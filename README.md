@@ -4,7 +4,7 @@
 ## LeetCode-Bank
 |  N.O.  |      Title/EN|    Title/CN   |   Solutions   | Time          | Space           | Difficulty  | Tag  
 |-----|----------------|---------------|---------------|---------------|---------------|-------------|-------------
-207| [Course Schedule](https://leetcode-cn.com/problems/course-schedule/) | 课程表| [Solutions](../master/src/main/java/com/frankcooper/bank/_993.java)|-|-||Meidum| - | 
+207| [Course Schedule](https://leetcode-cn.com/problems/course-schedule/) | 课程表| [Solutions](../master/src/main/java/com/frankcooper/bank/_207.java)|-|-||Meidum| - | 
 ||||||||||
 ||||||||||
 ||||||||||
