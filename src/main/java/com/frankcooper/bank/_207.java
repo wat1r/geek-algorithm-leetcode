@@ -8,7 +8,24 @@ import java.util.Queue;
  * Date 2020/3/5 23:09
  * Description
  */
+
+/**
+ *
+ */
+
+
 public class _207 {
+
+
+    public static void main(String[] args) {
+        _207 handler = new _207();
+        int numCourses = 5;
+        int[][] prerequisites = {{1, 0}, {3, 0}, {2, 1}, {3, 1}, {4, 2}};
+        handler.canFinish(numCourses, prerequisites);
+
+    }
+
+
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         int[] indegrees = new int[numCourses];
         for (int[] p : prerequisites) {
