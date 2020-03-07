@@ -6,6 +6,10 @@
 |-----|----------------|---------------|---------------|-------------|-------------|---------------
 |207| [Course Schedule](https://leetcode-cn.com/problems/course-schedule/) | 课程表| [Solutions](../master/src/main/java/com/frankcooper/bank/_207.java)|Meidum| BFS,Graph| 拓扑排序,入度表| 
 |210| [Course Schedule II](https://leetcode-cn.com/problems/course-schedule-ii/) | 课程表 II| [Solutions](../master/src/main/java/com/frankcooper/bank/_210.java)|Meidum| BFS,Graph| 拓扑排序,入度表 | 
+|215| [Kth Largest Element in an Array](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/) |数组中的第K个最大元素| [Solutions](../master/src/main/java/com/frankcooper/bank/_215.java)|Meidum| Heap| K系列,数组 | 
+|901| [Online Stock Span](https://leetcode-cn.com/problems/online-stock-span/) |数组中的第K个最大元素| [Solutions](../master/src/main/java/com/frankcooper/bank/_901.java)|Meidum| Monotonous Stack| 股票系列，单调栈 | 
+
+
 
 
 

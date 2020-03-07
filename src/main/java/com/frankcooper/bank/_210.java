@@ -2,6 +2,8 @@ package com.frankcooper.bank;
 
 import java.util.*;
 
+//210. 课程表 II   210. Course Schedule II
+
 public class _210 {
 
     public static void main(String[] args) {
@@ -10,6 +12,8 @@ public class _210 {
         int[][] prerequisites = {{1, 0}};
         handler.findOrder(numCourses, prerequisites);
     }
+
+
 
 
     /**
@@ -65,6 +69,7 @@ public class _210 {
             map.put(src, list);
             indegrees[dest]++;
         }
+        //找到入度为0的元素
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
             if (indegrees[i] == 0) queue.offer(i);
