@@ -74,14 +74,15 @@ class StockSpanner1st {
         stack.push(new Pair(price, count));
         return count;
     }
-}
 
-class Pair {
-    public int price;
-    public int count;
+    class Pair {
+        public int price;
+        public int count;
 
-    public Pair(int price, int count) {
-        this.price = price;
-        this.count = count;
+        public Pair(int price, int count) {
+            this.price = price;
+            this.count = count;
+        }
     }
 }
+
