@@ -35,4 +35,20 @@ public class _121 {
         }
         return dp[n - 1][0];//最后一天，手里没有股票的状态，相当于在最后一天的前（包含最后一天），完成了一次买入和一次卖出
     }
+
+    /*
+        ##### 方法2:空间压缩DP
+     */
+    public int maxProfit2nd(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int n = prices.length;
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            //dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]);
+            //dp[i][1] = Math.max(dp[i - 1][1], -prices[i]);
+            dp_i_1 = Math.max(dp_i_1, -prices[i]);
+        }
+        return dp_i_0;
+    }
 }
