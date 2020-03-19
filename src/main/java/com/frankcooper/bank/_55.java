@@ -36,7 +36,7 @@ public class _55 {
 
 
     /*
-        ##### 方法2：记忆化递归+回溯
+        ##### 方法2：记忆化递归+回溯(自顶向下) 从0->nums.length()-1
         - 用`Index`的`enum`来记录某个坐标是否可以到达最末尾的位置，有三类值：
           - `GOOD`:可以跳到末尾位置
           - `BAD`:不可以跳到末尾位置
@@ -72,5 +72,30 @@ public class _55 {
     enum Index {
         GOOD, BAD, UNKNOWN
     }
+
+    /*
+        ##### 方法3：记忆化递归+回溯(自底向上) 从`nums.length()-1->0`
+        - 每次从右边位置开始寻找，记录下`memo`
+     */
+    // Index[] memo;
+    public boolean canJump3rd(int[] nums) {
+        int n = nums.length;
+        memo = new Index[n];
+        for (int i = 0; i < n; i++) {
+            memo[i] = Index.BAD;
+        }
+        memo[n - 1] = Index.GOOD;
+        for (int i = n - 2; i >= 0; i--) {
+            int furtherPos = Math.min(i + nums[i], n - 1);
+            for (int j = i + 1; j <= furtherPos; j++) {
+                if (memo[j] == Index.GOOD) {
+                    memo[i] = Index.GOOD;
+                    break;
+                }
+            }
+        }
+        return memo[0] == Index.GOOD;
+    }
+
 
 }
