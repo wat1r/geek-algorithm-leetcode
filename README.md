@@ -14,6 +14,7 @@
 |207| [Course Schedule](https://leetcode-cn.com/problems/course-schedule/) | 课程表| [Solutions](../master/src/main/java/com/frankcooper/bank/_207.java)|Meidum| BFS,Graph| 拓扑排序,入度表| |
 |210| [Course Schedule II](https://leetcode-cn.com/problems/course-schedule-ii/) | 课程表 II| [Solutions](../master/src/main/java/com/frankcooper/bank/_210.java)|Meidum| BFS,Graph| 拓扑排序,入度表 | | 
 |215| [Kth Largest Element in an Array](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/) |数组中的第K个最大元素| [Solutions](../master/src/main/java/com/frankcooper/bank/_215.java)|Meidum| Heap| K系列,数组 | | 
+|300| [Longest Increasing Subsequence](https://leetcode-cn.com/problems/longest-increasing-subsequence/) |最长上升子序列| [Solutions](../master/src/main/java/com/frankcooper/bank/_300.java)|Meidum| DP| 上升，子序列 | | 
 |309| [Best Time to Buy and Sell Stock with Cooldown](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) |最佳买卖股票时机含冷冻期| [Solutions](../master/src/main/java/com/frankcooper/bank/_309.java)|Meidum| DP| 股票，冷冻期 | | 
 |322| [Coin Change](https://leetcode-cn.com/problems/coin-change/) |零钱兑换| [Solutions](../master/src/main/java/com/frankcooper/bank/_322.java)|Meidum| DP| 零钱 | | 
 |516| [Longest Palindromic Subsequence Medium](https://leetcode-cn.com/problems/longest-palindromic-subsequence/) |最长回文子序列| [Solutions](../master/src/main/java/com/frankcooper/bank/_516.java)|Meidum| DP| 回文，子序列 | | 
