@@ -1,14 +1,13 @@
-package com.frankcooper;
+package com.frankcooper.pack;
 
 import java.util.Scanner;
 
 /**
  * Created by FrankCooper
- * Date 2020/3/9 21:59
+ * Date 2020/3/26 0:16
  * Description
  */
-public class Main {
-
+public class MultiplePack {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -23,7 +22,8 @@ public class Main {
             s[i] = scanner.nextInt();
         }
         scanner.close();
-        System.out.println(multiplePackProcess1st(N, V, v, w, s));
+//        System.out.println(zeroOnePackExecutor1st(N, V, v, w));
+//        System.out.println(zeroOnePackExecutor2nd(N, V, v, w));
 
     }
 
@@ -42,5 +42,4 @@ public class Main {
         }
         return dp[V];
     }
-
 }

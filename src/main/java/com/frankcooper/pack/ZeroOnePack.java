@@ -1,4 +1,4 @@
-package com.frankcooper.rucksack;
+package com.frankcooper.pack;
 
 import java.util.Scanner;
 
@@ -95,17 +95,17 @@ public class ZeroOnePack {
         int[] dp = new int[V + 1];
         dp[0] = 0;
         for (int i = 1; i <= N; i++) {
-            for (int j = 0; j <= V; j++) {
-                if (j >= v[i]) dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
-            }
-//            for (int j = V; j >= v[i]; j--) {
-//                dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
+//            for (int j = 0; j <= V; j++) {
+//                if (j >= v[i]) dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
 //            }
-            for (int j = 0; j <= V; j++) {
-                System.out.print(dp[j]);
-                System.out.print(" ");
+            for (int j = V; j >= v[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
             }
-            System.out.print("\n");
+//            for (int j = 0; j <= V; j++) {
+//                System.out.print(dp[j]);
+//                System.out.print(" ");
+//            }
+//            System.out.print("\n");
         }
         return dp[V];
     }
