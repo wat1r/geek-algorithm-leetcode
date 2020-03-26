@@ -4,11 +4,10 @@ import java.util.Scanner;
 
 /**
  * Created by FrankCooper
- * Date 2020/3/26 0:17
+ * Date 2020/3/26 0:16
  * Description
  */
-public class MixPack {
-
+public class MultiplePackI {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -24,31 +23,23 @@ public class MixPack {
         }
         scanner.close();
 //        System.out.println(zeroOnePackExecutor1st(N, V, v, w));
-        System.out.println(mixPackProcess(N, V, v, w, s));
+//        System.out.println(zeroOnePackExecutor2nd(N, V, v, w));
 
     }
 
-    public static int mixPackProcess(int N, int V, int[] v, int[] w, int[] s) {
+    /*
+
+     */
+    public static int multiplePackProcessI1st(int N, int V, int[] v, int[] w, int[] s) {
         int[] dp = new int[V + 1];
-        for (int i = 1; i < N; i++) {
-            if (s[i] == 0) {//完全背包
-                for (int j = v[i]; j <= V; j++) {
-                    dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
-                }
-            } else if (s[i] == -1) {//01背包
-                for (int j = V; j >= v[i]; j--) {
-                    dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
-                }
-            } else if (s[i] >= 1) {//多重背包
-                for (int j = V; j >= v[i]; j--) {
-                    for (int k = 0; k <= s[i] && k * v[i] <= j; k++) {
-                        dp[j] = Math.max(dp[j], dp[j - k * v[i]] + k * w[i]);
-                    }
+        dp[0] = 0;
+        for (int i = 1; i <= N; i++) {
+            for (int j = V; j >= v[i]; j--) {
+                for (int k = 0; k <= s[i] && k * v[i] <= j; k++) {
+                    dp[j] = Math.max(dp[j], dp[j - k * v[i]] + k * w[i]);
                 }
             }
         }
         return dp[V];
     }
-
-
 }

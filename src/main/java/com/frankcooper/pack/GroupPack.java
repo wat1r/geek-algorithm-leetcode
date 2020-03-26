@@ -1,16 +1,13 @@
-package com.frankcooper;
+package com.frankcooper.pack;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
  * Created by FrankCooper
- * Date 2020/3/9 21:59
+ * Date 2020/3/26 21:43
  * Description
  */
-public class Main {
+public class GroupPack {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int N = scanner.nextInt();//物品的件数N
@@ -43,5 +40,15 @@ public class Main {
         return dp[N][V];
     }
 
-
+    public static int groupPackProcess2nd(int N, int V, int[][] v, int[][] w, int[] s) {
+        int[] dp = new int[V + 1];
+        for (int i = 1; i <= N; i++) {
+            for (int j = V; j >= 0; j--) {
+                for (int k = 0; k <= s[i]; k++) {
+                    if (j >= v[i][k]) dp[j] = Math.max(dp[j], dp[j - v[i][k]] + w[i][k]);
+                }
+            }
+        }
+        return dp[V];
+    }
 }
