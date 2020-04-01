@@ -4,6 +4,10 @@ package com.frankcooper.bank;
 public class _322 {
 
 
+    public static void main(String[] args) {
+
+    }
+
     /*
         - `dp[i]`表示凑够总金额为`i`需要的最少的硬币的个数，因为要求得是`dp[amount]`，即凑够总金额为`amount`时所需要的最少硬币的个数，初始化`dp`时要`n+1`;
         - `base case`：当总金额为`0`时，需要的最少的硬币数量，显然为`0` 即不需要硬币即可凑成
@@ -30,6 +34,9 @@ public class _322 {
         }
         return dp[amount];
     }
+
+
+    //https://leetcode-cn.com/problems/coin-change/solution/yong-bei-bao-wen-ti-si-xiang-lai-li-jie-ying-bi-zh/
 
 
 }

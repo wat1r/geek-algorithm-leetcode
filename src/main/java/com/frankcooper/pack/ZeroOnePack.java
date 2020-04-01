@@ -22,8 +22,8 @@ public class ZeroOnePack {
             w[i] = scanner.nextInt();
         }
         scanner.close();
-//        System.out.println(zeroOnePackExecutor1st(N, V, v, w));
-        System.out.println(zeroOnePackExecutor2nd(N, V, v, w));
+        System.out.println(zeroOnePackExecutor1st(N, V, v, w));
+//        System.out.println(zeroOnePackExecutor2nd(N, V, v, w));
 
     }
 
@@ -48,49 +48,52 @@ public class ZeroOnePack {
             for (int j = 1; j <= V; j++) {
                 dp[i][j] = dp[i - 1][j];
                 if (j >= v[i]) dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i]);
+                System.out.print(String.format("%s ", dp[i][j]));
             }
+            System.out.println();
         }
+
         return dp[N][V];
     }
 
-/*
+    /*
 
 
-##### 方法2：`DP`压缩空间版($j$采取逆序的方式)
+    ##### 方法2：`DP`压缩空间版($j$采取逆序的方式)
 
-- 准备一个一维的$dp$数组，去掉了$i$，只保留了$j$,如果正向遍历的话，是要这么写的
+    - 准备一个一维的$dp$数组，去掉了$i$，只保留了$j$,如果正向遍历的话，是要这么写的
 
-- ```java
-  for (int j = 0; j <= V; j++) {
-  	if (j >= v[i]) dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
-  }
-  ```
-```json
-0 0 0 0 0 0
-0 2 4 6 8 10
-0 2 4 6 8 10
-0 2 4 6 8 10
-0 2 4 6 8 10
-10
-```
-- 将$dp[i][j]=max(dp[i-1][j],dp[i-1][j-v[i]]+w[i])$变成了$dp[i][j]=max(dp[i-1][j],dp[i][j-v[i]]+w[i])$，正向遍历而来时，$i-1$的值已经计算过并被覆盖了，避免这个问题，需要采用倒序遍历,先更新$i$,再更新$i-1$
+    - ```java
+      for (int j = 0; j <= V; j++) {
+          if (j >= v[i]) dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
+      }
+      ```
+    ```json
+    0 0 0 0 0 0
+    0 2 4 6 8 10
+    0 2 4 6 8 10
+    0 2 4 6 8 10
+    0 2 4 6 8 10
+    10
+    ```
+    - 将$dp[i][j]=max(dp[i-1][j],dp[i-1][j-v[i]]+w[i])$变成了$dp[i][j]=max(dp[i-1][j],dp[i][j-v[i]]+w[i])$，正向遍历而来时，$i-1$的值已经计算过并被覆盖了，避免这个问题，需要采用倒序遍历,先更新$i$,再更新$i-1$
 
-- ```java
-  for (int j = V; j >= v[i]; j--) {
-      dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
-  }
-  ```
+    - ```java
+      for (int j = V; j >= v[i]; j--) {
+          dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
+      }
+      ```
 
 
-```json
-0 2 2 2 2 2
-0 2 4 6 6 6
-0 2 4 6 6 8
-0 2 4 6 6 8
-8
-```
-- 解释了为何需要倒序：https://www.cnblogs.com/lanhj/archive/2012/12/05/2802437.html
- */
+    ```json
+    0 2 2 2 2 2
+    0 2 4 6 6 6
+    0 2 4 6 6 8
+    0 2 4 6 6 8
+    8
+    ```
+    - 解释了为何需要倒序：https://www.cnblogs.com/lanhj/archive/2012/12/05/2802437.html
+     */
     public static int zeroOnePackExecutor2nd(int N, int V, int[] v, int[] w) {
         int[] dp = new int[V + 1];
         dp[0] = 0;
