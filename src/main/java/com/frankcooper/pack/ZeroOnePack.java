@@ -11,7 +11,6 @@ public class ZeroOnePack {
 
 
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         int N = scanner.nextInt();//物品的件数N
         int V = scanner.nextInt();//背包的容量V
@@ -22,8 +21,8 @@ public class ZeroOnePack {
             w[i] = scanner.nextInt();
         }
         scanner.close();
-        System.out.println(zeroOnePackExecutor1st(N, V, v, w));
-//        System.out.println(zeroOnePackExecutor2nd(N, V, v, w));
+//        System.out.println(zeroOnePackExecutor1st(N, V, v, w));
+        System.out.println(zeroOnePackExecutor2nd(N, V, v, w));
 
     }
 
@@ -48,11 +47,10 @@ public class ZeroOnePack {
             for (int j = 1; j <= V; j++) {
                 dp[i][j] = dp[i - 1][j];
                 if (j >= v[i]) dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i]);
-                System.out.print(String.format("%s ", dp[i][j]));
+//                System.out.print(String.format("%s ", dp[i][j]));
             }
-            System.out.println();
+//            System.out.println();
         }
-
         return dp[N][V];
     }
 
@@ -99,16 +97,18 @@ public class ZeroOnePack {
         dp[0] = 0;
         for (int i = 1; i <= N; i++) {
 //            for (int j = 0; j <= V; j++) {
-//                if (j >= v[i]) dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
+//                if (j >= v[i]) {
+//                    dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
+//                }
 //            }
             for (int j = V; j >= v[i]; j--) {
                 dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
             }
-//            for (int j = 0; j <= V; j++) {
-//                System.out.print(dp[j]);
-//                System.out.print(" ");
-//            }
-//            System.out.print("\n");
+            for (int j = 0; j <= V; j++) {
+                System.out.print(dp[j]);
+                System.out.print(" ");
+            }
+            System.out.print("\n");
         }
         return dp[V];
     }
