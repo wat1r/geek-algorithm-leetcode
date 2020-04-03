@@ -1,88 +1,8 @@
-package com.frankcooper.pack;
-
-import java.util.Scanner;
-
-/**
- * Created by FrankCooper
- * Date 2020/3/25 23:22
- * Description
- */
-public class CompletePack {
 
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();//物品的件数N
-        int V = scanner.nextInt();//背包的容量V
-        int[] v = new int[N + 1];//长度为N的数组，第i个元素表示第i件物品的体积
-        int[] w = new int[N + 1];//长度为N的数组，第i个元素表示第i件物品的价值
-        for (int i = 1; i <= N; i++) {//N行 每行两个数，空格分开，v[i]表示是第i个物品的体积，w[i]是第i个物品的价值
-            v[i] = scanner.nextInt();
-            w[i] = scanner.nextInt();
-        }
-        scanner.close();
-//        System.out.println(completePackProcess1st(N, V, v, w));
-        System.out.println(completePackProcess2nd(N, V, v, w));
-        System.out.println(completePackProcess3rd(N, V, v, w));
-        System.out.println(completePackProcess4th(N, V, v, w));
-    }
+#### 完全背包问题
 
-    //##### 方法1：`DP`二维数组三层循环版
-    public static int completePackProcess1st(int N, int V, int[] v, int[] w) {
-        int[][] dp = new int[N + 1][V + 1];
-        dp[0][0] = 0;
-        for (int i = 1; i <= N; i++) {//for loop每一个物品
-            for (int j = 1; j <= V; j++) {//for loop背包的重量
-                for (int k = 0; k * v[i] <= j; k++) {//每个物品的个数，背包的不能无限大
-                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - k * v[i]] + k * w[i]);
-                }
-            }
-        }
-        return dp[N][V];
-    }
-
-
-
-    //##### 方法2：`DP`一维数组三层循环版
-    public static int completePackProcess2nd(int N, int V, int[] v, int[] w) {
-        int[] dp = new int[V + 1];
-        dp[0] = 0;
-        for (int i = 1; i <= N; i++) {//for loop每一个物品
-            for (int j = 1; j <= V; j++) {//for loop背包的重量
-                for (int k = 0; k * v[i] <= j; k++) {//每个物品的个数，背包的不能无限大
-                    dp[j] = Math.max(dp[j], dp[j - k * v[i]] + k * w[i]);
-                }
-            }
-        }
-        return dp[V];
-    }
-
-    //##### 方法3：`DP`二维数组两层循环版
-    public static int completePackProcess3rd(int N, int V, int[] v, int[] w) {
-        int[][] dp = new int[N + 1][V + 1];
-        dp[0][0] = 0;
-        for (int i = 1; i <= N; i++) {
-            for (int j = 0; j <= V; j++) {
-                dp[i][j] = dp[i - 1][j];
-                if (j > v[i]) dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - v[i]] + w[i]);
-            }
-        }
-        return dp[N][V];
-    }
-
-    //##### 方法4：`DP`一维数组两层循环版
-    public static int completePackProcess4th(int N, int V, int[] v, int[] w) {
-        int[] dp = new int[V + 1];
-        dp[0] = 0;
-        for (int i = 1; i <= N; i++) {
-            for (int j = v[i]; j <= V; j++) {
-                dp[j] = Math.max(dp[j], dp[j - v[i]] + w[i]);
-            }
-        }
-        return dp[V];
-    }
-    /*
-    (https://imgchr.com/i/8x8suF)
+[![8x8suF.jpg](https://s1.ax1x.com/2020/03/25/8x8suF.jpg)](https://imgchr.com/i/8x8suF)
 
 ##### 方法1：`DP`二维数组三层循环版
 
@@ -125,7 +45,7 @@ public static int completePackProcess1st(int N, int V, int[] v, int[] w) {
 $f[i , j ]  \qquad   =max( f[i-1,j] , f[i-1,j-v]+w ,  f[i-1,j-2*v]+2*w , f[i-1,j-3*v]+3*w , .....)$
 
 $f[i , j-v]= max( \qquad\qquad\;\;    f[i-1,j-v]   ,  \qquad f[i-1,j-2*v] + w ,  \qquad f[i-1,j-2*v]+2*w , .....)$
-由上两式，可得出如下递推关系：
+由上两式，可得出如下递推关系： 
                     $    f[i][j]=max(f[i,j-v]+w , f[i-1][j]) $
 
 ```java
@@ -220,5 +140,35 @@ f[i][j] = max(f[i][j],f[i][j-v[i]]+w[i]);//完全背包问题
         return dp[V];
     }
 ```
-     */
-}
+
+
+
+#### 多重背包问题1
+
+![8x6AiV.jpg](https://s1.ax1x.com/2020/03/26/8x6AiV.jpg)
+
+##### 方法1：`DP`一维数组三层循环版
+
+- 基于$01$背包的做法，倒序遍历，但是有$s[i]$的限制
+
+```java
+    public static int multiplePackProcess1st(int N, int V, int[] v, int[] w, int[] s) {
+        int[] dp = new int[V + 1];
+        dp[0] = 0;
+        for (int i = 1; i <= N; i++) {
+            for (int j = V; j >= v[i]; j--) {
+                for (int k = 0; k <= s[i] && k * v[i] <= j; k++) {
+                    dp[j] = Math.max(dp[j], dp[j - k * v[i]] + k * w[i]);
+                }
+            }
+        }
+        return dp[V];
+    }
+```
+
+
+
+#### 多重背包问题2
+
+[![GpMdt1.jpg](https://s1.ax1x.com/2020/03/26/GpMdt1.jpg)](https://imgchr.com/i/GpMdt1)
+
