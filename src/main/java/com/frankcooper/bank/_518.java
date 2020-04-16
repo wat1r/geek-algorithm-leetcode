@@ -1,6 +1,7 @@
 package com.frankcooper.bank;
 
 //518. 零钱兑换 II  518. Coin Change 2 Medium
+//参见背包思想解决零钱兑换问题.md
 public class _518 {
     static _518 handler = new _518();
 
