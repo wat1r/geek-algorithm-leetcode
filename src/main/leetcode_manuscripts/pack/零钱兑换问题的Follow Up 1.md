@@ -12,7 +12,7 @@
 
 ##### 题目分析
 
-- 因为提到了**每个硬币只能选择一次**，这个**[01背包]()**很吻合
+- 因为提到了**每个硬币只能选择一次**，这个与**[01背包]()**很吻合
 
 ---
 
@@ -82,11 +82,85 @@ $F[i,v]$表示前$i$件物品恰好放入一个容量为$v$的背包可以获得
 
 ##### 题目分析
 
+- 因为提到了**每个硬币可以选择无数次**，这个与**[完全背包]()**很吻合
 
+---
 
+> 这是完全背包的抽象模型
 
+##### 参数定义：
 
+- $N$件物品
+- $V$背包的总容量
+- $Ci$放入第$i$件物品耗费的费用
+- $Wi$放入第$i$件物品得到的价值动态规划的几大要素：状态，选择以及边界条件
 
+每件物品可以 取用0件，1件，2件...$V/Ci$件，
+
+##### **定义状态**
+
+- $F[i,v]$表示前$i$个物品恰好放入容量为$v$的背包时获取到的最大价值，很容易得到如下的动态转移方程：
+  - $F[i,v]=max(F[i-1,v-kCi]+kWi|kCi∈[0,v])$
+
+##### 边界条件
+
+- 如果创建一个$dp=int[N+1][V+1]$的二维动态数组，当$dp[0][0]$时，表示的时物品数与背包的容量都是$0$的，显然其结果为$0$
+
+---
+
+> 回到本题
+
+- $dp[amount+1]$，初始化$dp[0]=0$,表示欲组成总金额为$0$硬币的最少个数，为$0$,一个硬币都不取
+- $dp[j]$:使用$coins$组成目标金额为$j$的最少硬币数量
+- 动态转移方程：$dp[j]=min(dp[j],dp[j-coins[i-1]]+1)$ 其中$i-1$表示的是第$i$个硬币
+
+```python
+    def change(self, coins: List[int], amount: int) -> int:
+        # 初始化数组 dp[amount+1] 为 float('inf')
+        dp = [float('inf') for i in range(amount + 1)]
+        dp[0] = 0
+        for coin in coins:
+            for j in range(coin, amount + 1):
+                dp[j] = min(dp[j], dp[j - coin] + 1)
+        return dp[amount] if dp[amount] != float('inf') else -1
+```
 
 ##### Step 3 零钱兑换问题(多重背包)
 
+**题目描述**：给定不同面额的硬币$ coins$ 和一个总金额 $amount$，**每个硬币的选择次数有限制，上限$t$次**，编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1
+
+##### 题目分析
+
+- 因为提到了**每个硬币的选择次数有限制，上限$t$次**，这个与**[多重背包]()**很吻合
+
+##### 定义状态
+
+- 对于第$i$中硬币，可以由0 ,1 2.....k 到t 次 的选择，**$dp[i][j]$表示前$i$个硬币组成金额为$j$时的最少硬币数量**
+
+```
+dp[i][j] = 
+min(dp[i-1]dp[j],
+	dp[i-1][j-c]+1, 
+	dp[i-1][j-2*c]+2, 
+	...,
+	dp[i-1][j-k*c]+k)
+	其中k∈[1,t]
+```
+
+- 代码
+
+```python
+    def change(self, coins: List[int], amount: int, t: List[int]) -> int:
+        dp = [float('inf') for i in range(amount + 1)]
+        dp[0] = 0
+        for i in range(len(coins)):
+            for j in range(amount, coins[i] - 1, -1):
+                for k in range(1, t[i] + 1): 
+                    if j >= k * coins[i]:  
+                        dp[j] = min(dp[j], dp[j - k * coins[i]] + k)
+        return -1 if dp[amount] > amount else dp[amount]
+```
+
+
+
+> 本文完
