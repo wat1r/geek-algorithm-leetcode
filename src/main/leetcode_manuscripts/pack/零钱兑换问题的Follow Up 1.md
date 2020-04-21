@@ -147,7 +147,7 @@ min(dp[i-1]dp[j],
 	其中k∈[1,t]
 ```
 
-- 代码
+- 代码：
 
 ```python
     def change(self, coins: List[int], amount: int, t: List[int]) -> int:
