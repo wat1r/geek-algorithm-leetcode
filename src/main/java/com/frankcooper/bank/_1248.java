@@ -21,23 +21,20 @@ public class _1248 {
      * @return
      */
     public int numberOfSubarrays(int[] nums, int k) {
-        int left = 0, right = 0;
-        int res = 0;
-        int oddCnt = 0;
-        while (left < nums.length && right < nums.length) {
-            if (nums[right] % 2 == 1) {
-                oddCnt++;
+        int len = nums.length, res = 0, index = 0, arr[] = new int[len + 2];
+        for (int i = 0; i < len; i++) {
+            // 奇数
+            if ((nums[i] & 1) == 1) {
+                arr[++index] = i;
             }
-            if (oddCnt == k) {
-                res++;
-                if (nums[left] % 2 == 1) {
-                    oddCnt--;
-                    left++;
-                }
-            }
-            right++;
         }
-
+        // 左边界
+        arr[0] = -1;
+        // 右边界
+        arr[index + 1] = len;
+        for (int i = 1; i + k < index + 2; i++) {
+            res += (arr[i] - arr[i - 1]) * (arr[i + k] - arr[i + k - 1]);
+        }
         return res;
     }
 }
