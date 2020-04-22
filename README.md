@@ -3,7 +3,7 @@
 
 ## LeetCode-Bank
 |  N.O.  |      Title/EN|    Title/CN   |   Solutions(Java) | Solutions(Python)              | Difficulty  | Tag  |Subject | MEMO|
-|-----|----------------|---------------|---------------|-------------|-------------|---------------|---------------|
+|-----|----------------|---------------|---------------|-------------| -------------|-------------|---------------|---------------|
 |19| [Remove Nth Node From End of List](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | 删除链表的倒数第N个节点 | [Java](NULL)| [Python](../master/src/main/python/com/frankcooper/bank/_19.java) |Medium|Two Pointers | |  |
 |45| [Jump Game II](https://leetcode-cn.com/problems/jump-game-ii/) | 跳跃游戏 II| [Solutions](../master/src/main/java/com/frankcooper/bank/_45.java) | [Python](../master/src/main/python/com/frankcooper/bank/)|Hard| Greedy,DP| 跳跃游戏|  |
 |55| [Jump Game](https://leetcode-cn.com/problems/jump-game/) | 跳跃游戏| [Solutions](../master/src/main/java/com/frankcooper/bank/_55.java)| [Python](../master/src/main/python/com/frankcooper/bank/)|Meidum| Greedy,DP| 跳跃游戏|  |
