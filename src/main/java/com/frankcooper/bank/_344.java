@@ -9,7 +9,6 @@ public class _344 {
         handler.reverseString(s);
     }
 
-
     public void reverseString(char[] s) {
         int l = 0, r = s.length - 1;
         while (l < r) {
