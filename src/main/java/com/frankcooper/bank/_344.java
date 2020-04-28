@@ -7,6 +7,7 @@ public class _344 {
     public static void main(String[] args) {
         char[] s = {'h', 'e', 'l', 'l', 'o'};
         handler.reverseString(s);
+        System.out.println("");
     }
 
     public void reverseString(char[] s) {
