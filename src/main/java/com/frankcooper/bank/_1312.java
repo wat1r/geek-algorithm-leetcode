@@ -16,7 +16,6 @@ public class _1312 {
      * @return
      */
     public int minInsertions(String s) {
-
         int[][] dp = buildDP(s.toCharArray());
         return dp[0][s.length() - 1];
     }
