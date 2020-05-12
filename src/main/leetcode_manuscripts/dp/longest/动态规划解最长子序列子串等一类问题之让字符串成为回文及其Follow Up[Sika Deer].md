@@ -1,12 +1,10 @@
-
+1
 
 ## 动态规划解最长子序列子串等一类问题之让字符串成为回文及其Follow Up[Sika Deer]
 
+> 这是个好题目
 
-
-
-
-
+![pexels-photo-219906](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\longest\动态规划解最长子序列子串等一类问题之让字符串成为回文及其Follow Up[Sika Deer].assets\pexels-photo-219906.jpeg)
 
 ### 0.源起
 
