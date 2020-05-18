@@ -1,5 +1,7 @@
 package com.frankcooper.bank;
 
+import java.util.Arrays;
+
 //300. 最长上升子序列 300. Longest Increasing Subsequence Medium
 public class _300 {
     public static void main(String[] args) {
