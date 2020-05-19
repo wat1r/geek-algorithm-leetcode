@@ -1,11 +1,11 @@
 package com.frankcooper.bank;
 
-import java.util.Arrays;
-
 //300. 最长上升子序列 300. Longest Increasing Subsequence Medium
 public class _300 {
+    static _300 handler = new _300();
     public static void main(String[] args) {
-
+        handler.lengthOfLISII(new int[]{10, 9, 2, 5, 3, 7, 101, 18});
+        handler.lengthOfLISII(new int[]{-2, -1});
     }
 
     /*
@@ -34,4 +34,26 @@ public class _300 {
         }
         return res;
     }
+
+    public int lengthOfLISII(int[] nums) {
+        int n = nums.length;
+        int[] tails = new int[n];
+        int end = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > tails[end]) tails[++end] = nums[i];
+            else {
+                int l = 0, r = end;
+                while (l < r) {
+                    int m = (l + r) / 2;
+                    if (tails[m] < nums[i]) l = m + 1;
+                    else r = m - 1;
+                }
+                tails[l] = nums[i];
+            }
+        }
+        return end;
+    }
+
+
+
 }
