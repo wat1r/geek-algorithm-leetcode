@@ -78,7 +78,24 @@
   - 而$x$又是$tails[j]$的值，即$x=tails[j]$
   - 得出$tails[i]>tails[j]$,这与一开始假设的条件矛盾，假设条件不成立
 
-
+```java
+ public int lengthOfLISII(int[] nums) {
+        int n = nums.length;
+        int[] tails = new int[n];
+        int end = 0;
+        for (int i = 0; i < n; i++) {
+            int l = 0, r = end;
+            while (l < r) {
+                int m = (l + r) / 2;
+                if (tails[m] < nums[i]) l = m + 1;
+                else r = m;
+            }
+            tails[l] = nums[i];
+            if (end == r) end++;
+        }
+        return end;
+    }
+```
 
 ### 关联阅读
 
