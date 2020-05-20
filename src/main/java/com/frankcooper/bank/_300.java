@@ -40,16 +40,14 @@ public class _300 {
         int[] tails = new int[n];
         int end = 0;
         for (int i = 0; i < n; i++) {
-            if (nums[i] > tails[end]) tails[++end] = nums[i];
-            else {
-                int l = 0, r = end;
-                while (l < r) {
-                    int m = (l + r) / 2;
-                    if (tails[m] < nums[i]) l = m + 1;
-                    else r = m - 1;
-                }
-                tails[l] = nums[i];
+            int l = 0, r = end;
+            while (l < r) {
+                int m = (l + r) / 2;
+                if (tails[m] < nums[i]) l = m + 1;
+                else r = m;
             }
+            tails[l] = nums[i];
+            if (end == r) end++;
         }
         return end;
     }
