@@ -45,8 +45,27 @@
 
 #### 方法2:DP($O(1)$)
 
+- 因为只会依赖于$i$与$i-1$这两个状态，借助一个常数的级别的一维数组$dp[2]$，辅以奇偶数的小技巧
 
+```java
+public int findLengthOfLCIS(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int n = nums.length;
+        int max = 1;
+        int[] dp = new int[2];
+        dp[0] = 1;
+        for (int i = 1; i < n; i++) {
+            dp[i % 2] = 1;//前一个状态值都会被覆盖，需要重新初始化
+            if (nums[i] > nums[i - 1]) {
+                dp[i % 2] += dp[(i - 1) % 2];//当前状态依赖前一状态，需要再前一状态上累加
+            }
+            max = Math.max(max, dp[i % 2]);
+        }
+        return max;
+    }
+```
 
 ### 2.最长递增子序列的个数
 
 ![1590505435058](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\longest\动态规划解最长子序列子串等一类问题之最长连续递增序列[Reindeer].assets\1590505435058.png)
+
