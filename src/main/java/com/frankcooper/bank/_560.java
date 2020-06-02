@@ -8,6 +8,22 @@ public class _560 {
     }
 
 
+    public int subarraySum(int[] nums, int k) {
+        int n = nums.length;
+        //多放一个位置 pre[i]表示前i个数的前缀和即 nums[0...i-1]这个范围内的前缀和
+        int[] pre = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            pre[i + 1] = pre[i] + nums[i];
+        }
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (pre[i] - pre[j] == k) res++;
+            }
+        }
+        return res;
+    }
+
 
 
 
