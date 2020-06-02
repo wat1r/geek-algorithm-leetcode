@@ -7,9 +7,10 @@ public class _1248 {
     public static void main(String[] args) {
         int[] nums = {1, 1, 2, 1, 1};
         int k = 3;
-        nums = new int[]{2, 2, 2, 1, 2, 2, 1, 2, 2, 2};
-        k = 2;
-        handler.numberOfSubarrays(nums, k);
+        handler.numberOfSubarrays2nd(nums, k);
+//        nums = new int[]{2, 2, 2, 1, 2, 2, 1, 2, 2, 2};
+//        k = 2;
+//        handler.numberOfSubarrays(nums, k);
 
     }
 
@@ -37,4 +38,19 @@ public class _1248 {
         }
         return res;
     }
+
+
+    public int numberOfSubarrays2nd(int[] nums, int k) {
+        int n = nums.length;
+        int[] counter = new int[n + 1];
+        counter[0] = 1;
+        int res = 0, odd = 0;
+        for (int i = 0; i < n; i++) {
+            odd += nums[i] & 1;
+            if (odd >= k)res += counter[odd - k];
+            counter[odd]++;
+        }
+        return res;
+    }
+
 }
