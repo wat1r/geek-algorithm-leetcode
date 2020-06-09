@@ -18,7 +18,7 @@ public class _397 {
             }
             maxStart = Math.max(maxStart, start[i % 2]);
         }
-        //从右到做,end
+        //从右到左,end
         int[] end = new int[2];
         Arrays.fill(end, 1);
         int maxEnd = 1;
