@@ -3,7 +3,7 @@
 ![pexels-photo-134402](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\permutation\排列组合之回文排列[Tump-tailed Monkey].assets\pexels-photo-134402.jpeg)
 
 
-> 欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。
+> **欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。**
 
 ### 0.基础框架
 

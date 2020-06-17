@@ -2,7 +2,7 @@
 
 ![monkey-1179368_960_720](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\permutation\排列组合之全排列[Macaque].assets\monkey-1179368_960_720.jpg)
 
-> 欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。
+> **欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。**
 
 ### 0.基础框架
 
