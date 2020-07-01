@@ -1,5 +1,11 @@
 ## 动态规划之最长重复子数组[White Tiger]
 
+![tiger-3497203_1280](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\动态规划之最长重复子数组[White Tiger].assets\tiger-3497203_1280.jpg)
+
+> **欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。**
+
+
+
 ![image-20200701200859403](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\动态规划之最长重复子数组.assets\image-20200701200859403.png)
 
 > 此题与求两个字符串的最长公共子串很类似，子串不可跳跃
@@ -96,7 +102,7 @@
 - 时间复杂度：$O(M*N) $ 
 - 空间复杂度： $O(M*N)$  其中$M$和 $N$是$A$ $B$数组的长度
 
-#### 方法3：压缩版DP(O(1))
+### 方法3：压缩版DP(O(1))
 
 ```
 [0,0,1,0,0]
@@ -140,7 +146,7 @@
 - 时间复杂度：$O(M*N) $ 
 - 空间复杂度： $O(N)$  其中$M$和 $N$是$A$ $B$数组的长度
 
-#### 方法4：滑动窗口
+### 方法4：滑动窗口
 
 - 在其他文章中体现，本文暂跳过
 
