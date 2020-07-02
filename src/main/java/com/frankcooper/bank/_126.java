@@ -1,5 +1,6 @@
 package com.frankcooper.bank;
 
+
 import com.alibaba.fastjson.JSON;
 
 import java.util.*;
@@ -149,7 +150,9 @@ public class _126 {
             }
             sb.setCharAt(i, tmp);//结束本轮loop后，恢复原样
         }
-        System.out.println(String.format("res:%s", JSON.toJSONString(resList)));
+        System.out.println(String.format("res:%s",
+
+                JSON.toJSONString(resList)));
         return resList;
     }
 
