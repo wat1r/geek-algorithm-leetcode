@@ -2,11 +2,13 @@
 
 
 
+### 1.不同路径II
+
 ![image-20200706210119286](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之不同路径[Chipmunk ].assets\image-20200706210119286.png)
 
 
 
-### 方法1：模板法DP
+#### 方法1：模板法DP
 
 #### 元方法
 
@@ -48,6 +50,120 @@
        return dp[n - 1][m - 1];
     }
 ```
+
+#### **复杂度分析**:
+
+- 时间复杂度：$O(M*N) $ 
+- 空间复杂度： $O(M*N)$  其中$M$和 $N$是矩阵的行列
+
+### 方法2：压缩版DP(O(n))
+
+- 凡是当前状态只依赖位于$dp$表中的上方、左方、左上方等状态时，也就是依赖的状态是部分位置的数据时，一般情况下可以做空间压缩到$O(n)$或者$O(1)$
+
+#### 定义状态
+
+- $dp[m]$其中$m$为列数，$dp[j]$表示从$[0,0]$到$[i,j]$的路径数
+- 刚开始时，初始化第一行的$dp[0...m]$
+- 一般情况下：
+
+```java
+ dp[j] = (j == 0) ? dp[j] : dp[j] + dp[j - 1];
+```
+
+- 其中当$j==0$时，说明是新开一行的第一个数，上面的$=$后面的$dp[j]$是当前位置的左边位置的值，$dp[j-1]$是当前位置上面的位置的值，滚动刷新$dp$数组
+
+```JAVA
+  public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0) return 0;
+        //列*行
+        int m = obstacleGrid[0].length, n = obstacleGrid.length;
+        int[] dp = new int[m];
+        for (int j = 0; j < m; j++) {
+            if (obstacleGrid[0][j] == 1) break;
+            dp[j] = 1;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[j] = 0;
+                    continue;
+                }
+                dp[j] = (j == 0) ? dp[j] : dp[j] + dp[j - 1];
+            }
+        }
+        return dp[m-1];
+    }
+```
+
+#### **复杂度分析**:
+
+- 时间复杂度：$O(M*N) $ 
+- 空间复杂度： $O(M)$  其中$M$和 $N$是矩阵的行列，只需要数组$dp[m]$维持状态
+
+
+
+### 2.不同路径
+
+> 本题与上面一题比较，少了障碍物，考虑的点少一些，也是两种方法
+
+![1594049129597](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之不同路径[Chipmunk].assets\1594049129597.png)
+
+#### 方法1：模板法DP
+
+```java
+public int uniquePaths(int m, int n) {
+    int[][] dp = new int[m][n];
+    for (int j = 0; j < n; j++) dp[0][j] = 1;
+    for (int i = 0; i < m; i++) dp[i][0] = 1;
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+        }
+    }
+    return dp[m - 1][n - 1];
+}
+```
+
+#### **复杂度分析**:
+
+- 时间复杂度：$O(M*N) $ 
+- 空间复杂度： $O(M*N)$  其中$M$和 $N$是矩阵的行列
+
+#### 方法2：压缩版DP(O(n))
+
+```java
+public int uniquePaths1st(int m, int n) {
+    int[] dp = new int[n];
+    for (int i = 0; i < n; i++) dp[i] = 1;
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[j] = dp[j] + dp[j - 1];
+        }
+    }
+    return dp[n - 1];
+}
+```
+
+#### **复杂度分析**:
+
+- 时间复杂度：$O(M*N) $ 
+- 空间复杂度： $O(M)$  其中$M$和 $N$是矩阵的行列，只需要数组$dp[m]$维持状态
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

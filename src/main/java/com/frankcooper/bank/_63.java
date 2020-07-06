@@ -32,4 +32,31 @@ public class _63 {
         }
         return dp[n - 1][m - 1];
     }
+
+
+    public int uniquePathsWithObstacles2nd(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0) return 0;
+        //列*行
+        int m = obstacleGrid[0].length, n = obstacleGrid.length;
+        int[] dp = new int[m];
+        for (int j = 0; j < m; j++) {
+            if (obstacleGrid[0][j] == 1) break;
+            dp[j] = 1;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[j] = 0;
+                    continue;
+                }
+                dp[j] = (j == 0) ? dp[j] : dp[j] + dp[j - 1];
+            }
+        }
+        return dp[m-1];
+    }
+
+
+
+
+
 }
