@@ -1,15 +1,24 @@
-> #### [980. 不同路径 III](https://leetcode-cn.com/problems/unique-paths-iii/)  Hard
+## 路径之不同路径II[Red Squirrel]
 
 
 
-![980_1](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之不同路径II[Red Squirrel].assets\980_1.jpg)
+![image-20200709193239845](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之不同路径II[Red Squirrel].assets\image-20200709193239845.png)
 
+> **欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。**
 
+---
 
+> **每一个无障碍方格都要通过一次**。
 
+- 题意要求每个无障碍的方格要通过一次，一条路径中的最后一个是$2$,这条路径才可以结束，但并非只的是在搜索的过程中，$2$这个位置是最后出现的，当碰到$2$时，可以回溯，下图给出了矩阵的两种路径：![980_1](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\paths\路径之不同路径II[Red Squirrel].assets\980_1.jpg)
+
+- 本题的特点是开始和结束的位置并不知道，路障的种类很多，求不止一条路径的种类，后续可以$follow$ $up$到记录路径的路线
+- 准备两个主要方法：
+  - $helper$: 做两件事情：一是找到开始的坐标$[X,Y]$，找打从其实位置到结束位置(也就是$2$的点)的路径长度$paths$
+  - $dfs$: 搜索方法，具体的细节见代码注释，注意出口条件，边界，标记与反标记
 
 ```java
- 	int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};//四个方向
+	int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};//四个方向
     int X = 0, Y = 0, paths = 1;//开始时的坐标轴（X,Y）及路径长度（初始化时为1，因为1本身也可以走）
     int m = 0, n = 0;//行*列
 
@@ -65,4 +74,6 @@
         }
     }
 ```
+
+
 
