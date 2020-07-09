@@ -1,16 +1,21 @@
-> #### [980. 不同路径 III](https://leetcode-cn.com/problems/unique-paths-iii/)  Hard
+package com.frankcooper.bank;
+
+/**
+ * @Date 2020/7/9
+ * @Author Frank Cooper
+ * @Description
+ */
+public class _980 {
+    static _980 handler = new _980();
+
+    public static void main(String[] args) {
+        int[][] grid = {{1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, -1}};
+        handler.uniquePathsIII(grid);
+    }
 
 
-
-![980_1](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之不同路径II[Red Squirrel].assets\980_1.jpg)
-
-
-
-
-
-```java
- 	int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};//四个方向
-    int X = 0, Y = 0, paths = 1;//开始时的坐标轴（X,Y）及路径长度（初始化时为1，因为1本身也可以走）
+    int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    int X = 0, Y = 0, paths = 1;//开始时的坐标轴及路径长度
     int m = 0, n = 0;//行*列
 
     public int uniquePathsIII(int[][] grid) {
@@ -31,8 +36,6 @@
         if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == -1) return 0;//其中的-1表示是原矩阵的-1
         System.out.println(String.format("%d,%d", x, y));
         if (grid[x][y] == 2) {
-            //这一句很关键，paths表示当前剩下的路径的长度，其为0表示已经走完了，开始收集，return 1 在原来的res基础上加上这个方案
-            //当然有场景是未走完全部的0后，到达2这个终点的，这时候并不开始计算路径，因为paths不是0，表示没有全部走完0这种点，return 0 加上后对结果影响
             return paths == 0 ? 1 : 0;
         }
         grid[x][y] = -1;//如果当前的位置未被走过，标记为-1表示已经走过
@@ -64,5 +67,4 @@
             }
         }
     }
-```
-
+}
