@@ -8,9 +8,11 @@
 
 > **欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。**
 
+### 1.路径总和II
+
 - 本题可作为$112$题的$follow$ $up$，区别于$112$题的找到是否存在符合题意的路径，$113$题要求收集所有路径的集合
 
-### 方法1：DFS
+#### 方法1：DFS
 
 - 主题框架沿用$112$的方法1，区别于在于准备两个$list$,一个$resultList$用来收集结果集，一个$subList$用来收集每一组路径的集合
 
@@ -48,11 +50,21 @@
 
 
 
+### 2.路径总和III
 
 
 
+![437_2](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\paths\路径问题之路径总和II[Snow Squirrels].assets\437_2.jpg)
 
-437
+
+
+> 这一题虽然被标记简单，但一点也不简单
+
+![437_1](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\paths\路径问题之路径总和II[Snow Squirrels].assets\437_1.jpg)
+
+
+
+#### 方法1：递归
 
 ```java
     public int pathSum(TreeNode root, int sum) {
@@ -70,25 +82,30 @@
     }
 ```
 
+#### 方法2：前缀树版DFS
 
+```java
+ Map<Integer, Integer> map = new HashMap<>();
 
+    public int pathSum(TreeNode root, int sum) {
+        map.put(0, 1);
+        return helper(root, sum, 0);
+    }
 
+    private int helper(TreeNode root, int sum, int pathSum) {
+        int res = 0;
+        if (root == null) return res;
+        pathSum += root.val;//路径和加上当前节点的值
+        //路径和-目标sum的值 的节点，这个节点是多少个，在此基础上累加
+        res += map.getOrDefault(pathSum - sum, 0);
+        //将从根节点到当前节点，有多少的路径和等于pathSum存入map
+        map.put(pathSum, map.getOrDefault(pathSum, 0) + 1);
+        //探索左右子树
+        res += helper(root.left, sum, pathSum) + helper(root.right, sum, pathSum);
+        //回溯过程需要将map的数量-1
+        map.put(pathSum, map.get(pathSum) - 1);
+        return res;
+    }
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-113/437
 
