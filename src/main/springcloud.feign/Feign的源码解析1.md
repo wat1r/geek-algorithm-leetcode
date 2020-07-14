@@ -310,6 +310,7 @@ public @interface EnableFeignClients {
 
 - https://my.oschina.net/u/3768341/blog/3125397
 - https://blog.csdn.net/u010145219/article/details/94437363
+- https://blog.csdn.net/luanlouis/article/details/82821294
 
 
 
