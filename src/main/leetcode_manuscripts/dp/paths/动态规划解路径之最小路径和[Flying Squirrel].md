@@ -121,4 +121,71 @@ int[][] dp = new int[n][n];     //方法2
 
 ### 2.最小路径和
 
-TO BE CONTINUED
+![2020-07-15_204854](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之最小路径和[Flying Squirrel].assets\2020-07-15_204854.jpg)
+
+#### 方法1：模板法DP
+
+
+#### 元方法
+
+利用模板法大体分三步（见上图的步骤标识）:
+
+- 计算$dp$表的第一行
+- 计算$dp$表的第一列
+- 计算$dp$表的一般情况，直到填充完$dp$表，方可结束
+
+![2020-07-15_204721](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之最小路径和[Flying Squirrel].assets\2020-07-15_204721.jpg)
+
+#### 定义状态：
+
+- $dp[i][j]$表示从点$[0,0]$走到当前点$[i,j]$的最小路径和
+
+- 第一行的点只能通过左边的点而来，同理第一列的点只能通过正上方的点而来，$dp$的值累加即可
+- 一般情况，对于$[i,j]$这个点来说，其只能来自左边或者上边的点而来，即$dp[i][j]=min(dp[i-1][j],dp[i][j-1])$+$grid[i][j]$
+- $dp[m-1][n-1]$即为所求的值
+
+```java
+public int minPathSum(int[][] grid) {
+    if (grid == null || grid.length == 0) return 0;
+    int m = grid.length, n = grid[0].length;//行 * 列
+    int[][] dp = new int[m][n];
+    dp[0][0] = grid[0][0];
+    for (int i = 1; i < m; i++) dp[i][0] = dp[i - 1][0] + grid[i][0];
+    for (int j = 1; j < n; j++) dp[0][j] = dp[0][j-1] + grid[0][j];
+    for (int i = 1; i < m; i++) {
+        for (int j = 1; j < n; j++) {
+            dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+        }
+    }
+    return dp[m - 1][n - 1];
+}
+```
+
+#### 方法2：空间压缩DP
+
+![2020-07-15_212149](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之最小路径和[Flying Squirrel].assets\2020-07-15_212149.jpg)
+
+- 详细流程，看图吧 ，一图解千言
+
+```java
+public int minPathSum(int[][] grid) {
+    if (grid == null || grid.length == 0) return 0;
+    int row = grid.length, col = grid[0].length;
+    int[] dp = new int[col];
+    dp[0] = grid[0][0];
+    for (int j = 1; j < col; j++) dp[j] = dp[j - 1] + grid[0][j];
+    for (int i = 1; i < row; i++) {
+        dp[0] = dp[0] + grid[i][0];
+        for (int j = 1; j < col; j++) {
+            dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i ][j];
+        }
+    }
+    return dp[col-1];
+}
+```
+
+#### **复杂度分析**:
+
+- 时间复杂度：$O(M*N) $  $M*N$为$grid$的行列
+- 空间复杂度： $O(N)$ 
+
