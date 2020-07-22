@@ -2,8 +2,6 @@
 
 
 
-
-
 - 在服务调用的场景中，我们经常调用基于Http协议的服务，而我们经常使用到的框架可能有HttpURLConnection、Apache HttpComponnets、OkHttp3 、Netty等等，这些框架在基于自身的专注点提供了自身特性。而从角色划分上来看，他们的职能是一致的提供Http调用服务。具体流程如下：
 
 ![image-20200713195650432](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\springcloud.feign\Feign的源码解析1.assets\image-20200713195650432.png)
