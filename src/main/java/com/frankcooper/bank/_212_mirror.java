@@ -8,9 +8,9 @@ import java.util.List;
  * @Author Frank Cooper
  * @Description
  */
-public class _212 {
+public class _212_mirror {
 
-    static _212 handler = new _212();
+    static _212_mirror handler = new _212_mirror();
 
     public static void main(String[] args) {
         char[][] board = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
@@ -47,10 +47,11 @@ public class _212 {
         //2.对单元格进行回溯
         m = board.length;
         n = board[0].length;
+        boolean[][] visited = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (root.next[board[i][j] - 'a'] != null) {
-                    backtracking(board, i, j, root);
+                    backtracking(board, i, j, root, visited);
                 }
             }
         }
@@ -58,23 +59,22 @@ public class _212 {
         return result;
     }
 
-    private void backtracking(char[][] board, int i, int j, TrieNode root) {
+    private void backtracking(char[][] board, int i, int j, TrieNode root, boolean[][] visited) {
         char c = board[i][j];
         TrieNode curr = root.next[c - 'a'];
         if (curr != null && curr.word != null) {
             result.add(curr.word);
             curr.word = null;
         }
-        board[i][j] = '#';
+//        board[i][j] = '#';
+        visited[i][j] = true;
         for (int k = 0; k < 4; k++) {
             int nextI = i + directions[k][0];
             int nextJ = j + directions[k][1];
-            if ((nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) || board[nextI][nextJ] == '#') continue;
-            if (curr != null) backtracking(board, nextI, nextJ, curr);
+            if ((nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) || visited[nextI][nextJ]) continue;
+            if (curr != null) backtracking(board, nextI, nextJ, curr, visited);
         }
-        board[i][j] = c;
-//        if (curr != null && curr.next == null) {
-//            root.next[c - 'a'] = null;
-//        }
+//        board[i][j] = c;
+        visited[i][j] = false;
     }
 }
