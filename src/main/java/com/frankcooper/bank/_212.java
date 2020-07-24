@@ -73,8 +73,8 @@ public class _212 {
             if (curr != null) backtracking(board, nextI, nextJ, curr);
         }
         board[i][j] = c;
-//        if (curr != null && curr.next == null) {
-//            root.next[c - 'a'] = null;
-//        }
+        if (curr != null && curr.next == null) {
+            root.next[c - 'a'] = null;
+        }
     }
 }
