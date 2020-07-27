@@ -112,3 +112,205 @@ class WordDictionary {
     }
 ```
 
+### 2.单词搜索 II
+
+![image-20200727195855364](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\trie\前缀树应用之单词搜索[Cape Giraffe].assets\image-20200727195855364.png)
+
+> 分两步
+
+#### 1.构建$words$的字典前缀树
+
+构建前缀树，可以参考$208$题,区别在于当到达一个单词的末尾时，将单词赋值给$word$
+
+```java
+        TrieNode root = new TrieNode();
+        for (String word : words) {
+            TrieNode curr = root;
+            for (char c : word.toCharArray()) {
+                if (curr.next[c - 'a'] == null) {
+                    curr.next[c - 'a'] = new TrieNode();
+                }
+                curr = curr.next[c - 'a'];
+            }
+            curr.word = word;
+        }
+```
+
+#### 2.$dfs$搜索
+
+![image-20200727201705385](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\trie\前缀树应用之单词搜索[Cape Giraffe].assets\image-20200727201705385.png)
+
+- 推荐一种写法：
+
+```java
+int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+ for (int k = 0; k < 4; k++) {
+            int nextI = i + directions[k][0];
+            int nextJ = j + directions[k][1];
+ }
+//详细的解释见上图，二维数组，拿行时，取[k][0],拿列时，取[k][1]
+```
+
+- 出口条件：(当前节点是一个单词的末尾字符形成的节点)
+
+```java
+        if (curr != null && curr.word != null) {
+            result.add(curr.word);
+            curr.word = null;
+        }
+```
+
+- 标记与边界
+
+```java
+ board[i][j] = '#'; 
+ board[i][j] = c;
+//在整个board区域内，且没有走过
+if ((nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) || board[nextI][nextJ] == '#') continue;
+```
+
+> 当然，也可以使用与board同样大小的访问数组来标记，缺点是浪费空间
+
+`boolean[][] visited = new boolean[m][n];`
+
+#### 方法1
+
+```java
+  class TrieNode {
+        private TrieNode[] next = new TrieNode[26];
+        private String word = null;
+    }
+
+
+    List<String> result = new ArrayList<>();
+    int m;//行
+    int n;//列
+    int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+    public List<String> findWords(char[][] board, String[] words) {
+
+        //1.构造前缀树，遍历words，在里层遍历每一个word
+        TrieNode root = new TrieNode();
+        for (String word : words) {
+            TrieNode curr = root;
+            for (char c : word.toCharArray()) {
+                if (curr.next[c - 'a'] == null) {
+                    curr.next[c - 'a'] = new TrieNode();
+                }
+                curr = curr.next[c - 'a'];
+            }
+            curr.word = word;
+        }
+        //2.对单元格进行回溯
+        m = board.length;
+        n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (root.next[board[i][j] - 'a'] != null) {
+                    backtracking(board, i, j, root);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private void backtracking(char[][] board, int i, int j, TrieNode root) {
+        char c = board[i][j];
+        TrieNode curr = root.next[c - 'a'];
+        if (curr != null && curr.word != null) {
+            result.add(curr.word);
+            curr.word = null;
+        }
+        board[i][j] = '#';
+        for (int k = 0; k < 4; k++) {
+            int nextI = i + directions[k][0];
+            int nextJ = j + directions[k][1];
+            if ((nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) || board[nextI][nextJ] == '#') continue;
+            if (curr != null) backtracking(board, nextI, nextJ, curr);
+        }
+        board[i][j] = c;
+    }
+```
+
+#### 方法2
+
+- 剪枝，准备一个变量count,当叶子节点的时候，也就是count=0时，开始剪枝，叶子节点已无用处，在构造前缀树的过程中，维护好count
+
+```java
+ class TrieNode {
+        TrieNode[] next = new TrieNode[26];
+        String word = null;
+        int count = 0;
+    }
+
+
+    List<String> result = new ArrayList<>();
+    int m;//行
+    int n;//列
+    int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    TrieNode root = new TrieNode();
+
+    public List<String> findWords(char[][] board, String[] words) {
+        //1.构造前缀树，遍历words，在里层遍历每一个word
+        addWords(words);
+        //2.对单元格进行回溯
+        m = board.length;
+        n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (root.next[board[i][j] - 'a'] != null) {
+                    backtracking(board, i, j, root);
+                }
+            }
+        }
+
+
+        return result;
+    }
+
+    private void backtracking(char[][] board, int i, int j, TrieNode root) {
+        char c = board[i][j];
+        TrieNode curr = root.next[c - 'a'];
+        if (curr != null && curr.word != null) {
+            result.add(curr.word);
+            curr.word = null;
+        }
+        board[i][j] = '#';
+        for (int k = 0; k < 4; k++) {
+            int nextI = i + directions[k][0];
+            int nextJ = j + directions[k][1];
+            if ((nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) || board[nextI][nextJ] == '#') continue;
+            if (curr != null) backtracking(board, nextI, nextJ, curr);
+        }
+        board[i][j] = c;
+        if (curr != null && curr.count == 0) {
+            root.next[c - 'a'] = null;
+            root.count--;
+        }
+    }
+
+    private void addWords(String[] words) {
+
+        for (String word : words) {
+            TrieNode curr = root;
+            for (char c : word.toCharArray()) {
+                if (curr.next[c - 'a'] == null) {
+                    curr.count++;
+                    curr.next[c - 'a'] = new TrieNode();
+                }
+                curr = curr.next[c - 'a'];
+            }
+            curr.word = word;
+        }
+    }
+```
+
+
+
+
+
+
+
+
+

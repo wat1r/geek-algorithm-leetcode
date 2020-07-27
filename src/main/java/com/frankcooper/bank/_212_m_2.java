@@ -4,24 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Date 2020/7/23
+ * @Date 2020/7/27
  * @Author Frank Cooper
  * @Description
  */
-public class _212 {
-
-    static _212 handler = new _212();
-
-    public static void main(String[] args) {
-        char[][] board = {{'o', 'a', 'a', 'n'}, {'e', 't', 'a', 'e'}, {'i', 'h', 'k', 'r'}, {'i', 'f', 'l', 'v'}};
-        String[] words = {"oath", "pea", "eat", "rain"};
-        handler.findWords(board, words);
-    }
+public class _212_m_2 {
 
 
     class TrieNode {
-        private TrieNode[] next = new TrieNode[26];
-        private String word = null;
+        TrieNode[] next = new TrieNode[26];
+        String word = null;
+        int count = 0;
     }
 
 
@@ -29,21 +22,11 @@ public class _212 {
     int m;//行
     int n;//列
     int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    TrieNode root = new TrieNode();
 
     public List<String> findWords(char[][] board, String[] words) {
-
         //1.构造前缀树，遍历words，在里层遍历每一个word
-        TrieNode root = new TrieNode();
-        for (String word : words) {
-            TrieNode curr = root;
-            for (char c : word.toCharArray()) {
-                if (curr.next[c - 'a'] == null) {
-                    curr.next[c - 'a'] = new TrieNode();
-                }
-                curr = curr.next[c - 'a'];
-            }
-            curr.word = word;
-        }
+        addWords(words);
         //2.对单元格进行回溯
         m = board.length;
         n = board[0].length;
@@ -54,6 +37,7 @@ public class _212 {
                 }
             }
         }
+
 
         return result;
     }
@@ -73,5 +57,26 @@ public class _212 {
             if (curr != null) backtracking(board, nextI, nextJ, curr);
         }
         board[i][j] = c;
+        if (curr != null && curr.count == 0) {
+            root.next[c - 'a'] = null;
+            root.count--;
+        }
     }
+
+    private void addWords(String[] words) {
+
+        for (String word : words) {
+            TrieNode curr = root;
+            for (char c : word.toCharArray()) {
+                if (curr.next[c - 'a'] == null) {
+                    curr.count++;
+                    curr.next[c - 'a'] = new TrieNode();
+                }
+                curr = curr.next[c - 'a'];
+            }
+            curr.word = word;
+        }
+    }
+
+
 }
