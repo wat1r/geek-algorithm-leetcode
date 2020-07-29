@@ -1,6 +1,17 @@
 ## 二叉树之不同的二叉搜索树[Buffalo]
 
+> **欢迎阅读、点赞、转发、订阅，你的举手之间，我的动力源泉。**
+
+![buffalo-1235227_960_720](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之不同的二叉搜索树[Buffalo].assets\buffalo-1235227_960_720.jpg)
+
 ### 1.不同的二叉搜索树
+
+>  二叉搜索树
+
+二叉搜索树是一种节点值之间具有一定数量级次序的二叉树，对于树中每个节点：
+
+- 若其左子树存在，则其左子树中每个节点的值都不大于该节点值；
+- 若其右子树存在，则其右子树中每个节点的值都不小于该节点值。
 
 ![image-20200729085901239](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之不同的二叉搜索树[Buffalo].assets\image-20200729085901239.png)
 
@@ -16,13 +27,13 @@
 
 #### 转移方程
 
+![表格 (1)](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之不同的二叉搜索树[Buffalo].assets\表格 (1).jpg)
 
 
-![表格](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之不同的二叉搜索树[Buffalo].assets\表格.jpg)
 
 $G(n)$可以选其中的某一个$i$作为根节点的所有情况的和，即$G(n)$=$sum(F[i,n])$,其中1<=i<=n
 
-因为只需要二叉树的结构相同，元素的排列顺序不用考虑，如上图的红色虚线框中的部分，元素相同，但是因为结构相同，算做一种结构，$F[i,n]$可以通过左右部分各自数量的乘积而得，如下图，可以得到$F[i,n]$=$G(i-1)$*$G(n-i)$,注意$G$函数的定义，再次参见上面的定义
+$F[i,n]$可以通过左右部分各自数量的乘积而得，如下图，可以得到$F[i,n]$=$G(i-1)$*$G(n-i)$,注意$G$函数的定义，再次参见上面的定义
 
 ![image-20200729090504425](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之不同的二叉搜索树[Buffalo].assets\image-20200729090504425.png)
 
@@ -66,3 +77,53 @@ $G(1)$:表示只有个元素形成的二叉搜索树，只有一种情况，令�
 很多牛叉的算法大多借助了一些辅助函数，如$KMP$算法中的$next$数组，本题也是如此，定义$G(n)$和$F[i,n]$,让问题很容易得到描述和分解
 
 ### 2.不同的二叉搜索树II
+
+![image-20200729204913645](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之不同的二叉搜索树[Buffalo].assets\image-20200729204913645.png)
+
+#### 定义函数
+
+$helper(start,end)$ 表示从区间$[start...end]$之间形成的二叉搜索树的列表
+
+每次从$[start...end]$选择一个数，为$curr$节点，作为根节点，并递归生成左右两部分
+
+- 左半部分，从$[start...i-1]$,生成所有可能的二叉搜索树列表
+- 右半部分，从$[i+1...end]$生成所有可能的二叉搜索树列表
+- 将左右部分组合到根节点的左右两侧并将结果收集到$result$列表，组合数可以参见上面一题的结果，就是$size(leftPart)$X$size(rightPart)$
+
+#### 出口
+
+当$start$>$end$s时，说明遇到了$[]$或者一个节点的的情况，添加$null$，后续追加到其所在的根节点
+
+```java
+   public List<TreeNode> generateTrees(int n) {
+        if (n == 0) return new ArrayList<>();
+        return helper(1, n);
+
+    }
+    private List<TreeNode> helper(int start, int end) {
+        List<TreeNode> result = new ArrayList<>();
+        if (start > end) {
+            result.add(null);
+            return result;
+        }
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> leftPart = helper(start, i - 1);
+            List<TreeNode> rightPart = helper(i + 1, end);
+            for (TreeNode left : leftPart) {
+                for (TreeNode right : rightPart) {
+                    TreeNode curr = new TreeNode(i);
+                    curr.left = left;
+                    curr.right = right;
+                    result.add(curr);
+                }
+            }
+        }
+//        System.out.println(JSON.toJSONString(result));
+        return result;
+    }
+```
+
+- 动态规划做法$TODO$
+
+  
+
