@@ -21,12 +21,34 @@ public class _207 {
         _207 handler = new _207();
         int numCourses = 5;
         int[][] prerequisites = {{1, 0}, {3, 0}, {2, 1}, {3, 1}, {4, 2}};
-        handler.canFinish(numCourses, prerequisites);
+        handler.canFinish1st(numCourses, prerequisites);
 
     }
 
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegrees = new int[numCourses];
+        for (int[] p : prerequisites) {
+            indegrees[p[0]]++;
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < indegrees.length; i++) {
+            if (indegrees[i] == 0) queue.offer(i);
+        }
+        while (!queue.isEmpty()) {
+            int pre = queue.poll();
+            numCourses--;
+            for (int[] p : prerequisites) {
+                if (p[1] != pre) continue;
+                indegrees[p[0]]--;
+                if (indegrees[p[0]] == 0) queue.offer(p[0]);
+            }
+        }
+        return numCourses == 0;
+    }
+
+
+    public boolean canFinish1st(int numCourses, int[][] prerequisites) {
         int[] indegrees = new int[numCourses];
         for (int[] p : prerequisites) {
             indegrees[p[0]]++;
