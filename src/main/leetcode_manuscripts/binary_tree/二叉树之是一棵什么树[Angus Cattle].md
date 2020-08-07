@@ -65,6 +65,26 @@ A^B 相同时返回false 因此 false ^ false = false / true ^ true = false
 
 ![image-20200807092439421](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之是一棵什么树[Angus Cattle].assets\image-20200807092439421.png)
 
+#### 方法1:递归
+
+
+
+```java
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null) return true;
+        return helper(root.left,root.right);
+    }
+    public boolean helper(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        return left.val == right.val && helper(left.left, right.right) && helper(left.right, right.left);
+    }
+```
+
+
+
+
+
 
 
 > TODO
