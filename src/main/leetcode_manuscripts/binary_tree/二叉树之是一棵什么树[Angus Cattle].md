@@ -10,6 +10,8 @@
 
 ![表格](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\binary_tree\二叉树之是一棵什么树[Angus Cattle].assets\表格.png)
 
+#### 方法1：递归
+
 ```java
      public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) return true;
@@ -18,6 +20,46 @@
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 ```
+
+#### 方法2:BFS
+
+- 采用迭代的方式，两个$queue$分别装$p$ $q$两棵树的 写法比递归繁琐
+
+```java
+//异或运算^
+A^B 相同时返回false 因此 false ^ false = false / true ^ true = false
+    不同时返回ture  因此 true ^ false = true / false ^ true = true
+```
+
+```java
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        Queue<TreeNode> queue1 = new LinkedList<>();
+        Queue<TreeNode> queue2 = new LinkedList<>();
+        queue1.offer(p);
+        queue2.offer(q);
+        while (!queue1.isEmpty()) {
+            TreeNode currP = queue1.poll();
+            TreeNode currQ = queue2.poll();
+            if (currP == null && currQ == null) continue;
+            if (currP.val != currQ.val) return false;
+            TreeNode currPLeft = currP.left;
+            TreeNode currPRight = currP.right;
+            TreeNode currQLeft = currQ.left;
+            TreeNode currQRight = currQ.right;
+            if (currPLeft == null ^ currQLeft == null) return false;
+            if (currPRight == null ^ currQRight == null) return false;
+            if (currPLeft != null) queue1.offer(currPLeft);
+            if (currPRight != null) queue1.offer(currPRight);
+            if (currQLeft != null) queue2.offer(currQLeft);
+            if (currQRight != null) queue2.offer(currQRight);
+        }
+        return true;
+    }
+```
+
+
 
 ### 2.对称的二叉树
 

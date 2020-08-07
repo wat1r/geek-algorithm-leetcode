@@ -15,6 +15,9 @@ public class _15 {
     public static void main(String[] args) {
         handler.threeSum(new int[]{1, 0, 1, 2, -1, -4});
 
+
+        System.out.println("dnd");
+
     }
 
 
