@@ -2,6 +2,12 @@
 
 
 
+A
+
+---
+
+> 写的每一篇题解都会配图，其它的基本是动物，这篇我考虑算经典高级算法，没想到合适的，就拉了个凯多的图，希望以后有机会写$KMP$,$Manacher$等用的上其他五皇,本文的题目用的是比较俗套的"一文看懂"，"面试官系列"等，请忽略这种命名方式，我的公众号的风格不是这样的。。。
+
 ![timg (1)](C:\Users\FrankCooper\Desktop\timg (1).jpg)
 
 ### 背景
@@ -103,11 +109,61 @@ $Morris$遍历利用的是树的叶节点左右孩子为空（树的大量空闲
     }
 ```
 
+#### **复杂度分析**:
 
+- 时间复杂度：
+- 空间复杂度： 
 
 ### 前序遍历
 
-> TODO
+#### **步骤：**
+
+1. 如果当前节点的左孩子为空，则输出当前节点并将其右孩子作为当前节点。 $curr$ =$curr.right$
+
+2. 如果当前节点的左孩子不为空，在当前节点的左子树中找到当前节点在中序遍历下的前驱节点,也就是当前节点的左子树上最右的节点，为$mostRight$
+
+   a) 如果前驱节点（$mostRight$）的右孩子为空，将它的右孩子设置为当前节点。**输出当前节点（这里与中序遍历的不同点）**，当前节点更新为当前节点的左孩子。$curr$=$curr.left$
+
+   b) 如果前驱节点（$mostRight$）的右孩子为当前节点，将它的右孩子重新设为空（恢复树的形状）**这里不用输出节点**。当前节点更新为当前节点的右孩子。$curr$=$curr.right$
+
+3. 重复以上1、2直到当前节点为空。
+
+```java
+   public void preOrderByMorris(TreeNode root) {
+        TreeNode curr = root;
+        while (curr != null) {
+            if (curr.left == null) {
+                System.out.print(curr.val + " ");
+                curr = curr.right;
+            } else {
+                TreeNode predecessor = getPredecessor(curr);
+                if (predecessor.right == null) {
+                    predecessor.right = curr;
+                    System.out.print(curr.val + " ");
+                    curr = curr.left;
+                } else if (predecessor.right == curr) {
+                    predecessor.right = null;
+                    curr = curr.right;
+                }
+            }
+        }
+    }
+
+    private TreeNode getPredecessor(TreeNode curr) {
+        TreeNode predecessor = curr;
+        if (curr.left != null) {
+            predecessor = curr.left;
+            while (predecessor.right != null && predecessor.right != curr) {
+                predecessor = predecessor.right;
+            }
+        }
+        return predecessor;
+    }
+```
+
+
+
+
 
 ### 后续遍历
 
