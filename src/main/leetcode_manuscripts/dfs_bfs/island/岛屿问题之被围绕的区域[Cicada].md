@@ -178,6 +178,77 @@ public int node(int i, int j) {
 
 
 
+### 方法3：BFS
+
+
+
+```java
+ class Position {
+            int i, j;
+
+            public Position(int i, int j) {
+                this.i = i;
+                this.j = j;
+            }
+        }
+
+        int m, n;
+
+        public void solve(char[][] board) {
+            System.out.println(JSON.toJSONString(board));
+            if (board == null || board.length == 0) return;
+            m = board.length;
+            n = board[0].length;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i == 0 && j == 1) {
+                        System.out.println("ee");
+                    }
+                    if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O') {
+                        bfs(board, i, j);
+                    }
+                }
+            }
+            System.out.println(JSON.toJSONString(board));
+
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (board[i][j] == 'O') {
+                        board[i][j] = 'X';
+                    }
+                    if (board[i][j] == '#') {
+                        board[i][j] = 'O';
+                    }
+                }
+            }
+            System.out.println(JSON.toJSONString(board));
+
+        }
+
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        private void bfs(char[][] board, int i, int j) {
+            Queue<Position> queue = new LinkedList<>();
+            queue.offer(new Position(i, j));
+            board[i][j] = '#';
+            while (!queue.isEmpty()) {
+                Position curr = queue.poll();
+                for (int k = 0; k < directions.length; k++) {
+                    int nextI = curr.i + directions[k][0];
+                    int nextJ = curr.j + directions[k][1];
+                    System.out.println(nextI + ":" + nextJ);
+                    if (nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) continue;
+                    if (board[nextI][nextJ] == 'O') {
+                        queue.offer(new Position(nextI, nextJ));
+                        board[nextI][nextJ] = '#';
+                    }
+                }
+            }
+        }
+```
+
+
+
 
 
 

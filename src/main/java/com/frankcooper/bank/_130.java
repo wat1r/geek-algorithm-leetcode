@@ -2,6 +2,10 @@ package com.frankcooper.bank;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * @Date 2020/8/11
  * @Author Frank Cooper
@@ -245,6 +249,168 @@ public class _130 {
         public int node(int i, int j) {
             return i * n + j;
         }
+
+    }
+
+
+    static class _4th extends _130 {
+
+        public static void main(String[] args) {
+            char[][] board = {{'O', 'X', 'X', 'O', 'X'}, {'X', 'O', 'O', 'X', 'O'}, {'X', 'O', 'X', 'O', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            _4th handler = new _4th();
+            board = new char[][]{{'X', 'O', 'X', 'X'}, {'O', 'X', 'O', 'X'}, {'X', 'O', 'X', 'O'}, {'O', 'X', 'O', 'X'}};
+            board = new char[][]{{'O', 'X', 'X', 'O', 'X'}, {'X', 'O', 'O', 'X', 'O'}, {'X', 'O', 'X', 'O', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            board = new char[][]{{'O', 'O', 'O'}, {'O', 'O', 'O'}, {'O', 'O', 'O'}};
+            board = new char[][]{{'O', 'X', 'X', 'O', 'X'}, {'X', 'X', 'X', 'X', 'O'}, {'X', 'X', 'X', 'X', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            handler.solve(board);
+        }
+
+
+        class Position {
+            int i, j;
+
+            public Position(int i, int j) {
+                this.i = i;
+                this.j = j;
+            }
+        }
+
+        int m, n;
+
+        public void solve(char[][] board) {
+            System.out.println(JSON.toJSONString(board));
+            if (board == null || board.length == 0) return;
+            m = board.length;
+            n = board[0].length;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i == 0 && j == 1) {
+                        System.out.println("ee");
+                    }
+                    if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O') {
+                        dfs(board, i, j);
+                    }
+                }
+            }
+            System.out.println(JSON.toJSONString(board));
+
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (board[i][j] == 'O') {
+                        board[i][j] = 'X';
+                    }
+                    if (board[i][j] == '#') {
+                        board[i][j] = 'O';
+                    }
+                }
+            }
+            System.out.println(JSON.toJSONString(board));
+
+        }
+
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        private void dfs(char[][] board, int i, int j) {
+            Stack<Position> stack = new Stack<>();
+            stack.push(new Position(i, j));
+            board[i][j] = '#';
+            while (!stack.isEmpty()) {
+                for (int k = 0; k < directions.length; k++) {
+                    Position curr = stack.peek();
+                    int nextI = curr.i + directions[k][0];
+                    int nextJ = curr.j + directions[k][1];
+                    System.out.println(nextI + ":" + nextJ);
+                    if (nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) continue;
+                    if (board[nextI][nextJ] == 'O') {
+                        stack.push(new Position(nextI, nextJ));
+                        board[nextI][nextJ] = '#';
+                        break;
+                    }
+                }
+                stack.pop();
+            }
+        }
+
+
+    }
+
+
+    static class _5th extends _130 {
+
+        public static void main(String[] args) {
+            char[][] board = {{'O', 'X', 'X', 'O', 'X'}, {'X', 'O', 'O', 'X', 'O'}, {'X', 'O', 'X', 'O', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            _5th handler = new _5th();
+            board = new char[][]{{'X', 'O', 'X', 'X'}, {'O', 'X', 'O', 'X'}, {'X', 'O', 'X', 'O'}, {'O', 'X', 'O', 'X'}};
+            board = new char[][]{{'O', 'X', 'X', 'O', 'X'}, {'X', 'O', 'O', 'X', 'O'}, {'X', 'O', 'X', 'O', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            board = new char[][]{{'O', 'O', 'O'}, {'O', 'O', 'O'}, {'O', 'O', 'O'}};
+            board = new char[][]{{'O', 'X', 'X', 'O', 'X'}, {'X', 'X', 'X', 'X', 'O'}, {'X', 'X', 'X', 'X', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            handler.solve(board);
+        }
+
+
+        class Position {
+            int i, j;
+
+            public Position(int i, int j) {
+                this.i = i;
+                this.j = j;
+            }
+        }
+
+        int m, n;
+
+        public void solve(char[][] board) {
+            System.out.println(JSON.toJSONString(board));
+            if (board == null || board.length == 0) return;
+            m = board.length;
+            n = board[0].length;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i == 0 && j == 1) {
+                        System.out.println("ee");
+                    }
+                    if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && board[i][j] == 'O') {
+                        bfs(board, i, j);
+                    }
+                }
+            }
+            System.out.println(JSON.toJSONString(board));
+
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (board[i][j] == 'O') {
+                        board[i][j] = 'X';
+                    }
+                    if (board[i][j] == '#') {
+                        board[i][j] = 'O';
+                    }
+                }
+            }
+            System.out.println(JSON.toJSONString(board));
+
+        }
+
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        private void bfs(char[][] board, int i, int j) {
+            Queue<Position> queue = new LinkedList<>();
+            queue.offer(new Position(i, j));
+            board[i][j] = '#';
+            while (!queue.isEmpty()) {
+                Position curr = queue.poll();
+                for (int k = 0; k < directions.length; k++) {
+                    int nextI = curr.i + directions[k][0];
+                    int nextJ = curr.j + directions[k][1];
+                    System.out.println(nextI + ":" + nextJ);
+                    if (nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) continue;
+                    if (board[nextI][nextJ] == 'O') {
+                        queue.offer(new Position(nextI, nextJ));
+                        board[nextI][nextJ] = '#';
+                    }
+                }
+            }
+        }
+
 
     }
 }
