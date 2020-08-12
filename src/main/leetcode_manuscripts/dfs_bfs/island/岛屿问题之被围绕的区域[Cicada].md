@@ -112,62 +112,62 @@
 
 ```java
 int m, n;
-        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-        public void solve(char[][] board) {
-            if (board == null || board.length == 0) return;
-            System.out.println(JSON.toJSONString(board));
-            m = board.length;
-            n = board[0].length;
-            int initValue = m * n + 1;
-            UnionFind unionFind = new UnionFind(initValue);
-            int dummy = m * n;
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (board[i][j] == 'O') {
-                        if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
-                            unionFind.union(node(i, j), dummy);
-                        } else {
-                            for (int k = 0; k < directions.length; k++) {
-                                int nextI = i + directions[k][0];
-                                int nextJ = i + directions[k][1];
-                                System.out.println(String.format("%d:%d", nextI, nextJ));
-                                if ((nextI > 0 || nextI < m || nextJ > 0 || nextJ < n) && board[nextI][nextJ] == 'O') {
-                                    unionFind.union(node(i, j), node(nextI, nextJ));
-                                }
-//                                if (i + directions[i][0] > 0&&board[i])
-                            }
-//                            if (i > 0 && board[i - 1][j] == 'O') {
-//                                unionFind.union(node(i, j), node(i - 1, j));
-//                            }
-//                            if (i < m - 1 && board[i + 1][j] == 'O') {
-//                                unionFind.union(node(i, j), node(i + 1, j));
-//                            }
-//                            if (j > 0 && board[i][j - 1] == 'O') {
-//                                unionFind.union(node(i, j), node(i, j - 1));
-//                            }
-//                            if (j < n - 1 && board[i][j + 1] == 'O') {
-//                                unionFind.union(node(i, j), node(i, j + 1));
-//                            }
+public void solve(char[][] board) {
+    if (board == null || board.length == 0) return;
+    System.out.println(JSON.toJSONString(board));
+    m = board.length;
+    n = board[0].length;
+    int initValue = m * n + 1;
+    UnionFind unionFind = new UnionFind(initValue);
+    int dummy = m * n;
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i][j] == 'O') {
+                if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
+                    unionFind.union(node(i, j), dummy);
+                } else {
+                    for (int k = 0; k < directions.length; k++) {
+                        int nextI = i + directions[k][0];
+                        int nextJ = j + directions[k][1];
+                        //                                System.out.println(String.format("%d:%d", nextI, nextJ));
+                        if ((nextI > 0  || nextI < m  || nextJ > 0  || nextJ < n) && board[nextI][nextJ] == 'O') {
+                            unionFind.union(node(i, j), node(nextI, nextJ));
                         }
+                        //                                if (i + directions[i][0] > 0&&board[i])
                     }
+                    //                            if (i > 0 && board[i - 1][j] == 'O') {
+                    //                                unionFind.union(node(i, j), node(i - 1, j));
+                    //                            }
+                    //                            if (i < m - 1 && board[i + 1][j] == 'O') {
+                    //                                unionFind.union(node(i, j), node(i + 1, j));
+                    //                            }
+                    //                            if (j > 0 && board[i][j - 1] == 'O') {
+                    //                                unionFind.union(node(i, j), node(i, j - 1));
+                    //                            }
+                    //                            if (j < n - 1 && board[i][j + 1] == 'O') {
+                    //                                unionFind.union(node(i, j), node(i, j + 1));
+                    //                            }
                 }
             }
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (unionFind.find(node(i, j)) == unionFind.find(dummy)) {
-                        board[i][j] = 'O';
-                    } else {
-                        board[i][j] = 'X';
-                    }
-                }
-            }
-            System.out.println(JSON.toJSONString(board));
         }
+    }
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (unionFind.find(node(i, j)) == unionFind.find(dummy)) {
+                board[i][j] = 'O';
+            } else {
+                board[i][j] = 'X';
+            }
+        }
+    }
+    System.out.println(JSON.toJSONString(board));
+}
 
-        public int node(int i, int j) {
-            return i * n + j;
-        }
+public int node(int i, int j) {
+    return i * n + j;
+}
 ```
 
 
@@ -177,6 +177,16 @@ int m, n;
 扩展：关于并查集，
 
 
+
+> Path Compression(路径压缩)
+
+
+
+
+
+
+
+> Union by Rank()
 
 
 

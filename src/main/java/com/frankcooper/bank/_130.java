@@ -117,9 +117,9 @@ public class _130 {
                         } else {
                             for (int k = 0; k < directions.length; k++) {
                                 int nextI = i + directions[k][0];
-                                int nextJ = i + directions[k][1];
-                                System.out.println(String.format("%d:%d", nextI, nextJ));
-                                if ((nextI > 0 || nextI < m || nextJ > 0 || nextJ < n) && board[nextI][nextJ] == 'O') {
+                                int nextJ = j + directions[k][1];
+//                                System.out.println(String.format("%d:%d", nextI, nextJ));
+                                if ((nextI > 0 || nextI < m  || nextJ > 0  || nextJ < n) && board[nextI][nextJ] == 'O') {
                                     unionFind.union(node(i, j), node(nextI, nextJ));
                                 }
 //                                if (i + directions[i][0] > 0&&board[i])
