@@ -119,7 +119,7 @@ public class _130 {
                                 int nextI = i + directions[k][0];
                                 int nextJ = j + directions[k][1];
 //                                System.out.println(String.format("%d:%d", nextI, nextJ));
-                                if ((nextI > 0 || nextI < m  || nextJ > 0  || nextJ < n) && board[nextI][nextJ] == 'O') {
+                                if ((nextI > 0 || nextI < m || nextJ > 0 || nextJ < n) && board[nextI][nextJ] == 'O') {
                                     unionFind.union(node(i, j), node(nextI, nextJ));
                                 }
 //                                if (i + directions[i][0] > 0&&board[i])
@@ -155,8 +155,96 @@ public class _130 {
         public int node(int i, int j) {
             return i * n + j;
         }
-
-
     }
 
+
+    static class _3rd extends _130 {
+
+
+        public static void main(String[] args) {
+            char[][] board = {{'O', 'X', 'X', 'O', 'X'}, {'X', 'O', 'O', 'X', 'O'}, {'X', 'O', 'X', 'O', 'X'}, {'O', 'X', 'O', 'O', 'O'}, {'X', 'X', 'O', 'X', 'O'}};
+            _3rd handler = new _3rd();
+            board = new char[][]{{'X', 'O', 'X', 'X'}, {'O', 'X', 'O', 'X'}, {'X', 'O', 'X', 'O'}, {'O', 'X', 'O', 'X'}};
+            handler.solve(board);
+        }
+
+
+        static class UnionFindSet {
+            int[] parents;
+            int[] ranks;
+
+            public UnionFindSet(int n) {
+                parents = new int[n];
+                ranks = new int[n];
+                for (int i = 0; i < n; i++) {
+                    parents[i] = i;
+                }
+            }
+
+
+            public int find(int x) {
+                if (x != parents[x]) {
+                    parents[x] = find(parents[x]);
+                }
+                System.out.println(x + ":" + parents[x]);
+                return parents[x];
+            }
+
+            public void union(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
+                if (rootX == rootY) return;
+                if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
+                if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
+                if (ranks[rootX] == ranks[rootY]) {
+                    parents[rootY] = rootX;
+                    ranks[rootY]++;
+                }
+            }
+        }
+
+
+        int m, n;
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        public void solve(char[][] board) {
+            if (board == null || board.length == 0) return;
+            m = board.length;
+            n = board[0].length;
+            int initValue = m * n + 1;
+            UnionFindSet unionFindSet = new UnionFindSet(initValue);
+            int dummy = m * n;
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (board[i][j] == 'O') {
+                        if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
+                            unionFindSet.union(node(i, j), dummy);
+                        } else {
+                            for (int k = 0; k < directions.length; k++) {
+                                int nextI = i + directions[k][0];
+                                int nextJ = j + directions[k][1];
+                                if ((nextI > 0 || nextI < m || nextJ > 0 || nextJ < n) && board[nextI][nextJ] == 'O') {
+                                    unionFindSet.union(node(i, j), node(nextI, nextJ));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (unionFindSet.find(node(i, j)) == unionFindSet.find(dummy)) {
+                        board[i][j] = 'O';
+                    } else {
+                        board[i][j] = 'X';
+                    }
+                }
+            }
+        }
+
+        public int node(int i, int j) {
+            return i * n + j;
+        }
+
+    }
 }

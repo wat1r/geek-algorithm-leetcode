@@ -172,24 +172,6 @@ public int node(int i, int j) {
 
 
 
-![image-20200811214218596](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\island\岛屿问题之被围绕的区域[Cicada].assets\image-20200811214218596.png)
-
-扩展：关于并查集，
-
-
-
-> Path Compression(路径压缩)
-
-
-
-
-
-
-
-> Union by Rank()
-
-
-
 
 
 
