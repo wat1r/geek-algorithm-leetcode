@@ -59,10 +59,6 @@
     }
 ```
 
-
-
-
-
 ### 2.岛屿的周长
 
 ![image-20200813204508076](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\island\岛屿问题之岛屿的周长面积[Morpho Cypris Aphrodite].assets\image-20200813204508076.png)
@@ -112,6 +108,70 @@
 ```
 
 #### 方法2：DFS
+
+![image-20200817204435919](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\island\岛屿问题之岛屿的周长面积[Morpho Cypris Aphrodite].assets\image-20200817204435919.png)
+
+##### 思路
+
+- 当当前遍历的格子与边缘相连，出现一个周长的一边，+1
+- 当当前遍历的格子与水相连，出现一个周长的一边，+1
+- 当当前遍历的格子是1的时候，也就是陆地，此陆地会将当前遍历的陆地包围，不需要做什么
+- 当当前遍历的格子是2的时候，也就是走过的陆地，也就是1，直接返回0，因为被计算过了
+
+```java
+int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    int m, n;
+
+    public int islandPerimeter(int[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return dfs(grid, i, j);
+                }
+            }
+        }
+        return 0;
+    }
+
+    private int dfs(int[][] grid, int i, int j) {
+        if (!inArea(i, j)) return 1;
+        if (grid[i][j] == 0) return 1;
+        if (grid[i][j] == 2) return 0;
+        grid[i][j] = 2;
+        int tmp = 0;
+        for (int[] direction : directions) {
+            int nextI = i + direction[0];
+            int nextJ = j + direction[1];
+            tmp += dfs(grid, nextI, nextJ);
+        }
+        return tmp;
+    }
+
+    private boolean inArea(int i, int j) {
+        return i >= 0 && i < m && j >= 0 && j < n;
+    }
+```
+
+番外：
+
+```java
+        for (int[] direction : directions) {
+            int nextI = i + direction[0];
+            int nextJ = j + direction[1];
+            tmp += dfs(grid, nextI, nextJ);
+        }
+```
+
+可替换成：
+
+```java
+        tmp += dfs(grid, i - 1, j);
+        tmp += dfs(grid, i, j - 1);
+        tmp += dfs(grid, i + 1, j);
+        tmp += dfs(grid, i, j + 1);
+```
 
 
 

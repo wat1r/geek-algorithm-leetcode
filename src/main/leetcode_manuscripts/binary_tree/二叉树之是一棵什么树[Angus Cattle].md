@@ -97,4 +97,21 @@ A^B 相同时返回false 因此 false ^ false = false / true ^ true = false
 
 
 
-> TODO
+#### 方法1：递归
+
+```java
+    public boolean isBalanced(TreeNode root) {
+        if (root != null) {
+            if (Math.abs(getHeight(root.left) - Math.abs(getHeight(root.right))) > 1) return false;
+            if (!isBalanced(root.left)) return false;
+            if (!isBalanced(root.right)) return false;
+        }
+        return true;
+    }
+
+    private int getHeight(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(getHeight(root.left), getHeight(root.right)) + 1;
+    }
+```
+

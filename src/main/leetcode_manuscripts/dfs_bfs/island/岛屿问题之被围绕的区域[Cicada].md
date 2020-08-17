@@ -67,15 +67,9 @@
 
 
 
-
-
-
-
 ### 方法2：并查集
 
-
-
-
+- 参考《一文掌握并查集算法》
 
 ```java
  static class UnionFind {
@@ -108,7 +102,7 @@
 
 
 
-#### 主题代码
+#### 主体代码
 
 ```java
 int m, n;
@@ -170,17 +164,9 @@ public int node(int i, int j) {
 }
 ```
 
-
-
-
-
-
-
-
-
 ### 方法3：BFS
 
-
+- 将二维的点转为一维的点
 
 ```java
  class Position {
