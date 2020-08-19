@@ -1,4 +1,4 @@
-package com.frankcooper.bank;
+package com.frankcooper.lintcode;
 
 import com.alibaba.fastjson.JSON;
 
@@ -160,16 +160,22 @@ public class _804 {
 
         }
 
+        //判断是否在grid的范围内，是否越界
         private boolean inArea(int i, int j) {
             return i >= 0 && i < m && j >= 0 && j < n;
         }
 
 
+        /**
+         * 获取目标的island，只拿一个
+         * @param islands 候选的island列表
+         * @return
+         */
         private String getProperIsland(List<Point> islands) {
             List<String> sameIslands = new ArrayList<>();
             for (int[] action : actions) {
-                List<Point> originList = new ArrayList<>();
-                List<Point> flatList = new ArrayList<>();
+                List<Point> originList = new ArrayList<>();//原始的list
+                List<Point> flatList = new ArrayList<>();//折叠的list
                 for (Point point : islands) {
                     int nextX = point.x, nextY = point.y;
                     originList.add(new Point(nextX * action[0], nextY * action[1]));
@@ -182,7 +188,11 @@ public class _804 {
             return sameIslands.get(0);
         }
 
-
+        /**
+         * 处理当前的list，排序后生成路径
+         * @param list
+         * @return
+         */
         private String processList(List<Point> list) {
             list.sort((o1, o2) -> {
                 if (o1.x != o2.x) return o1.x - o2.x;
