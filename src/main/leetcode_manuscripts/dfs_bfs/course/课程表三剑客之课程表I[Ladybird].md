@@ -58,6 +58,14 @@ typedef struct Vnode
 
 ```
 
+> AOV&AOE
+
+$AOV$网，顶点表示活动，弧表示活动间的优先关系的有向图。 即如果a->b,那么a是b的先决条件。
+
+$AOE$网，边表示活动，是一个带权的有向无环图， 其中顶点表示事件，弧表示活动，权表示活动持续时间。
+
+求拓扑序列就是$AOV$，求关键路径就是$AOE$
+
 ##### **入度**
 
 > 入度(indegree)就是有向图中指向这个点的边的数量，即有向图的某个顶点作为终点的次数和
@@ -89,17 +97,24 @@ typedef struct Vnode
 - 返回$numCourses == 0$
 
 ```java
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+        //1.计算入度表，[u,v] v->u
+        //入度(indegree)就是有向图中指向这个点的边的数量，即有向图的某个顶点作为终点的次数和
         int[] indegrees = new int[numCourses];
         for (int[] p : prerequisites) {
             indegrees[p[0]]++;
         }
+        //2.将入度为0的点放入queue中,queue中装的是点的下标索引，即是入度表中的索引
+        //题意：你这个学期必须选修 numCourse 门课程，记为 0 到 numCourse-1 。课程名称与索引是对应的
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < indegrees.length; i++) {
             if (indegrees[i] == 0) queue.offer(i);
         }
+        //3.轮转这个queue，这个queue中弹出的节点其实是v->u中的v
+        //弹出一个节点，将课程数-1，在prerequisites中找到这个节点的指向节点，即通过v->u
+        //如果u找到了，将其入度-1，如果入度为0了，将其加到queue中
         while (!queue.isEmpty()) {
-            int pre = queue.poll();
+            int pre = queue.poll();//这个是v->u的v
             numCourses--;
             for (int[] p : prerequisites) {
                 if (p[1] != pre) continue;
@@ -107,9 +122,15 @@ typedef struct Vnode
                 if (indegrees[p[0]] == 0) queue.offer(p[0]);
             }
         }
+        //判断有没有剩余的课程数
         return numCourses == 0;
     }
 ```
+
+#### **复杂度分析**:
+
+- **时间复杂度**：$O(N + M)$, $N$为节点数量，$M$为临边数量；
+- **空间复杂度**：$O(N + M)$： 为建立邻接表所需额外空间。
 
 ### 方法2：DFS+邻接矩阵
 
@@ -156,3 +177,4 @@ public boolean canFinish(int numCourses, int[][] prerequisites) {
 
  [DS博客作业04--图](https://www.cnblogs.com/zml7/p/12832715.html)
 
+[数据结构关于AOV与AOE网的区别](https://www.cnblogs.com/lpxblog/p/4994531.html)

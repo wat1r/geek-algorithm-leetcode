@@ -1,31 +1,17 @@
-package com.frankcooper.bank;
+## 课程表三剑客之课程表II[Dung Beetle]
 
-import java.util.LinkedList;
-import java.util.Queue;
+![beetle-2655575_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\course\课程表三剑客之课程表II[Ladybird].assets\beetle-2655575_640.png)
 
-/**
- * Created by FrankCooper
- * Date 2020/3/5 23:09
- * Description
- */
+![image-20200820204320060](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\course\课程表三剑客之课程表II[Ladybird].assets\image-20200820204320060.png)
 
-/**
- *
- */
+### 方法1:BFS+入度
 
+> 这题完全就是207题的姐妹题，207要求是否能学完课程，返回布尔，这里是返回一个学完课程的路径
 
-public class _207 {
+> 下面是207的代码
 
-
-    public static void main(String[] args) {
-        _207 handler = new _207();
-        int numCourses = 5;
-        int[][] prerequisites = {{1, 0}, {3, 0}, {2, 1}, {3, 1}, {4, 2}};
-        handler.canFinish1st(numCourses, prerequisites);
-
-    }
-
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
+```java
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
         //1.计算入度表，[u,v] v->u
         //入度(indegree)就是有向图中指向这个点的边的数量，即有向图的某个顶点作为终点的次数和
         int[] indegrees = new int[numCourses];
@@ -53,19 +39,28 @@ public class _207 {
         //判断有没有剩余的课程数
         return numCourses == 0;
     }
+```
 
+只需要添加记录路径的逻辑
 
-    public boolean canFinish2nd(int numCourses, int[][] prerequisites) {
+- 需要一个$array$来记录路径的大小，大小等于$numCourse$，因为要是能学完的话，是需要$numCourse=0$的
+- $index$记录加入路径的游标
+
+#### 完整代码
+
+```java
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
         int[] indegrees = new int[numCourses];
-        for (int[] p : prerequisites) {
-            indegrees[p[0]]++;
-        }
+        int[] res = new int[numCourses];//添加的code
+        for (int[] p : prerequisites) indegrees[p[0]]++;
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < indegrees.length; i++) {
+        for (int i = 0; i < numCourses; i++) {
             if (indegrees[i] == 0) queue.offer(i);
         }
+        int index = 0;//添加的code
         while (!queue.isEmpty()) {
             int pre = queue.poll();
+            res[index++] = pre;//添加的code
             numCourses--;
             for (int[] p : prerequisites) {
                 if (p[1] != pre) continue;
@@ -73,31 +68,18 @@ public class _207 {
                 if (indegrees[p[0]] == 0) queue.offer(p[0]);
             }
         }
-        return numCourses == 0;
+        return numCourses == 0 ? res : new int[0];//添加的code
     }
 
+```
 
-    public boolean canFinish1st(int numCourses, int[][] prerequisites) {
-        int[] indegrees = new int[numCourses];
-        for (int[] p : prerequisites) {
-            indegrees[p[0]]++;
-        }
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < numCourses; i++) {
-            if (indegrees[i] == 0) {
-                queue.offer(i);//入的是索引位置i,也就是前面出现的p[0]
-            }
-        }
-        while (!queue.isEmpty()) {
-            Integer pre = queue.poll();//弹出的是索引位置,也就是前面出现的p[0]
-            numCourses--;
-            for (int[] p : prerequisites) {
-                if (p[1] != pre) continue;//当pre与cur的不一致，之前的作为目前的arr 第二个数
-                indegrees[p[0]]--;
-                if (indegrees[p[0]] == 0) queue.offer(p[0]);
-            }
-        }
 
-        return numCourses == 0;
-    }
-}
+
+
+
+
+
+
+
+
+

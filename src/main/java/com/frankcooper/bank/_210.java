@@ -10,10 +10,31 @@ public class _210 {
         _210 handler = new _210();
         int numCourses = 2;
         int[][] prerequisites = {{1, 0}};
-        handler.findOrder(numCourses, prerequisites);
+        handler.findOrder3rd(numCourses, prerequisites);
     }
 
 
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] indegrees = new int[numCourses];
+        int[] res = new int[numCourses];
+        for (int[] p : prerequisites) indegrees[p[0]]++;
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegrees[i] == 0) queue.offer(i);
+        }
+        int index = 0;
+        while (!queue.isEmpty()) {
+            int pre = queue.poll();
+            res[index++] = pre;
+            numCourses--;
+            for (int[] p : prerequisites) {
+                if (p[1] != pre) continue;
+                indegrees[p[0]]--;
+                if (indegrees[p[0]] == 0) queue.offer(p[0]);
+            }
+        }
+        return numCourses == 0 ? res : new int[0];
+    }
 
 
     /**
@@ -27,7 +48,7 @@ public class _210 {
      * > 扑排序中的第一个节点将是没有任何入边的节点。事实上，任何具有0入度的节点都可以开始拓扑排序。如果有多个这样的节点，它们的相对顺序并不重要，可以以任何顺序出现。
      */
 
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
+    public int[] findOrder3rd(int numCourses, int[][] prerequisites) {
         int[] indegrees = new int[numCourses];
         int[] paths = new int[numCourses];
         for (int[] p : prerequisites) {
