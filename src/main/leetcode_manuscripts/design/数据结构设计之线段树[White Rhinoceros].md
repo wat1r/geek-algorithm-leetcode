@@ -1,16 +1,26 @@
 ## 数据结构设计之线段树[White Rhinoceros]
 
+![timg (2)](C:\Users\FrankCooper\Desktop\timg (2).jpg)
+
+
+
+### 方法0：种子
+
+
+
 ![script](C:\Users\FrankCooper\Downloads\script.png)
 
-
-
-
+> 上图中right修改成 right=2*node+2
 
 ![1598099267094](C:\Users\FrankCooper\AppData\Roaming\Typora\typora-user-images\1598099267094.png)
 
+下面为在做$queryTree$时做加速
 
+```
+ if (start >= L && end <= R) return tree[node];
+```
 
-
+- 未写上述代码的情况：
 
 ```
 start:0,end:5
@@ -26,6 +36,8 @@ start:5,end:5
 
 ![1598099791454](C:\Users\FrankCooper\AppData\Roaming\Typora\typora-user-images\1598099791454.png)
 
+- 加上后：
+
 ```
 start:0,end:5
 start:0,end:2
@@ -34,7 +46,9 @@ start:2,end:2
 start:3,end:5
 ```
 
-### 元方法
+
+
+#### 完整代码
 
 ```java
 /**
@@ -109,9 +123,11 @@ start:3,end:5
     }
 ```
 
+
+
 ![1598142386162](C:\Users\FrankCooper\AppData\Roaming\Typora\typora-user-images\1598142386162.png)
 
-#### 方法1:构造树
+### 方法1:构造树
 
 > 10个case在通过第9个的时候，报超出内存限制
 
@@ -127,8 +143,8 @@ start:3,end:5
                 n = nums.length;
                 if (n == 0) return;
                 arr = new int[n + 1];
-                tree = new int[(int) Math.pow(2, n)];
-                System.arraycopy(nums, 0, arr, 1, n);
+                tree = new int[(int) Math.pow(2, n)];//初始化大小
+                System.arraycopy(nums, 0, arr, 1, n);//将nums的0-n-1拷贝给arr，1-n
                 buildTree(arr, 1, 1, n);
             }
 
@@ -139,16 +155,16 @@ start:3,end:5
              * @param end   arr区间的结束下标索引
              */
             private void buildTree(int[] arr, int node, int start, int end) {
-                if (start == end) {
+                if (start == end) {//区间只有一个元素，开始赋值返回
                     tree[node] = arr[start];
                     return;
                 }
-                int mid = start + (end - start) / 2;
-                int leftNode = 2 * node;
-                int rightNode = 2 * node + 1;
-                buildTree(arr, leftNode, start, mid);
-                buildTree(arr, rightNode, mid + 1, end);
-                tree[node] = tree[leftNode] + tree[rightNode];
+                int mid = start + (end - start) / 2;//中点
+                int leftNode = 2 * node;//左孩子节点索引
+                int rightNode = 2 * node + 1;//右孩子节点索引
+                buildTree(arr, leftNode, start, mid);//构造左孩子树
+                buildTree(arr, rightNode, mid + 1, end);//构造右孩子树
+                tree[node] = tree[leftNode] + tree[rightNode];//当前节点的值等于左右孩子树之和
             }
 
 
@@ -211,11 +227,20 @@ start:3,end:5
         }
 ```
 
+> 上面两个方法存在的问题：图中有大量的的虚线矿标识出来的废弃节点，其占用内存空间，但是实际中用不到这些，为了占索引的位置
 
+### 方法2:优化构造树
 
+#### 思路
 
-
-
+- 创建一个$TreeNode$节点，存储如下信息
+  - $start$节点计算的左右区间的左边界
+  - $end$节点计算的左右区间的右边界
+  - $val$节点在左右区间的$sum$值
+  - $left$节点的左孩子
+  - $right$节点的右孩子
+- $buildTree$
+  - 构造树，判断$start$与 $end$值，如果相等，创建节点返回，不相等，分别创建左孩子树和右孩子树 
 
 ```java
 class NumArray {
@@ -300,15 +325,88 @@ class NumArray {
 
 
 
+### 方法3:数组构造树
+
+![1598173573416](C:\Users\FrankCooper\AppData\Roaming\Typora\typora-user-images\1598173573416.png)
+
+```java
+       class NumArray {
+
+            int n;
+            int[] tree;
+
+
+            public NumArray(int[] nums) {
+                int n = nums.length;
+                tree = new int[2 * n];
+                buildTree(nums);
+            }
+
+            private void buildTree(int[] nums) {
+                //构造tree的n - 2n-1部分
+                for (int i = n, j = 0; i < 2 * n; i++, j++) {
+                    tree[i] = nums[j];
+                }
+                //构造tree的1-n-1部分
+                for (int i = n - 1; i > 0; i--) {
+                    tree[i] = tree[i * 2] + tree[i * 2 + 1];
+                }
+            }
+
+            public void update(int i, int val) {
+                i += n;//nums的索引与tree的索引相差n
+                tree[i] = val;
+                while (i > 0) {
+                    int left = i;
+                    int right = i;
+                    if (i % 2 == 0) right = i + 1;//i为左孩子
+                    else left = i - 1;//i为右孩子
+                    tree[i / 2] = tree[left] + tree[right];
+                    i /= 2;
+                }
+            }
+
+            public int sumRange(int i, int j) {
+                //nums的索引与tree的索引相差n
+                i += n;
+                j += n;
+                int sum = 0;
+                while (i <= j) {
+                    //目的是维持[i,j]我左右孩子，或者一个节点本身
+                    if (i % 2 == 1) {//i为右孩子
+                        sum += tree[i];
+                        i++;
+                    }
+                    if (j % 2 == 0) {//j为左孩子
+                        sum += tree[j];
+                        j--;
+                    }
+                    i /= 2;
+                    j /= 2;
+                }
+                return sum;
+            }
+        }
+```
+
+#### 复杂度分析
+
+#### $queryTree$
+
+**时间复杂度**：$O(logn)$。因为在算法的每次迭代中，我们会向上移动一层，要么移动到当前节点的父节点，要么移动到父节点的左侧或者右侧的兄弟节点，直到两个边界相交为止。在最坏的情况下，这种情况会在算法进行$log(n)$ 次迭代后发生在根节点。
+
+**空间复杂度**：$O(1)$
+
+#### $updateTree$
+
+**时间复杂度**：$O(logn)$。算法的时间复杂度为$O(logn)$，因为有几个树节点的范围包括第$i$ 个数组元素，每个层上都有一个。共有 $log(n)$ 层
+**空间复杂度**：$O(1)$
 
 
 
 
 
+### Reference
 
-
-
-
-
-
-
+- 视频材料
+- 力扣官方题解
