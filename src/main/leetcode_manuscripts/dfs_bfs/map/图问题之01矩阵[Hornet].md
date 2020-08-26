@@ -2,19 +2,25 @@
 
 
 
-![bee-161866_640](C:\Users\wangzhou\Desktop\bee-161866_640.png)
+
+
+![bee-161866_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\map\图问题之01矩阵[Hornet].assets\bee-161866_640.png)
 
 
 
 ```python
 def bfs(){
     q.push(head);//一般为q这种优先队列来处理bfs问题
+    level;//记录层数
     while(!q.empty()){
-        temp=q.front;//弹出元素
-        q.pop(); 
-        if(temp为目标状态)输出解 
-        if(temp不合法)continue;
-        if(temp合法)q.push(temp+Δ);
+		size = q.size;
+        for i in range(size):
+                temp=q.front;//弹出元素
+                q.pop(); 
+                if(temp为目标状态)输出解 
+                if(temp不合法)continue;
+                if(temp合法)q.push(temp+Δ);
+        level++;//for loop 结束后层数扩张一层
     }
 }
 一般也会设置一些visit[] 来记录元素访问与否，做剪枝
@@ -24,8 +30,6 @@ def bfs(){
 
 ### 方法1：BFS
 
-
-
 #### 思路
 
 - 此题难点是记录距离，但是这里的距离的是$queue$的层数，一层距离为1, 可以想象成每次以一个坐标为中心，上下左右如水波纹一样的扩散叠加，每层叠加，准备一个初始化为0的变量$dist$,每一层结束就+1
@@ -34,7 +38,7 @@ def bfs(){
 
 #### 举例转这个case
 
-![script](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\map\图问题之01矩阵.assets\script.jpg)
+![script](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\map\图问题之01矩阵[Hornet].assets\script.jpg)
 
 ```java
     int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};//四个方向
@@ -84,4 +88,10 @@ def bfs(){
         return res;
     }
 ```
+
+
+
+
+
+
 
