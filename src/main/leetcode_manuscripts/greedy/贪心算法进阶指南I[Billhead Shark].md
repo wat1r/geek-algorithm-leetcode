@@ -1,6 +1,6 @@
 ## 贪心算法进阶指南I[Billhead Shark]
 
-![island-1956217_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[dd].assets\island-1956217_640.jpg)
+![island-1956217_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[Billhead Shark].assets\island-1956217_640.jpg)
 
 
 
@@ -36,7 +36,7 @@
 
 ### 1.判断子序列
 
-![image-20200908081226082](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[dd].assets\image-20200908081226082.png)
+![image-20200908081226082](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[Billhead Shark].assets\image-20200908081226082.png)
 
 #### 思路
 
