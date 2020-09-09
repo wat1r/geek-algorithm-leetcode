@@ -141,19 +141,122 @@
 
 
 
+### 3.用最少数量的箭引爆气球
+
+![image-20200909091832339](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[Billhead Shark].assets\image-20200909091832339.png)
+
+
+
+```java
+int [][]a = new int [5][2];
+```
+
+> //定义一个二维数组，其中所包含的一维数组具有两个元素
+>
+> 对于一个已定义的二位数组a进行如下规则排序,首先按照每一个对应的一维数组第一个元素进行升序排序（即a[][0]）,若第一个元素相等,则按照第二个元素进行升序排序（a[][1]）。(特别注意,这里的a[][0]或者a[][1]在java中是不能这么定义的,这里只是想说明是对于某一个一维数组的第0或1个元素进行排序)
+>
+> 其中o1[1]-o2[1]表示对于第二个元素进行升序排序如果为o2[1]-o1[1]则表示为降序。
+
+```java
+Arrays.sort(a, new Comparator<int[]>() {
+    @Override
+    public int compare(int[] o1, int[] o2) {
+    if (o1[0]==o2[0]) return o1[1]-o2[1];
+    return o1[0]-o2[0];
+    }
+});
+```
+
+
+
+>  几种写法
+
+```java
+//对二维数组int[][] points = {{10, 16}, {2, 8}, {1, 6}, {7, 12}};按第二个元素升序排列
+//--->{{1,6},{2,8},{7,12},{10,16}}
+//method 1
+Arrays.sort(points, new Comparator<int[]>() {
+    @Override
+    public int compare(int[] o1, int[] o2) {
+        return o1[1] - o2[1];
+    }
+});
+//method 2
+Arrays.sort(points, (o1, o2) -> o1[1] - o2[1]);
+//method 3
+Arrays.sort(points, Comparator.comparingInt(o -> o[1]));
+```
 
 
 
 
 
+> 
+
+```java
+    public int findMinArrowShots(int[][] points) {
+        if (points == null || points.length == 0) return 0;
+        Arrays.sort(points, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] - o2[1];
+            }
+        });
+        int res = 0;
+        int curr = Integer.MIN_VALUE;
+        //处理{{-2147483648, 2147483647}}这种case
+        if (points[0][0] == Integer.MIN_VALUE) res++;
+        for (int[] p : points) {
+            if (p[0] > curr) {
+                curr = p[1];
+                res++;
+            }
+        }
+        return res;
+    }
+```
 
 
 
 
 
+### 4.根据身高重建队列
+
+![image-20200909091955841](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[Billhead Shark].assets\image-20200909091955841.png)
+
+> [官方题解](https://leetcode-cn.com/problems/queue-reconstruction-by-height/solution/gen-ju-shen-gao-zhong-jian-dui-lie-by-leetcode/)写的很到位了
+
+该策略可以递归进行：
+将最高的人按照 k 值升序排序，然后将它们放置到输出队列中与 k 值相等的索引位置上。
+按降序取下一个高度，同样按 k 值对该身高的人升序排序，然后逐个插入到输出队列中与 k 值相等的索引位置上。
+直到完成为止。
 
 
 
+> 排序的写法
+
+```java
+Arrays.sort(people, (o1, o2) -> o1[0] == o2[0] ? o1[1] - o2[1] : o2[0] - o1[0]);
+```
+
+
+
+```java
+    public int[][] reconstructQueue(int[][] people) {
+        if (people == null || people.length == 0) return new int[][]{};
+        Arrays.sort(people, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] == o2[0] ? o1[1] - o2[1] : o2[0] - o1[0];
+            }
+        });
+        List<int[]> output = new ArrayList<>();
+        for (int[] p : people) {
+            output.add(p[1], p);
+        }
+        return output.toArray(new int[people.length][2]);
+    }
+```
 
 
 
