@@ -260,14 +260,92 @@ Arrays.sort(people, (o1, o2) -> o1[0] == o2[0] ? o1[1] - o2[1] : o2[0] - o1[0]);
 
 
 
+### 5.加油站
+
+![image-20200909212221526](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[Billhead Shark].assets\image-20200909212221526.png)
+
+
+
+```java
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int curr = 0, total = 0;
+        int n = gas.length;
+        int start = 0;
+        for (int i = 0; i < n; i++) {
+            int delta = gas[i] - cost[i];
+            total += delta;
+            curr += delta;
+            if (curr < 0) {
+                start = i + 1;
+                curr = 0;
+            }
+        }
+        return total >= 0 ? start : -1;
+    }
+```
 
 
 
 
 
+### 6.去除重复字符
 
 
 
+![image-20200910083244196](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\贪心算法进阶指南I[Billhead Shark].assets\image-20200910083244196.png)
+
+```java
+   public String removeDuplicateLetters(String s) {
+        int[] counter = new int[26];
+        for (char c : s.toCharArray()) counter[c - 'a']++;
+        Set<Character> set = new HashSet<>();
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (!set.contains(c)) {
+                while (!stack.isEmpty() && stack.peek() > c && counter[stack.peek() - 'a'] > 1) {
+                    char pop = stack.pop();
+                    counter[pop - 'a']--;
+                    set.remove(pop);
+                }
+                stack.push(c);
+                set.add(c);
+            } else {
+                counter[c - 'a']--;
+            }
+        }
+        StringBuffer sb = new StringBuffer();
+        while (!stack.isEmpty()) sb.append(stack.pop());
+        return sb.reverse().toString();
+    }
+```
+
+
+
+
+
+### 7.无重叠区间
+
+>官方题解
+
+```java
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length == 0 || intervals[0].length == 0) return 0;
+        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
+        int res = 0;
+        int prev = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[prev][1] > intervals[i][0]) {
+                if (intervals[prev][1] > intervals[i][1]) {
+                    prev = i;
+                }
+                res++;
+            } else {
+                prev = i;
+            }
+        }
+        return res;
+    }
+```
 
 
 
