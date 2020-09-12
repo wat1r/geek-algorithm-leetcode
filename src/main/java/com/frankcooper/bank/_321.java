@@ -10,11 +10,6 @@ public class _321 {
     static _321 handler = new _321();
 
 
-    public static void main(String[] args) {
-
-    }
-
-
 
 
 }
