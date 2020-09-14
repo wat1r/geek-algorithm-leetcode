@@ -1,4 +1,4 @@
-package com.frankcooper.other;
+package com.frankcooper.other.prim;
 
 import java.util.*;
 
