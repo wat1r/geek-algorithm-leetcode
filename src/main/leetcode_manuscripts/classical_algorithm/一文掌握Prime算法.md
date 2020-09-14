@@ -1,39 +1,20 @@
-package com.frankcooper.other.prim;
-
-import java.util.*;
-
-/**
- * @Date 2020/9/14
- * @Author Frank Cooper
- * @Description
- */
-public class PrimMST1ST {
+## 一文掌握Prime算法
 
 
-    public static void main(String[] args) {
-//        mianTest();
-        testOne();
-    }
+
+![script](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\classical_algorithm\一文掌握Prime算法.assets\script.png)
 
 
-    public static void mianTest() {
-        Scanner scanner = new Scanner(System.in);
-        int V = scanner.nextInt();
-        int E = scanner.nextInt();
-        Map<Integer, List<Pair>> graph = new HashMap<>();
-        for (int i = 0; i < E; i++) {
-            int start = scanner.nextInt();
-            int end = scanner.nextInt();
-            int weigh = scanner.nextInt();
-            graph.putIfAbsent(start, new ArrayList<>());
-            graph.putIfAbsent(end, new ArrayList<>());
-//            graph.get(start).add(new Pair(weigh, end));
-//            graph.get(end).add(new Pair(weigh, start));
-        }
-        System.out.println(prim(1, graph));
-    }
 
 
+
+
+
+
+
+
+
+```java
     static class Pair {
         int start;//from
         int end;//to
@@ -103,7 +84,7 @@ public class PrimMST1ST {
             start = curr.end;
             //端点被访问过，返回
             if (visited[start]) continue;
-            if (curr.start != -1) mst.add(curr);
+            if (curr.start != -1) mst.add(curr);//生成mst
             //标记
             visited[start] = true;
             //更新权值
@@ -118,6 +99,17 @@ public class PrimMST1ST {
         }
         return minCost;
     }
+```
 
+> ### output
 
-}
+```java
+27
+from:0,to:1,weigh:4
+from:0,to:5,weigh:8
+from:5,to:6,weigh:7
+from:6,to:2,weigh:2
+from:2,to:3,weigh:3
+from:3,to:4,weigh:3
+```
+

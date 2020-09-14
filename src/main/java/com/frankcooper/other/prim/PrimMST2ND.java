@@ -8,5 +8,24 @@ package com.frankcooper.other.prim;
 public class PrimMST2ND {
 
 
+    public static void main(String[] args) {
+
+        for (int i = 0; i < 10; ++i) {
+            System.out.println(i);
+        }
+
+    }
+
+
+
+
+
+//    private void prim(int )
+
+
+
+
+
+
 
 }
