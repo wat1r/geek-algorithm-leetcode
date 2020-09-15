@@ -20,6 +20,23 @@ public class _474 {
 
     public int findMaxForm(String[] strs, int m, int n) {
         int len = strs.length;
+        int[][] dp = new int[m + 1][n + 1];
+        for (String str : strs) {
+            int[] counter = counter(str);
+            for (int i = m; i >= counter[0]; i--) {
+                for (int j = n; j >= counter[1]; j--) {
+                    dp[i][j] = Math.max(dp[i][j],
+                            dp[i - counter[0]][j - counter[1]] + 1);
+                }
+            }
+            PrintUtils.printMatrix(dp);
+        }
+        return dp[m][n];
+    }
+
+
+    public int findMaxForm1st(String[] strs, int m, int n) {
+        int len = strs.length;
         int[][][] dp = new int[len + 1][m + 1][n + 1];
         for (int k = 1; k < len + 1; ++k) {
             int[] counter = counter(strs[k - 1]);
