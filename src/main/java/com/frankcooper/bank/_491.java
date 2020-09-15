@@ -1,5 +1,7 @@
 package com.frankcooper.bank;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,29 +23,61 @@ public class _491 {
 
 
     List<List<Integer>> resList = new ArrayList<>();
-    List<Integer> segList = new ArrayList<>();
-    int n;
 
     public List<List<Integer>> findSubsequences(int[] nums) {
-        n = nums.length;
         dfs(nums, -1);
+        for (List<Integer> subList : resList) {
+            for (int num : subList) System.out.print(num + " ");
+            System.out.println();
+        }
+
         return resList;
     }
 
+    List<Integer> subList = new ArrayList<>();
+
     private void dfs(int[] nums, int currIdx) {
-        if (segList.size() >= 2) {
-            resList.add(new ArrayList<>(segList));
-        }
-//        Set<Integer> set = new HashSet<>();
-        for (int i = currIdx + 1; i < n; i++) {
-//            if (set.contains(nums[i])) continue;
-//            set.add(nums[i]);
+        if (subList.size() >= 2) resList.add(new ArrayList<>(subList));
+        Set<Integer> set = new HashSet<>();
+        for (int i = currIdx + 1; i < nums.length; ++i) {
+            if (set.contains(nums[i])) continue;
+            set.add(nums[i]);
             if (currIdx == -1 || nums[i] >= nums[currIdx]) {
-                segList.add(nums[i]);
+                subList.add(nums[i]);
                 dfs(nums, i);
-                segList.remove(segList.size() - 1);
+                subList.remove(subList.size() - 1);
             }
         }
+    }
+
+
+    class _2nd {
+        List<List<Integer>> resList = new ArrayList<>();
+        List<Integer> segList = new ArrayList<>();
+        int n;
+
+        public List<List<Integer>> findSubsequences(int[] nums) {
+            n = nums.length;
+            dfs(nums, -1);
+            return resList;
+        }
+
+        private void dfs(int[] nums, int currIdx) {
+            if (segList.size() >= 2) {
+                resList.add(new ArrayList<>(segList));
+            }
+//        Set<Integer> set = new HashSet<>();
+            for (int i = currIdx + 1; i < n; i++) {
+//            if (set.contains(nums[i])) continue;
+//            set.add(nums[i]);
+                if (currIdx == -1 || nums[i] >= nums[currIdx]) {
+                    segList.add(nums[i]);
+                    dfs(nums, i);
+                    segList.remove(segList.size() - 1);
+                }
+            }
+        }
+
     }
 
 
