@@ -8,6 +8,17 @@ package com.frankcooper.bank;
 public class _684 {
 
 
+    static _684 handler = new _684();
+
+    public static void main(String[] args) {
+
+        int[][] edges = new int[][]{{1, 2}, {3, 4}, {2, 3}, {1, 4}, {1, 5}};
+        int[] arr = handler.findRedundantConnection(edges);
+        System.out.printf("%d-->%d\n", arr[0], arr[1]);
+
+    }
+
+
     int[] parents;
 
     public int[] findRedundantConnection(int[][] edges) {
@@ -31,7 +42,7 @@ public class _684 {
         }
     }
 
-//    //递归版路径压缩，找到x的根节点
+    //    //递归版路径压缩，找到x的根节点
 //    public int find(int x) {
 //        if (x != parents[x]) {
 //            parents[x] = find(parents[x]);
