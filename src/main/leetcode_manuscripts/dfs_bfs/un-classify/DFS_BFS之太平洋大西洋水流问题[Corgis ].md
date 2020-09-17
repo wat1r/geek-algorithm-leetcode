@@ -1,22 +1,19 @@
-package com.frankcooper.bank;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class _417 {
-
-    static _417 handler = new _417();
-
-    public static void main(String[] args) {
-
-    }
+## DFS_BFS之太平洋大西洋水流问题[Corgis ]
 
 
-    static class _1st {
+
+![pembroke-5188516_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\un-classify\DFS_BFS之太平洋大西洋水流问题[].assets\pembroke-5188516_640.png)
 
 
-        int m, n;
+
+
+
+![image-20200917075738392](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\un-classify\DFS_BFS之太平洋大西洋水流问题[].assets\image-20200917075738392.png)
+
+
+
+```java
+          int m, n;
         int[][] matrix;
         int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
@@ -70,7 +67,10 @@ public class _417 {
         private boolean inArea(int i, int j) {
             return i >= 0 && i < m && j >= 0 && j < n;
         }
-    }
+
+```
 
 
-}
+
+
+
