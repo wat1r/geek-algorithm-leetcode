@@ -19,6 +19,18 @@ public class PrintUtils {
     }
 
 
+    public static void printMatrix(int[][] matrix, int d) {
+        int rows = matrix.length, cols = matrix[0].length;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                System.out.print(String.format("%" + d + "s", matrix[i][j]) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("--------------");
+    }
+
+
     public static void printMatrix(int[][][] matrix) {
         int m = matrix.length, n = matrix[0].length, p = matrix[0][0].length;
         for (int i = 0; i < m; ++i) {
