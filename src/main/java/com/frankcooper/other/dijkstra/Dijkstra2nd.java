@@ -52,25 +52,50 @@ public class Dijkstra2nd {
     static int u, v, w;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextInt()) {
-//            n = scanner.nextInt();
-//            m = scanner.nextInt();
-            init();
-            if (n == 0 && m == 0) {
-                break;
+//        Scanner scanner = new Scanner(System.in);
+//        while (scanner.hasNextInt()) {
+//            n = scanner.nextInt();//顶点的个数
+//            m = scanner.nextInt();//边的条数
+        n = 6;
+        m = 8;
+        int[][] arr = new int[n + 1][n + 1];
+        arr[1][3] = 10;
+        arr[1][5] = 30;
+        arr[1][6] = 100;
+        arr[2][3] = 5;
+        arr[3][4] = 50;
+        arr[4][6] = 10;
+        arr[5][4] = 20;
+        arr[5][6] = 60;
+        init();
+//        if (n == 0 && m == 0) {
+//            break;
+//        }
+//            for (int i = 0; i < m; i++) {
+        for (int i = 1; i <= n; i++) {
+//                u = scanner.nextInt();
+//                v = scanner.nextInt();
+//                w = scanner.nextInt();
+            for (int j = 1; j <= n; j++) {
+                if (arr[i][j] != 0) {
+                    u = i;
+                    v = j;
+                    w = arr[i][j];
+                    addEdge(u, v, w);
+                }
+
             }
-            for (int i = 0; i < m; i++) {
-                u = scanner.nextInt();
-                v = scanner.nextInt();
-                w = scanner.nextInt();
-                addEdge(u, v, w);
-            }
-            s = 1;
-            t = n;
-            Dijkstra();
-            System.out.println(dis[t]);
+
         }
+        s = 1;
+//        s = 0;
+        t = n;
+        Dijkstra();
+        System.out.println(dis[t]);
+        for (int d : dis) {
+//            System.out.print(d + " ");
+        }
+//        }
     }
 
     static void init() {
