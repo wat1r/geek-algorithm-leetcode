@@ -135,14 +135,14 @@ public class _307 {
 //            updateTree(root, i, val);
 //        }
 //
-//        public void updateTree(TreeNode node, int i, int val) {
-//            if (node.start == node.end) {
-//                node.val = val;
+//        public void updateTree(TreeNode Node, int i, int val) {
+//            if (Node.start == Node.end) {
+//                Node.val = val;
 //            } else {
-//                int mid = node.start + (node.end - node.start) / 2;
-//                if (i <= mid) updateTree(node.left, i, val);
-//                else updateTree(node.right, i, val);
-//                node.val = node.left.val + node.right.val;
+//                int mid = Node.start + (Node.end - Node.start) / 2;
+//                if (i <= mid) updateTree(Node.left, i, val);
+//                else updateTree(Node.right, i, val);
+//                Node.val = Node.left.val + Node.right.val;
 //            }
 //        }
 //
@@ -150,19 +150,19 @@ public class _307 {
 //            return queryTree(root, i, j);
 //        }
 //
-//        public int queryTree(TreeNode node, int i, int j) {
+//        public int queryTree(TreeNode Node, int i, int j) {
 //            System.out.println(String.format("i:%d,j:%d", i, j));
-//            System.out.println(node);
-//            System.out.println(String.format("node.val:%d", node.val));
-//            if (node.start == i && node.end == j) return node.val;
+//            System.out.println(Node);
+//            System.out.println(String.format("Node.val:%d", Node.val));
+//            if (Node.start == i && Node.end == j) return Node.val;
 //            else {
-//                int mid = node.start + (node.end - node.start) / 2;
+//                int mid = Node.start + (Node.end - Node.start) / 2;
 //                if (j <= mid) {
-//                    return queryTree(node.left, i, j);
+//                    return queryTree(Node.left, i, j);
 //                } else if (i >= mid + 1) {
-//                    return queryTree(node.right, i, j);
+//                    return queryTree(Node.right, i, j);
 //                } else {
-//                    return queryTree(node.left, i, mid) + queryTree(node.right, mid + 1, j);
+//                    return queryTree(Node.left, i, mid) + queryTree(Node.right, mid + 1, j);
 //                }
 //            }
 //        }
@@ -449,7 +449,7 @@ public class _307 {
             public int queryTree(TreeNode node, int i, int j) {
                 System.out.println(String.format("i:%d,j:%d", i, j));
                 System.out.println(node);
-                System.out.println(String.format("node.val:%d", node.val));
+                System.out.println(String.format("Node.val:%d", node.val));
                 if (node.start == i && node.end == j) return node.val;
                 else {
                     int mid = node.start + (node.end - node.start) / 2;

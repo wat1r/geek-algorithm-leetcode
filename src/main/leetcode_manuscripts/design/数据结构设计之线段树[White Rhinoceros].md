@@ -54,7 +54,7 @@ start:3,end:5
 /**
          * @param arr   原始数组
          * @param tree  要生成的线段树数组
-         * @param node  当前线段树节点的下标索引
+         * @param Node  当前线段树节点的下标索引
          * @param start arr区间的开始下标索引
          * @param end   arr区间的结束下标索引
          */
@@ -76,7 +76,7 @@ start:3,end:5
         /**
          * @param arr   原始数组
          * @param tree  要生成的线段树数组
-         * @param node  当前线段树节点的下标索引
+         * @param Node  当前线段树节点的下标索引
          * @param start arr区间的开始下标索引
          * @param end   arr区间的结束下标索引
          * @param idx   要修改的arr的下标索引
@@ -102,7 +102,7 @@ start:3,end:5
         /**
          * @param arr   原始数组
          * @param tree  要生成的线段树数组
-         * @param node  当前线段树节点的下标索引
+         * @param Node  当前线段树节点的下标索引
          * @param start arr区间的开始下标索引
          * @param end   arr区间的结束下标索引
          * @param L     要计算的arr的区间[L,R]的左闭区间索引

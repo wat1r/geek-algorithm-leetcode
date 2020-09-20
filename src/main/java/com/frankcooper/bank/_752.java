@@ -58,7 +58,7 @@ public class _752 {
                     for (int d = -1; d <= 1; d += 2) {
                         int y = ((node.charAt(i) - '0') + d + 10) % 10;
                         String nei = node.substring(0, i) + ("" + y) + node.substring(i + 1);
-                        System.out.println(String.format("node:%s,y:%d,nei:%s", node, y, nei));
+                        System.out.println(String.format("Node:%s,y:%d,nei:%s", node, y, nei));
                         if (!seen.contains(nei)) {
                             seen.add(nei);
                             queue.offer(nei);

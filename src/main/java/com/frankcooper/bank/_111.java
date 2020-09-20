@@ -55,11 +55,11 @@ public class _111 {
 //        int depth = Integer.MAX_VALUE;
 //        while (!stack.isEmpty()) {
 //            Pair<TreeNode, Integer> pair = stack.pop();
-//            TreeNode node = pair.getKey();
-//            if (node.left == null && node.right == null)
+//            TreeNode Node = pair.getKey();
+//            if (Node.left == null && Node.right == null)
 //                depth = Math.min(depth, pair.getValue());
-//            if (node.right != null) stack.add(new Pair<TreeNode, Integer>(node.right, pair.getValue() + 1));
-//            if (node.left != null) stack.add(new Pair<TreeNode, Integer>(node.left, pair.getValue() + 1));
+//            if (Node.right != null) stack.add(new Pair<TreeNode, Integer>(Node.right, pair.getValue() + 1));
+//            if (Node.left != null) stack.add(new Pair<TreeNode, Integer>(Node.left, pair.getValue() + 1));
 //        }
 //        return depth;
 //    }

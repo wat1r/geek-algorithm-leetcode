@@ -132,16 +132,16 @@ public void solve(char[][] board) {
                         //                                if (i + directions[i][0] > 0&&board[i])
                     }
                     //                            if (i > 0 && board[i - 1][j] == 'O') {
-                    //                                unionFind.union(node(i, j), node(i - 1, j));
+                    Node
                     //                            }
                     //                            if (i < m - 1 && board[i + 1][j] == 'O') {
-                    //                                unionFind.union(node(i, j), node(i + 1, j));
+                    Node
                     //                            }
                     //                            if (j > 0 && board[i][j - 1] == 'O') {
-                    //                                unionFind.union(node(i, j), node(i, j - 1));
+                    Node
                     //                            }
                     //                            if (j < n - 1 && board[i][j + 1] == 'O') {
-                    //                                unionFind.union(node(i, j), node(i, j + 1));
+                    Node
                     //                            }
                 }
             }

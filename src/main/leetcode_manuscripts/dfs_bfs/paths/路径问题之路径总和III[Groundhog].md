@@ -40,7 +40,7 @@ queue.peek().seq != (getSeq(curNum) + 1) / 2
         if (nums == null || nums.length == 0) return 0;
         Arrays.sort(nums);//sort,set the start number and got it
         Queue<Node> queue = new LinkedList<>();
-        queue.add(new Node(getLevel(nums[0]), getSeq(nums[0]), getValue(nums[0])));//add the root node
+        queue.add(new Node(getLevel(nums[0]), getSeq(nums[0]), getValue(nums[0])));Node
         //i: 0...size-1
         int i = 1, size = nums.length;
         int curLevel = 2; //the first level begin with 1 ,then start with curLevel

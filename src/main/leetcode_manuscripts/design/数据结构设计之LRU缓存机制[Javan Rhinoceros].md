@@ -49,7 +49,7 @@
         /**
          * 移除一个普通的节点
          *
-         * @param node
+         * @param Node
          */
         public void removeNode(DoubleLinkedNode node) {
             DoubleLinkedNode next = node.next;
@@ -82,7 +82,7 @@
         /**
          * 将当前节点移动到最头部位置
          *
-         * @param node
+         * @param Node
          */
         public void moveToHead(DoubleLinkedNode node) {
             removeNode(node);
