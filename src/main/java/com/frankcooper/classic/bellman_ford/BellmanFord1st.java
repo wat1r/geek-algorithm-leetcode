@@ -7,7 +7,7 @@ import java.util.List;
  * Created by FrankCooper
  * Date 2020/9/20 11:46
  * Description
- *
+ * <p>
  * https://blog.csdn.net/afei__/article/details/83378472
  */
 public class BellmanFord1st {
@@ -36,7 +36,9 @@ public class BellmanFord1st {
         }
         // 2. 需要执行 (V-1)*E 次松弛操作
         for (int i = 1; i < list.size(); i++) {
+            System.out.printf("i:%d\n", i);
             for (Edge edge : queue) {
+                System.out.printf("start:%s-->end:%s--->weigh:%d\n", edge.getStart(), edge.getEnd(), edge.getWeight());
                 relax(edge);
             }
         }
