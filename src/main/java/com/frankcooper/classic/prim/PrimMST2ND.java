@@ -1,4 +1,4 @@
-package com.frankcooper.other.prim;
+package com.frankcooper.classic.prim;
 
 /**
  * @Date 2020/9/14

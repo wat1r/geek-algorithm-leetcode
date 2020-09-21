@@ -1,4 +1,4 @@
-package com.frankcooper.classic;
+package com.frankcooper.other;
 
 public class _8_11 {
     public static void main(String[] args) {

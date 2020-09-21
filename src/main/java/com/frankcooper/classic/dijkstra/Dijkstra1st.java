@@ -1,4 +1,4 @@
-package com.frankcooper.other.dijkstra;
+package com.frankcooper.classic.dijkstra;
 
 import com.frankcooper.swordoffer.utils.PrintUtils;
 

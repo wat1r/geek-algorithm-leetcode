@@ -1,4 +1,4 @@
-package com.frankcooper.other.bellman_ford;
+package com.frankcooper.classic.bellman_ford;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,7 +1,6 @@
-package com.frankcooper.other.dijkstra;
+package com.frankcooper.classic.dijkstra;
 
 import java.util.PriorityQueue;
-import java.util.Scanner;
 
 /**
  * Created by FrankCooper

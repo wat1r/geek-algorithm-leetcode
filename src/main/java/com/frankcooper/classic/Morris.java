@@ -1,4 +1,4 @@
-package com.frankcooper.other;
+package com.frankcooper.classic;
 
 /**
  * Created by FrankCooper

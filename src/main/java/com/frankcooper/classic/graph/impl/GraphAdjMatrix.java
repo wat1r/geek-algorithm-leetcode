@@ -1,6 +1,6 @@
-package com.frankcooper.other.graph.impl;
+package com.frankcooper.classic.graph.impl;
 
-import com.frankcooper.other.graph.IGraph;
+import com.frankcooper.classic.graph.IGraph;
 
 import java.lang.reflect.Array;
 

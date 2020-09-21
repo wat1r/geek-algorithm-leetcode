@@ -1,8 +1,7 @@
-package com.frankcooper.other;
+package com.frankcooper.classic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**

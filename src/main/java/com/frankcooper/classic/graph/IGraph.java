@@ -1,4 +1,4 @@
-package com.frankcooper.other.graph;
+package com.frankcooper.classic.graph;
 
 /**
  * Created by FrankCooper
