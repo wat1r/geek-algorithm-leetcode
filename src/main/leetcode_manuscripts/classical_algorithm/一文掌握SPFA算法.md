@@ -49,7 +49,7 @@
                         queue.add(edges[i].v);
                         num[edges[i].v]++;
                         if (num[edges[i].v] > n) return false;
-                        used[edges[i].v] = true;   //表示边edges[i]的终点b已进入数组队
+                        used[edges[i].v] = true;   //表示边edges[i]的终点v已进入数组队
                     }
                 }
             }
