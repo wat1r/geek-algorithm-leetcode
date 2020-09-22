@@ -96,7 +96,6 @@ public class Floyd1st {
          */
         private char readChar() {
             char ch = '0';
-
             do {
                 try {
                     ch = (char) System.in.read();
