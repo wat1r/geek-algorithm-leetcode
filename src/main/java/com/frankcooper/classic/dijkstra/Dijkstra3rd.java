@@ -23,8 +23,6 @@ public class Dijkstra3rd {
         int n = 6;//顶点数量
         int s = 0;//起点的下标索引
         int e = 8;//边的数量
-
-
         int[][] edges = new int[e][3];
         edges[0] = new int[]{0, 2, 10};
         edges[1] = new int[]{0, 4, 30};
@@ -34,9 +32,8 @@ public class Dijkstra3rd {
         edges[5] = new int[]{3, 5, 10};
         edges[6] = new int[]{4, 3, 20};
         edges[7] = new int[]{4, 5, 60};
-        System.out.println(JSON.toJSONString(edges));
+//        System.out.println(JSON.toJSONString(edges));
         dijkstra(edges, s, n);
-
     }
 
 
@@ -56,6 +53,10 @@ public class Dijkstra3rd {
         dis[s] = 0;
         PriorityQueue<Integer> pq = new PriorityQueue<>(((o1, o2) -> dis[o1] - dis[o2]));
         pq.offer(s);
+        for (int d : dis) System.out.print(d + " ");
+        System.out.println();
+        for (boolean v : vis) System.out.print(v + " ");
+        System.out.println();
         while (!pq.isEmpty()) {
             int curr = pq.poll();
             if (vis[curr]) continue;
@@ -70,6 +71,11 @@ public class Dijkstra3rd {
                 }
                 pq.offer(to);
             }
+            System.out.println(JSON.toJSON(pq));
+            for (int d : dis) System.out.print(d + " ");
+            System.out.println();
+            for (boolean v : vis) System.out.print(v + " ");
+            System.out.println();
         }
         for (int d : dis) System.out.print(d + " ");
         return dis;
