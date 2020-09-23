@@ -4,6 +4,8 @@
 
 ~~贵宾犬~~
 
+~~萨摩耶~~
+
 
 
 http://www.goupu.com.cn/baike/show-817.html
