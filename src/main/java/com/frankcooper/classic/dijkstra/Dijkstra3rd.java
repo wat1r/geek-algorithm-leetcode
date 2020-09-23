@@ -58,7 +58,9 @@ public class Dijkstra3rd {
         for (boolean v : vis) System.out.print(v + " ");
         System.out.println();
         while (!pq.isEmpty()) {
+            System.out.println(JSON.toJSON(pq));
             int curr = pq.poll();
+            System.out.println(JSON.toJSON(pq));
             if (vis[curr]) continue;
             vis[curr] = true;
             List<int[]> nexts = graph.getOrDefault(curr, new ArrayList<>());
@@ -71,7 +73,6 @@ public class Dijkstra3rd {
                 }
                 pq.offer(to);
             }
-            System.out.println(JSON.toJSON(pq));
             for (int d : dis) System.out.print(d + " ");
             System.out.println();
             for (boolean v : vis) System.out.print(v + " ");
