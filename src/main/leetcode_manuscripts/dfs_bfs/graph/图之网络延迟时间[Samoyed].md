@@ -2,8 +2,6 @@
 
 
 
-
-
 ### 方法1:Dijkstra
 
 ```java
@@ -78,3 +76,42 @@
         }
 ```
 
+### 方法3:SPFA
+
+```java
+        Integer INF = Integer.MAX_VALUE;
+
+        public int networkDelayTime(int[][] edges, int N, int K) {
+            List<Integer> queue = new ArrayList<>();
+            long[] dist = new long[N + 1];
+            boolean[] used = new boolean[N + 1];
+            int[] nums = new int[N + 1];
+            Arrays.fill(dist, INF);
+            dist[K] = 0;
+            used[K] = true;
+            queue.add(K);
+            while (!queue.isEmpty()) {
+                int a = queue.get(0);
+                queue.remove(0);
+                for (int i = 0; i < edges.length; i++) {
+                    int u = edges[i][0], v = edges[i][1], w = edges[i][2];
+                    System.out.printf("u:%d,v:%d,w:%d\n", u, v, w);
+                    if (a == u && dist[v] > dist[u] + w) {
+                        dist[v] = dist[u] + w;
+                        if (!used[v]) {
+                            queue.add(v);
+                            nums[v]++;
+                            if (nums[v] >= N) continue;
+                            used[v] = true;
+                        }
+                    }
+                }
+                used[a] =false;
+            }
+            long max = 0;
+            for (int i = 1; i <= N; ++i) max = Math.max(max, dist[i]);
+            return max == INF ? -1 : (int) max;
+        }
+```
+
+### 方法4:Floyd

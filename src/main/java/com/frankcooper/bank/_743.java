@@ -149,8 +149,8 @@ public class _743 {
                             used[v] = true;
                         }
                     }
-
                 }
+                used[a] =false;//本轮结束
             }
             long max = 0;
             for (int i = 1; i <= N; ++i) max = Math.max(max, dist[i]);
