@@ -66,20 +66,21 @@ public class _743 {
 
     private void testTwo() {
 //        _2nd second = new _2nd();
-        _3rd second = new _3rd();
+//        _3rd second = new _3rd();
 //        _2nd_1 second = new _2nd_1();
+        _4th second = new _4th();
         int[][] graph = new int[][]{{2, 1, 1}, {2, 3, 1}, {3, 4, 1}};
         int N = 4;
         int K = 2;
 //        graph = new int[][]{{1, 2, 1}, {2, 1, 3}};
 //        N = 2;
 //        K = 2;
-        graph = new int[][]{{4, 2, 76}, {1, 3, 79}, {3, 1, 81}, {4, 3, 30}, {2, 1, 47}, {1, 5, 61}, {1, 4, 99}, {3, 4, 68}, {3, 5, 46}, {4, 1, 6}, {5, 4, 7}, {5, 3, 44}, {4, 5, 19}, {2, 3, 13}, {3, 2, 18}, {1, 2, 0}, {5, 1, 25}, {2, 5, 58}, {2, 4, 77}, {5, 2, 74}};
-        N = 5;
-        K = 3;
+//        graph = new int[][]{{4, 2, 76}, {1, 3, 79}, {3, 1, 81}, {4, 3, 30}, {2, 1, 47}, {1, 5, 61}, {1, 4, 99}, {3, 4, 68}, {3, 5, 46}, {4, 1, 6}, {5, 4, 7}, {5, 3, 44}, {4, 5, 19}, {2, 3, 13}, {3, 2, 18}, {1, 2, 0}, {5, 1, 25}, {2, 5, 58}, {2, 4, 77}, {5, 2, 74}};
+//        N = 5;
+//        K = 3;
         second.networkDelayTime(graph, N, K);
         System.out.println("-------------------");
-        second.getShortestPaths(N, K, second.initEdge(graph));
+//        second.getShortestPaths(N, K, second.initEdge(graph));
     }
 
 
@@ -150,7 +151,7 @@ public class _743 {
                         }
                     }
                 }
-                used[a] =false;//本轮结束
+                used[a] = false;//本轮结束
             }
             long max = 0;
             for (int i = 1; i <= N; ++i) max = Math.max(max, dist[i]);
@@ -220,6 +221,41 @@ public class _743 {
                 this.w = w;
             }
         }
+
+    }
+
+
+    class _4th {
+        Integer INF = Integer.MAX_VALUE;
+
+        public int networkDelayTime(int[][] edges, int N, int K) {
+            int[][] dist = new int[N + 1][N + 1];
+            for (int i = 1; i <= N; ++i) {
+                for (int j = 1; j <= N; ++j) {
+                    dist[i][j] = i == j ? 0 : INF;
+                }
+            }
+            for (int[] edge : edges) {
+                dist[edge[0]][edge[1]] = edge[2];
+            }
+            for (int a = 1; a <= N; ++a) {
+                for (int i = 1; i <= N; ++i) {
+                    for (int j = 1; j <= N; ++j) {
+                        int tmp = (dist[i][a] == INF || dist[a][j] == INF) ? INF : dist[i][a] + dist[a][j];
+                        if (dist[i][j] > tmp) {
+                            dist[i][j] = tmp;
+                        }
+                    }
+                }
+            }
+            int max = -1;
+            //找K出发的点，K->i，最长的路径
+            for (int i = 1; i <= N; ++i) {
+                max = Math.max(max, dist[K][i]);
+            }
+            return max == INF ? -1 : max;
+        }
+
 
     }
 

@@ -1,6 +1,8 @@
 ## 图之网络延迟时间[Samoyed]
 
+> 一道模板题，详见文末推荐阅读
 
+![istockphoto-882484506-1024x1024](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\graph\图之网络延迟时间.assets\istockphoto-882484506-1024x1024.jpg)
 
 ### 方法1:Dijkstra
 
@@ -115,3 +117,45 @@
 ```
 
 ### 方法4:Floyd
+
+```java
+        Integer INF = Integer.MAX_VALUE;
+
+        public int networkDelayTime(int[][] edges, int N, int K) {
+            int[][] dist = new int[N + 1][N + 1];
+            for (int i = 1; i <= N; ++i) {
+                for (int j = 1; j <= N; ++j) {
+                    dist[i][j] = i == j ? 0 : INF;
+                }
+            }
+            for (int[] edge : edges) {
+                dist[edge[0]][edge[1]] = edge[2];
+            }
+            for (int a = 1; a <= N; ++a) {
+                for (int i = 1; i <= N; ++i) {
+                    for (int j = 1; j <= N; ++j) {
+                        int tmp = (dist[i][a] == INF || dist[a][j] == INF) ? INF : dist[i][a] + dist[a][j];
+                        if (dist[i][j] > tmp) {
+                            dist[i][j] = tmp;
+                        }
+                    }
+                }
+            }
+            int max = -1;
+            //找K出发的点，K->i，最长的路径
+            for (int i = 1; i <= N; ++i) {
+                max = Math.max(max, dist[K][i]);
+            }
+            return max == INF ? -1 : max;
+        }
+```
+
+### 推荐阅读
+
+| #    | github.io地址                                                | 关键词                    |
+| ---- | ------------------------------------------------------------ | ------------------------- |
+| 1    | [一文掌握Dijkstra算法](https://wat1r.github.io/2020/09/23/dijkstra-algorithm-master/) | Graph,Shortest Path,Model |
+| 2    | [一文掌握Bellman-Ford算法](https://wat1r.github.io/2020/09/22/bellman-ford-algorithm-master/) | Graph,Shortest Path,Model |
+| 3    | [一文掌握SPFA算法](https://wat1r.github.io/2020/09/21/spfa-algorithm-master/) | Graph,Shortest Path,Model |
+| 4    | [一文掌握Floyd算法](https://wat1r.github.io/2020/09/23/floyd-algorithm-master/) | Graph,Shortest Path,Model |
+
