@@ -10,4 +10,6 @@
 
 ~~拉布拉多~~
 
+~~苏格兰牧羊犬~~
+
 http://www.goupu.com.cn/baike/show-817.html

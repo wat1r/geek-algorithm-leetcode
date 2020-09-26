@@ -1,10 +1,18 @@
 package com.frankcooper.bank;
 
+import com.frankcooper.swordoffer.utils.PrintUtils;
+
 public class _329 {
     static _329 handler = new _329();
 
     public static void main(String[] args) {
+        int[][] matrix = new int[][]{
+                {9, 9, 4},
+                {6, 6, 8},
+                {2, 1, 1}
+        };
 
+        handler.longestIncreasingPath(matrix);
     }
 
 
@@ -13,6 +21,7 @@ public class _329 {
     int m, n;
 
     public int longestIncreasingPath(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
         m = matrix.length;
         n = matrix[0].length;
         memo = new int[m][n];
@@ -20,6 +29,7 @@ public class _329 {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 res = Math.max(res, dfs(matrix, i, j));
+                PrintUtils.printMatrix(memo);
             }
         }
         return res;
