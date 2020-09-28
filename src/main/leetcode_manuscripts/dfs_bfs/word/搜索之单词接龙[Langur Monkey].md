@@ -16,7 +16,7 @@ hit->hot->dot->dog->cog
 hit->hot->lot->log->cog
 ```
 
-#### 方法1：BFS
+### 方法1：BFS
 
  - 准备一个`transform(Set<String> words, String word)` 函数，生成的是与当前`word`差距一个字符的单词，此单词存在于`words`中，返回的是个`List`
  - 准备一个`Queue`,与记录到达`endWord`的步数`steps`  ，一开始将`beginWord`推进`Queue`，`steps=1`  
@@ -77,9 +77,7 @@ hit->hot->lot->log->cog
     }
 ```
 
-
-
-
+### 方法2：双向BFS
 
 
 

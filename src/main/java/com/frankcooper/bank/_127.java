@@ -1,6 +1,9 @@
 package com.frankcooper.bank;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.*;
+
 //127. 单词接龙 127. Word Ladder Medium
 public class _127 {
 
@@ -9,12 +12,79 @@ public class _127 {
 
         Set<String> words = new HashSet<>(Arrays.asList(new String[]{"hot", "dot", "dog", "lot", "log", "cog"}));
         String beginWord = "hit";
+        String endWord = "cog";
 //        handler.transform(words, beginWord);
 //        handler.ladderLength2nd(beginWord, "cog", new ArrayList<>(words));
-        words = new HashSet<>(Arrays.asList(new String[]{"a", "b", "c"}));
-        beginWord = "a";
-        String endWord = "c";
+//        words = new HashSet<>(Arrays.asList(new String[]{"a", "b", "c"}));
+//        beginWord = "a";
+//        String endWord = "c";
 //        handler.ladderLength2nd(beginWord, endWord, new ArrayList<>(words));
+        handler.testTwo();
+
+    }
+
+
+    private void testTwo() {
+        _2nd second = new _2nd();
+        Set<String> words = new HashSet<>(Arrays.asList(new String[]{"hot", "dot", "dog", "lot", "log", "cog"}));
+        String beginWord = "hit";
+        String endWord = "cog";
+        second.ladderLength(beginWord, endWord, new ArrayList<>(words));
+    }
+
+
+    /**
+     * 双向bfs
+     */
+    class _2nd {
+
+
+        public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+
+            Set<String> wordSet = new HashSet<>(wordList);
+            if (!wordSet.contains(endWord)) return 0;
+            Set<String> beginSet = new HashSet<>();
+            Set<String> endSet = new HashSet<>();
+            Set<String> visitdSet = new HashSet<>();
+            beginSet.add(beginWord);
+            endSet.add(endWord);
+            int steps = 1;
+            while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+                if (beginSet.size() > endSet.size()) {
+                    Set<String> tmpSet = beginSet;
+                    beginSet = endSet;
+                    endSet = tmpSet;
+                }
+                Set<String> tmpSet = new HashSet<>();
+                System.out.printf("beginSet:%s\n", JSON.toJSONString(beginSet));
+                System.out.printf("endSet:%s\n", JSON.toJSONString(endSet));
+                for (String word : beginSet) {
+                    char[] chas = word.toCharArray();
+                    for (int i = 0; i < chas.length; i++) {
+                        char src = chas[i];
+                        for (char c = 'a'; c <= 'z'; c++) {
+                            if (c == src) continue;
+                            chas[i] = c;
+                            String nextWord = String.valueOf(chas);
+                            //已经找到了
+                            if (endSet.contains(nextWord)) {
+                                return steps + 1;
+                            }
+                            //没有被访问过，且单词在wordSet中，添加进tmpSet ，本轮结束后赋值给beginSet
+                            if (!visitdSet.contains(nextWord) && wordSet.contains(nextWord)) {
+                                tmpSet.add(nextWord);
+                                visitdSet.add(nextWord);
+                            }
+                        }
+                        chas[i] = src;
+                    }
+                }
+                beginSet = tmpSet;
+                steps++;
+            }
+            return 0;
+        }
+
     }
 
 
