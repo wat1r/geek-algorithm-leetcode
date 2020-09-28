@@ -1,12 +1,8 @@
-## 搜索之单词接龙[Langur Monkey]
+## 搜索之单词接龙[ ]
 
+![istockphoto-1268340835-1024x1024](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\word\搜索之单词接龙[Langur Monkey].assets\istockphoto-1268340835-1024x1024.jpg)
 
-
-![1591970344523](C:\Users\FrankCooper\AppData\Roaming\Typora\typora-user-images\1591970344523.png)
-
-> 举例
-
-![单词接龙](C:\Users\FrankCooper\Downloads\单词接龙.png)
+![2020-09-28_171850](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\word\搜索之单词接龙[Langur Monkey].assets\2020-09-28_171850.jpg)
 
 - 单词之间的可以组成一张图，图的顶点为单词本身，单词之间的连接线表示单词之间的转换关系，单向箭头表示一个方向转换，双向箭头表示双向切换，题目要求的从$beginWord$到$endWord$，的最短路径，可以使用$BFS$的搜索方法解决
 - 如上图所示，可以找到两条路径：
@@ -78,6 +74,56 @@ hit->hot->lot->log->cog
 ```
 
 ### 方法2：双向BFS
+
+![image-20200928171619046](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dfs_bfs\word\搜索之单词接龙[Langur Monkey].assets\image-20200928171619046.png)
+
+```java
+        public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+
+            Set<String> wordSet = new HashSet<>(wordList);
+            if (!wordSet.contains(endWord)) return 0;
+            Set<String> beginSet = new HashSet<>();
+            Set<String> endSet = new HashSet<>();
+            Set<String> visitdSet = new HashSet<>();
+            beginSet.add(beginWord);
+            endSet.add(endWord);
+            int steps = 1;
+            while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+                if (beginSet.size() > endSet.size()) {
+                    Set<String> tmpSet = beginSet;
+                    beginSet = endSet;
+                    endSet = tmpSet;
+                }
+                Set<String> tmpSet = new HashSet<>();
+                System.out.printf("beginSet:%s\n", JSON.toJSONString(beginSet));
+                System.out.printf("endSet:%s\n", JSON.toJSONString(endSet));
+                for (String word : beginSet) {
+                    char[] chas = word.toCharArray();
+                    for (int i = 0; i < chas.length; i++) {
+                        char src = chas[i];
+                        for (char c = 'a'; c <= 'z'; c++) {
+                            if (c == src) continue;
+                            chas[i] = c;
+                            String nextWord = String.valueOf(chas);
+                            //已经找到了
+                            if (endSet.contains(nextWord)) {
+                                return steps + 1;
+                            }
+                            //没有被访问过，且单词在wordSet中，添加进tmpSet ，本轮结束后赋值给beginSet
+                            if (!visitdSet.contains(nextWord) && wordSet.contains(nextWord)) {
+                                tmpSet.add(nextWord);
+                                visitdSet.add(nextWord);
+                            }
+                        }
+                        chas[i] = src;
+                    }
+                }
+                beginSet = tmpSet;
+                steps++;
+            }
+            return 0;
+        }
+```
 
 
 
