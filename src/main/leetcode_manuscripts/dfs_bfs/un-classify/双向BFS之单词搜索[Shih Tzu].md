@@ -29,6 +29,39 @@ while(!queue.empty()) {
 }
 ```
 
+#### 逐层扩展
+
+```c++
+void bfs()
+{
+    for(int i = 1; i <= max; i++)
+      {
+        正向bfs算式;
+        if(产生状态在反向曾产生过)  输出结果，结束程序;
+      }
+    for(int i = 1; i <= max; i++
+      {
+        反向bfs算式;
+        if(产生状态在正向曾产生过)  输出结果，结束程序;
+      }
+}
+```
+
+#### 逐节点扩展
+
+```c++
+void bfs()
+{
+    for(int i = 1; i <= max; i++)
+      {
+        正向bfs算式;
+        if(产生状态在反向曾产生过)  输出结果，结束程序;
+        反向bfs算式;
+        if(产生状态在正向曾产生过)  输出结果，结束程序;
+      }
+}
+```
+
 
 
 
@@ -94,7 +127,8 @@ while(!queue.empty()) {
 - https://blog.csdn.net/weixin_43501684/article/details/90147421
 - https://my.oschina.net/u/4160637/blog/4359629
 
-
+- https://blog.csdn.net/mashiro_ylb/article/details/78261639
+- https://leetcode.com/problems/open-the-lock/discuss/110237/Regular-java-BFS-solution-and-2-end-BFS-solution-with-improvement
 
 
 
