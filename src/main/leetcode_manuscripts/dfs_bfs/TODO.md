@@ -21,6 +21,8 @@
 ~~圣伯纳犬~~
 ~~西施犬~~
 
+~~金毛犬~~
+
 http://www.goupu.com.cn/baike/show-817.html
 
 
