@@ -1,6 +1,6 @@
 ## week_210
 
-### [5535. 括号的最大嵌套深度](https://leetcode-cn.com/problems/maximum-nesting-depth-of-the-parentheses/)
+### 5535. 括号的最大嵌套深度
 
 #### 思路
 
@@ -23,7 +23,7 @@
     }
 ```
 
-### [5536. 最大网络秩](https://leetcode-cn.com/problems/maximal-network-rank/)
+### 5536. 最大网络秩
 
 #### 思路
 
@@ -59,7 +59,7 @@
     }
 ```
 
-### [5537. 分割两个字符串得到回文串](https://leetcode-cn.com/problems/split-two-strings-to-make-palindrome/)
+### 5537. 分割两个字符串得到回文串
 
 ![5537](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\weekly_competition\w_210.assets\5537-1602405225339.jpg)
 
