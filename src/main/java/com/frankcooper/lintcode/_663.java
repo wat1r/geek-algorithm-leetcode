@@ -1,8 +1,6 @@
 package com.frankcooper.lintcode;
 
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
-
 import java.util.LinkedList;
 import java.util.Queue;
 

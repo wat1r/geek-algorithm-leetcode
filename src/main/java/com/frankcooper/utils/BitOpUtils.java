@@ -1,4 +1,4 @@
-package com.frankcooper.swordoffer.utils;
+package com.frankcooper.utils;
 
 public class BitOpUtils {
 
@@ -6,21 +6,38 @@ public class BitOpUtils {
 
 
     public static void main(String[] args) {
-        handler.testBin2Ten();
+//            handler.testBin2Ten();
 
-        int a = -8;
-        System.out.println(a >> 3);
-        int x = 1, y = 2;
-        x ^= y;
-        y ^= x;
-        x ^= y;
+//        int a = -8;
+//        System.out.println(a >> 3);
+//        int x = 1, y = 2;
+//        x ^= y;
+//        y ^= x;
+//        x ^= y;
+//
+//        System.out.printf("x:%d,y:%d\n", x, y);
+//        x = 1;
+//        x = -(~x);
 
-        System.out.printf("x:%d,y:%d\n", x, y);
+        handler.enumerateSubset();
+    }
 
 
-        x = 1;
-        x = -(~x);
+    int[] k = {1, 2, 3, 4, 5};
 
+
+    private void enumerateSubset() {
+        int s, n = 5;
+        //
+        for (s = 0; s < (1 << n); s++) {
+            System.out.printf("%s--->", addZeroForNum(Integer.toBinaryString(s), 5));
+            for (int i = 0; i < n; i++) {
+                if ((s & (1 << i)) != 0) {
+                    System.out.printf("%d ", i);
+                }
+            }
+            System.out.printf("\n");
+        }
     }
 
 
@@ -34,7 +51,6 @@ public class BitOpUtils {
 
 
     private void testOne() {
-
         for (int i = 1; i <= 10; i++) {
             int positive = i;
             int negative = -i;
@@ -73,7 +89,6 @@ public class BitOpUtils {
                 strLen = str.length();
             }
         }
-
         return str;
     }
 

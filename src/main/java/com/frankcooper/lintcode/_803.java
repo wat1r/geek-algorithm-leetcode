@@ -1,7 +1,6 @@
 package com.frankcooper.lintcode;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
-import org.omg.CORBA.INTERNAL;
+import com.frankcooper.utils.PrintUtils;
 
 import java.util.*;
 import java.util.Set;

@@ -1,9 +1,6 @@
 package com.frankcooper.classic.floyd;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
-
-import java.util.Arrays;
-import java.util.Scanner;
+import com.frankcooper.utils.PrintUtils;
 
 public class Floyd2nd {
 

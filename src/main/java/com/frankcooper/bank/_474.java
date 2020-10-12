@@ -1,6 +1,6 @@
 package com.frankcooper.bank;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 
 /**
  * @Date 2020/9/15
