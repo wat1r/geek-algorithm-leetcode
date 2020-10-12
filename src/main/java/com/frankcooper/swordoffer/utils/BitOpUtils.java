@@ -7,11 +7,26 @@ public class BitOpUtils {
 
     public static void main(String[] args) {
         handler.testBin2Ten();
+
+        int a = -8;
+        System.out.println(a >> 3);
+        int x = 1, y = 2;
+        x ^= y;
+        y ^= x;
+        x ^= y;
+
+        System.out.printf("x:%d,y:%d\n", x, y);
+
+
+        x = 1;
+        x = -(~x);
+
     }
 
 
     private void testBin2Ten() {
-        String[] arr = new String[]{"10011", "11001", "10001"};
+        String[] arr = new String[]{"10011", "11001", "10001", "11011", "01100", "01010", "01000000"
+        };
         for (String bin : arr) {
             bin2Ten(bin);
         }
