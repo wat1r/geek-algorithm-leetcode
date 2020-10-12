@@ -1,6 +1,6 @@
 package com.frankcooper.bank;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 import java.util.*;
 
