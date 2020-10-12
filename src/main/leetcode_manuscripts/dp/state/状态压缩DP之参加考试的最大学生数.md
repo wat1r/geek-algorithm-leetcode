@@ -13,6 +13,7 @@
 ### Reference
 
 - https://zhuanlan.zhihu.com/p/131585177
+- https://www.luogu.com.cn/blog/BW-Orzzzzz/dong-tai-gui-hua-wei-yun-suan-yu-zhuang-ya-dp
 
 
 
