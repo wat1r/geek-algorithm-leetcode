@@ -23,6 +23,11 @@ public class PrintUtils {
         int rows = matrix.length, cols = matrix[0].length;
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
+//                if (Integer.MAX_VALUE == matrix[i][j]) {
+//                    System.out.print("INF ");
+//                } else {
+//                    System.out.print(String.format("%" + d + "s", matrix[i][j]) + " ");
+//                }
                 System.out.print(String.format("%" + d + "s", matrix[i][j]) + " ");
             }
             System.out.println();

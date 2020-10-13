@@ -35,11 +35,12 @@ public class POJ3311 {
     private void autoProcess() {
         n = 3;
         n++;
-//        edges = new int[n][n];
-        edges = new int[][]{{0, 1, 10, 10},
-                {1, 0, 1, 2},
-                {10, 1, 0, 10},
-                {10, 2, 10, 0}};
+        edges = new int[][]{
+                {0, 0, 0, 0, 0},
+                {0, 0, 1, 10, 10},
+                {0, 1, 0, 1, 2},
+                {0, 10, 1, 0, 10},
+                {0, 10, 2, 10, 0}};
 //        dist = new int[n + 1][n + 1];
 //        for (int i = 0; i <= n; i++) {
 //            for (int j = 0; j <= n; j++) {
@@ -47,34 +48,38 @@ public class POJ3311 {
 //            }
 //        }
         floyd();
-        dp = new int[n][n];
-        for (int i = 1; i < n; i++) {
+        dp = new int[n + 1][1 << n];
+        for (int i = 0; i <= n; i++) {
             Arrays.fill(dp[i], INF);
         }
-        dp[0][0] = 0;
+        PrintUtils.printMatrix(dp, 14);
+        dp[1][1] = 0;
         for (int state = 1; state < (1 << n); state++) {
-            for (int i = 0; i < n; i++) {
-                if ((state & (1 << i)) != 0) {
-                    for (int j = 1; j < n; j++) {
-                        if ((state & (1 << j)) != 0) {
-                            dp[j][state | (1 << j)] = Math.min(dp[j][state | (1 << j)], dp[i][state] + edges[i][j]);
+            for (int i = 1; i <= n; i++) {
+                if ((state & (1 << (i - 1))) != 0) {
+                    for (int j = 1; j <= n; j++) {
+                        if ((state & (1 << (j - 1))) == 0) {
+                            dp[j][state | (1 << (j - 1))] = Math.min(dp[j][state | (1 << (j - 1))], dp[i][state] + edges[i][j]);
                         }
                     }
                 }
             }
         }
-        PrintUtils.printMatrix(dp);
+        PrintUtils.printMatrix(dp, 14);
         int res = 0;
         for (int i = 2; i <= n; i++) {
-            res = Math.min(res, dp[i][(1 << n) - 1] + edges[i][1]);
+            if (dp[i][(1 << n) - 1] >= 0 && dp[i][(1 << n) - 1] <= 10) {
+                res = Math.min(res, dp[i][(1 << n) - 1] + edges[i][1]);
+            }
         }
+        System.out.println("res");
 
     }
 
     private void floyd() {
-        for (int k = 0; k < n; k++) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+        for (int k = 1; k <= n; k++) {
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
                     edges[i][j] = Math.min(edges[i][j], edges[i][k] + edges[k][j]);
                 }
             }
