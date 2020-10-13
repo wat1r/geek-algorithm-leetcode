@@ -1,5 +1,8 @@
 package com.frankcooper.bank;
 
+/**
+ * https://leetcode-cn.com/problems/beautiful-arrangement/solution/java-zhuang-tai-ya-suo-dp-dai-zhu-shi-yi-dong-by-d/
+ */
 public class _526 {
     static _526 handler = new _526();
 
