@@ -1,9 +1,7 @@
-package com.frankcooper.poj;
+package com.frankcooper.oj_set.poj;
 
-import com.frankcooper.Main;
 import com.frankcooper.swordoffer.utils.PrintUtils;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
