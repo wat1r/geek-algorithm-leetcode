@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class _285 {
 
 
-    static _287 handler = new _287();
+    static _285 handler = new _285();
 
 
     static class Main {
