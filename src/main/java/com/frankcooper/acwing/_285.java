@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class _287 {
+public class _285 {
 
 
     static _287 handler = new _287();
