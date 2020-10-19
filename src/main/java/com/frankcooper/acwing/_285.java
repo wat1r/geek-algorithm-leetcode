@@ -11,6 +11,84 @@ public class _285 {
     static _285 handler = new _285();
 
 
+    public static void main(String[] args) {
+
+    }
+
+
+    static class Adj {
+        static Adj adj = new Adj();
+
+        public static void main(String[] args) {
+
+        }
+
+        /**
+         * cnt_edge是给每一个边标号，从0开始。
+         * edges[i].v 表示第i条边指向哪个点，edge[i].next表示第i条边的下一条边的序号。
+         * head[u]表示以第u为初始结点的边的序号
+         */
+        class Edge {
+            int v;
+            int w;
+            int next;
+        }
+
+        int N = 10;
+        Edge[] edges = new Edge[2 * N];
+        int cnt_edge = 0;
+        int[] head = new int[N];
+
+        public void add(int uu, int vv, int ww) {
+            edges[cnt_edge].v = vv;
+            edges[cnt_edge].w = ww;
+            edges[cnt_edge].next = head[cnt_edge];
+            head[uu] = cnt_edge++;
+        }
+
+    }
+
+
+    static class Adj1 {
+
+        static Adj1 adj = new Adj1();
+
+        public static void main(String[] args) {
+            adj.add(1, 2);
+            adj.add(2, 3);
+            adj.add(2, 5);
+            adj.add(3, 5);
+            adj.add(5, 1);
+            adj.add(5, 0);
+//            for (int u = 1; u <= 5; u++) {
+//                adj.printU(u);
+//            }
+        }
+
+        int N = 10;
+        int idx = 0;
+        int[] head = new int[6]; // 存储的是顶点的下标
+        int[] edge = new int[6];
+        int[] next = new int[6]; //顶点的下标
+
+
+        public void add(int u, int v) {
+            edge[idx] = v;
+            next[idx] = head[u];
+            head[u] = idx++;
+        }
+
+
+        public void printU(int u) {
+            System.out.printf("%d : ", u);
+            for (int i = head[u]; i >= 0; i = next[i]) {
+                System.out.printf("%d , v -->", u, i);
+            }
+        }
+
+    }
+
+
     static class Main {
 
         static Main main = new Main();
