@@ -19,23 +19,34 @@ public class Adj {
         int E = 6;// 边的总数量，当图为无向图时，一条边的两个端点建立邻接表时，均会记录该边，一条边会被记录两次
         int V = 5; //顶点的总数量
         int idx = 0; //标记当前边的编号
-        int[] head = new int[V << 1]; //每个顶点其中一条边的编号
-        Edge[] edge = new Edge[E << 1]; //边的数量
+        int[] head = new int[V + 1]; //每个顶点其中一条边的编号
+        Edge[] edge = new Edge[E + 1]; //边的数量
 
 
         private void process() {
             init();
             print();
+            /**
+             * 1
+             * --> 2
+             * 2
+             * --> 5
+             * --> 3
+             * 3
+             * --> 5
+             * 4
+             * 5
+             * --> 4
+             * --> 1
+             */
         }
 
 
         private void init() {
             Arrays.fill(head, -1);
 //            Arrays.fill(edge, new Edge(0, 0));
-            for (int i = 0; i < (E << 1); i++) {
-                edge[i] = new Edge();
-                edge[i].to = 0;
-                edge[i].next = 0;
+            for (int i = 0; i < (E + 1); i++) {
+                edge[i] = new Edge(0, 0);
             }
             addEdge(1, 2);
             addEdge(2, 3);
