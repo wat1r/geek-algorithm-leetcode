@@ -54,18 +54,11 @@ public class _285 {
         static Adj1 adj = new Adj1();
 
         public static void main(String[] args) {
-            adj.add(1, 2);
-            adj.add(2, 3);
-            adj.add(2, 5);
-            adj.add(3, 5);
-            adj.add(5, 1);
-            adj.add(5, 0);
-//            for (int u = 1; u <= 5; u++) {
-//                adj.printU(u);
-//            }
+            adj.process();
         }
 
-        int N = 10;
+
+        int N = 5;
         int idx = 0;
         int[] head = new int[6]; // 存储的是顶点的下标
         int[] edge = new int[6];
@@ -79,12 +72,30 @@ public class _285 {
         }
 
 
-        public void printU(int u) {
-            System.out.printf("%d : ", u);
-            for (int i = head[u]; i >= 0; i = next[i]) {
-                System.out.printf("%d , v -->", u, i);
+        public void process() {
+            Arrays.fill(head, -1);
+            addEdge();
+            print();
+        }
+
+        private void print() {
+            for (int i = 1; i <= N; i++) {
+                System.out.printf("%d\n", i);
+                for (int j = head[i]; j != -1; j = next[j]) {
+                    System.out.printf("--> %d\n", edge[j]);
+                }
             }
         }
+
+        private void addEdge() {
+            add(1, 2);
+            add(2, 3);
+            add(2, 5);
+            add(3, 5);
+            add(5, 1);
+            add(5, 4);
+        }
+
 
     }
 
