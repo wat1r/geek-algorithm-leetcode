@@ -14,12 +14,33 @@ public class _337 {
     }
 
 
-    public int rob(TreeNode root) {
+    class _3rd {
+
+
+        public int rob(TreeNode root) {
+            int[] f = dfs(root);
+            return Math.max(f[0], f[1]);
+        }
+
+        private int[] dfs(TreeNode node) {
+            if (node == null) return new int[]{0, 0};
+            int[] fLeft = dfs(node.left);
+            int[] fRight = dfs(node.right);
+            int[] f = new int[2];
+            f[0] = Math.max(fLeft[0], fLeft[1]) + Math.max(fRight[0], fRight[1]);
+            f[1] = fLeft[0] + fRight[0] + node.val;
+            return f;
+        }
+
+    }
+
+
+    public int rob2nd(TreeNode root) {
         if (root == null) return 0;
         int first = root.val;
-        if (root.left != null) first += rob(root.left.left) + rob(root.left.right);
-        if (root.right != null) first += rob(root.right.left) + rob(root.right.right);
-        int second = rob(root.left) + rob(root.right);
+        if (root.left != null) first += rob2nd(root.left.left) + rob2nd(root.left.right);
+        if (root.right != null) first += rob2nd(root.right.left) + rob2nd(root.right.right);
+        int second = rob2nd(root.left) + rob2nd(root.right);
         return Math.max(first, second);
     }
 
