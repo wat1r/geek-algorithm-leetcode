@@ -110,18 +110,18 @@ public class _285 {
 
 
         //        int N = 6010; //N名员工
-        int N = 8; //N名员工
-        int[] happy = new int[N]; //员工的快乐指数 H
-        int[] head = new int[N]; //
-        int[] edge = new int[N];//边
-        int[] neighbour = new int[N];//
+        int n = 8; //N名员工
+        int[] happy = new int[n]; //员工的快乐指数 H
+        int[] head = new int[n]; //
+        int[] edge = new int[n];//边
+        int[] next = new int[n];//
         int idx = 0;
-        int[][] f = new int[N][2];
-        boolean[] hasFather = new boolean[N];
+        int[][] f = new int[n][2];
+        boolean[] hasFather = new boolean[n];
 
         private void process() {
             Scanner in = new Scanner(System.in);
-            int n = in.nextInt();
+            n = in.nextInt();
             for (int i = 1; i <= n; i++) happy[i] = in.nextInt();
             Arrays.fill(head, -1);
             for (int i = 0; i < n - 1; i++) {
@@ -129,10 +129,22 @@ public class _285 {
                 add(b, a);
                 hasFather[a] = true;
             }
-            System.out.println(JSON.toJSONString(happy));
-            System.out.println(JSON.toJSONString(head));
-            System.out.println(JSON.toJSONString(edge));
-            System.out.println(JSON.toJSONString(neighbour));
+            int root = 1;
+            while (hasFather[root]) root++;
+            dfs(root);
+            System.out.println(Math.max(f[root][0], f[root][1]));
+        }
+
+        private void dfs(int u) {
+            f[u][1] = happy[u];
+            for (int i = head[u]; i != -1; i = next[i]) {
+                int j = edge[i];
+                dfs(j);
+                f[u][1] += f[j][0];
+                f[u][0] += Math.max(f[j][1], f[j][0]);
+            }
+
+
         }
 
         /**
@@ -141,7 +153,7 @@ public class _285 {
          */
         private void add(int a, int b) {
             edge[idx] = b;
-            neighbour[idx] = head[a];
+            next[idx] = head[a];
             head[a] = idx++;
         }
 
