@@ -1,5 +1,6 @@
 package com.frankcooper.bank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class _1627 {
@@ -7,21 +8,31 @@ public class _1627 {
     static _1627 handler = new _1627();
 
     public static void main(String[] args) {
-
+        int n = 6;
+        int threshold = 2;
+        int[][] queries = {{1, 4}, {2, 5}, {3, 6}};
+        handler.areConnected(n, threshold, queries);
     }
 
 
     public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
-
-
-
-
-
-        return null;
+        UnionFind uf = new UnionFind(n);
+        for (int i = threshold + 1; i <= n; i++) {
+            int times = 2;
+            while (i * times <= n) {
+                int x = i - 1;
+                int y = i * times - 1;
+                uf.unoin(x, y);
+                times += 1;
+            }
+        }
+        List<Boolean> res = new ArrayList<>();
+        for (int[] q : queries) {
+            int x = q[0] - 1, y = q[1] - 1;
+            res.add(uf.connect(x, y));
+        }
+        return res;
     }
-
-
-
 
 
     class UnionFind {
