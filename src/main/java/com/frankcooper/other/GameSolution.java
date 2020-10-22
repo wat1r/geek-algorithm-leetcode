@@ -81,7 +81,6 @@ public class GameSolution {
 
         static _2nd handler = new _2nd();
 
-
         public static void main(String[] args) {
 //            int[] follows = {3, 1, 5, 8};
             int[] arr = {3, 4, 5, 6, 7, 10, 12};
@@ -98,8 +97,6 @@ public class GameSolution {
             }
 
             System.out.println(totalMax);
-
-
         }
 
 
