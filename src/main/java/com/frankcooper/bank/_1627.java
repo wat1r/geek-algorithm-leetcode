@@ -11,11 +11,39 @@ public class _1627 {
         int n = 6;
         int threshold = 2;
         int[][] queries = {{1, 4}, {2, 5}, {3, 6}};
-        handler.areConnected(n, threshold, queries);
+//        handler.areConnected(n, threshold, queries);
     }
 
 
     public List<Boolean> areConnected(int n, int threshold, int[][] queries) {
+        UnionFind uf = new UnionFind(n);
+        for (int z = threshold + 1; z <= n; z++)
+            for (int x = z, y = z * 2; y <= n; x += z, y += z)
+                uf.unoin(x - 1, y - 1);
+        List<Boolean> res = new ArrayList<>();
+        for (int[] q : queries) {
+            int x = q[0] - 1, y = q[1] - 1;
+            res.add(uf.connect(x, y));
+        }
+        return res;
+    }
+
+
+    public List<Boolean> areConnected2nd(int n, int threshold, int[][] queries) {
+        UnionFind uf = new UnionFind(n);
+        for (int i = threshold + 1; i <= n; i++)
+            for (int j = i * 2; j <= n; j += i)
+                uf.unoin(i, j);
+        List<Boolean> res = new ArrayList<>();
+        for (int[] q : queries) {
+            int x = q[0] - 1, y = q[1] - 1;
+            res.add(uf.connect(x, y));
+        }
+        return res;
+    }
+
+
+    public List<Boolean> areConnected1st(int n, int threshold, int[][] queries) {
         UnionFind uf = new UnionFind(n);
         for (int i = threshold + 1; i <= n; i++) {
             int times = 2;
@@ -44,7 +72,6 @@ public class _1627 {
             ranks = new int[n];
             for (int i = 0; i < n; i++) parents[i] = i;
         }
-
 
         public int find(int x) {
             if (x != parents[x]) {
