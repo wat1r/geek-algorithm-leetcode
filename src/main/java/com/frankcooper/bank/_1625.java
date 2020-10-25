@@ -24,7 +24,11 @@ public class _1625 {
             //轮转
             s = s.substring(b) + s.substring(0, b);
             //修改奇数的位置
-
+            for (int j = 0; j < 10; j++) {
+                for (int k = 1; k < s.length(); k += 2) {
+//                    s+=a;
+                }
+            }
 
 
         }
