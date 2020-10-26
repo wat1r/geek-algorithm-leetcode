@@ -1,6 +1,6 @@
 package com.frankcooper.bank.week;
 
-import org.omg.PortableInterceptor.INACTIVE;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.*;
 
@@ -71,9 +71,9 @@ public class Week212 {
     /**
      * Dijkstra 最短路径
      */
-    static class _3rd {
+    static class _3rd_1 {
 
-        static _3rd handler = new _3rd();
+        static _3rd_1 handler = new _3rd_1();
 
         public static void main(String[] args) {
             int[][] heights = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
@@ -82,9 +82,9 @@ public class Week212 {
 
         int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
         int m, n;
-        int[][] dist;
-        boolean[][] vis;
-        int INF = Integer.MAX_VALUE;
+        int[][] dist; //距离
+        boolean[][] vis; //访问数组
+        int INF = Integer.MAX_VALUE; //INF
 
 
         class Node {
@@ -95,7 +95,7 @@ public class Week212 {
             public Node(int i, int j, int val) {
                 this.i = i;
                 this.j = j;
-                this.val = val;
+                this.val = val; //距离
             }
         }
 
@@ -118,6 +118,7 @@ public class Week212 {
                     int ni = i + d[0], nj = j + d[1];
                     if (!inArea(ni, nj)) continue;
                     int nval = Math.max(val, Math.abs(heights[i][j] - heights[ni][nj]));
+                    //松弛
                     if (!vis[ni][nj] && dist[ni][nj] > nval) {
                         dist[ni][nj] = nval;
                         pq.offer(new Node(ni, nj, nval));
@@ -131,6 +132,210 @@ public class Week212 {
         private boolean inArea(int i, int j) {
             return i >= 0 && i < m && j >= 0 && j < n;
         }
+
+    }
+
+
+    static class _3rd_2 {
+
+        static _3rd_2 handler = new _3rd_2();
+
+        public static void main(String[] args) {
+            int[][] heights = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
+            handler.minimumEffortPath(heights);
+        }
+
+
+        public int minimumEffortPath(int[][] heights) {
+            int L = 0, R = 1_000_000; //
+            while (L <= R) {
+                int M = (L + R) >> 1; // 取mid
+                if (bfs(M, heights)) {
+                    R = M - 1;
+                } else {
+                    L = M + 1;
+                }
+            }
+            return L;
+        }
+
+
+        /**
+         * 能否小于max的情况下找到一条从起点到终点的路径
+         *
+         * @param max
+         * @param heights
+         * @return
+         */
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int m, n;
+
+        private boolean bfs(int max, int[][] heights) {
+            m = heights.length;
+            n = heights[0].length;
+            Queue<int[]> queue = new LinkedList<>();
+            queue.add(new int[]{0, 0});
+            boolean[][] vis = new boolean[m][n];
+            vis[0][0] = true;
+            while (!queue.isEmpty()) {
+                int[] curr = queue.poll();
+                int i = curr[0], j = curr[1];
+                if (i == m - 1 && j == n - 1) return true;
+                for (int[] d : directions) {
+                    int ni = i + d[0], nj = j + d[1];
+                    //判断(i,j) --> (ni,nj)的距离是否比当前的小距离小，如果是这点是有效的
+                    if (inArea(ni, nj) && !vis[ni][nj] && Math.abs(heights[i][j] - heights[ni][nj]) <= max) {
+                        vis[ni][nj] = true;
+                        queue.add(new int[]{ni, nj});
+                    }
+                }
+            }
+            return false;
+        }
+
+        private boolean inArea(int i, int j) {
+            return i >= 0 && i < m && j >= 0 && j < n;
+        }
+    }
+
+
+    static class _3rd_3 {
+        static _3rd_3 handler = new _3rd_3();
+
+        public static void main(String[] args) {
+            int[][] heights = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
+            handler.minimumEffortPath(heights);
+        }
+
+        int INF = Integer.MAX_VALUE >> 1;
+        int ans = INF;
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int m, n;
+        boolean[][] vis;
+
+        Map<Integer, Integer> memo = new HashMap<>();
+
+
+        public int minimumEffortPath(int[][] heights) {
+            m = heights.length;
+            n = heights[0].length;
+            vis = new boolean[m][n];
+            vis[0][0] = true;
+            dfs(heights, 0, 0, 0);
+            return ans;
+        }
+
+
+        private void dfs(int[][] heights, int i, int j, int val) {
+            int idx = i * n + j;
+            if (memo.containsKey(idx) && memo.get(idx) < val) {
+                return;
+            }
+            if (!memo.containsKey(idx)) memo.put(idx, val);
+            if (i == m - 1 && j == n - 1) {
+                if (ans >= val) ans = val;
+                return;
+            }
+            for (int[] d : directions) {
+                int ni = i + d[0], nj = j + d[1];
+                if (inArea(ni, nj) && !vis[ni][nj]) {
+                    vis[ni][nj] = true;
+                    dfs(heights, ni, nj, Math.max(Math.abs(heights[ni][nj] - heights[i][j]), val));
+                    vis[ni][nj] = false;
+                }
+            }
+        }
+
+
+        private boolean inArea(int i, int j) {
+            return i >= 0 && i < m && j >= 0 && j < n;
+        }
+
+
+    }
+
+    static class _3rd_4 {
+
+        static _3rd_4 handler = new _3rd_4();
+
+        public static void main(String[] args) {
+            int[][] h = {{4, 3, 4, 10, 5, 5, 9, 2}, {10, 8, 2, 10, 9, 7, 5, 6}, {5, 8, 10, 10, 10, 7, 4, 2}, {5, 1, 3, 1, 1, 3, 1, 9}, {6, 4, 10, 6, 10, 9, 4, 6}};
+            handler.minimumEffortPath(h);
+        }
+
+        class Edge {
+            int x;//from的idx
+            int y; //to的idx
+            int val; //距离
+
+            public Edge(int x, int y, int val) {
+                this.x = x;
+                this.y = y;
+                this.val = val;
+            }
+        }
+
+
+        public int minimumEffortPath(int[][] heights) {
+            List<Edge> edges = new ArrayList<>();
+            int m = heights.length;
+            int n = heights[0].length;
+            //处理这些边
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    int idx = i * n + j;
+                    if (i > 0) edges.add(new Edge(idx - n, idx, Math.abs(heights[i][j] - heights[i - 1][j])));
+                    if (j > 0) edges.add(new Edge(idx - 1, idx, Math.abs(heights[i][j] - heights[i][j - 1])));
+                }
+            }
+            //排序，按边的值从小到大排序
+            edges.sort((o1, o2) -> o1.val - o2.val);
+            UnionFind uf = new UnionFind(m * n);
+            for (Edge edge : edges) {
+                uf.unoin(edge.x, edge.y);//合并
+                if (uf.connect(0, m * n - 1)) return edge.val; //判断
+            }
+            return 0;
+        }
+
+
+        class UnionFind {
+            int[] parents;
+            int[] ranks;
+
+            public UnionFind(int n) {
+                parents = new int[n];
+                ranks = new int[n];
+                for (int i = 0; i < n; i++) parents[i] = i;
+            }
+
+            public int find(int x) {
+                if (x != parents[x]) {
+                    parents[x] = find(parents[x]);
+                }
+                return parents[x];
+            }
+
+            public boolean unoin(int x, int y) {
+                int rootX = find(x), rootY = find(y);
+                if (rootX == rootY) return false;
+                if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
+                if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
+                if (ranks[rootX] == ranks[rootY]) {
+                    parents[rootY] = rootX;
+                    ranks[rootY]++;
+                }
+                return true;
+            }
+
+            public boolean connect(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
+                return rootX == rootY;
+            }
+
+        }
+
 
     }
 
@@ -171,6 +376,7 @@ public class Week212 {
     private boolean inArea(int i, int j) {
         return i >= 0 && i < m && j >= 0 && j < n;
     }
+
 
     static class _2nd {
 
