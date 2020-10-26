@@ -7,6 +7,16 @@ package com.frankcooper.swordoffer.utils;
  */
 public class PrintUtils {
 
+
+    private void processSymbol(String str) {
+        str.replace("[", "{").replace("]", "}");
+
+
+
+
+    }
+
+
     public static void printMatrix(int[][] matrix) {
         int rows = matrix.length, cols = matrix[0].length;
         for (int i = 0; i < rows; ++i) {

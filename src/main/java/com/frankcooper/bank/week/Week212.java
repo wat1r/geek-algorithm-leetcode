@@ -1,5 +1,7 @@
 package com.frankcooper.bank.week;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 import java.util.*;
 
 /**
@@ -65,6 +67,74 @@ public class Week212 {
         return true;
     }
 
+
+    /**
+     * Dijkstra 最短路径
+     */
+    static class _3rd {
+
+        static _3rd handler = new _3rd();
+
+        public static void main(String[] args) {
+            int[][] heights = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
+            handler.minimumEffortPath(heights);
+        }
+
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int m, n;
+        int[][] dist;
+        boolean[][] vis;
+        int INF = Integer.MAX_VALUE;
+
+
+        class Node {
+            int i;
+            int j;
+            int val;
+
+            public Node(int i, int j, int val) {
+                this.i = i;
+                this.j = j;
+                this.val = val;
+            }
+        }
+
+
+        public int minimumEffortPath(int[][] heights) {
+            m = heights.length;
+            n = heights[0].length;
+            dist = new int[m][n];
+            vis = new boolean[m][n];
+            for (int i = 0; i < m; i++) Arrays.fill(dist[i], INF);
+            PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.val - o2.val);
+            pq.offer(new Node(0, 0, 0));
+            dist[0][0] = 0;
+            while (!pq.isEmpty()) {
+                Node curr = pq.poll();
+                int i = curr.i, j = curr.j, val = curr.val;
+                if (vis[i][j]) continue;
+                vis[i][j] = true;
+                for (int[] d : directions) {
+                    int ni = i + d[0], nj = j + d[1];
+                    if (!inArea(ni, nj)) continue;
+                    int nval = Math.max(val, Math.abs(heights[i][j] - heights[ni][nj]));
+                    if (!vis[ni][nj] && dist[ni][nj] > nval) {
+                        dist[ni][nj] = nval;
+                        pq.offer(new Node(ni, nj, nval));
+                    }
+                }
+            }
+            return dist[m - 1][n - 1];
+        }
+
+
+        private boolean inArea(int i, int j) {
+            return i >= 0 && i < m && j >= 0 && j < n;
+        }
+
+    }
+
+
     int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
     int m, n;
 
@@ -110,7 +180,7 @@ public class Week212 {
         public static void main(String[] args) {
 
             int[][] h = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
-            h = new int[][]{{1,10,6,7,9,10,4,9}};
+            h = new int[][]{{1, 10, 6, 7, 9, 10, 4, 9}};
             handler.minimumEffortPath(h);
 
         }
