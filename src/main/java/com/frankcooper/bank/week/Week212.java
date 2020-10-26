@@ -213,28 +213,30 @@ public class Week212 {
         int m, n;
         boolean[][] vis;
 
-        Map<Integer, Integer> memo = new HashMap<>();
-
 
         public int minimumEffortPath(int[][] heights) {
             m = heights.length;
             n = heights[0].length;
             vis = new boolean[m][n];
-            vis[0][0] = true;
-            dfs(heights, 0, 0, 0);
-            return ans;
+            int L = 0, R = 1_000_000; //
+            while (L <= R) {
+                int M = (L + R) >> 1; // 取mid
+                if (dfs(heights, 0, 0, M)) {
+                    R = M - 1;
+                } else {
+                    L = M + 1;
+                }
+            }
+            return L;
         }
 
 
-        private void dfs(int[][] heights, int i, int j, int val) {
-            int idx = i * n + j;
-            if (memo.containsKey(idx) && memo.get(idx) < val) {
-                return;
-            }
-            if (!memo.containsKey(idx)) memo.put(idx, val);
+        private boolean dfs(int[][] heights, int i, int j, int val) {
             if (i == m - 1 && j == n - 1) {
-                if (ans >= val) ans = val;
-                return;
+                if (ans >= val) {
+                    ans = val;
+                    return true;
+                }
             }
             for (int[] d : directions) {
                 int ni = i + d[0], nj = j + d[1];
@@ -244,6 +246,7 @@ public class Week212 {
                     vis[ni][nj] = false;
                 }
             }
+            return false;
         }
 
 
