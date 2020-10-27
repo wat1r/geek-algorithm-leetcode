@@ -421,4 +421,82 @@ public class Week212 {
     }
 
 
+    /**
+     * 1632.矩阵转换后的秩
+     */
+    static class _4th_1 {
+        static _4th_1 handler = new _4th_1();
+
+        public static void main(String[] args) {
+
+        }
+
+        int R, C; //行列
+        int LIM = 512;
+
+        public int[][] matrixRankTransform(int[][] matrix) {
+            R = matrix.length;
+            C = matrix[0].length;
+            int[] countR = new int[R];
+            int[] countC = new int[C];
+            Map<Integer, List<Integer>> map = new HashMap<>();
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    List<Integer> list = map.getOrDefault(matrix[r][c], new ArrayList<>());
+                    list.add(r * LIM + c);
+                    map.put(matrix[r][c], list);
+                }
+            }
+            UnionFind uf = new UnionFind(LIM * 2);
+            int[] values = new int[map.size()];
+            int i = 0;
+            for (List<Integer> list : map.values()) {
+                values[i++] = list.get(0);
+            }
+            Arrays.sort(values);
+
+
+            return null;
+        }
+
+
+        class UnionFind {
+            int[] parents;
+            int[] ranks;
+
+            public UnionFind(int n) {
+                parents = new int[n];
+                ranks = new int[n];
+                for (int i = 0; i < n; i++) parents[i] = i;
+            }
+
+            public int find(int x) {
+                if (x != parents[x]) {
+                    parents[x] = find(parents[x]);
+                }
+                return parents[x];
+            }
+
+            public boolean unoin(int x, int y) {
+                int rootX = find(x), rootY = find(y);
+                if (rootX == rootY) return false;
+                if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
+                if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
+                if (ranks[rootX] == ranks[rootY]) {
+                    parents[rootY] = rootX;
+                    ranks[rootY]++;
+                }
+                return true;
+            }
+
+            public boolean connect(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
+                return rootX == rootY;
+            }
+
+        }
+    }
+
+
 }
