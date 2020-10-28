@@ -1,5 +1,7 @@
 package com.frankcooper.bank.week;
 
+import com.alibaba.fastjson.JSON;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.omg.CORBA.INTERNAL;
 
 import java.util.*;
@@ -454,48 +456,132 @@ public class Week212 {
                 values[i++] = list.get(0);
             }
             Arrays.sort(values);
+            for (int val : values) {
+                for (int vv : map.get(val)) {
+//                    uf.find(val/LIM)
+                }
+            }
 
 
             return null;
         }
 
 
-        class UnionFind {
-            int[] parents;
-            int[] ranks;
+    }
 
-            public UnionFind(int n) {
-                parents = new int[n];
-                ranks = new int[n];
-                for (int i = 0; i < n; i++) parents[i] = i;
-            }
+    static class UnionFind {
+        int[] parents;
+        int[] ranks;
 
-            public int find(int x) {
-                if (x != parents[x]) {
-                    parents[x] = find(parents[x]);
-                }
-                return parents[x];
-            }
-
-            public boolean unoin(int x, int y) {
-                int rootX = find(x), rootY = find(y);
-                if (rootX == rootY) return false;
-                if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
-                if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
-                if (ranks[rootX] == ranks[rootY]) {
-                    parents[rootY] = rootX;
-                    ranks[rootY]++;
-                }
-                return true;
-            }
-
-            public boolean connect(int x, int y) {
-                int rootX = find(x);
-                int rootY = find(y);
-                return rootX == rootY;
-            }
-
+        public UnionFind(int n) {
+            parents = new int[n];
+            ranks = new int[n];
+            for (int i = 0; i < n; i++) parents[i] = i;
         }
+
+        public int find(int x) {
+            if (x != parents[x]) {
+                parents[x] = find(parents[x]);
+            }
+            return parents[x];
+        }
+
+        public boolean unoin(int x, int y) {
+            int rootX = find(x), rootY = find(y);
+            if (rootX == rootY) return false;
+            if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
+            if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
+            if (ranks[rootX] == ranks[rootY]) {
+                parents[rootY] = rootX;
+                ranks[rootY]++;
+            }
+            return true;
+        }
+
+        public boolean connect(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+            return rootX == rootY;
+        }
+
+    }
+
+
+    static class _4th_2 {
+
+
+        static _4th_2 handler = new _4th_2();
+
+
+        public static void main(String[] args) {
+//            handler.matrixRankTransform(PrintUtils.processSymbol("[[7,3,6],[1,4,5],[9,8,2]]"));
+            handler.matrixRankTransform(PrintUtils.processSymbol("[[20,-21,14],[-19,4,19],[22,-47,24],[-19,4,19]]"));
+        }
+
+
+        public int[][] matrixRankTransform(int[][] matrix) {
+            int R = matrix.length, C = matrix[0].length;
+            UnionFind uf = new UnionFind(R * C);
+            Integer[] idxs = new Integer[R * C];
+            int[] vals = new int[R * C];
+            for (int i = 0; i < R * C; i++) idxs[i] = i;
+            Arrays.sort(idxs, (o1, o2) -> matrix[o1 / C][o1 % C] - matrix[o2 / C][o2 % C]);
+            int[] rowMaxRank = new int[R];
+            int[] colMaxRank = new int[C];
+            Arrays.fill(rowMaxRank, -1);
+            Arrays.fill(colMaxRank, -1);
+            System.out.printf("idxs:%s\n",JSON.toJSONString(idxs));
+            int pos = 0;
+            while (pos < R * C) {
+                int val = 1;
+                int idx = idxs[pos];
+                int r = idx / C, c = idx % C;
+                if (rowMaxRank[r] != -1) {
+                    int k = rowMaxRank[r];
+                    int tmpIdx = r * C + k;
+                    int tmpRoot = uf.find(tmpIdx);
+                    int tmpVal = vals[tmpRoot];
+                    if (matrix[r][c] == matrix[r][k]) {
+                        uf.unoin(idx, tmpIdx);
+                        val = tmpVal;
+                    } else {
+                        val = tmpVal + 1;
+                    }
+                }
+                if (colMaxRank[c] != -1) {
+                    int k = colMaxRank[c];
+                    int tmpIdx = k * C + c;
+                    int tmpRoot = uf.find(tmpIdx);
+                    int tmpVal = vals[tmpRoot];
+                    if (matrix[r][c] == matrix[k][c]) {
+                        uf.unoin(idx, tmpIdx);
+                        val = Math.max(val, tmpVal);
+                    } else {
+                        val = Math.max(val, tmpVal + 1);
+                    }
+                }
+                rowMaxRank[r] = c;
+                colMaxRank[c] = r;
+                int idxRoot = uf.find(idx);
+                vals[idxRoot] = val;
+                System.out.printf("idx:%d,r:%d,c:%d,pos:%d\n", idx, r, c, pos);
+                System.out.printf("rowMaxRank:%s\n", JSON.toJSONString(rowMaxRank));
+                System.out.printf("colMaxRank:%s\n", JSON.toJSONString(colMaxRank));
+                System.out.printf("vals:%s\n", JSON.toJSONString(vals));
+                System.out.println("---------------------------------");
+                pos++;
+            }
+            int[][] res = new int[R][C];
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    int idx = r * C + c;
+                    res[r][c] = vals[uf.find(idx)];
+                }
+            }
+            return res;
+        }
+
+
     }
 
 
