@@ -1,7 +1,5 @@
 package com.frankcooper.other;
 
-import com.frankcooper.bank._1;
-
 import java.util.ArrayList;
 import java.util.*;
 
@@ -23,6 +21,123 @@ public class _10_10 {
 
 
     }
+
+
+    static class _3rd {
+        class FenwickTree {
+            int n;
+            int[] C;
+
+            //初始化
+            public FenwickTree(int n) {
+                this.n = n;
+                this.C = new int[n];
+            }
+
+            // 单点更新：将 i 位置与其直接关联的 C 都更新一遍
+            public void update(int i) {
+                while (i < n) {
+                    C[i]++;
+                    i += lowbit(i);
+                }
+            }
+
+            //传进来的值-1过，查询之前有多少个数
+            //区间查询：查询小于等于 i 的元素个数
+            public int query(int i) {
+                int sum = 0;
+                while (i >= 1) {
+                    sum += C[i];
+                    i -= lowbit(i);
+                }
+                return sum;
+            }
+
+            //算lowbit
+            public int lowbit(int x) {
+                return x & (-x);
+            }
+        }
+
+        class StreamRank {
+            FenwickTree fenwickTree;
+
+            public StreamRank() {
+                fenwickTree = new FenwickTree(50_005);
+            }
+
+            public void track(int x) {
+                fenwickTree.update(x + 1);
+            }
+
+            public int getRankOfNumber(int x) {
+                return fenwickTree.query(x + 1);
+            }
+        }
+
+    }
+
+
+    static class _2nd {
+
+
+        static _2nd handler = new _2nd();
+
+        public static void main(String[] args) {
+            String[] op = {"StreamRank", "getRankOfNumber", "track", "getRankOfNumber", "track", "track", "track", "getRankOfNumber", "getRankOfNumber"};
+            int[][] arr = {{}, {1}, {0}, {0}, {2}, {3}, {2}, {2}, {3}};
+            StreamRank streamRank = null;
+            for (int i = 0; i < op.length; i++) {
+                switch (op[i]) {
+                    case "StreamRank":
+                        streamRank = new StreamRank();
+                        break;
+                    case "getRankOfNumber":
+                        streamRank.getRankOfNumber(arr[i][0]);
+                        break;
+                    case "track":
+                        streamRank.track(arr[i][0]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        static class StreamRank {
+            int N = 50_005;
+            int[] C;
+            int idx;
+
+
+            public StreamRank() {
+                C = new int[N];
+                idx = 0;
+            }
+
+            public void track(int x) {
+                for (int i = x + 1; i <= N; i += lowbit(i)) {
+                    C[i]++;
+                }
+            }
+
+            public int lowbit(int x) {
+                return x & (-x);
+            }
+
+            public int getRankOfNumber(int x) {
+                int res = 0;
+                for (int i = x + 1; i > 0; i -= lowbit(i)) {
+                    res += C[i];
+                }
+                return res;
+            }
+
+        }
+
+    }
+
 
     static class _1st {
 
@@ -47,8 +162,6 @@ public class _10_10 {
                         break;
                 }
             }
-
-
         }
 
         static class StreamRank {
