@@ -15,8 +15,6 @@ public class PrintUtils {
     }
 
 
-
-
     public static int[][] processSymbol(String str) {
         str = str.replace("[[", "").replace("]]", "");
 
@@ -31,6 +29,7 @@ public class PrintUtils {
                 matrix[r][c] = Integer.parseInt(seg[c]);
             }
         }
+        printMatrix(matrix, 6);
         return matrix;
     }
 
