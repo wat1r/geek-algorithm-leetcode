@@ -386,8 +386,17 @@ public class Week212 {
                     queue.offer(new int[]{ni, nj});
                 }
 
+
             }
-//            PrintUtils.printMatrix(dist, 6);
+
+//            for (int i = 0; i < dist.length; i++) {
+//                for (int j = 0; j < dist[0].length; j++) {
+//                    System.out.printf("%d ",dist[i][j]);
+//                }
+//                System.out.println();
+//            }
+
+            PrintUtils.printMatrix(dist, 6);
             return dist[len1 - 1][len2 - 1];
         }
     }
