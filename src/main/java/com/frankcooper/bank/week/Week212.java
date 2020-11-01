@@ -450,7 +450,6 @@ public class Week212 {
             int[][] h = {{1, 2, 2}, {3, 8, 2}, {5, 3, 5}};
             h = new int[][]{{1, 10, 6, 7, 9, 10, 4, 9}};
             handler.minimumEffortPath(h);
-
         }
 
         int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
