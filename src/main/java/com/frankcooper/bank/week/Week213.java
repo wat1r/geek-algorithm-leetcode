@@ -45,4 +45,24 @@ public class Week213 {
         }
     }
 
+
+    static class _2nd {
+
+        public static void main(String[] args) {
+
+        }
+
+        List<String> seed = Arrays.asList("a", "e", "i", "o", "u");
+
+        public int countVowelStrings(int n) {
+
+            return dfs(n);
+        }
+
+
+
+
+    }
+
+
 }
