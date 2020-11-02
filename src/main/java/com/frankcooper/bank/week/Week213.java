@@ -46,23 +46,78 @@ public class Week213 {
     }
 
 
-    static class _2nd {
+    /**
+     * ETL
+     */
+    static class _2nd_1 {
+
+        static _2nd_1 handler = new _2nd_1();
+
 
         public static void main(String[] args) {
-
+//            handler.countVowelStrings(2);
+//            handler.countVowelStrings(1);
+//            handler.countVowelStrings(33);
+            handler.countVowelStrings(50);
         }
 
         List<String> seed = Arrays.asList("a", "e", "i", "o", "u");
+        List<List<String>> resList = new ArrayList<>();
 
         public int countVowelStrings(int n) {
+            dfs(new ArrayList<>(), n);
+            return resList.size();
+        }
 
-            return dfs(n);
+        private void dfs(List<String> levelList, int n) {
+            if (levelList.size() == n) {
+                resList.add(new ArrayList<>(levelList));
+                return;
+            }
+            for (String s : seed) {
+                if (!levelList.isEmpty() && levelList.get(levelList.size() - 1).compareTo(s) > 0) continue;
+                levelList.add(s);
+                dfs(levelList, n);
+                levelList.remove(levelList.size() - 1);
+
+            }
+        }
+    }
+
+    /**
+     * 双百
+     */
+    static class _2nd_2 {
+        static _2nd_2 handler = new _2nd_2();
+
+        public static void main(String[] args) {
+            handler.countVowelStrings(2);
+            handler.countVowelStrings(1);
+            handler.countVowelStrings(33);
+//            handler.countVowelStrings(50);
         }
 
 
+        List<Character> seed = Arrays.asList('a', 'e', 'i', 'o', 'u');
+        int ans = 0;
+
+        public int countVowelStrings(int n) {
+            dfs(n, 'a');
+            return ans;
+        }
+
+        private void dfs(int n, char last) {
+            if (n == 0) {
+                ans++;
+                return;
+            }
+            for (char curr : seed) {
+                if (curr < last) continue;
+                dfs(n - 1, curr);
+            }
+        }
 
 
     }
-
 
 }
