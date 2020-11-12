@@ -43,14 +43,31 @@ public class Week214 {
 
         public static void main(String[] args) {
 //            handler.minDeletions("aaabbbcc");//2
-//            handler.minDeletions("ceabaacb");//2
+            handler.minDeletions("ceabaacb");//2
 //            handler.minDeletions("accdcdadddbaadbc");
 //            handler.minDeletions("abcabc");//3
-            handler.minDeletions("abcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwz");
+//            handler.minDeletions1st("abcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwzabcdefghijklmnopqrstuvwxwz");
         }
 
 
         public int minDeletions(String s) {
+            int[] arr = new int[26];
+            for (char c : s.toCharArray()) arr[c - 'a']++;
+            Set<Integer> set = new HashSet<>();
+            int ans = 0;
+            for (int i : arr) {
+                if (i != 0) {
+                    while (set.contains(i)) {
+                        i--;
+                        ans++;
+                    }
+                    if (i != 0) set.add(i);
+                }
+            }
+            return ans;
+        }
+
+        public int minDeletions1st(String s) {
             Map<Character, Integer> map = new HashMap<>();
             int[] arr = new int[26];
             for (char c : s.toCharArray()) {
