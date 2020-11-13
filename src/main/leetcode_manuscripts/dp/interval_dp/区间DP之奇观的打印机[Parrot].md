@@ -12,9 +12,7 @@
 
 #### 状态转移
 
-
-
-
+![image-20201113093654625](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\interval_dp\区间DP之奇观的打印机[Parrot].assets\image-20201113093654625.png)
 
 >  **对于上图的情况1**
 
@@ -63,3 +61,29 @@
 这时候已经全部打印结束了，4次
 
 > 综上总结，这种情况下需要判断[i...j]中的k位置，是否与存在重复的字符
+
+
+
+```java
+    public int strangePrinter(String s) {
+        int n = s.length();
+        if (n == 0) return 0;
+        int[][] dp = new int[n + 1][n + 1];
+        for (int i = 0; i < n; i++) dp[i][i] = 1;
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i <= n; i++) {
+                int j = i + len - 1;//
+                if (j >= n) break;
+                dp[i][j] = dp[i + 1][j] + 1;
+                for (int k = i + 1; k <= j; k++) {
+                    if (s.charAt(i) == s.charAt(k)) {
+                        dp[i][j] = Math.min(dp[i][j], dp[i][k - 1] + dp[k + 1][j]);
+                    }
+                }
+
+            }
+        }
+        return dp[0][n - 1];
+    }
+```
+

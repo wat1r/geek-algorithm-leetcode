@@ -1,6 +1,6 @@
 ## 区间DP之多边形三角剖分的最低得分[Cuckoo]
 
-![cuckoo-5310825_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\interval_dp\区间DP之多边形三角剖分的最低得分.assets\cuckoo-5310825_640.png)[动态规划解分割数组II[Arctic Fox\]](https://leetcode-cn.com/problems/partition-array-for-maximum-sum/solution/leetcodebi-ji-java-py-si-ke-yi-dao-ti-1043-fen-ge-/)
+![cuckoo-5310825_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\interval_dp\区间DP之多边形三角剖分的最低得分.assets\cuckoo-5310825_640.png)
 
 > 区间DP模板
 
