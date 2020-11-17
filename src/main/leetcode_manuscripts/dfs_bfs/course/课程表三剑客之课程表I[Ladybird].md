@@ -134,8 +134,6 @@ $AOE$网，边表示活动，是一个带权的有向无环图， 其中顶点�
 
 ### 方法2：DFS+邻接矩阵
 
-> 待补充
-
 ```java
 public boolean canFinish(int numCourses, int[][] prerequisites) {
         int[][] adjacency = new int[numCourses][numCourses];
@@ -164,12 +162,6 @@ public boolean canFinish(int numCourses, int[][] prerequisites) {
         return true;
     }
 ```
-
-
-
-
-
-
 
 
 
