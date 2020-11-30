@@ -13,7 +13,7 @@ public class _767 {
         handler.reorganizeString("vvvlo");
     }
 
-
+    @Deprecated
     public String reorganizeString(String S) {
         int n = S.length();
         Integer[] arr = new Integer[26];
