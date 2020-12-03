@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+/**
+ * 类似 169  229
+ */
+
 public class _767 {
 
     static _767 handler = new _767();
