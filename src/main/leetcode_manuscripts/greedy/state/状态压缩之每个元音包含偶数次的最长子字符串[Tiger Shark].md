@@ -1,6 +1,6 @@
 ## 状态压缩之每个元音包含偶数次的最长子字符串[Tiger Shark]
 
-
+![desert-5773182_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\state\状态压缩之每个元音包含偶数次的最长子字符串[Tiger Shark].assets\desert-5773182_640.jpg)
 
 ![image-20201209091922124](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\greedy\state\状态压缩之每个元音包含偶数次的最长子字符串[Tiger Shark].assets\image-20201209091922124.png)
 
@@ -74,5 +74,61 @@ a << 3;
 
 ### 方法1：
 
+```java
+    public int findTheLongestSubstring(String s) {
+        int n = s.length();
+        //大小为32的数组pos，记录当前状态status出现的最早的的位置
+        int[] pos = new int[1 << 5];
+        Arrays.fill(pos, -1);
+        int ans = 0, status = 0;
+        pos[0] = 0;
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            switch (c){
+                case 'u': status ^= (1 << 0);break;
+                case 'o': status ^= (1 << 1);break;
+                case 'i': status ^= (1 << 2);break;
+                case 'e': status ^= (1 << 3);break;
+                case 'a': status ^= (1 << 4);break;
+                default:break;
+            }
+            if (pos[status] >= 0) ans = Math.max(ans, i + 1 - pos[status]);
+            else pos[status] = i + 1;
+        }
+        return ans;
+    }
+```
 
+- 对于处理边界与初始化处理不同
+
+### 方法2：
+
+```java
+    public int findTheLongestSubstring(String s) {
+        Integer INF = Integer.MAX_VALUE;
+        int[] pre=new int[1<<5];
+        Arrays.fill(pre,INF);
+        pre[0]=-1;
+        int size=s.length(),status=0,ans=0;
+        for(int i=0;i<size;i++){
+            char ch=s.charAt(i);
+            switch(ch){
+                case 'a':status^=1<<0;break;
+                case 'e':status^=1<<1;break;
+                case 'i':status^=1<<2;break;
+                case 'o':status^=1<<3; break;
+                case 'u':status^=1<<4;break;
+            }
+            if(pre[status]==INF){
+                pre[status]=i;
+            }else{
+                ans=Math.max(ans,i-pre[status]);
+            }
+        }
+        return ans;
+    }
+
+```
+
+- 注意此方法的写法，`INF`的初始值，需要做一个`pre[0]=-1;`的处理，如`aa`这个字符，如果走到`idx=1`的时候，要是依据正常的处理，这时候处理的长度结果为1，但是其实答案是2
 
