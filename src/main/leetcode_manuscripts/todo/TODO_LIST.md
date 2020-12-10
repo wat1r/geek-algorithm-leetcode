@@ -27,7 +27,7 @@ https://visualgo.net/en
 
 **974. 和可被 K 整除的子数组**
 
-1371. 每个元音包含偶数次的最长子字符串
+1371. 每个元音包含偶数次的最长子字符串  DONE
 
 
 
@@ -43,21 +43,13 @@ https://visualgo.net/en
 
 
 
-1094 类似 1109
+1094 类似 1109  DONE
 
-
+ 
 
 前缀和
 
-467. 环绕字符串中唯一的子字符串(中等)
-
-468. 区间子数组个数(中等)
-
-469. 水果成篮(中等)
-
-470. K 个不同整数的子数组（困难）
-
-     1109航班预订统计(中等)
+![image-20201210205016524](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\todo\TODO_LIST.assets\image-20201210205016524.png)
 
 
 
