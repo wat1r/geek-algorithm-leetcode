@@ -89,4 +89,17 @@ public class PrintUtils {
     }
 
 
+    public static void printMatrix(int[][][] matrix, int sense) {
+        int m = matrix.length, n = matrix[0].length, p = matrix[0][0].length;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+
+                System.out.print(String.format("%6s", "(" + matrix[i][j][0] + "," + matrix[i][j][1] + ")") + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("--------------");
+    }
+
+
 }
