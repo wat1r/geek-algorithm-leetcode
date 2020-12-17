@@ -110,7 +110,7 @@ public class _877 {
                 f[i][j] = Math.max(piles[i] - f[i + 1][j], piles[j] - f[i][j - 1]);
             }
         }
-        PrintUtils.printMatrix(f);
+//        PrintUtils.printMatrix(f);
         return f[0][n - 1] > 0;
     }
 
