@@ -1,6 +1,6 @@
-## 石子游戏七匹狼系列之一
+## 石子游戏七匹狼系列之一[Red Wolf]
 
- 
+ ![dog-3059346_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之一.assets\dog-3059346_640.jpg)
 
 ![image-20201215204430318](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之一.assets\image-20201215204430318.png)
 
@@ -122,19 +122,33 @@ private void print() {
 
 ### 方法3：一维DP
 
+- `f[i][j]`只与`f[i+1][j]`和`f[i][j-1]`有关系，在计算时只用到`i`和`i+1`行的值，可以用一维来解决
 
-
-
-
-
-
-
+```java
+public boolean stoneGame2nd(int[] piles) {
+    int n = piles.length;
+    int[] f = new int[n];
+    for (int i = 0; i < n; i++) f[i] = piles[i];
+    for (int i = n - 2; i >= 0; i--) {
+        for (int j = i + 1; j < n; j++) {
+            f[j] = Math.max(piles[i] - f[j], piles[j] - f[j - 1]);
+        }
+    }
+    return f[n - 1] > 0;
+}
+```
 
 ### 方法4：数学分析
 
 ![image-20201217100229805](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之一.assets\image-20201217100229805.png)
 
 从0到`n-1`这个区间范围内，分布着等量的奇数和偶数的下标索引的石子，我们提前有一个结论，题意说的是，石子的总量不等，也就是说，`sum(piles[even])!=sum(piles[odd])`,只要先测试一轮，`Alex`选偶数下标的索引或者奇数下标的索引的石子，即可得到答案
+
+```java
+public boolean stoneGame(int[] piles) {
+ 	return true;   
+}
+```
 
 
 

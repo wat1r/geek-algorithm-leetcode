@@ -101,6 +101,19 @@ public class _877 {
     }
 
 
+    public boolean stoneGame2nd(int[] piles) {
+        int n = piles.length;
+        int[] f = new int[n];
+        for (int i = 0; i < n; i++) f[i] = piles[i];
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = i + 1; j < n; j++) {
+                f[j] = Math.max(piles[i] - f[j], piles[j] - f[j - 1]);
+            }
+        }
+        return f[n - 1] > 0;
+    }
+
+
     public boolean stoneGame1st(int[] piles) {
         int n = piles.length;
         int[][] f = new int[n][n];
@@ -120,6 +133,7 @@ public class _877 {
 
     /**
      * 倾斜遍历，三维
+     *
      * @param piles
      * @return
      */
