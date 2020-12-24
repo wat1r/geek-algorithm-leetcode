@@ -110,31 +110,30 @@ i:0,j:4
     }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### 方法2:递归
 
+> 思路参考国际站大佬`hunangdachuan`
 
+- 假设是5个石子，从1到5，`Alice`拿走了，`a1,a3,a5`,`Bob`拿走了`b2,b4`,  他们之前差值是`a1+a3+a5-(b2+b4)`  ，可以写成`a1-(b2-(a3-(b4-a5)))`, 如果`a1>b2>a3>b4>a5`,可以想到使用递归的方式，对于先手与后手玩家，`my_current_round_gain`- `sub_problem_difference`  均是两者想扩大化的，`Alice`想尽可能地扩大`a1-sub_problem` 与 `a3-sub_problem`,  而对于`Bob`来说，其想最小化`a1-sub_problem`而想扩大化`b2-sub_problem`
+
+```java
+    public int stoneGameVII(int[] stones) {
+        int n = stones.length;
+        Integer[][] f = new Integer[n][n];
+        int sum = 0;
+        for (int i = 0; i < n; i++) sum += stones[i];
+        return dfs(stones, f, 0, n - 1, sum);
+    }
+
+    private int dfs(int[] stones, Integer[][] f, int i, int j, int sum) {
+        //出口，当只有一个石子后，选完就没了
+        if (i == j) return 0;
+        //如果已经搜过了，不需要再次搜索
+        if (f[i][j] != null) return f[i][j];
+        //左右两侧，取左边，取右边，拿最大值
+        int left = sum - stones[i] - dfs(stones, f, i + 1, j, sum - stones[i]);
+        int right = sum - stones[j] - dfs(stones, f, i, j - 1, sum - stones[j]);
+        return f[i][j] = Math.max(left, right);
+    }
+```
 

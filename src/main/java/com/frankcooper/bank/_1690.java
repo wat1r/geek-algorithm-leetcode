@@ -32,7 +32,7 @@ public class _1690 {
     }
 
 
-    public int stoneGameVII(int[] stones) {
+    public int stoneGameVII2nd(int[] stones) {
         int n = stones.length;
         int[][] f = new int[n][n];
         for (int i = n - 2; i >= 0; i--) {
@@ -49,6 +49,26 @@ public class _1690 {
         }
 //        PrintUtils.printMatrix(f);
         return f[0][n - 1];
+    }
+
+
+    public int stoneGameVII(int[] stones) {
+        int n = stones.length;
+        Integer[][] f = new Integer[n][n];
+        int sum = 0;
+        for (int i = 0; i < n; i++) sum += stones[i];
+        return dfs(stones, f, 0, n - 1, sum);
+    }
+
+    private int dfs(int[] stones, Integer[][] f, int i, int j, int sum) {
+        //出口，当只有一个石子后，选完就没了
+        if (i == j) return 0;
+        //如果已经搜过了，不需要再次搜索
+        if (f[i][j] != null) return f[i][j];
+        //左右两侧，取左边，取右边，拿最大值
+        int left = sum - stones[i] - dfs(stones, f, i + 1, j, sum - stones[i]);
+        int right = sum - stones[j] - dfs(stones, f, i, j - 1, sum - stones[j]);
+        return f[i][j] = Math.max(left, right);
     }
 
 }
