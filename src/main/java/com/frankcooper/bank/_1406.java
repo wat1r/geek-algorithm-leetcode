@@ -1,5 +1,8 @@
 package com.frankcooper.bank;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.Arrays;
 
 public class _1406 {
@@ -8,7 +11,8 @@ public class _1406 {
 
     public static void main(String[] args) {
         int[] stones = new int[]{1, 2, 3, 7};
-        handler.stoneGameIII1st(stones);
+        stones = new int[]{1, 2, 3, -1, -2, -3, 7};
+        handler.stoneGameIII(stones);
     }
 
 
@@ -52,7 +56,7 @@ public class _1406 {
     }
 
 
-    public String stoneGameIII(int[] stones) {
+    public String stoneGameIII3rd(int[] stones) {
         int n = stones.length;
         int[] f = new int[n + 1];
         for (int i = n - 1; i >= 0; --i) {
@@ -60,6 +64,22 @@ public class _1406 {
             for (int k = 0, take = 0; k < 3 && i + k < n; ++k) {
                 take += stones[i + k];
                 f[i] = Math.max(f[i], take - f[i + k + 1]);
+            }
+        }
+        return f[0] == 0 ? "Tie" : (f[0] > 0 ? "Alice" : "Bob");
+    }
+//1, 2, 3, -1, -2, -3, 7
+
+    public String stoneGameIII(int[] stones) {
+        int n = stones.length, f[] = new int[4];
+        for (int i = n - 1; i >= 0; i--) {
+            f[i % 4] = Integer.MIN_VALUE;
+            for (int k = 0, take = 0; k < 3 && k + i < n; k++) {
+                System.out.println(JSONObject.toJSONString(f));
+                System.out.printf("%d,%d,%d,%d,%d,%d,%d\n", i, k, i % 4, i + k, i + k + 1, take, f[i % 4]);
+//                System.out.printf("i:%d,k:%d,i整除4:%d,i+k:%d,i+k+1:%d , take :%d, f[i整除4] :%d\n", i, k, i % 4, i + k, i + k + 1, take, f[i % 4]);
+                take += stones[i + k];
+                f[i % 4] = Math.max(f[i % 4], take - f[(i + k + 1) % 4]);
             }
         }
         return f[0] == 0 ? "Tie" : (f[0] > 0 ? "Alice" : "Bob");

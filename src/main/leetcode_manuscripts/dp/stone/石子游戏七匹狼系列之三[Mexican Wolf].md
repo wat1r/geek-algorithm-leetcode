@@ -82,8 +82,6 @@ public String stoneGameIII(int[] stones) {
 
 > 下面的两种方法，参考国际站大佬`lee215`,一句很犀利评论道出一切
 >
-> https://www.youtube.com/channel/UCUBt1TDQTl1atYsscVoUzoQ
->
 > *Alex and Lee continue their games with piles of stones... lee215 wins.*
 
 #### 思路
@@ -91,6 +89,7 @@ public String stoneGameIII(int[] stones) {
 - 当当前玩家拿走`stones[i]`的时候，这个玩家可以赢得`take-f[i+1]`
 - 当当前玩家拿走`stones[i,i+1]`的时候，这个玩家可以赢得`take-f[i+2]`
 - 当当前玩家拿走`stones[i,i+1,i+2]`的时候，这个玩家可以赢得`take-f[i+3]`	
+- take的变量定义精髓
 
 ```java
 public String stoneGameIII(int[] stones) {
@@ -111,5 +110,22 @@ public String stoneGameIII(int[] stones) {
 
 ### 方法4：DP(O(1))
 
+- 只依赖 0 1 2 3 这几个状态，滚动可以做到空间复杂度`O(1)`
 
+![image-20201225090854181](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之三[Mexican Wolf].assets\image-20201225090854181.png)
 
+```java
+    public String stoneGameIII(int[] stones) {
+        int n = stones.length, f[] = new int[4];
+        for (int i = n - 1; i >= 0; i--) {
+            f[i % 4] = Integer.MIN_VALUE;
+            for (int k = 0, take = 0; k < 3 && k + i < n; k++) {
+                System.out.println(JSONObject.toJSONString(f));
+                System.out.printf("%d,%d,%d,%d,%d,%d,%d\n", i, k, i % 4, i + k, i + k + 1, take, f[i % 4]);
+                take += stones[i + k];
+                f[i % 4] = Math.max(f[i % 4], take - f[(i + k + 1) % 4]);
+            }
+        }
+        return f[0] == 0 ? "Tie" : (f[0] > 0 ? "Alice" : "Bob");
+    }
+```

@@ -28,7 +28,7 @@
 
 石子游戏七匹狼系列之三[Mexican Wolf]
 
-
+石子游戏七匹狼系列之四[Eastern Canadian Wolf]
 
 石子游戏七匹狼系列之七[Japanese Wolf]
 
