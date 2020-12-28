@@ -1,6 +1,6 @@
 ## 石子游戏七匹狼系列之二[Arctic Wolf]
 
-
+![animal-2372712_960_720](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之二[Arctic Wolf].assets\animal-2372712_960_720.jpg)
 
 ![image-20201217201430079](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之二[Arctic Wolf].assets\image-20201217201430079.png)
 
