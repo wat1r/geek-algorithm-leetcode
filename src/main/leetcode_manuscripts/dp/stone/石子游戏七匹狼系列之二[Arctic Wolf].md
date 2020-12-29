@@ -72,21 +72,35 @@ private int dfs(int[] piles, int i, int M) {
 
 - 如果当前玩家从`[i...i+x-1]`选了这个范围的石子，留给另外一个玩家的选择范围是`[i+x...max(m,x)]`，而
 
+- 如果`i+2M` 到达了石子堆的末尾，即`i+2M>=n`的时候，对于当前玩家，最好的方案是全部取走石子，即`f[i][M]=sum[i:n-1]`
+- 如果`i+2M<n`,则`f[i][M]=max{f[i][M],sum[i:n-1]-f[i+x][max(M,x)]}`  这里的x在`[1:2M]`范围内
+
+```java
+public int stoneGameII(int[] piles) {
+    int N = piles.length;
+    int preSum = 0;
+    int[][] f = new int[N][N + 1];
+    for (int i = N - 1; i >= 0; i--) {
+        preSum += piles[i];
+        for (int M = 1; M <= N; M++) {
+            if (i + 2 * M >= N) f[i][M] = preSum;
+            else {
+                for (int x = 1; x <= 2 * M; x++) {
+                    f[i][M] = Math.max(f[i][M], preSum - f[i + x][Math.max(M, x)]);
+                }
+            }
+
+        }
+    }
+    return f[0][1];
+}
+```
 
 
 
+### Reference
 
-
-
-
-
-
-
-### Q&A
-
-- 
-
-
+- https://leetcode-cn.com/problems/stone-game-ii/solution/java-dong-tai-gui-hua-qing-xi-yi-dong-17xing-by-lg/
 
 
 
