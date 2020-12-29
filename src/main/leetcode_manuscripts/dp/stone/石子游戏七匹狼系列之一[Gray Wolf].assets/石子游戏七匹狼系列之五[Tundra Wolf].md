@@ -6,9 +6,27 @@
 
 ![image-20201228205030541](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之一[Gray Wolf].assets\石子游戏七匹狼系列之五[Tundra Wolf].assets\image-20201228205030541.png)
 
-### 方法1：记忆化搜索
+### 方法1：记忆化搜索DP
 
-- 超时
+#### 状态定义
+
+**`dp[l][r]` 表示`Alice`在石子区间`[l...r]`这个范围内，所能获得的最大的分数**
+
+#### 转移方程
+
+当`Alice`从中间的某处，将这两堆石子分开，变成`[l...i]`与`[i+1...r]`时，`Bob`会拿走其中的一堆:
+
+- `sum[l:i]`<`sum[i+1:r]` 当左部分的和小于右部分的和，`Bob`会丢弃掉右部分，`Alice`拿走`sum[l:i]`即`dp[l][r]=dp[l][i]+sum[l:i]`,  `Alice`在`[l...i]`这个区间所能获得的最大分数+这一轮获得的左部分的分数和
+- `sum[l:i]>sum[i+1:r]`，当左部分的和大于右部分的和，`Bob`会丢弃掉左部分，`Alice`拿走`sum[l+1:r]`即`dp[l][r]=dp[i+1][r]+sum[i+1:r]`,  `Alice`在`[i+1...r]`这个区间所能获得的最大分数+这一轮获得的左部分的分数和
+- `sum[l:i]=sum[i+1:r]`，当左部分的和等于右部分的和，`Bob`让`Alice`选择左或者右，需要确认左右部分的最大值，即`max{dp[l][i],dp[i+1][r]}`  ,再加上本轮所获取的分数即，`sum[l:i]` 或者，`sum[i+1:r]`
+
+- 要求的是`dp[0][n-1]`这个值，即在`[0...n-1]`这个区间范围内，`Alice`所能获取的最大分数
+
+#### 思路
+
+- 利用前缀和，来计算区间和
+
+> TLE
 
 ```java
 Map<Pair, Integer> cache = new HashMap<>();
@@ -54,9 +72,7 @@ Map<Pair, Integer> cache = new HashMap<>();
     }
 ```
 
-
-
-
+> AC
 
 ```java
 Integer[][] dp;
@@ -89,3 +105,10 @@ private int dfs(int[] stoneValue, int l, int r) {
     return dp[l][r] =ans;
 }
 ```
+
+
+
+
+
+
+
