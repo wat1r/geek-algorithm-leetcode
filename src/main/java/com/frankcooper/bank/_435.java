@@ -17,7 +17,13 @@ public class _435 {
     public static void main(String[] args) {
         int[][] intervals = new int[][]{{1, 2}, {2, 3}, {3, 4}, {1, 3}};
 //        intervals = new int[][]{{1, 2}, {1, 2}, {1, 2}};
-        handler.eraseOverlapIntervals1st(intervals);
+//        handler.eraseOverlapIntervals1st(intervals);
+
+        int i = 1;
+
+//        System.out.println(1==nu);
+//        System.out.println("1".equals(1));
+        System.out.println("1".equals(String.valueOf(i)));
     }
 
 

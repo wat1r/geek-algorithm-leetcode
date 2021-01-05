@@ -41,6 +41,9 @@ public class BiWeek41 {
     }
 
 
+    /**
+     *1685
+     */
     public int[] getSumAbsoluteDifferences(int[] nums) {
         int n = nums.length;
         int[] res = new int[n];
@@ -51,6 +54,26 @@ public class BiWeek41 {
         }
         return res;
     }
+
+
+    /**
+     *1686
+     */
+    public int stoneGameVI(int[] A, int[] B) {
+        int n = A.length;
+        int[][] sum = new int[n][3];
+        for (int i = 0; i < n; i++) sum[i] = new int[]{A[i] + B[i], A[i], B[i]};
+        Arrays.sort(sum, (o1, o2) -> o2[0] - o1[0]);
+        int a = 0, b = 0;
+        for (int i = 0; i < n; i++) {
+            if ((i & 1) == 0) a += sum[i][1];
+            else b += sum[i][2];
+        }
+        return Integer.compare(a, b);
+    }
+
+
+
 
 
 }
