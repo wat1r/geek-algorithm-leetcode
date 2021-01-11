@@ -15,7 +15,8 @@ public class _1202 {
         List<List<Integer>> pairs = new ArrayList<>();
         pairs.add(Arrays.asList(0, 3));
         pairs.add(Arrays.asList(1, 2));
-        _2nd handler = new _2nd();
+//        _2nd handler = new _2nd();
+        _3rd handler = new _3rd();
         handler.smallestStringWithSwaps(s, pairs);
     }
 
@@ -66,6 +67,50 @@ public class _1202 {
             return ans.toString();
         }
 
+
+    }
+
+
+    static class _3rd {
+        public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
+
+            Map<Integer, List<Integer>> graph = new HashMap<>();
+            for (List<Integer> pair : pairs) {
+                List<Integer> list = graph.getOrDefault(pair.get(0), new ArrayList<>());
+                list.add(pair.get(1));
+                graph.putIfAbsent(pair.get(0), list);
+                list = graph.getOrDefault(pair.get(1), new ArrayList<>());
+                list.add(pair.get(0));
+                graph.putIfAbsent(pair.get(1), list);
+            }
+            int n = s.length();
+            char[] ans = new char[n];
+            boolean[] vis = new boolean[n];
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < n; i++) {
+                if (vis[i]) continue;
+                queue.offer(i);
+                List<Integer> li = new ArrayList<>();
+                List<Character> lc = new ArrayList<>();
+                while (!queue.isEmpty()) {
+                    int curr = queue.poll();
+                    if (vis[curr]) continue;
+                    vis[curr] = true;
+                    li.add(curr);
+                    lc.add(s.charAt(curr));
+                    List<Integer> next = graph.get(curr);
+                    if (next != null) {
+                        for (int ne : next) queue.offer(ne);
+                    }
+                }
+                Collections.sort(li);
+                Collections.sort(lc);
+                for (int j = 0; j < lc.size(); j++) {
+                    ans[li.get(j)] = lc.get(j);
+                }
+            }
+            return new String(ans);
+        }
 
     }
 
