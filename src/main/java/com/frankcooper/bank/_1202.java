@@ -70,7 +70,9 @@ public class _1202 {
 
     }
 
-
+    /**
+     * bfs
+     */
     static class _3rd {
         public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
 
