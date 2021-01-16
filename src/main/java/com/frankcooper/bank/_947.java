@@ -1,5 +1,8 @@
 package com.frankcooper.bank;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class _947 {
 
 
@@ -7,17 +10,16 @@ public class _947 {
 
         public int removeStones(int[][] stones) {
             int n = stones.length;
-            int ans = 0;
-            UnionFind uf = new UnionFind(n);
-            for (int i = 0; i < n; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    int[] a = stones[i], b = stones[j];
-                    if (a[0] == b[0] || a[1] == b[1]) {
-//                        if()
-                    }
-                }
+            UnionFind uf = new UnionFind(20000);
+            for (int[] s : stones) {
+                uf.union(10001 + s[0], s[1]);
+            }
+            Set<Integer> set = new HashSet<>();
+            for (int[] s : stones) {
+                set.add(uf.find(s[0]));
             }
 
+            return n - set.size();
         }
 
 
@@ -25,12 +27,14 @@ public class _947 {
 
             int[] parents;
             int[] ranks;
+            int count;
 
 
             public UnionFind(int n) {
                 parents = new int[n];
                 ranks = new int[n];
                 for (int i = 0; i < n; i++) parents[i] = i;
+                for (int i = 0; i < n; i++) ranks[i] = 1;
             }
 
             public int find(int x) {
@@ -46,7 +50,7 @@ public class _947 {
                 else if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
                 else if (ranks[rootX] == ranks[rootY]) {
                     parents[rootX] = rootY;
-                    ranks[rootX]++;
+                    ranks[rootY]++;
                 }
                 return true;
             }
