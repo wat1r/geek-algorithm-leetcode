@@ -269,9 +269,8 @@ public class GameSolution {
         }
 
 
-        private boolean inArea(int i, int j) {
-            return i >= 0 && i < m && j >= 0 && j < n;
-        }
+
+
 
 
         public int getMaxFood(int[] nums) {
