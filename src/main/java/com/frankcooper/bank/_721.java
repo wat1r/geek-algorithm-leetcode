@@ -77,8 +77,8 @@ public class _721 {
                         name = email;
                         continue;
                     }
-                    graph.computeIfAbsent(email, x -> new ArrayList<String>()).add(account.get(1));
-                    graph.computeIfAbsent(account.get(1), x -> new ArrayList<String>()).add(email);
+                    graph.computeIfAbsent(email, x -> new ArrayList<>()).add(account.get(1));
+                    graph.computeIfAbsent(account.get(1), x -> new ArrayList<>()).add(email);
                     emailToName.put(email, name);
                 }
             }
