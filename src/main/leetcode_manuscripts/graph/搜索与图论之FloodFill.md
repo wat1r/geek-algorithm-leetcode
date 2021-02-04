@@ -73,33 +73,259 @@ public boolean inArea(int r, int c) {
 
 ### [1034. 边框着色](https://leetcode-cn.com/problems/coloring-a-border/) 
 
+![background-1695579_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\background-1695579_640.jpg)
+
+#### 方法1：DFS+计数
+
+- dfs返回的值是0或者1
+  - 当如果不是和`oldColor`相同的颜色，返回1
+  - 当不在区域范围或者当前的`(r,c)`点被访问过，返回0
+- 当cnt<4时，说明有一个方向是可以突围的，是和外面是联通的，不是被当前点的同类颜色所包围
+
+```java
+        int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int R, C;
+        boolean[][] visited;
+        int oldColor;
+
+
+        public int[][] colorBorder(int[][] grid, int r0, int c0, int newColor) {
+            R = grid.length;
+            C = grid[0].length;
+            visited = new boolean[R][C];
+            oldColor = grid[r0][c0];
+            dfs(grid, r0, c0, newColor);
+            return grid;
+        }
+
+
+        public int dfs(int[][] grid, int r, int c, int newColor) {
+            if (!inArea(r, c)) return 0;
+            if (visited[r][c]) return 1;
+            if (grid[r][c] != oldColor) return 0;
+            visited[r][c] = true;
+            int cnt = 0;
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                cnt += dfs(grid, nr, nc, newColor);
+            }
+            if (cnt < 4) grid[r][c] = newColor;
+            return 1;
+        }
+
+
+        public boolean inArea(int r, int c) {
+            return r >= 0 && r < R && c >= 0 && c < C;
+        }
+```
+
+#### 方法2：DFS+翻转成负数
+
+> 思路图片来自国际站
+
+- 在dfs的过程中，将其翻转成负数，在结束的时候，翻转负数成正数
+- 下面的思路与下图大体相当，需要开一个额外的`res`二维数组
+- `res`需要重新开地址赋值
+
+![image-20210203191122047](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\image-20210203191122047.png)
+
+```java
+   int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int R, C;
+        int[][] res;
+
+        public int[][] colorBorder(int[][] grid, int r0, int c0, int color) {
+            R = grid.length;
+            C = grid[0].length;
+            res = new int[R][C];
+            for (int r = 0; r < R; r++)
+                for (int c = 0; c < C; c++)
+                    res[r][c] = grid[r][c];
+            dfs(grid, r0, c0, color);
+            return res;
+        }
+
+
+        public void dfs(int[][] grid, int r, int c, int color) {
+            res[r][c] *= -1;
+            boolean isEdge = false;
+            boolean f = false;
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                if (d[0] == -1) System.out.printf("上\n");
+                if (d[0] == 1) System.out.printf("下\n");
+                if (d[1] == -1) System.out.printf("左\n");
+                if (d[1] == 1) System.out.printf("右\n");
+                //当不在区域范围内或者当前颜色与旁边的颜色不同时 如下面的例子1
+                if (!inArea(nr, nc) || grid[r][c] != grid[nr][nc]) {
+                    isEdge = true;
+                }
+                //res[nr][nc]首次翻转的时候（变成负数）一定会进下面的dfs，当再次被翻转后，其变成与grid的原坐标相同的时候，不会再进
+                if (inArea(nr, nc) && res[nr][nc] == grid[r][c]) {
+                    dfs(grid, nr, nc, color);
+                }
+
+            }
+            res[r][c] *= -1;
+            if (isEdge) res[r][c] = color;
+        }
+
+        public boolean inArea(int r, int c) {
+            return r >= 0 && r < R && c >= 0 && c < C;
+        }
+```
+
+> 例1
+>
+> 当在(0,3)位置，扫其右侧的(0,4)位置时，满足`grid[r][c] != grid[nr][nc]`
+
+```java
+[[1,2,1,2,1,2],[2,2,2,2,1,2],[1,2,2,2,1,2]]
+1
+3
+1
+```
+
+#### 方法3：BFS
+
+```java
+int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int R, C;
+
+public int[][] colorBorder(int[][] grid, int r0, int c0, int color) {
+    R = grid.length;
+    C = grid[0].length;
+    int oldColor = grid[r0][c0];
+    boolean[][] visited = new boolean[R][C];
+    Queue<int[]> queue = new LinkedList<>();
+    queue.offer(new int[]{r0, c0});
+    visited[r0][c0] = true;
+    while (!queue.isEmpty()) {
+        int[] p = queue.poll();
+        int r = p[0], c = p[1];
+        if (isBorder(r, c)) grid[r][c] = color;
+        for (int[] d : dirs) {
+            if (d[0] == -1) System.out.printf("上\n");
+            if (d[0] == 1) System.out.printf("下\n");
+            if (d[1] == -1) System.out.printf("左\n");
+            if (d[1] == 1) System.out.printf("右\n");
+            int nr = r + d[0], nc = c + d[1];
+            System.out.printf("(%d,%d)<--->(%d,%d)\n", r, c, nr, nc);
+            if (!inArea(nr, nc) || visited[nr][nc]) continue;
+            if (grid[nr][nc] == oldColor) {//挨着的点不是原来的oldColor，当前点便是异类
+                queue.offer(new int[]{nr, nc});
+                visited[nr][nc] = true;
+            } else {
+                grid[r][c] = color;
+            }
+        }
+    }
+    return grid;
+}
+
+//注意是或
+public boolean isBorder(int r, int c) {
+    return r == 0 || r == R - 1 || c == 0 || c == C - 1;
+}
+
+public boolean inArea(int r, int c) {
+    return r >= 0 && r < R && c >= 0 && c < C;
+}
+```
+
+> 配的例子
+
+```java
+int[][] grid = new int[][]{
+        {1, 1, 1, 1, 2, 2},
+        {3, 3, 3, 3, 2, 2},
+        {3, 3, 3, 2, 3, 3},
+        {3, 3, 2, 3, 3, 3},
+        {3, 2, 2, 2, 3, 3},
+        {3, 2, 2, 2, 3, 3},
+        {3, 3, 2, 2, 3, 3}
+};
+int color = 4;
+int r0 = 5, c0 = 1;
+```
+
+
+
+### [785. 判断二分图](https://leetcode-cn.com/problems/is-graph-bipartite/)
+
+> 这个问题可以抽象为：给定一个无向图，判断是否能找到一个使用两种颜色的着色方案，使每条边连接的两点颜色均不同
+
+#### 方法1：DFS染色
+
+```java
+public boolean isBipartite(int[][] graph) {
+    int[] visited = new int[graph.length];
+    for (int i = 0; i < graph.length; i++) {
+        //当前点没有被访问过且染色失败，返回false
+        if (visited[i] == 0 && !dfs(graph, i, 1, visited)) return false;
+    }
+    return true;
+}
+
+
+/**
+ * @param graph   图
+ * @param curr    当前处理的顶点
+ * @param color   当前顶点即将被染的颜色
+ * @param visited 记录顶点是否被访问过
+ * @return 成功染色，返回true，失败染色返回false
+ */
+public boolean dfs(int[][] graph, int curr, int color, int[] visited) {
+    if (visited[curr] != 0) {
+        return visited[curr] == color;
+    }
+    visited[curr] = color;
+    for (int next : graph[curr]) {
+        if (!dfs(graph, next, -color, visited)) return false;
+    }
+    return true;
+}
+```
+
+#### 方法2：BFS染色
+
+```java
+public boolean isBipartite(int[][] graph) {
+    int[] v = new int[graph.length];
+    for (int i = 0; i < graph.length; i++) {
+        //对没有染色并且有邻居的进行下面的循环
+        if (v[i] == 0 && graph[i].length > 0) {
+            Queue<Integer> q = new LinkedList<>();
+            q.offer(i);
+            v[i] = 1;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                for (int j = 0; j < size; j++) {
+                    int curr = q.poll();
+                    for (int next : graph[curr]) {
+                        //如果curr的邻居处于没有被染色的状态,染上一与curr相反的颜色，curr为1,next为-1，curr为-1，next为1
+                        if (v[next] == 0) {
+                            q.offer(next);
+                            v[next] = -1 * v[curr];
+                        } 
+                        //这时候next已经染上色了，开始对其染色进行判断，如果next与curr同色，不符合题意
+                        else if (v[curr] == v[next]) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+```
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-785
-
-
-
-
-
-
-
-
+### [886. 可能的二分法](https://leetcode-cn.com/problems/possible-bipartition/)
 
 
 
@@ -115,7 +341,7 @@ public boolean inArea(int r, int c) {
 
 
 
-886
+
 
 
 
@@ -131,7 +357,7 @@ public boolean inArea(int r, int c) {
 
 
 
-1034
+
 
 
 
