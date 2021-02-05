@@ -531,104 +531,239 @@ public void detect(char[][] board, int r, int c) {
 }
 ```
 
+### [200. 岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
 
+[岛屿问题之岛屿的数量Eighty-eight Butterfly](https://leetcode-cn.com/problems/number-of-islands/solution/dao-yu-wen-ti-zhi-dao-yu-de-shu-liang-eighty-eight/)
 
+### [827. 最大人工岛](https://leetcode-cn.com/problems/making-a-large-island/)
 
+[ 岛屿问题之最大人工岛Danaus Genutia](https://leetcode-cn.com/problems/making-a-large-island/solution/dao-yu-wen-ti-zhi-zui-da-ren-gong-dao-danaus-genut/)
 
+### [695. 岛屿的最大面积](https://leetcode-cn.com/problems/max-area-of-island/)
 
+[岛屿问题之岛屿的周长面积Morpho Cypris Aphrodite](https://leetcode-cn.com/problems/island-perimeter/solution/dao-yu-wen-ti-zhi-dao-yu-de-zhou-chang-mian-ji-mor/)
 
+### [463. 岛屿的周长](https://leetcode-cn.com/problems/island-perimeter/)
 
+[岛屿问题之岛屿的周长面积Morpho Cypris Aphrodite](https://leetcode-cn.com/problems/island-perimeter/solution/dao-yu-wen-ti-zhi-dao-yu-de-zhou-chang-mian-ji-mor/)
 
+### [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
 
+[岛屿问题之不同岛屿的数量Monarch Butterfly](https://leetcode-cn.com/problems/number-of-islands/solution/dao-yu-wen-ti-zhi-bu-tong-dao-yu-de-shu-liang-mona/)
 
+### [130. 被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
 
+[岛屿问题之被围绕的区域[Cicada]](https://leetcode-cn.com/problems/surrounded-regions/solution/dao-yu-wen-ti-zhi-bei-wei-rao-de-qu-yu-cicada-by-2/)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### [289. 生命游戏](https://leetcode-cn.com/problems/game-of-life/)
 
 
 
 ![background-1760294_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\background-1760294_640.jpg)
 
+### 方法1：未操作
+
+> 来自国际站@yavinci大神，地址在[这里](https://leetcode.com/problems/game-of-life/discuss/73223/Easiest-JAVA-solution-with-explanation)
+
+- 可以使用2 bits来存储这几种状态
+
+```java
+[2nd bit, 1st bit] = [next state, current state]
+//从左到右是第2位，第1位， 
+- 00  dead (next) <- dead (current)  0(10) //十进制的0
+- 01  dead (next) <- live (current)  1(10) //十进制的1
+- 10  live (next) <- dead (current)  2(10) //十进制的2
+- 11  live (next) <- live (current)  3(10) //十进制的3
+```
+
+- 一些解释
+  - 一开始的时候，只有0和1 也就是只有`00` 和 `01`这两种二进制状态
+  - 注意到第1位的状态`1st`与第2位`2nd`的状态是独立的
+  - 想象下，所有的细胞从`1st`状态切换到`2nd`状态
+  - 计算当前点从`1st`状态的存活着的邻居，依据规则设置`2nd`状态
+  - 因为`2nd`默认是0，也就是死亡的，没有必要考虑01->00
+  - 在结束前，移除`1st`状态，保留`2nd`的状态，返回`board`  执行>> 操作即可
+
+- 检查每个细胞的 `1st`状态，然后根据存活状态的邻居数量来设置`2nd`
+
+```java
+01->11 //一开始的时候是存活的，继续保持存活需要满足：
+    board[r][c]== 1 && lives in (2,3)
+00->10 //一开始的时候是死亡的，转成存活需要满足：
+    board[r][c]==0 && lives in (3)
+```
+
+> 位操作小技巧
+
+```java
+//获取当前低位 1st
+board[[r][c]&1 
+//获取下个状态位 即高位 2nd
+board[r][c]>>1
+```
+
+- 与（ & ）每一位进行比较，两位都为1，结果为1，否则为0（-4 & 1 = 0）
+
+```java
+  1 0 0 1 1 -->(19)[10]  表示10进制中的19
+& 1 1 0 0 1 -->(25)[10]
+------------------------------
+  1 0 0 0 1 -->(17)[10]
+```
+
+
+
+- 右移（ >> ） 整体右移，左边空出位补零或补1（负数补1，整数补0），右边位舍弃 （-4 >> 1 = -2）
+
+```java
+unsigned int a = 8;
+a >> 3;
+移位前：0000 0000 0000 0000 0000 0000 0000 1000 -->(8)[10]
+移位后：0000 0000 0000 0000 0000 0000 0000 0001 -->(1)[10] 相当于 / 2^3
+
+int a = -8;
+a >> 3;
+移位前：1111 1111 1111 1111 1111 1111 1111 1000 -->(-8)[10]
+移位前：1111 1111 1111 1111 1111 1111 1111 1111 -->(-1)[10] 
+```
 
 
 
 
-200
+
+
+
+
+
+
+
+#### 方法2：BFS染色
+
+```java
+  int R, C;
+        int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
+
+
+        public void gameOfLife(int[][] board) {
+            if (board == null || (board.length == 0 || board[0].length == 0)) return;
+            R = board.length;
+            C = board[0].length;
+            bfs(board, 0, 0);
+//            PrintUtils.printMatrix(board);
+            for (int r = 0; r < R; ++r)
+                for (int c = 0; c < C; ++c)
+                    //被标记的发生翻转
+                    if (board[r][c] == -1) board[r][c] = 0;
+                    else if (board[r][c] == -2) board[r][c] = 1;
+//            PrintUtils.printMatrix(board);
+        }
+
+
+        public void bfs(int[][] board, int sr, int sc) {
+            boolean[][] visited = new boolean[R][C];
+            Queue<int[]> q = new LinkedList<>();
+            q.offer(new int[]{sr, sc});
+            visited[sr][sc] = true;//标记原始(sr,sc)被访问过
+            while (!q.isEmpty()) {
+                int[] curr = q.poll();
+                int cr = curr[0], cc = curr[1];//当前点
+                int cnt = 0;
+                for (int[] d : dirs) {
+                    int nr = cr + d[0], nc = cc + d[1];
+                    if (!inArea(nr, nc)) continue;
+                   	//当前为1 或者我们暂时标记的-1 cnt++
+                    if (board[nr][nc] == 1 || board[nr][nc] == -1) cnt++;
+                    if (visited[nr][nc]) continue;
+                    q.offer(new int[]{nr, nc});
+                    visited[nr][nc] = true;
+                }
+//                System.out.printf("(%d,%d)-%d\n", cr, cc, cnt);
+                if (board[cr][cc] == 1) {//当前细胞为活细胞
+                    if (cnt < 2 || cnt > 3) board[cr][cc] = -1;//<2 >3 两种情况下需要设置当前的活细胞为死细胞，区别0这种，我们设置为-1
+                    else if (cnt == 2 || cnt == 3) board[cr][cc] = 1;//等于2 等于3 活细胞继续活着
+                } else if (board[cr][cc] == 0) {//当前细胞为死细胞
+                    if (cnt == 3) board[cr][cc] = -2;//死细胞复活，区别1这种活细胞，设置为-2
+                }
+            }
+        }
+
+
+        private boolean inArea(int r, int c) {
+            return r >= 0 && r < R && c >= 0 && c < C;
+        }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [1020. 飞地的数量](https://leetcode-cn.com/problems/number-of-enclaves/)
 
 
 
-130
+
+
+
+
+[547. 朋友圈](https://leetcode-cn.com/problems/friend-circles/)
 
 
 
@@ -640,34 +775,13 @@ public void detect(char[][] board, int r, int c) {
 
 
 
-529扫雷游戏
 
 
 
 
 
-827最大人工岛 Hard
-
-695
 
 
-
-Flood Fill 这类题还有很多：
-
-- 
-- [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
-- [547. 朋友圈](https://leetcode-cn.com/problems/friend-circles/)
-
-733. 
-463. 岛屿的周长
-130. 被围绕的区域 1020.飞地的数量 （这两题基本一样的）
-736. 岛屿数量
-737. 统计封闭岛屿的数目 130题与200题的组合
-
-作者：mrmm
-链接：https://leetcode-cn.com/problems/coloring-a-border/solution/jian-dan-yi-dong-dfsjie-jue-duo-dao-yan-se-tian-ch/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 
 
