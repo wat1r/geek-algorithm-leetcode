@@ -405,25 +405,216 @@ public boolean possibleBipartition(int N, int[][] dislikes) {
 }
 ```
 
+#### 番外
+
+> 构建图的另外的方式
+
+```java
+Map<Integer, Set<Integer>> graph = new HashMap<>();
+for (int[] d : dislikes) {
+    int s = d[0], t = d[1];
+    graph.putIfAbsent(s, new HashSet<>());
+    graph.putIfAbsent(t, new HashSet<>());
+    graph.get(s).add(t);
+    graph.get(t).add(s);
+}
+```
 
 
-695
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+### [529. 扫雷游戏](https://leetcode-cn.com/problems/minesweeper/)
 
 ![bee-2984342_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\bee-2984342_640.jpg)
+
+#### 方法1：DFS
+
+- 八方向，需要额外多做一个探测地雷的操作`detect`
+
+```java
+int R, C;
+int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
+
+public char[][] updateBoard(char[][] board, int[] click) {
+    R = board.length;
+    C = board[0].length;
+    dfs(board, click[0], click[1]);
+    return board;
+}
+
+public void dfs(char[][] board, int r, int c) {
+    if (!inArea(r, c)) return;
+    if (board[r][c] == 'M') {
+        board[r][c] = 'X';
+        return;
+    }
+    if (board[r][c] == 'E') {
+        detect(board, r, c);
+        if (board[r][c] == 'B') {
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                dfs(board, nr, nc);
+            }
+        }
+    }
+}
+
+public void detect(char[][] board, int r, int c) {
+    int bomb = 0;
+    for (int[] d : dirs) {
+        int nr = r + d[0], nc = c + d[1];
+        if (inArea(nr, nc) && board[nr][nc] == 'M') bomb++;
+    }
+    board[r][c] = bomb > 0 ? (char) (bomb + '0') : 'B';
+}
+
+
+private boolean inArea(int r, int c) {
+    return r >= 0 && r < R && c >= 0 && c < C;
+}
+```
+
+#### 方法2：BFS
+
+- 用`visited`控制重复访问
+
+```java
+int R, C;
+int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
+
+public char[][] updateBoard(char[][] board, int[] click) {
+    R = board.length;
+    C = board[0].length;
+    int sr = click[0], sc = click[1];
+    if (board[sr][sc] == 'M') {
+        board[sr][sc] = 'X';
+        return board;
+    }
+    bfs(board,sr,sc);
+    return board;
+}
+
+
+public void bfs(char[][] board, int r, int c) {
+    boolean[][] visited = new boolean[R][C];
+    Queue<int[]> q = new LinkedList<>();
+    q.offer(new int[]{r, c});
+    visited[r][c] = true;
+    while (!q.isEmpty()) {
+        int[] curr = q.poll();
+        int currR = curr[0], currC = curr[1];
+        detect(board, currR, currC);
+        if (board[currR][currC] == 'B') {
+            for (int[] d : dirs) {
+                int nextR = currR + d[0], nextC = currC + d[1];
+                if (inArea(nextR, nextC) && !visited[nextR][nextC]) {
+                    q.offer(new int[]{nextR, nextC});
+                    visited[nextR][nextC] = true;
+                }
+            }
+        }
+    }
+}
+
+
+private boolean inArea(int r, int c) {
+    return r >= 0 && r < R && c >= 0 && c < C;
+}
+
+
+public void detect(char[][] board, int r, int c) {
+    int bomb = 0;
+    for (int[] d : dirs) {
+        int nr = r + d[0], nc = c + d[1];
+        if (inArea(nr, nc) && board[nr][nc] == 'M') bomb++;
+    }
+    board[r][c] = bomb > 0 ? (char) (bomb + '0') : 'B';
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ![background-1760294_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\background-1760294_640.jpg)
 
@@ -457,7 +648,7 @@ public boolean possibleBipartition(int N, int[][] dislikes) {
 
 827最大人工岛 Hard
 
-
+695
 
 
 
@@ -467,11 +658,11 @@ Flood Fill 这类题还有很多：
 - [1254. 统计封闭岛屿的数目](https://leetcode-cn.com/problems/number-of-closed-islands/)
 - [547. 朋友圈](https://leetcode-cn.com/problems/friend-circles/)
 
-733. 图像渲染
+733. 
 463. 岛屿的周长
 130. 被围绕的区域 1020.飞地的数量 （这两题基本一样的）
-200. 岛屿数量
-1254. 统计封闭岛屿的数目 130题与200题的组合
+736. 岛屿数量
+737. 统计封闭岛屿的数目 130题与200题的组合
 
 作者：mrmm
 链接：https://leetcode-cn.com/problems/coloring-a-border/solution/jian-dan-yi-dong-dfsjie-jue-duo-dao-yan-se-tian-ch/

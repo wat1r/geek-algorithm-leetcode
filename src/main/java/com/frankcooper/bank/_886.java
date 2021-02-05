@@ -2,10 +2,7 @@ package com.frankcooper.bank;
 
 import com.frankcooper.swordoffer.utils.PrintUtils;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class _886 {
 
@@ -15,7 +12,7 @@ public class _886 {
 
         int N = 4;
         int[][] dislikes = PrintUtils.processSymbol("[[1,2],[1,3],[2,4]]");
-        handler.possibleBipartition(N,dislikes);
+        handler.possibleBipartition(N, dislikes);
     }
 
 
@@ -85,7 +82,18 @@ public class _886 {
             }
             return true;
         }
-
     }
+
+    private void getGraph(int N, int[][] dislikes) {
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int[] d : dislikes) {
+            int s = d[0], t = d[1];
+            graph.putIfAbsent(s, new HashSet<>());
+            graph.putIfAbsent(t, new HashSet<>());
+            graph.get(s).add(t);
+            graph.get(t).add(s);
+        }
+    }
+
 
 }
