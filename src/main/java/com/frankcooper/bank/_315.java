@@ -191,7 +191,6 @@ class _1st {
                 strLen = str.length();
             }
         }
-
         return str;
     }
 

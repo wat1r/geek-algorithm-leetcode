@@ -46,6 +46,20 @@ public class PrintUtils {
     }
 
 
+    public static void printMatrix(int[][] matrix, boolean bin) {
+        int rows = matrix.length, cols = matrix[0].length;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (bin) {
+                    System.out.printf("%3s", addZeroForNum(Integer.toBinaryString(matrix[i][j]), 2) + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("--------------");
+    }
+
+
     public static void printMatrix(double[][] matrix) {
         int rows = matrix.length, cols = matrix[0].length;
         for (int i = 0; i < rows; ++i) {
@@ -102,4 +116,17 @@ public class PrintUtils {
     }
 
 
+    public static String addZeroForNum(String str, int strLength) {
+        int strLen = str.length();
+        if (strLen < strLength) {
+            while (strLen < strLength) {
+                StringBuffer sb = new StringBuffer();
+                sb.append("0").append(str);// 左补0
+                // sb.append(str).append("0");//右补0
+                str = sb.toString();
+                strLen = str.length();
+            }
+        }
+        return str;
+    }
 }

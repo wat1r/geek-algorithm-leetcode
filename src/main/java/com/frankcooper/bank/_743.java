@@ -1,6 +1,7 @@
 package com.frankcooper.bank;
 
 import com.alibaba.fastjson.JSON;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 import java.util.*;
 
@@ -61,7 +62,13 @@ public class _743 {
     static _743 handler = new _743();
 
     public static void main(String[] args) {
-        handler.testTwo();
+//        handler.testTwo();
+        int[][] times = PrintUtils.processSymbol("[[2,1,1],[2,3,1],[3,4,1]]");
+//        int[][] times = PrintUtils.processSymbol("[[2,1,2],[2,3,1],[3,4,1]]");
+        int N = 4, K = 2;
+//        _6th handler = new _6th();
+        _5th handler = new _5th();
+        handler.networkDelayTime(times, N, K);
     }
 
     private void testTwo() {
@@ -255,9 +262,157 @@ public class _743 {
             }
             return max == INF ? -1 : max;
         }
+    }
+
+
+    /**
+     * bfs
+     */
+    static class _5th {
+        public int networkDelayTime(int[][] times, int N, int K) {
+            int INF = Integer.MAX_VALUE / 2;
+            //构建graph
+            Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+            for (int[] t : times) {
+                graph.putIfAbsent(t[0], new HashMap<>());
+                graph.get(t[0]).put(t[1], t[2]);
+            }
+            int[] dist = new int[N + 1];
+            Arrays.fill(dist, INF);//需要初始化成INF，防止溢出，取INF/2
+            Queue<Integer> q = new LinkedList<>();
+            q.offer(K);
+            dist[K] = 0;
+            while (!q.isEmpty()) {
+                int u = q.poll();
+                if (graph.containsKey(u)) {
+                    for (Map.Entry<Integer, Integer> e : graph.get(u).entrySet()) {
+                        int v = e.getKey(), w = e.getValue();
+                        if (dist[u] + w < dist[v]) {//松弛
+                            dist[v] = dist[u] + w;
+                            q.offer(v);
+                        }
+                    }
+                }
+            }
+            int ans = 0;
+            //跳过0这个不存在的节点
+            for (int i = 1; i <= N; i++) {
+                ans = Math.max(ans, dist[i]);
+            }
+            return ans == INF ? -1 : ans;
+        }
 
 
     }
 
+
+    /**
+     * bfs PriorityQueue
+     */
+    static class _6th {
+        public int networkDelayTime(int[][] times, int N, int K) {
+            System.out.printf("%d\n", K);
+            Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+            for (int[] t : times) {
+                graph.putIfAbsent(t[0], new HashMap<>());
+                graph.get(t[0]).put(t[1], t[2]);
+            }
+            //采用优先队列存储， 0指的是当前走的距离，1指的是走到当前的节点Node 按距离从小到大排序，这个很关键
+            Queue<int[]> pq = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+            pq.offer(new int[]{0, K});//起始从K 节点开始，走到K节点花了0的距离
+            boolean[] visited = new boolean[N + 1]; //下标从1开始，多放一个
+            int ans = 0;//结果集
+            while (!pq.isEmpty()) {
+                int[] curr = pq.poll();
+                //0 是走到当前节点的距离 1 是
+                int currNode = curr[1], currDist = curr[0];
+                if (visited[currNode]) continue;//当前点如果访问过，不需要再访问其邻居节点
+                visited[currNode] = true;
+                ans = currDist;
+                N--;//所有的节点被遍历完，可以提前结束
+                if (N == 0) return ans;
+                if (graph.containsKey(currNode)) {//访问邻居节点，并更新当前的dist距离
+                    for (int next : graph.get(currNode).keySet()) {
+                        pq.offer(new int[]{currDist + graph.get(currNode).get(next), next});
+                    }
+                }
+            }
+            return N == 0 ? ans : -1;
+        }
+    }
+
+
+    /**
+     * dfs
+     */
+    static class _7th {
+
+
+        Map<Integer, Map<Integer, Integer>> graph;
+        int[] dist;
+
+        public int networkDelayTime(int[][] times, int N, int K) {
+            int INF = Integer.MAX_VALUE / 2;
+            //构建graph
+            graph = new HashMap<>();
+            for (int[] t : times) {
+                graph.putIfAbsent(t[0], new HashMap<>());
+                graph.get(t[0]).put(t[1], t[2]);
+            }
+            dist = new int[N + 1];
+            Arrays.fill(dist, INF);//需要初始化成INF，防止溢出，取INF/2
+            dist[K] = 0;
+            dfs(K);
+            int ans = 0;
+            //跳过0这个不存在的节点
+            for (int i = 1; i <= N; i++) {
+                ans = Math.max(ans, dist[i]);
+            }
+            return ans == INF ? -1 : ans;
+        }
+
+        private void dfs(int u) {
+            if (graph.containsKey(u)) {
+                for (Map.Entry<Integer, Integer> e : graph.get(u).entrySet()) {
+                    int v = e.getKey(), w = e.getValue();
+                    if (dist[u] + w < dist[v]) {
+                        dist[v] = dist[u] + w;
+                        dfs(v);
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Floyd
+     */
+    static class _8th {
+        public int networkDelayTime(int[][] times, int N, int K) {
+            int INF = Integer.MAX_VALUE / 2;
+            int[][] dist = new int[N + 1][N + 1];
+            for (int i = 0; i <= N; i++) Arrays.fill(dist[i], INF);
+            for (int[] t : times) {
+                int u = t[0], v = t[1], w = t[2];
+                dist[u][v] = w;
+            }
+            dist[K][K] = 0;
+            for (int k = 1; k <= N; k++) {
+                for (int u = 1; u <= N; u++) {
+                    for (int v = 1; v <= N; v++) {
+                        dist[u][v] = Math.min(dist[u][v], dist[u][k] + dist[k][v]);
+                    }
+                }
+            }
+            int ans = -1;
+            for (int i = 1; i <= N; i++) {
+                ans = Math.max(ans, dist[K][i]);
+            }
+            return ans == INF ? -1 : ans;
+        }
+
+
+    }
 
 }

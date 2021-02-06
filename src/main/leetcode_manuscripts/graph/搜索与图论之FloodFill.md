@@ -563,7 +563,63 @@ public void detect(char[][] board, int r, int c) {
 
 ![background-1760294_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\background-1760294_640.jpg)
 
-### 方法1：未操作
+#### 方法1：BFS染色
+
+```java
+  int R, C;
+        int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
+
+
+        public void gameOfLife(int[][] board) {
+            if (board == null || (board.length == 0 || board[0].length == 0)) return;
+            R = board.length;
+            C = board[0].length;
+            bfs(board, 0, 0);
+//            PrintUtils.printMatrix(board);
+            for (int r = 0; r < R; ++r)
+                for (int c = 0; c < C; ++c)
+                    //被标记的发生翻转
+                    if (board[r][c] == -1) board[r][c] = 0;
+                    else if (board[r][c] == -2) board[r][c] = 1;
+//            PrintUtils.printMatrix(board);
+        }
+
+
+        public void bfs(int[][] board, int sr, int sc) {
+            boolean[][] visited = new boolean[R][C];
+            Queue<int[]> q = new LinkedList<>();
+            q.offer(new int[]{sr, sc});
+            visited[sr][sc] = true;//标记原始(sr,sc)被访问过
+            while (!q.isEmpty()) {
+                int[] curr = q.poll();
+                int cr = curr[0], cc = curr[1];//当前点
+                int cnt = 0;
+                for (int[] d : dirs) {
+                    int nr = cr + d[0], nc = cc + d[1];
+                    if (!inArea(nr, nc)) continue;
+                   	//当前为1 或者我们暂时标记的-1 cnt++
+                    if (board[nr][nc] == 1 || board[nr][nc] == -1) cnt++;
+                    if (visited[nr][nc]) continue;
+                    q.offer(new int[]{nr, nc});
+                    visited[nr][nc] = true;
+                }
+//                System.out.printf("(%d,%d)-%d\n", cr, cc, cnt);
+                if (board[cr][cc] == 1) {//当前细胞为活细胞
+                    if (cnt < 2 || cnt > 3) board[cr][cc] = -1;//<2 >3 两种情况下需要设置当前的活细胞为死细胞，区别0这种，我们设置为-1
+                    else if (cnt == 2 || cnt == 3) board[cr][cc] = 1;//等于2 等于3 活细胞继续活着
+                } else if (board[cr][cc] == 0) {//当前细胞为死细胞
+                    if (cnt == 3) board[cr][cc] = -2;//死细胞复活，区别1这种活细胞，设置为-2
+                }
+            }
+        }
+
+
+        private boolean inArea(int r, int c) {
+            return r >= 0 && r < R && c >= 0 && c < C;
+        }
+```
+
+#### 方法2：位操作
 
 > 来自国际站@yavinci大神，地址在[这里](https://leetcode.com/problems/game-of-life/discuss/73223/Easiest-JAVA-solution-with-explanation)
 
@@ -629,66 +685,61 @@ a >> 3;
 移位前：1111 1111 1111 1111 1111 1111 1111 1111 -->(-1)[10] 
 ```
 
+```java
+int R, C;
+
+public void gameOfLife(int[][] board) {
+    if (board == null || board.length == 0) return;
+    R = board.length;
+    C = board[0].length;
+    PrintUtils.printMatrix(board, true);
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            int lives = getLiveNeighbors1(board, r, c);
+            //一开始的时候，所有的2nd都是0，因此只需要确定2nd是否变成1
+            // 01 --> 11 做2nd位 3想成是十进制的11
+            if (board[r][c] == 1 && (lives >= 2 && lives <= 3)) board[r][c] = 3;
+            //00  --> 10 做2nd位 2想成是十进制的10
+            if (board[r][c] == 0 && lives == 3) board[r][c] = 2;
+        }
+    }
+    PrintUtils.printMatrix(board, true);
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            board[r][c] >>= 1;
+        }
+    }
+
+}
 
 
+public int getLiveNeighbors(int[][] board, int sr, int sc) {
+    int lives = 0;
+    //遍历的时候拿的是sr，sc一圈为1的9个点，有1的+1
+    for (int r = Math.max(sr - 1, 0); r <= Math.min(sr + 1, R - 1); r++) {
+        for (int c = Math.max(sc - 1, 0); c <= Math.min(sc + 1, C - 1); c++) {
+            lives += board[r][c] & 1;
+        }
+    }
+    //去掉自己是1的情况
+    lives -= board[sr][sc] & 1;
+    return lives;
+}
+```
 
-
-
-
-
-
-
-
-#### 方法2：BFS染色
+另外一种求lives的方式：
 
 ```java
-  int R, C;
-        int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
-
-
-        public void gameOfLife(int[][] board) {
-            if (board == null || (board.length == 0 || board[0].length == 0)) return;
-            R = board.length;
-            C = board[0].length;
-            bfs(board, 0, 0);
-//            PrintUtils.printMatrix(board);
-            for (int r = 0; r < R; ++r)
-                for (int c = 0; c < C; ++c)
-                    //被标记的发生翻转
-                    if (board[r][c] == -1) board[r][c] = 0;
-                    else if (board[r][c] == -2) board[r][c] = 1;
-//            PrintUtils.printMatrix(board);
-        }
-
-
-        public void bfs(int[][] board, int sr, int sc) {
-            boolean[][] visited = new boolean[R][C];
-            Queue<int[]> q = new LinkedList<>();
-            q.offer(new int[]{sr, sc});
-            visited[sr][sc] = true;//标记原始(sr,sc)被访问过
-            while (!q.isEmpty()) {
-                int[] curr = q.poll();
-                int cr = curr[0], cc = curr[1];//当前点
-                int cnt = 0;
-                for (int[] d : dirs) {
-                    int nr = cr + d[0], nc = cc + d[1];
-                    if (!inArea(nr, nc)) continue;
-                   	//当前为1 或者我们暂时标记的-1 cnt++
-                    if (board[nr][nc] == 1 || board[nr][nc] == -1) cnt++;
-                    if (visited[nr][nc]) continue;
-                    q.offer(new int[]{nr, nc});
-                    visited[nr][nc] = true;
-                }
-//                System.out.printf("(%d,%d)-%d\n", cr, cc, cnt);
-                if (board[cr][cc] == 1) {//当前细胞为活细胞
-                    if (cnt < 2 || cnt > 3) board[cr][cc] = -1;//<2 >3 两种情况下需要设置当前的活细胞为死细胞，区别0这种，我们设置为-1
-                    else if (cnt == 2 || cnt == 3) board[cr][cc] = 1;//等于2 等于3 活细胞继续活着
-                } else if (board[cr][cc] == 0) {//当前细胞为死细胞
-                    if (cnt == 3) board[cr][cc] = -2;//死细胞复活，区别1这种活细胞，设置为-2
-                }
+        public int getLiveNeighbors1(int[][] board, int sr, int sc) {
+            int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
+            int lives = 0;
+            for (int[] d : dirs) {
+                int nr = sr + d[0], nc = sc + d[1];
+                if (!inArea(nr, nc)) continue;
+                lives += board[nr][nc] & 1;
             }
+            return lives;
         }
-
 
         private boolean inArea(int r, int c) {
             return r >= 0 && r < R && c >= 0 && c < C;
@@ -697,11 +748,144 @@ a >> 3;
 
 
 
+> 打印出位操作前后的二进制的状态
+
+```java
+//原始的board
+     0      1      0 
+     0      0      1 
+     1      1      1 
+     0      0      0 
+----
+//原始的board 二进制
+00 01 00 
+00 00 01 
+01 01 01 
+00 00 00 
+--------------
+//位操作后的board 二进制
+00 01 00 
+10 00 11 
+01 11 11 
+00 10 00 
+//取2nd 位的结果即可返回
+```
 
 
 
+### [1020. 飞地的数量](https://leetcode-cn.com/problems/number-of-enclaves/)
+
+> 类似130题 被围绕的区域
+
+![flower-1499758_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\graph\搜索与图论之FloodFill.assets\flower-1499758_640.jpg)
 
 
+
+#### 方法1：BFS染色
+
+```java
+int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int R, C;
+
+public int numEnclaves(int[][] A) {
+    R = A.length;
+    C = A[0].length;
+    PrintUtils.printMatrix(A);
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            if (isBoard(r, c) && A[r][c] == 1) {//边界上的1作为种子来进行扩散
+                bfs(A, r, c);
+            }
+        }
+    }
+    //统计1的个数（即封闭的陆地的个数）
+    int cnt = 0;
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            if (A[r][c] == 1) cnt++;
+        }
+    }
+    return cnt;
+}
+
+
+private void bfs(int[][] A, int sr, int sc) {
+    Queue<int[]> q = new LinkedList<>();
+    q.offer(new int[]{sr, sc});
+    A[sr][sc] = 0;//边缘进来的点是1，染色为0
+    while (!q.isEmpty()) {
+        int[] c = q.poll();
+        int cr = c[0], cc = c[1];
+        for (int[] d : dirs) {
+            int nr = cr + d[0], nc = cc + d[1];
+            if (!inArea(nr, nc)) continue;
+            if (A[nr][nc] == 1) {//如果当前点是陆地1，翻转为0
+                q.offer(new int[]{nr, nc});
+                A[nr][nc] = 0;
+            }
+        }
+    }
+}
+
+//边缘的点
+private boolean isBoard(int r, int c) {
+    return r == 0 || r == R - 1 || c == 0 || c == C - 1;
+}
+
+//在区域内的点
+private boolean inArea(int r, int c) {
+    return r >= 0 && r < R && c >= 0 && c < C;
+}
+```
+
+
+
+#### 方法2：DFS染色
+
+```java
+int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+int R, C;
+
+public int numEnclaves(int[][] A) {
+    R = A.length;
+    C = A[0].length;
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            if (isBoard(r, c) && A[r][c] == 1) {
+                dfs(A, r, c);
+            }
+        }
+    }
+    //统计1的个数（即封闭的陆地的个数）
+    int cnt = 0;
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            if (A[r][c] == 1) cnt++;
+        }
+    }
+    return cnt;
+
+}
+
+
+private void dfs(int[][] A, int r, int c) {
+    if (!inArea(r, c) || A[r][c] != 1) return;
+    A[r][c] = 0;
+    for (int[] d : dirs) {
+        dfs(A, r + d[0], c + d[1]);
+    }
+}
+
+//边缘的点
+private boolean isBoard(int r, int c) {
+    return r == 0 || r == R - 1 || c == 0 || c == C - 1;
+}
+
+//在区域内的点
+private boolean inArea(int r, int c) {
+    return r >= 0 && r < R && c >= 0 && c < C;
+}
+```
 
 
 

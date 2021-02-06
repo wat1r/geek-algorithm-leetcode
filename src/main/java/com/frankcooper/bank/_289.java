@@ -10,8 +10,10 @@ public class _289 {
 
     public static void main(String[] args) {
         int[][] board = PrintUtils.processSymbol("[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]");
-        _1st handler = new _1st();
+//        _1st handler = new _1st();
+        _2nd handler = new _2nd();
         handler.gameOfLife(board);
+
     }
 
 
@@ -88,16 +90,18 @@ public class _289 {
             if (board == null || board.length == 0) return;
             R = board.length;
             C = board[0].length;
+            PrintUtils.printMatrix(board, true);
             for (int r = 0; r < R; r++) {
                 for (int c = 0; c < C; c++) {
-                    int lives = getLiveNeighbors(board, r, c);
+                    int lives = getLiveNeighbors1(board, r, c);
                     //一开始的时候，所有的2nd都是0，因此只需要确定2nd是否变成1
-                    // 01 --> 11 做2nd位
+                    // 01 --> 11 做2nd位 3想成是十进制的11
                     if (board[r][c] == 1 && (lives >= 2 && lives <= 3)) board[r][c] = 3;
-                    //00  --> 10 做2nd位
+                    //00  --> 10 做2nd位 2想成是十进制的10
                     if (board[r][c] == 0 && lives == 3) board[r][c] = 2;
                 }
             }
+            PrintUtils.printMatrix(board, true);
             for (int r = 0; r < R; r++) {
                 for (int c = 0; c < C; c++) {
                     board[r][c] >>= 1;
@@ -109,14 +113,33 @@ public class _289 {
 
         public int getLiveNeighbors(int[][] board, int sr, int sc) {
             int lives = 0;
+            //遍历的时候拿的是sr，sc一圈为1的9个点，有1的+1
             for (int r = Math.max(sr - 1, 0); r <= Math.min(sr + 1, R - 1); r++) {
                 for (int c = Math.max(sc - 1, 0); c <= Math.min(sc + 1, C - 1); c++) {
                     lives += board[r][c] & 1;
                 }
             }
+            //去掉自己是1的情况
             lives -= board[sr][sc] & 1;
             return lives;
         }
+
+
+        public int getLiveNeighbors1(int[][] board, int sr, int sc) {
+            int[][] dirs = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
+            int lives = 0;
+            for (int[] d : dirs) {
+                int nr = sr + d[0], nc = sc + d[1];
+                if (!inArea(nr, nc)) continue;
+                lives += board[nr][nc] & 1;
+            }
+            return lives;
+        }
+
+        private boolean inArea(int r, int c) {
+            return r >= 0 && r < R && c >= 0 && c < C;
+        }
+
 
     }
 
