@@ -114,4 +114,37 @@ public class _332 {
     }
 
 
+    /**
+     * Hierholzer
+     */
+    static class _4th {
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        Stack<String> stack = new Stack<>();
+
+        public List<String> findItinerary(List<List<String>> tickets) {
+
+            for (List<String> t : tickets) {
+                String u = t.get(0), v = t.get(1);
+                graph.putIfAbsent(u, new PriorityQueue<>());
+                graph.get(u).offer(v);
+            }
+            dfs("JFK");
+            List<String> res = new ArrayList<>();
+            while (!stack.isEmpty()) res.add(stack.pop());
+            return res;
+        }
+
+
+        private void dfs(String curr) {
+            PriorityQueue<String> nexts = graph.get(curr);
+            while (nexts != null && nexts.size() > 0) {
+                String next = nexts.poll();
+                dfs(next);
+            }
+            stack.push(curr);
+        }
+
+    }
+
+
 }
