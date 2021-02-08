@@ -86,8 +86,7 @@ public class Hierholzer {
             System.out.print(circuit.get(i));
             if (i != 0) System.out.print(" -> ");
         }
-        System.out.print("\n");
-
+//        System.out.print("\n");
     }
 
 
