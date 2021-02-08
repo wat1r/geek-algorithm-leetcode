@@ -9,6 +9,28 @@ import java.util.*;
  */
 public class _332 {
 
+
+    public static void main(String[] args) {
+
+
+        _5th handler = new _5th();
+        List<List<String>> tickets = new ArrayList<>();
+        tickets.add(new ArrayList<String>() {{
+            add("JFK");
+            add("KUL");
+        }});
+        tickets.add(new ArrayList<String>() {{
+            add("JFK");
+            add("NRT");
+        }});
+        tickets.add(new ArrayList<String>() {{
+            add("NRT");
+            add("JFK");
+        }});
+        handler.findItinerary(tickets);
+    }
+
+
     static class _1st {
         //收集结果返回
         List<String> resList = new ArrayList<>();
@@ -143,7 +165,76 @@ public class _332 {
             }
             stack.push(curr);
         }
+    }
 
+
+    /**
+     * Fleury
+     * <p>
+     * case:
+     * <p>
+     * ["JFK","MUC","LHR","SFO","SJC"]
+     * ["JFK","ATL","JFK","SFO","ATL","SFO"]
+     * ["JFK","NRT","JFK","KUL"] //这种的很难过掉
+     */
+    static class _5th {
+        Map<String, List<String>> graph = new HashMap<>();
+        List<String> res = new ArrayList<>();
+
+        public List<String> findItinerary(List<List<String>> tickets) {
+            for (List<String> t : tickets) {
+                String u = t.get(0), v = t.get(1);
+                graph.putIfAbsent(u, new ArrayList<>());
+                graph.get(u).add(v);
+
+            }
+            for (List<String> values : graph.values()) Collections.sort(values);
+            String u = "JFK";
+            res.add(u);
+            fleuryProcess(u);
+            return res;
+
+        }
+
+
+        private void fleuryProcess(String u) {
+            if (graph.containsKey(u)) {
+                for (int i = 0; i < graph.get(u).size(); i++) {
+                    String v = graph.get(u).get(i);
+                    if (isValidNextEdge(u, v)) {
+                        res.add(v);
+                        graph.get(u).remove(v);
+                        fleuryProcess(v);
+                    }
+                }
+            }
+        }
+
+
+        private boolean isValidNextEdge(String u, String v) {
+            if (graph.get(u).size() == 1) return true;
+            Map<String, Boolean> visited = new HashMap<>();
+            int count1 = dfs(u, visited);
+            graph.get(u).remove(v);
+            visited = new HashMap<>();
+            int count2 = dfs(v, visited);
+            graph.get(u).add(0, v);//这里不需要重复遍历了
+            return count1 <= count2;
+        }
+
+        private int dfs(String u, Map<String, Boolean> visited) {
+            visited.put(u, true);
+            int count = 1;
+            System.out.printf("%s\n", u);
+            if (graph.containsKey(u)) {
+                for (String adj : graph.get(u)) {
+                    if (visited.get(adj) == null || (visited.get(adj) != null && !visited.get(adj))) {
+                        count += dfs(adj, visited);
+                    }
+                }
+            }
+            return count;
+        }
     }
 
 
