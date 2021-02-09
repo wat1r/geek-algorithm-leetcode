@@ -4,10 +4,6 @@
 
 ![image-20201221200205711](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\stone\石子游戏七匹狼系列之一[Gray Wolf].assets\image-20201221200205711.png)
 
-## 石子游戏七匹狼系列之七[Gray Wolf]
-
-
-
 ### 方法1：贪心
 
 > 参考国际站`lee215`大佬的思路
