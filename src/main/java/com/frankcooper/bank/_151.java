@@ -31,4 +31,12 @@ public class _151 {
     }
 
 
+    static class _2nd {
+        /**
+         * https://leetcode.com/problems/reverse-words-in-a-string/discuss/47720/Clean-Java-two-pointers-solution-(no-trim(-)-no-split(-)-no-StringBuilder
+         */
+
+        
+    }
+
 }
