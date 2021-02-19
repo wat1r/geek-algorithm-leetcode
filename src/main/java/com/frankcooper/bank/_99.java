@@ -143,5 +143,13 @@ public class _99 {
         return predecessor;
     }
 
+    static class _3rd {
+        public void recoverTree(TreeNode root) {
+
+        }
+
+
+    }
+
 
 }
