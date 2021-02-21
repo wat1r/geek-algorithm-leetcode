@@ -2,15 +2,18 @@ package com.frankcooper.bank;
 
 public class _189 {
 
-    static _2nd handler = new _2nd();
-
 
     public static void main(String[] args) {
-        handler.reverse(new int[]{1, 2, 3, 4, 5, 6, 7}, 0, 6);
+
+//        static _2nd handler = new _2nd();
+        _1st handler = new _1st();
+
+//        handler.rotate(new int[]{1, 2, 3, 4, 5, 6, 7}, 0, 6);
+        handler.rotate(new int[]{1, 2, 3, 4, 5, 6, 7}, 3);
     }
 
 
-    class _1st {
+    static class _1st {
         public void rotate(int[] nums, int k) {
             int n = nums.length;
             int[] tmp = new int[n];
