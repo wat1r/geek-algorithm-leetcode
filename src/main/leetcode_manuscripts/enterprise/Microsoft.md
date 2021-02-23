@@ -27,6 +27,48 @@ public TreeNode dfs(int[] preorder, int preStart, int preEnd, int[] inorder, int
 }
 ```
 
+### [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
+
+#### 方法1：递归
+
+- 注意边界 long类型
+
+```java
+    public boolean isValidBST(TreeNode root) {
+        return helper(root,Long.MIN_VALUE,Long.MAX_VALUE);
+    }
+
+
+    public boolean helper(TreeNode root, long down ,long up){
+        if(root ==null) return true;
+        if(root.val<=down||root.val>=up) return false;
+        return helper(root.left,down,root.val)&&helper(root.right,root.val,up);
+    }
+```
+
+#### 方法2:中序遍历
+
+```java
+TreeNode pre;
+
+public boolean isValidBST(TreeNode root) {
+    if (root == null) return true;
+    if (!isValidBST(root.left)) {
+        return false;
+    }
+    if (pre != null && pre.val >= root.val) {
+        return false;
+    }
+    pre = root;
+    if (!isValidBST(root.right)) {
+        return false;
+    }
+    return true;
+}
+```
+
+
+
 ### [617. 合并二叉树](https://leetcode-cn.com/problems/merge-two-binary-trees/)
 
 #### 方法1：DFS
@@ -302,11 +344,77 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 
 #### todo
 
+### [剑指 Offer 25. 合并两个排序的链表](https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/)
+
+```java
+ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null||l2==null) return l1==null?l2:l1;
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        while(l1!=null&&l2!=null){
+            if(l1.val<=l2.val){
+                curr.next = l1;
+                l1= l1.next;
+            }else{
+                curr.next = l2;
+                l2= l2.next;
+            }
+            curr= curr.next;
+        }
+         if(l1!=null){
+            curr.next = l1;
+        }
+        if(l2!=null){
+            curr.next = l2;
+        }
+        return dummy.next;
+
+    }
+```
+
+
+
 
 
 ### [23. 合并K个升序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
 
 #### todo
+
+https://leetcode-cn.com/problems/merge-k-sorted-lists/solution/c-you-xian-dui-lie-liang-liang-he-bing-fen-zhi-he-/
+
+Queue
+
+成对合并
+
+分治合并
+
+```java
+ public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) return null;
+        int len = lists.length;
+        return mergeKLists(lists, 0, len - 1);
+    }
+
+    private ListNode mergeKLists(ListNode[] lists, int l, int r) {
+        if (l == r) return lists[l];
+        int mid = l + (r - l) / 2;
+        ListNode l1 = mergeKLists(lists, l, mid);
+        ListNode l2 = mergeKLists(lists, mid + 1, r);
+        return mergeTwoSortedListNode(l1, l2);
+    }
+
+    private ListNode mergeTwoSortedListNode(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoSortedListNode(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoSortedListNode(l1, l2.next);
+            return l2;
+        }
+    }
+```
 
 
 
@@ -717,6 +825,34 @@ public double helper(double x, long N) {
 
 
 
+
+
+
+
+
+
+
+
+## 图类问题
+
+### [1162. 地图分析](https://leetcode-cn.com/problems/as-far-from-land-as-possible/)
+
+#### 方法1：BFS
+
+#### //todo
+
+
+
+#### 方法2：DP
+
+#### //todo
+
+
+
+
+
+
+
 ## 动态规划
 
 ### [剑指 Offer 46. 把数字翻译成字符串](https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/)
@@ -871,9 +1007,49 @@ private void dfs(String currStr, int l, int r, List<String> ans) {
 
 
 
+### [221. 最大正方形](https://leetcode-cn.com/problems/maximal-square/)
+
+- `f[i][j]`是以最大`[i,j]`结尾的正方形的最大边长
+
+```java
+    public int maximalSquare(char[][] matrix) {
+        if(matrix==null||matrix.length==0||matrix[0].length==0) return 0;
+        int R = matrix.length,C = matrix[0].length;
+        int[][] f = new int[R][C];
+        int maxL = 0;
+        for(int r = 0;r<R;r++){
+            for(int c = 0;c<C;c++){
+                f[r][c] = matrix[r][c] =='1' ?1:0;
+                maxL = Math.max(maxL,f[r][c]);
+            }
+        }
+        
+        for(int r=1;r<R;r++){
+            for(int c=1;c<C;c++){
+                if(matrix[r][c]=='1'){
+                    // System.out.printf("%d,%d\n",r,c);
+                    f[r][c] = Math.min(Math.min(f[r-1][c],f[r][c-1]),f[r-1][c-1])+1;
+                    //注意+1
+                    // System.out.printf("%d\n", f[r][c]);
+                    maxL = Math.max(maxL,f[r][c]);
+                }
+            }
+        }
+        return maxL*maxL;
+    }
+```
+
+
+
+
+
+
+
 ### [300. 最长递增子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
 
 #### todo
+
+
 
 
 
@@ -891,7 +1067,229 @@ private void dfs(String currStr, int l, int r, List<String> ans) {
 
 ### [面试题 16.25. LRU 缓存](https://leetcode-cn.com/problems/lru-cache-lcci/)
 
-#### todo
+```java
+class LRUCache {
+
+    class Node{
+        int key,val;
+        Node pre,next;
+
+        public Node(int key, int val){
+            this.key = key;
+            this.val = val;
+        }
+    }
+
+
+    int capacity;
+    int size;
+    Node head,tail;
+    Map<Integer,Node> map = new HashMap<>();
+
+    public LRUCache(int capacity) {
+        head = new Node(-1,-1);
+        tail = new Node(-1,-1);
+        head.next = tail;
+        tail.pre = head;
+        this.capacity = capacity;
+        size = 0;
+    }
+    
+    public void addHead(int key,int val){
+        Node node = new Node(key,val);
+        Node next = head.next;
+        head.next = node;
+        node.pre = head;
+        node.next = next;
+        next.pre = node;
+        size ++;
+        map.put(key,node);
+        if(size>capacity){
+            Node preTail = tail.pre;
+            remove(preTail.key);
+        }
+    }
+
+    public void remove(int  key){
+        Node curr = map.get(key);
+        Node next = curr.next;
+        Node pre = curr.pre;
+        pre.next = next;
+        next.pre = pre;
+        size --;
+        map.remove(key);
+    }
+
+
+
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        else{
+            Node curr = map.get(key);
+            remove(key);
+            addHead(curr.key,curr.val);
+            return curr.val;
+        }
+
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+            remove(key);
+        }
+        addHead(key,value);
+
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+
+
+
+
+### [460. LFU 缓存](https://leetcode-cn.com/problems/lfu-cache/)
+
+
+
+```java
+class LFUCache {
+
+    
+
+
+    class Node{
+        int key,val;
+        int cnt;
+        Node pre,next;
+
+        public Node(int key,int val){
+            this.key =key;
+            this.val = val;
+            this.cnt =1;
+        }
+    }
+
+    class DLList{
+        Node head,tail;
+        int len;
+
+        public DLList(){
+            head = new Node(-1,-1);
+            tail = new Node(-1,-1);
+            head.next = tail;
+            tail.pre = head;
+            len = 0;
+        }
+
+        public void addHead(Node node){
+            Node next = head.next;
+            node.next = next;
+            node.pre = head;
+            head.next = node;
+            next.pre = node;
+            map.put(node.key,node);
+            len++;
+        }
+
+
+        public void remove(Node node){
+            Node pre =node.pre;
+            Node next = node.next;
+            pre.next = next;
+            next.pre = pre;
+            len--;
+            map.remove(node.key);
+        }
+
+        public void removeTail(){
+            Node preTail = tail.pre;
+            remove(preTail);
+        }
+    }
+
+    Map<Integer,Node> map;
+    Map<Integer,DLList> freq;
+    int size ;
+    int capacity;
+    int maxFreq ;
+
+    public LFUCache(int capacity) {
+        map = new HashMap<>();
+        freq= new HashMap<>();
+        this.size = 0;
+        this.capacity = capacity;
+        maxFreq = 0;
+    }
+    
+    public int get(int key) {
+        if(map.get(key)==null) return -1;
+        Node node = map.get(key);
+        int preFreq = node.cnt;
+        DLList preList = freq.get(preFreq);
+        preList.remove(node);
+        int currFreq = preFreq+1;
+        maxFreq = Math.max(maxFreq,currFreq);
+        DLList currList = freq.getOrDefault(currFreq,new DLList());
+        node.cnt++;//要修改cnt
+        currList.addHead(node);
+        freq.put(preFreq ,preList);
+        freq.put(currFreq,currList);
+        return node.val;
+    }
+    
+    public void put(int key, int value) {
+        if(capacity ==0 ) return;
+        if(map.get(key)!=null){
+            map.get(key).val = value;
+            get(key);
+            return ; 
+        }
+        Node node = new Node(key,value);
+        DLList currList = freq.getOrDefault(1,new DLList());
+        currList.addHead(node);
+        size++;
+        if(size>capacity){
+            if(currList.len>1){
+                currList.removeTail();
+            }else{
+                for(int i=2;i<=maxFreq;i++){
+                    DLList tmpList = freq.get(i);
+                    if(tmpList!=null&&tmpList.len>0){
+                        tmpList.removeTail();
+                        break;
+                    }
+                }
+            }
+            size--;
+        }
+        freq.put(1,currList);
+    }
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+
+
+
+
+
+
+
+
+
 
 ### [384. 打乱数组](https://leetcode-cn.com/problems/shuffle-an-array/)
 
@@ -901,4 +1299,34 @@ private void dfs(String currStr, int l, int r, List<String> ans) {
 
 ### [剑指 Offer 41. 数据流中的中位数](https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/)
 
-#### todo
+```java
+static class MedianFinder {
+
+    PriorityQueue<Integer> maxHeap;//大根堆，保存较小的一半，始终多一个，如果有的多的话
+    PriorityQueue<Integer> minHeap;//小根堆，保存较大的一半
+    int count;
+
+    /**
+     * initialize your data structure here.
+     */
+    public MedianFinder() {
+        count = 0;
+        maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
+        minHeap = new PriorityQueue<>();
+    }
+
+    public void addNum(int num) {
+        count++;
+        maxHeap.offer(num);
+        minHeap.offer(maxHeap.poll());
+        if (count % 2 == 1) maxHeap.offer(minHeap.poll());
+    }
+
+    public double findMedian() {
+        double ans;
+        if (count % 2 == 1) ans = (double) maxHeap.peek();
+        else ans = (double) (maxHeap.peek() + minHeap.peek()) / 2;
+        return ans;
+    }
+}
+```
