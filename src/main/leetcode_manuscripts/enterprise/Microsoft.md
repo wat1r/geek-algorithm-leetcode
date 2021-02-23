@@ -378,15 +378,33 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 
 ### [23. 合并K个升序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
 
-#### todo
-
 https://leetcode-cn.com/problems/merge-k-sorted-lists/solution/c-you-xian-dui-lie-liang-liang-he-bing-fen-zhi-he-/
 
-Queue
+#### 方法1：Queue
 
-成对合并
+```java
+    public ListNode mergeKLists(ListNode[] lists) {
+        Queue<ListNode> pq = new PriorityQueue<>((l1,l2)->l1.val-l2.val);
+        for(ListNode l:lists){
+            if(l!=null) pq.offer(l);
+        }
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+        while(!pq.isEmpty()){
+            ListNode tmp = pq.poll();
+            curr.next = tmp;
+            curr = curr.next;
+            if(tmp.next!=null) pq.offer(tmp.next);
+        }
+        return dummy.next;
+    }
+```
 
-分治合并
+
+
+#### 方法2：成对合并 //todo
+
+#### 方法3：分治合并
 
 ```java
  public ListNode mergeKLists(ListNode[] lists) {
@@ -416,7 +434,26 @@ Queue
     }
 ```
 
+### [543. 二叉树的直径](https://leetcode-cn.com/problems/diameter-of-binary-tree/)
 
+
+
+```java
+int ans = 1;
+
+public int diameterOfBinaryTree(TreeNode root) {
+    dfs(root);
+    return ans - 1;
+}
+
+public int dfs(TreeNode root) {
+    if (root == null) return 0;
+    int L = dfs(root.left);
+    int R = dfs(root.right);
+    ans = Math.max(ans, L + R + 1);
+    return Math.max(L, R) + 1;
+}
+```
 
 
 
@@ -823,11 +860,110 @@ public double helper(double x, long N) {
 
 
 
+### [5.第k大元素](https://www.lintcode.com/problem/5/)
+
+```java
+    public int kthLargestElement(int n, int[] nums) {
+        // write your code here
+        Queue<Integer> pq = new PriorityQueue<>();
+        for (int a : nums) {
+            while (!pq.isEmpty() && (pq.size()>=n && pq.peek() < a)) {
+                pq.poll();
+            }
+            pq.offer(a);
+        }
+        if (!pq.isEmpty() && pq.size() > n) {
+            pq.poll();
+        }
+        // System.out.printf("%d\n",pq.size());
+        return pq.isEmpty() ? -1 : pq.peek();
+    }
+
+```
 
 
 
 
 
+### [17. 电话号码的字母组合](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/)
+
+```java
+	 int N ;
+    Map<Character,List<String>> dict = new HashMap<>();
+    List<String> res = new ArrayList<>();
+    char[] chas;
+
+
+    public List<String> letterCombinations(String digits) {
+        if(digits ==null||digits.length() ==0) return res;
+         N = digits.length();
+         chas= digits.toCharArray();
+        dict.put('2', Arrays.asList("a", "b", "c"));
+        dict.put('3', Arrays.asList("d", "e", "f"));
+        dict.put('4', Arrays.asList("g", "h", "i"));
+        dict.put('5', Arrays.asList("j", "k", "l"));
+        dict.put('6', Arrays.asList("m", "n", "o"));
+        dict.put('7', Arrays.asList("p", "q", "r", "s"));
+        dict.put('8', Arrays.asList("t", "u", "v"));
+        dict.put('9', Arrays.asList("w", "x", "y", "z"));
+       dfs(new ArrayList<>(),0);
+       return res;
+    }
+
+    private void  dfs(List<String> sub ,int idx ){
+        if(N == sub.size()){ 
+            StringBuilder sb = new StringBuilder();
+            for(String s : sub)  sb.append(s);
+            res.add(sb.toString());
+            return;
+        }
+        List<String> seed = dict.get(chas[idx]);
+        for(String s: seed){
+            sub.add(s);
+            dfs(sub,idx+1);
+            sub.remove(sub.size()-1);
+        }
+    }
+```
+
+### [131. 分割回文串](https://leetcode-cn.com/problems/palindrome-partitioning/)
+
+```java
+  List<List<String>> res = new ArrayList<>();
+    
+    public List<List<String>> partition(String s) {
+        if(s==null||s.length()==0) return res;
+        dfs(s,new ArrayList<>(),0);
+        return res;
+    }
+
+    private void dfs(String s ,List<String> sub , int start){
+        if(start ==s.length()){
+            res.add(new ArrayList<>(sub));
+            return ;
+        }
+
+        for(int end = start;end<s.length();end++){
+            if(isPalindrome(s,start,end)){
+                sub.add(s.substring(start,end+1));
+                dfs(s,sub,end+1);
+                sub.remove(sub.size()-1);
+            }
+        }
+
+    }
+
+
+
+    public boolean isPalindrome(String str, int l, int r) {
+        while (l < r) {
+            if (str.charAt(l) != str.charAt(r)) return false;
+            l++;
+            r--;
+        }
+        return true;
+    }
+```
 
 
 
@@ -1330,3 +1466,67 @@ static class MedianFinder {
     }
 }
 ```
+
+
+
+## 经典题
+
+### [42. 接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)
+
+> Hard
+
+#### //todo
+
+
+
+
+
+## 过题
+
+### [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+> Hard
+
+https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/tu-jie-kge-yi-zu-fan-zhuan-lian-biao-by-user7208t/
+
+#### 方法1：迭代
+
+```java
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy, end = dummy;
+        while(end.next!=null){
+            for(int i =0;i<k && end!=null;i++){
+                end =end.next;
+            }
+            if(end == null) break;
+            ListNode start = pre.next;
+            ListNode next = end.next;
+            end.next = null;
+            pre.next = reverse(start);
+            start.next = next;
+            pre =start;
+            end = pre;
+        }
+        return dummy.next;
+    }
+
+    private ListNode reverse(ListNode head){
+        ListNode pre = null,curr = head;
+        while(curr!=null){
+            ListNode next = curr.next;
+            curr.next =pre;
+            pre = curr;
+            curr = next;
+        }
+        return pre;
+    }
+```
+
+
+
+
+
+
+

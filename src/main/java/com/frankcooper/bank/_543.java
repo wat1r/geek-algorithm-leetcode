@@ -27,4 +27,21 @@ public class _543 {
         return Math.max(leftDepth, rightDepth) + 1;//返回最大的深度
     }
 
+
+    static class _2nd {
+        int ans = 1;
+
+        public int diameterOfBinaryTree(TreeNode root) {
+            dfs(root);
+            return ans - 1;
+        }
+
+        public int dfs(TreeNode root) {
+            if (root == null) return 0;
+            int L = dfs(root.left);
+            int R = dfs(root.right);
+            ans = Math.max(ans, L + R + 1);
+            return Math.max(L, R) + 1;
+        }
+    }
 }
