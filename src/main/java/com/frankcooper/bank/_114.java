@@ -11,6 +11,24 @@ import java.util.Stack;
  */
 public class _114 {
 
+    /**
+     * https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/114-er-cha-shu-zhan-kai-wei-lian-biao-by-ming-zhi-/
+     */
+    static class _1st {
+        public void flatten(TreeNode root) {
+            if (root == null) return;
+            flatten(root.left);
+            flatten(root.right);
+            TreeNode tmp = root.right;
+            root.right = root.left;
+            root.left = null;
+            while (root.right != null) {
+                root = root.right;
+            }
+            root.right = tmp;
+        }
+    }
+
 
     public void flatten(TreeNode root) {
         while (root != null) {
