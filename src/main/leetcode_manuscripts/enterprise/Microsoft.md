@@ -436,8 +436,6 @@ https://leetcode-cn.com/problems/merge-k-sorted-lists/solution/c-you-xian-dui-li
 
 ### [543. 二叉树的直径](https://leetcode-cn.com/problems/diameter-of-binary-tree/)
 
-
-
 ```java
 int ans = 1;
 
@@ -454,6 +452,71 @@ public int dfs(TreeNode root) {
     return Math.max(L, R) + 1;
 }
 ```
+
+
+
+### [234. 回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/)
+
+#### 方法1：递归
+
+```java
+    ListNode left ;
+    public boolean isPalindrome(ListNode head) {
+        left = head;
+       return recur(head);
+    }
+
+
+    public boolean recur(ListNode right){
+        if(right == null) return true;
+        boolean ans =    recur(right.next);
+        ans = ans && (left.val == right.val);
+        left = left.next;
+        return ans;
+    }
+```
+
+
+
+
+
+### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
+
+#### 方法1：递归
+
+```java
+    public TreeNode invertTree(TreeNode root) {
+        if(root==null) return null;
+        TreeNode l = invertTree(root.left);
+        TreeNode r = invertTree(root.right);
+        root.left = r;
+        root.right = l;
+        return root;  
+    }
+```
+
+#### 方法2：迭代
+
+```java
+ public TreeNode invertTree(TreeNode root) {
+        if (root == null) return null;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode cur = queue.poll();
+            TreeNode tmp = cur.left;
+            cur.left = cur.right;
+            cur.right = tmp;
+            if (cur.left != null) queue.offer(cur.left);
+            if (cur.right != null) queue.offer(cur.right);
+        }
+        return root;
+    }
+```
+
+
+
+
 
 
 
