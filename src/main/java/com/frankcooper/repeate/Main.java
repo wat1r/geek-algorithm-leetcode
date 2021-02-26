@@ -1,48 +1,76 @@
 package com.frankcooper.repeate;
 
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-//            System.out.println(processOne(in.nextInt()));
-            int m = in.nextInt(), n = in.nextInt();
-            int[] nums = new int[n];
-            for (int i = 0; i < n; i++) nums[i] = in.nextInt();
-//            System.out.println(processTwo(m, n, nums));
-            System.out.println(allocate(m, nums));
-        }
+//        Scanner in = new Scanner(System.in);
+//        while (in.hasNext()) {
+////            System.out.println(processOne(in.nextInt()));
+//            int m = in.nextInt(), n = in.nextInt();
+//            int[] nums = new int[n];
+//            for (int i = 0; i < n; i++) nums[i] = in.nextInt();
+////            System.out.println(processTwo(m, n, nums));
+//        }
+
+
+        List<Employee> employees = new ArrayList<>();
+//        add some data
+        employees.sort(new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                int res = (o2.age >= o1.age) ? 1 : o1.id - o2.id;
+                return res;
+            }
+        });
+
+
     }
 
 
-    public static int allocate(int m, int[] ts) {
-        int n = ts.length;
-        int ans = 0;
-        if (n <= m) {
-            for (int t : ts) {
-                ans = Math.max(ans, t);
+    public static class Employee implements Comparable<Employee> {
+        private Integer age;
+        private Integer id;
+
+
+        @Override
+        public int compareTo(Employee o) {
+            if (this.getAge() > o.getAge()) {
+                return -1;// this-o小于0，表示this在前 o在后
+            } else if (this.getAge() == o.getAge()) {
+                if (this.getId() > o.getId()) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            } else {
+                return 1;// this-o大于0，表示this在后 o在前
             }
-            return ans;
-        }
-        Arrays.sort(ts);
-
-        PriorityQueue<Integer> nextFree = new PriorityQueue<>(m);
-
-        for (int _m = 0; _m < m; _m++) {
-            nextFree.add(0);
         }
 
-        for (int i = n - 1; i >= 0; i--) {
-            int t = nextFree.poll() + ts[i];
-            ans = Math.max(t, ans);
-            nextFree.add(t);
+
+        public Employee(Integer age, Integer id) {
+            this.age = age;
+            this.id = id;
         }
 
-        return ans;
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
 
     }
 
