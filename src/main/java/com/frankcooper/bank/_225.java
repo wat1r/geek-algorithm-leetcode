@@ -63,8 +63,55 @@ public class _225 {
         }
     }
 
-    class _1st{
 
+    /**
+     * 但队实现栈
+     */
+    class _1st {
+        class MyStack {
+
+            Queue<Integer> q;
+
+            /**
+             * Initialize your data structure here.
+             */
+            public MyStack() {
+                q = new LinkedList<>();
+            }
+
+            /**
+             * Push element x onto stack.
+             */
+            //先获取原来但size，将x放进队列但末尾，然后将队首对的元素放在队尾
+            public void push(int x) {
+                int n = q.size();
+                q.offer(x);
+                while (n-- > 0) {
+                    q.offer(q.poll());
+                }
+            }
+
+            /**
+             * Removes the element on top of the stack and returns that element.
+             */
+            public int pop() {
+                return q.poll();
+            }
+
+            /**
+             * Get the top element.
+             */
+            public int top() {
+                return q.peek();
+            }
+
+            /**
+             * Returns whether the stack is empty.
+             */
+            public boolean empty() {
+                return q.isEmpty();
+            }
+        }
     }
 }
 
