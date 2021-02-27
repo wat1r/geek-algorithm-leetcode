@@ -17,6 +17,7 @@ public class _91 {
     public static void main(String[] args) {
 //        shortestHamiltonPath();
         shortestHamiltonPath2nd();
+        System.out.println("------");
     }
 
     //手工输入
