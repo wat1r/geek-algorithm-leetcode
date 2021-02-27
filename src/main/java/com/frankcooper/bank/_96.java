@@ -7,6 +7,10 @@ package com.frankcooper.bank;
  */
 public class _96 {
 
+    public static void main(String[] args) {
+
+    }
+
     public int numTrees(int n) {
         int[] dp = new int[n + 1];
         dp[0] = 1;
