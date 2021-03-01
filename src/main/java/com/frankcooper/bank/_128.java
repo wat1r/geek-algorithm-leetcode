@@ -1,8 +1,6 @@
 package com.frankcooper.bank;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class _128 {
     static _128 handler = new _128();
@@ -41,10 +39,36 @@ public class _128 {
                     curNum += 1;
                     curCnt += 1;
                 }
-                max = Math.max(max,curCnt);
+                max = Math.max(max, curCnt);
             }
         }
 
         return max;
+    }
+
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            handler.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2});
+        }
+
+        public int longestConsecutive(int[] nums) {
+            Map<Integer, Integer> map = new HashMap<>();//k：当前字符的下标索引，v：其能组成的最长的连续序列的长度
+            int l = 0, r = 0;
+            int ans = 0;
+            for (int num : nums) {
+                if (!map.containsKey(num)) {
+                    l = map.getOrDefault(num - 1, 0);
+                    r = map.getOrDefault(num + 1, 0);
+                    int len = l + r + 1;//
+                    if (len > ans) ans = len;
+                    map.put(num, 1);//这个塞入什么值都无所谓
+                    map.put(num - l, len);
+                    map.put(num + r, len);
+                }
+            }
+            return ans;
+        }
     }
 }
