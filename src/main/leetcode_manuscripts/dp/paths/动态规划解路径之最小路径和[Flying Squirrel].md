@@ -123,7 +123,43 @@ int[][] dp = new int[n][n];     //方法2
 
 ![2020-07-15_204854](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之最小路径和[Flying Squirrel].assets\2020-07-15_204854.jpg)
 
-#### 方法1：模板法DP
+#### 方法1: DFS
+
+```java
+int[][] cache;
+int R, C;
+
+int[][] dirs = {{1, 0}, {0, 1}};
+
+public int minPathSum(int[][] grid) {
+    if (grid == null || grid.length == 0) return 0;
+    R = grid.length;
+    C = grid[0].length;//行 * 列
+    cache = new int[R][C];
+    for (int i = 0; i < R; i++) Arrays.fill(cache[i], -1);//初始化
+    return dfs(grid, 0, 0);
+}
+
+
+private int dfs(int[][] grid, int r, int c) {
+    if (r == R - 1 && c == C - 1) return grid[r][c];
+    if (cache[r][c] != -1) return cache[r][c];
+    int ans = Integer.MAX_VALUE / 2;// 设置一个最大值
+    for (int[] d : dirs) {
+        int nr = r + d[0], nc = c + d[1];
+        if (!inArea(nr, nc)) continue;
+        ans = Math.min(ans, dfs(grid, nr, nc));
+    }
+    return cache[r][c] = ans + grid[r][c];
+}
+
+
+private boolean inArea(int r, int c) {
+    return r >= 0 && r < R && c >= 0 && c < C;
+}
+```
+
+#### 方法2：模板法DP
 
 
 #### 元方法
@@ -161,7 +197,7 @@ public int minPathSum(int[][] grid) {
 }
 ```
 
-#### 方法2：空间压缩DP
+#### 方法3：空间压缩DP
 
 ![2020-07-15_212149](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\paths\动态规划解路径之最小路径和[Flying Squirrel].assets\2020-07-15_212149.jpg)
 
@@ -188,4 +224,46 @@ public int minPathSum(int[][] grid) {
 
 - 时间复杂度：$O(M*N) $  $M*N$为$grid$的行列
 - 空间复杂度： $O(N)$ 
+
+#### Follow up :如何打印最短路径
+
+```java
+  int R, C;
+
+        public void printShortestPath(int[][] grid) {
+            if (grid == null || grid.length == 0) return;
+            R = grid.length;
+            C = grid[0].length;//行 * 列
+            int[][] dp = new int[R][C];
+            dp[0][0] = grid[0][0];
+            for (int i = 1; i < R; i++) dp[i][0] = dp[i - 1][0] + grid[i][0];
+            for (int j = 1; j < C; j++) dp[0][j] = dp[0][j - 1] + grid[0][j];
+            for (int i = 1; i < R; i++) {
+                for (int j = 1; j < C; j++) {
+                    dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+                }
+            }
+            dfs(dp, grid, R - 1, C - 1);
+        }
+
+        public void dfs(int[][] dp, int[][] grid, int i, int j) {
+            if (i == 0 && j == 0) {
+                System.out.printf("<-(%d,%d)", i, j);
+                System.out.println();
+            }
+            boolean f = (i == R - 1 && j == C - 1);
+            if (i >= 1 && grid[i][j] + dp[i - 1][j] == dp[i][j]) {
+                System.out.printf((f ? "" : "<-") + "(%d,%d)", i, j);
+                dfs(dp, grid, i - 1, j);
+            }
+            if (j >= 1 && grid[i][j] + dp[i][j - 1] == dp[i][j]) {
+                System.out.printf((f ? "" : "<-") + "(%d,%d)", i, j);
+                dfs(dp, grid, i, j - 1);
+            }
+        }
+```
+
+
+
+
 
