@@ -100,4 +100,99 @@ public class _5 {
             return end - start - 1;
         }
     }
+
+
+    static class _4th {
+        Boolean[][] memo;
+
+        public String longestPalindrome(String s) {
+            memo = new Boolean[s.length()][s.length()];
+            String ans = "";
+            for (int i = 0; i < s.length(); i++) {
+                for (int j = i; j < s.length(); j++) {
+                    if (helper(s, i, j) && j - i + 1 > ans.length()) {
+                        ans = s.substring(i, j + 1);
+                    }
+                }
+            }
+            return ans;
+        }
+
+
+        private boolean helper(String s, int start, int end) {
+            if (start == end) return true;
+            if (start + 1 == end) return s.charAt(start) == s.charAt(end);
+            if (memo[start][end] != null) return memo[start][end];
+            boolean ans = false;
+            if (s.charAt(start) == s.charAt(end)) {
+                ans = helper(s, start + 1, end - 1);
+            }
+            return memo[start][end] = ans;
+        }
+    }
+
+
+    static class _5th {
+
+
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            handler.longestPalindrome("cbbd");
+        }
+
+        public String longestPalindrome(String s) {
+            if (s == null || s.length() == 0) return "";
+            int n = s.length();
+            boolean[][] f = new boolean[n][n];
+            for (int i = 0; i < n; ++i) f[i][i] = true;
+            int maxLen = 1, start = 0;
+            for (int k = 2; k <= n; k++) {
+                // System.out.printf("k:%d\n", k);
+                for (int i = 0; i < n - k + 1; i++) {
+                    int j = i + k - 1;
+                    // System.out.printf("i:%d,j:%d\n", i, j);
+                    if (s.charAt(i) == s.charAt(j) && (k == 2 || f[i + 1][j - 1])) {
+                        f[i][j] = true;
+                        if (maxLen < k) {
+                            maxLen = k;
+                            start = i;
+                        }
+                    }
+                }
+            }
+            return s.substring(start, start + maxLen);
+        }
+    }
+
+    static class _6th {
+
+        public static void main(String[] args) {
+            _6th handler = new _6th();
+            handler.longestPalindrome("cbbd");
+        }
+
+        public String longestPalindrome(String s) {
+            if (s == null || s.length() <= 0) return s;
+            int n = s.length();
+            boolean[][] f = new boolean[n][n];
+            for (int i = 0; i < n; i++) f[i][i] = true;
+            int maxLen = 1, start = 0;
+            for (int i = n - 1; i >= 0; i--) {
+                for (int k = 1; k < n - i; k++) {
+                    int j = k + i;
+                    if (s.charAt(i) == s.charAt(j)) {
+                        f[i][j] = (k == 1) || f[i + 1][j - 1];
+                    }
+                    if (f[i][j] && j - i + 1 > maxLen) {
+                        maxLen = j - i + 1;
+                        start = i;
+                    }
+                }
+            }
+            return s.substring(start, start + maxLen);
+        }
+
+    }
+
+
 }

@@ -76,4 +76,28 @@ public class _516 {
         return memo[i][j];
     }
 
+
+    static class _1st {
+
+
+        public int longestPalindromeSubseq(String s) {
+            return findLPSLengthRecursive(s, 0, s.length() - 1);
+        }
+
+
+        private int findLPSLengthRecursive(String s, int start, int end) {
+            if (start == end) return 1;
+            if (start > end) return 0;
+            int ans = 0;
+            if (s.charAt(start) == s.charAt(end)) {
+                ans = findLPSLengthRecursive(s, start + 1, end - 1) + 2;
+            } else {
+                ans = Math.max(findLPSLengthRecursive(s, start + 1, end),
+                        findLPSLengthRecursive(s, start, end - 1));
+            }
+            return ans;
+        }
+
+
+    }
 }
