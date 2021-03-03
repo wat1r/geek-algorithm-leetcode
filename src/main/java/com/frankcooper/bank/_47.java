@@ -15,6 +15,46 @@ public class _47 {
 
     }
 
+
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums = new int[]{1, 1, 1, 2};
+            handler.permuteUnique(nums);
+        }
+
+
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> permuteUnique(int[] nums) {
+            if (nums == null || nums.length == 0) return res;
+            Arrays.sort(nums);
+            dfs(new ArrayList<>(), nums, new boolean[nums.length]);
+            return res;
+        }
+
+        private void dfs(List<Integer> sub, int[] nums, boolean[] vis) {
+            if (sub.size() == nums.length) {
+                sub.forEach(System.out::print);
+                System.out.println();
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int i = 0; i < nums.length; i++) {
+                if (vis[i]) continue;
+                if (i > 0 && nums[i - 1] == nums[i] && !vis[i - 1]) continue;
+                vis[i] = true;
+                sub.add(nums[i]);
+                dfs(sub, nums, vis);
+                sub.remove(sub.size() - 1);
+                vis[i] = false;
+
+            }
+        }
+    }
+
+
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> resList = new ArrayList<>();
         if (nums == null || nums.length == 0) return resList;

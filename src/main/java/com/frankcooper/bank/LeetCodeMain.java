@@ -11,5 +11,9 @@ public class LeetCodeMain {
 
     static LeetCodeMain handler = new LeetCodeMain();
 
+    public static void main(String[] args) {
+        System.out.println("ddd");
+    }
+
 
 }
