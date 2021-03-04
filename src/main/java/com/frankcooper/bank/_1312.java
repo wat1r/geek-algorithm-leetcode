@@ -115,6 +115,65 @@ public class _1312 {
         }
     }
 
+    static class _1st {
+        public int minInsertions(String s) {
+            return helper(s, 0, s.length() - 1);
+        }
+
+        private int helper(String s, int start, int end) {
+            if (start >= end) return 0;
+            int ans;
+            if (s.charAt(start) == s.charAt(end)) {
+                ans = helper(s, start + 1, end - 1);
+            } else {
+                ans = Math.min(helper(s, start, end - 1), helper(s, start + 1, end)) + 1;
+            }
+            return ans;
+        }
+
+    }
+
+    static class _2nd {
+        Integer[][] memo;
+
+        public int minInsertions(String s) {
+            int n = s.length();
+            memo = new Integer[n][n];
+            return helper(s, 0, n - 1);
+        }
+
+        private int helper(String s, int start, int end) {
+            if (memo[start][end] != null) return memo[start][end];
+            if (start >= end) return 0;
+            int ans;
+            if (s.charAt(start) == s.charAt(end)) {
+                ans = helper(s, start + 1, end - 1);
+            } else {
+                ans = Math.min(helper(s, start, end - 1), helper(s, start + 1, end)) + 1;
+            }
+            return memo[start][end] = ans;
+
+        }
+    }
+
+    static class _3rd {
+        public int minInsertions(String s) {
+            // $dp[i][j]$表示子串$str[i...j]$范围内的最少添加多少个字符后，可以形成回文子串
+            char[] chas = s.toCharArray();
+            int n = chas.length;
+            int[][] dp = new int[n][n];
+            for (int j = 1; j < n; j++) {
+                dp[j - 1][j] = (chas[j - 1] == chas[j]) ? 0 : 1;
+                for (int i = j - 2; i >= 0; i--) {
+                    if (chas[i] == chas[j]) dp[i][j] = dp[i + 1][j - 1];
+                    else dp[i][j] = Math.min(dp[i + 1][j], dp[i][j - 1]) + 1;
+                }
+            }
+            return dp[0][s.length() - 1];
+        }
+
+
+    }
 
 }
 

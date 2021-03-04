@@ -100,4 +100,58 @@ public class _516 {
 
 
     }
+
+
+    static class _5th {
+
+
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            handler.minDelBuildPalindrome("bbbab");
+        }
+
+        Integer[][] memo;
+
+        public int minDelBuildPalindrome(String s) {
+            memo = new Integer[s.length()][s.length()];
+            return s.length() - helper(s, 0, s.length() - 1);
+        }
+
+        private int helper(String s, int start, int end) {
+            if (memo[start][end] != null) return memo[start][end];
+            if (start == end) return 1;
+            if (start > end) return 0;
+            int ans;
+            if (s.charAt(start) == s.charAt(end)) {
+                ans = helper(s, start + 1, end - 1) + 2;
+            } else {
+                ans = Math.max(helper(s, start, end - 1), helper(s, start + 1, end));
+            }
+            System.out.println(ans);
+            return memo[start][end] = ans;
+        }
+    }
+
+
+    static class _7th {
+
+        public static void main(String[] args) {
+            _7th handler = new _7th();
+            handler.minDelBuildPalindrome("bbbab");
+        }
+
+        public int minDelBuildPalindrome(String s) {
+            int n = s.length();
+            int[][] f = new int[n][n];
+            for (int i = n - 1; i >= 0; i--) {
+                f[i][i] = 1;
+                for (int j = i + 1; j < n; j++) {
+                    if (s.charAt(i) == s.charAt(j)) f[i][j] = f[i + 1][j - 1] + 2;
+                    else f[i][j] = Math.max(f[i + 1][j], f[i][j - 1]);
+                }
+            }
+
+            return n - f[0][n - 1];
+        }
+    }
 }
