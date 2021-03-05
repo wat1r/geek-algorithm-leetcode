@@ -12,6 +12,23 @@ import java.util.List;
  */
 public class _144 {
 
+    static class _1st {
+        /*递归*/
+        List<Integer> res = new ArrayList<>();
+
+        public List<Integer> preorderTraversal(TreeNode root) {
+            dfs(root);
+            return res;
+        }
+
+        private void dfs(TreeNode root) {
+            if (root == null) return;
+            res.add(root.val);
+            dfs(root.left);
+            dfs(root.right);
+        }
+    }
+
 
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
@@ -36,10 +53,6 @@ public class _144 {
         }
         return result;
     }
-
-
-
-
 
 
     public void preOrderByMorris(TreeNode root) {
