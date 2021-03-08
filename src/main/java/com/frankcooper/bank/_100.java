@@ -13,8 +13,6 @@ import java.util.Queue;
 public class _100 {
 
 
-
-
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) return true;
         if (p == null || q == null) return false;
@@ -47,6 +45,14 @@ public class _100 {
         if (p == null || q == null) return false;
         if (p.val != q.val) return false;
         return isSameTree1st(p.left, q.left) && isSameTree1st(p.right, q.right);
+    }
+
+    static class _1st {
+        public boolean isSameTree(TreeNode p, TreeNode q) {
+            if (p == null && q == null) return true;
+            if (p == null || q == null) return false;
+            return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        }
     }
 
 }
