@@ -1,5 +1,7 @@
 package com.frankcooper.bank;
 
+import sun.tools.jstat.JStatLogger;
+
 import java.util.*;
 
 
@@ -162,6 +164,49 @@ public class _131 {
                     sub.remove(sub.size() - 1);
                 }
             }
+        }
+    }
+
+
+    static class _5th {
+        public static void main(String[] args) {
+            String s = "aab";
+            s = "abbab";
+            _5th handler = new _5th();
+            handler.partition(s);
+        }
+
+        List<List<String>> res = new ArrayList<>();
+
+        public List<List<String>> partition(String s) {
+            if (s == null || s.length() == 0) return res;
+            int n = s.length();
+            boolean[][] f = new boolean[n][n];
+            for (int j = 0; j < n; j++) {
+                f[j][j] = true;
+                for (int i = 0; i < j; i++) {
+                    if (s.charAt(j) == s.charAt(i) && (j - i <= 2 || f[i + 1][j - 1])) f[i][j] = true;
+                }
+            }
+
+            dfs(s, 0, new ArrayList<String>(), f);
+            return res;
+        }
+
+        private void dfs(String s, int idx, List<String> sub, boolean[][] f) {
+            if (idx >= s.length()) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int i = idx; i < s.length(); i++) {
+                System.out.printf("idx:%d,i:%d\n", idx, i);
+                if (f[idx][i]) {
+                    sub.add(s.substring(idx, i + 1));
+                    dfs(s, i + 1, sub, f);
+                    sub.remove(sub.size() - 1);
+                }
+            }
+
         }
     }
 
