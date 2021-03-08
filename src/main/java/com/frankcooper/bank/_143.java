@@ -24,32 +24,37 @@ public class _143 {
 
 
         public void reorderList(ListNode head) {
+            if (head == null || head.next == null) return;
             ListNode dummy = new ListNode(-1);
             dummy.next = head;
             ListNode slow = head, fast = head;
-            while (fast != null && fast.next != null) {
+            while (fast.next != null && fast.next.next != null) {
                 slow = slow.next;
-                fast = fast.next;
+                fast = fast.next.next;
             }
             ListNode tmp = slow.next;
             slow.next = null;
-            ListNode cur = tmp, pre = null, next;
+            ListNode second = reverse(tmp);
+            ListNode first = dummy.next;
+            while (second != null) {
+                ListNode l2 = second.next;
+                second.next = first.next;
+                first.next = second;
+                first = second.next;
+                second = l2;
+            }
+        }
+
+
+        private ListNode reverse(ListNode head) {
+            ListNode cur = head, pre = null, next;
             while (cur != null) {
                 next = cur.next;
                 cur.next = pre;
                 pre = cur;
                 cur = next;
             }
-            ListNode first = dummy.next;
-            ListNode second = cur;
-            ListNode l1 = first.next;
-            ListNode l2 = second.next;
-            while (second != null) {
-                first.next = l2;
-                second.next = l1;
-                first = l1;
-                second = l2;
-            }
+            return pre;
         }
     }
 }
