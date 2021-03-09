@@ -24,4 +24,7 @@ public class Sword_54 {
             return list.get(k - 1);
         }
     }
+
+
+
 }
