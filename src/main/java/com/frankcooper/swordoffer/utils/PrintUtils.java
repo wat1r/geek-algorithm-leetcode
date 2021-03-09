@@ -91,11 +91,14 @@ public class PrintUtils {
 
     public static void printMatrix(int[][][] matrix) {
         int m = matrix.length, n = matrix[0].length, p = matrix[0][0].length;
+        System.out.printf("m:%d,n:%d,p:%d\n", m, n, p);
         for (int i = 0; i < m; ++i) {
+            System.out.printf("i:%d\n", i);
             for (int j = 0; j < n; ++j) {
                 for (int k = 0; k < p; ++k) {
                     System.out.print(String.format("%3s", matrix[i][j][k]) + " ");
                 }
+                System.out.println();
             }
             System.out.println();
         }
@@ -105,6 +108,7 @@ public class PrintUtils {
 
     public static void printMatrix(int[][][] matrix, int sense) {
         int m = matrix.length, n = matrix[0].length, p = matrix[0][0].length;
+
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
 

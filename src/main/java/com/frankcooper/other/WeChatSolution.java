@@ -3,6 +3,7 @@ package com.frankcooper.other;
 import com.alibaba.fastjson.JSON;
 import com.frankcooper.swordoffer.utils.PrintUtils;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 public class WeChatSolution {
@@ -86,5 +87,25 @@ public class WeChatSolution {
 
     }
 
+
+    static class _2nd {
+        public static void main(String[] args) {
+
+            Long res = (long) Integer.MAX_VALUE * 60;
+            System.out.println(res);
+
+//            Timestamp timestamp = new Timestamp();
+//            timestamp.getTime()
+            System.out.println(Long.MAX_VALUE & 0xffffffffL);
+            System.out.println(PrintUtils.addZeroForNum(Integer.toBinaryString(Integer.MAX_VALUE), 50));
+            System.out.println(PrintUtils.addZeroForNum(Integer.toBinaryString(0xffffffff), 50));
+            System.out.println(PrintUtils.addZeroForNum(Long.toBinaryString(0xffffffffL), 50));
+            System.out.println(PrintUtils.addZeroForNum(Integer.toBinaryString(-1), 50));
+
+            /**
+             * (int)(timestamp.gettime/1000+endtime*60)&0xffffffff
+             */
+        }
+    }
 
 }
