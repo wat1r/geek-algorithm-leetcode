@@ -15,6 +15,7 @@ public class _879 {
         int[] profit = new int[]{2, 3};
 
         handler.profitableSchemes(G, P, group, profit);
+        handler.profitableSchemes1st(G, P, group, profit);
 
 
         System.out.println(m);
@@ -104,6 +105,7 @@ public class _879 {
                 }
             }
         }
+        PrintUtils.printMatrix(dp);
         //最终返回
         return dp[N][G][P];
     }

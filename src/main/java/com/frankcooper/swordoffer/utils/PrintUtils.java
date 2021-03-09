@@ -91,6 +91,9 @@ public class PrintUtils {
 
     public static void printMatrix(int[][][] matrix) {
         int m = matrix.length, n = matrix[0].length, p = matrix[0][0].length;
+//        for (int i = 0; i < m * n * p; i++) {
+//            System.out.print(String.format("%3s", matrix[i / (n * p)][(i / p) % n][i % p]) + " ");
+//        }
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 for (int k = 0; k < p; ++k) {
