@@ -27,6 +27,13 @@ public class _879 {
     int MOD = 1_000_000_007;
 
 
+    /**
+     * @param G      n n名员工
+     * @param P      minProfit
+     * @param group
+     * @param profit
+     * @return
+     */
     public int profitableSchemes(int G, int P, int[] group, int[] profit) {
         int N = profit.length;
         int[][][] dp = new int[N + 1][G + 1][P + 1];
@@ -49,8 +56,9 @@ public class _879 {
         PrintUtils.printMatrix(dp);
         //最终返回
         int sum = 0;
-        for (int i = 0; i <= G; i++) {
-            sum = (sum + dp[group.length][i][P]) % MOD;
+        for (int j = 0; j <= G; j++) {
+            System.out.printf("i:%d,j:%d,k:%d\n", N, j, P);
+            sum = (sum + dp[N][j][P]) % MOD;
         }
         return sum;
     }
@@ -81,7 +89,13 @@ public class _879 {
 //        return dp[G][P];
     }
 
-
+    /**
+     * @param G      n n名员工
+     * @param P      minProfit
+     * @param group
+     * @param profit
+     * @return
+     */
     public int profitableSchemes1st(int G, int P, int[] group, int[] profit) {
         int N = profit.length;
         int[][][] dp = new int[N + 1][G + 1][P + 1];
