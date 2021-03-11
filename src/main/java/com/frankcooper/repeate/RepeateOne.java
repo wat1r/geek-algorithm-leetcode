@@ -27,7 +27,7 @@ public class RepeateOne {
             res++;
             for (int i = 0; i < size; i++) {
                 String curWord = queue.poll();
-                List<String> candidates = transform(curWord,words);
+                List<String> candidates = transform(curWord, words);
                 for (String candidate : candidates) {
                     if (candidate.equals(endWord)) {
                         return res;
@@ -60,4 +60,38 @@ public class RepeateOne {
     }
 
 
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+//            handler.mySqrt(9);
+            handler.mySqrt(2147395599);
+//            handler.mySqrt1(2);
+        }
+
+        public int mySqrt(int x) {
+            long l = 0, r = x;
+            while (l < r) {
+                long m = l + (r - l) / 2;
+                long t = m * m;
+                if (t == x) return (int) m;
+                else if (t > x) r = m;
+                else if (t < x) l = m + 1;
+            }
+            return (int) (l * l == x ? l : l - 1);
+        }
+
+        public int mySqrt1(int x) {
+            long l = 0, r = x;
+            while (l < r) {
+                long m = l + (r - l) / 2;
+                if ((int) m * m >= x) {
+                    r = m;
+                } else {
+                    l = m + 1;
+                }
+            }
+            return (int) (l * l == x ? l : l - 1);
+        }
+    }
 }

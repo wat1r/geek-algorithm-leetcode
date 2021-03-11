@@ -74,4 +74,26 @@ public class _3 {
             return ans;
         }
     }
+
+
+    static class _2nd {
+
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            handler.lengthOfLongestSubstring("abcabcbb");
+        }
+
+
+        public int lengthOfLongestSubstring(String s) {
+            int res = 0, left = 0, right = 0;
+            int n = s.length();
+            int[] helper = new int[128];
+            while (right < n) {
+                left = Math.max(left, helper[s.charAt(right)]);
+                res = Math.max(res, right - left + 1);
+                helper[s.charAt(right)] = 1 + right++;
+            }
+            return res;
+        }
+    }
 }

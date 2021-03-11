@@ -3,7 +3,6 @@ package com.frankcooper.other;
 import com.alibaba.fastjson.JSON;
 import com.frankcooper.swordoffer.utils.PrintUtils;
 
-import java.sql.Timestamp;
 import java.util.*;
 
 public class WeChatSolution {
@@ -106,6 +105,125 @@ public class WeChatSolution {
              * (int)(timestamp.gettime/1000+endtime*60)&0xffffffff
              */
         }
+    }
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            handler.process("aa23bb3c678");
+            handler.process("a11b2");
+        }
+
+
+        private int[] process(String s) {
+            List<Integer> list = new ArrayList<>();
+            char[] chas = s.toCharArray();
+            int l = 0, r = 0, n = s.length();
+            while (r < n) {
+                while (chas[l] >= 'a' && chas[l] <= 'z') {
+                    l++;
+                    r++;
+                }
+                while (r < n && chas[r] >= '0' && chas[r] <= '9') r++;
+                list.add(Integer.valueOf(s.substring(l, r)));
+                l = r;
+            }
+            int[] ans = new int[list.size()];
+            for (int i = 0; i < list.size(); i++) ans[i] = list.get(i);
+            return ans;
+
+        }
+    }
+
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+
+            handler.sqrt(9);
+            System.exit(0);
+            for (int i = 0; i < 21; i++) {
+                long a = handler.sqrt(Long.valueOf(i));
+                long b = a * a;
+                if (b < i) {
+                    b = (a + 1) * (a + 1);
+                }
+                if (i == 0) {
+                    System.out.println(true);
+                }
+                if (b >= i && i < (a + 1) * (a + 1) && i > (a - 1) * (a - 1)) {
+                    System.out.println(true);
+                } else {
+                    System.out.println("平方根" + a + "次方" + b + "对应整数" + i);
+
+                }
+            }
+
+        }
+
+        public long sqrt(long x) {
+            long l = 0;
+            long r = x;
+            long ans = -1;
+            while (l <= r) {
+                long mid = l + (r - l) / 2;
+                if (mid * mid <= x) {
+                    ans = mid;
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+
+            }
+            return ans;
+        }
+
+
+        public int mySqrt(int x) {
+            int l = 0, r = x;
+            int ans = 0;
+            while (l <= r) {
+                int m = l + (r - l) / 2;
+                if ((long) m * m <= x) {
+                    ans = m;
+                    l = m + 1;
+                } else {
+                    r = m - 1;
+                }
+            }
+            return ans;
+        }
+
+
+        public int mySqrt1(int x) {
+            long l = 0, r = x;
+            while (l <= r) {
+                long m = l + (r - l) / 2;
+                if (m * m > x) {
+                    r = m - 1;
+                } else if (m * m < x) {
+                    l = m + 1;
+                } else {
+                    return (int) m;
+                }
+            }
+            return (int) l - 1;
+        }
+
+        public int sqrt2(int x) {
+            long l = 0, r = x;
+            while (l < r) {
+                long m = l + (r - l) / 2;
+                if ((int) m * m >= x) {
+                    r = m;
+                } else {
+                    l = m + 1;
+                }
+            }
+            return (int) (l * l == x ? l : l - 1);
+        }
+
+
     }
 
 }
