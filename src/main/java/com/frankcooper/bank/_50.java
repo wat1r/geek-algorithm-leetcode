@@ -1,5 +1,6 @@
 package com.frankcooper.bank;
 
+import com.frankcooper._Model;
 import com.frankcooper.swordoffer.utils.PrintUtils;
 
 public class _50 {
@@ -54,4 +55,25 @@ public class _50 {
     }
 
 
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+        }
+
+        public double myPow(double x, int n) {
+
+            long N = n;
+            if (N < 0) {
+                x = 1 / x;
+                N = -N;
+            }
+            double ans = 1.0;
+            while (N > 0) {
+                if ((N & 1) == 1) ans *= x;
+                x *= x;
+                N >>= 1;
+            }
+            return ans;
+        }
+    }
 }
