@@ -4,9 +4,9 @@ import org.junit.Assert;
 
 import java.util.*;
 
-public class Demo {
+public class MSCycle {
 
-    static Demo handler = new Demo();
+    static MSCycle handler = new MSCycle();
 
     public static void main(String[] args) {
         String[] arr = new String[]{"AA00=10", "AB00=(AA00+AA01)*15", "AA01=20+AB00"};

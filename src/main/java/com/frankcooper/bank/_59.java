@@ -34,4 +34,26 @@ public class _59 {
             return res;
         }
     }
+
+
+    static class _2nd {
+
+        public int[][] generateMatrix(int n) {
+            int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            int[][] res = new int[n][n];
+            int i = 0, j = 0, d = 0;
+            for (int k = 1; k <= n * n; k++) {
+                res[i][j] = k;
+                int ni = i + dirs[d][0], nj = j + dirs[d][1];
+                if (ni < 0 || ni >= n || nj < 0 || nj >= n || res[ni][nj] != 0) {
+                    d = (d + 1) % 4;
+                    ni = i + dirs[d][0];
+                    nj = j + dirs[d][1];
+                }
+                i = ni;
+                j = nj;
+            }
+            return res;
+        }
+    }
 }
