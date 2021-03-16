@@ -1,8 +1,9 @@
 package com.frankcooper;
 
-import java.util.*;
-
-import org.junit.Assert;
+/**
+ * import java.util.*;
+ * import org.junit.Assert;
+ */
 
 public class _Model {
 
