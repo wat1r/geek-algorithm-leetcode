@@ -31,9 +31,11 @@
 
 | 地址                                                      | 备注                       |
 | ------------------------------------------------------------ | -------------------------- |
-| [**力扣题解导航-阿飞算法**](https://wat1r.github.io/2020/09/03/leetcode-manualscripts-navigator/) | 过往题解导航入口，持续更新 |              
+| [**力扣题解导航-阿飞算法**](https://wat1r.github.io/2020/09/03/leetcode-manualscripts-navigator/) | 过往题解导航入口，持续更新 |
 
 
+
+- [畅游面试中的动态规划套路](https://blog.csdn.net/wat1r/article/details/114377702?spm=1001.2014.3001.5501)
 
 
 
