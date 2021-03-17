@@ -18,12 +18,13 @@ public class _1897 {
             int[] sum = new int[50005];//根据数据范围设定，否则的话则是下面的maxn
             int[] vis = new int[50005];
             int n = ask.length;
-            int maxn = 0;//最大的天数，
+            int maxn = 0;//最大的天数，所有会议结束的最大数
             for (int i = 0; i < intervals.length; i++) {
                 vis[intervals[i][0]]++;
                 vis[intervals[i][1]]--;
                 maxn = Math.max(maxn, intervals[i][1]);
             }
+            //遍历ask更新 maxn
             for (int i = 0; i < n; i++) maxn = Math.max(maxn, ask[i][1]);
             int temp = 0;
             for (int i = 1; i <= maxn; i++) {
