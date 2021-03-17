@@ -1,8 +1,5 @@
 package com.frankcooper.bank.week;
 
-import com.frankcooper.bank._1;
-import com.frankcooper.swordoffer.utils.PrintUtils;
-
 import java.util.*;
 
 /**
