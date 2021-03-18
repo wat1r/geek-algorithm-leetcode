@@ -88,14 +88,15 @@ public class BiWeek45 {
             Assert.assertEquals(handler.maxValue(events, k), 7);
             events = PrintUtils.processSymbol("[[1,2,4],[3,4,3],[2,3,10]]");
             k = 2;
-            Assert.assertEquals(handler.maxValue(events, k), 10);
+//            Assert.assertEquals(handler.maxValue(events, k), 10);
             events = PrintUtils.processSymbol("[[1,1,1],[2,2,2],[3,3,3],[4,4,4]]");
             k = 3;
-            Assert.assertEquals(handler.maxValue(events, k), 9);
+//            Assert.assertEquals(handler.maxValue(events, k), 9);
         }
 
 
         class Pair {
+            //开始时间，结束时间，会议价值
             int s, e, v;
 
             public Pair(int s, int e, int v) {
@@ -109,22 +110,27 @@ public class BiWeek45 {
         public int maxValue(int[][] events, int K) {
             Arrays.sort(events, (o1, o2) -> o1[1] - o2[1]);
             int N = events.length;
+            //预处理组装
             Pair[] p = new Pair[N + 1];
             for (int i = 1; i <= N; i++) p[i] = new Pair(events[i - 1][0], events[i - 1][1], events[i - 1][2]);
+            //`dp[i][j]`表示在前`i`个会议中，最多只能参加`j`个会议，所能获取到的最大价值
             int[][] dp = new int[N + 1][K + 1];
             for (int i = 1; i <= N; i++) {
                 for (int j = 1; j <= K; j++) {
+                    //不参加i这个会议
                     dp[i][j] = dp[i - 1][j];
+                    //二分找最靠近i的且其结束时间比i的开始时间小的那个会议，返回l这个会议下标
                     int l = 0, r = i - 1;
                     while (l < r) {
-                        int m = l + (r - l + 1) / 2;
+                        int m = l + (r - l + 1) / 2;//取右中位数
                         if (p[m].e < p[i].s) l = m;
-                        else r = m - 1;
+                        else r = m - 1;//右动
                     }
+                    //参加i这个会议
                     dp[i][j] = Math.max(dp[i][j], p[i].v + dp[l][j - 1]);
                 }
             }
-            PrintUtils.printMatrix(dp);
+//            PrintUtils.printMatrix(dp);
             return dp[N][K];
         }
 

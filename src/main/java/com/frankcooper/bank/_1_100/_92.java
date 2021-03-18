@@ -70,4 +70,43 @@ public class _92 {
             return dummy.next;
         }
     }
+
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+
+        }
+
+        public ListNode reverseBetween(ListNode head, int m, int n) {
+            ListNode dummy = head;
+            ListNode prev = null, curr = head;
+            for (int i = 1; i < m; i++) {
+                prev = curr;
+                curr = curr.next;
+            }
+            ListNode oldHead = curr;
+            for (int i = 0; i < n - m + 1; i++) {
+                curr = curr.next;
+            }
+            ListNode successor = curr == null ? null : curr.next;
+            System.out.printf("%d\n", prev.val);
+            prev.next = reverse(oldHead);
+            oldHead.next = successor;
+            return dummy.next;
+
+        }
+
+        private ListNode reverse(ListNode head) {
+            ListNode prev = null, curr = head;
+            while (curr != null) {
+                ListNode nxt = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = nxt;
+            }
+            System.out.printf("%d\n", prev.val);
+            return prev;
+        }
+    }
 }
