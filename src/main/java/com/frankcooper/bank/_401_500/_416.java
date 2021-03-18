@@ -1,5 +1,8 @@
 package com.frankcooper.bank._401_500;
 
+import com.frankcooper.swordoffer.utils.PrintUtils;
+import org.junit.Assert;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +59,69 @@ public class _416 {
     }
 
     static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            int[] nums = new int[]{1, 5, 11, 5};
+            Assert.assertTrue(handler.canPartition(nums));
+            nums = new int[]{1, 2, 3, 5};
+            Assert.assertFalse(handler.canPartition(nums));
+            nums = new int[]{1, 2, 3, 6};
+            Assert.assertTrue(handler.canPartition(nums));
+        }
+
+        public boolean canPartition(int[] nums) {
+            int N = nums.length;
+            int sum = 0;
+            for (int i : nums) sum += i;
+            if (sum % 2 == 1) return false;
+            int T = sum / 2;
+            boolean[][] dp = new boolean[N][T + 1];
+            for (int i = 0; i < N; i++) dp[i][0] = true;
+            for (int j = 0; j <= T; j++) if (j == nums[0]) dp[0][j] = true;
+            for (int i = 1; i < N; i++) {
+                for (int j = 1; j <= T; j++) {
+                    dp[i][j] = dp[i - 1][j];
+                    if (j >= nums[i]) dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
+                }
+            }
+//            PrintUtils.printMatrix(dp);
+            return dp[N - 1][T];
+        }
+
+    }
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            int[] nums = new int[]{1, 5, 11, 5};
+            Assert.assertTrue(handler.canPartition(nums));
+            nums = new int[]{1, 2, 3, 5};
+            Assert.assertFalse(handler.canPartition(nums));
+            nums = new int[]{1, 2, 3, 6};
+            Assert.assertTrue(handler.canPartition(nums));
+        }
+
+
+        public boolean canPartition(int[] nums) {
+            int N = nums.length;
+            int sum = 0;
+            for (int i : nums) sum += i;
+            if (sum % 2 == 1) return false;
+            int T = sum / 2;
+            boolean[] dp = new boolean[T + 1];
+            dp[0] = true;
+            for (int num : nums) {
+/*                for (int j = T; j >= 0; j--) {
+                    if (j >= num) dp[j] = dp[j] || dp[j - num];
+                }*/
+                for (int j = T; j >= num; j--) {
+                    dp[j] = dp[j] || dp[j - num];
+                }
+
+            }
+//            PrintUtils.printMatrix(dp);
+            return dp[T];
+        }
 
     }
 }

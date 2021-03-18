@@ -46,6 +46,23 @@ public class PrintUtils {
     }
 
 
+    public static void printMatrix(boolean[][] matrix) {
+        int rows = matrix.length, cols = matrix[0].length;
+        for (int j = 0; j < cols; ++j) {
+            System.out.print(String.format("%5d", j));
+        }
+        System.out.println();
+        for (int i = 0; i < rows; ++i) {
+            System.out.printf("%d", i);
+            for (int j = 0; j < cols; ++j) {
+                System.out.print(String.format("%4s", matrix[i][j] ? "T" : "F") + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("--------------");
+    }
+
+
     public static void printMatrix(int[][] matrix, boolean bin) {
         int rows = matrix.length, cols = matrix[0].length;
         for (int i = 0; i < rows; ++i) {
