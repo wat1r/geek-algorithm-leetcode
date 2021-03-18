@@ -75,9 +75,21 @@ public class _92 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
-
+            ListNode l0 = new ListNode(1);
+            ListNode l1 = new ListNode(2);
+            ListNode l2 = new ListNode(3);
+            ListNode l3 = new ListNode(4);
+            ListNode l4 = new ListNode(5);
+            l0.next = l1;
+            l1.next = l2;
+            l2.next = l3;
+            l3.next = l4;
+            handler.reverseBetween(l0, 2, 4);
         }
 
+        /*
+         error
+         */
         public ListNode reverseBetween(ListNode head, int m, int n) {
             ListNode dummy = head;
             ListNode prev = null, curr = head;
@@ -86,7 +98,7 @@ public class _92 {
                 curr = curr.next;
             }
             ListNode oldHead = curr;
-            for (int i = 0; i < n - m + 1; i++) {
+            for (int i = 0; i < n - m; i++) {
                 curr = curr.next;
             }
             ListNode successor = curr == null ? null : curr.next;
