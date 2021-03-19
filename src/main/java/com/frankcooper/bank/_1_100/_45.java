@@ -121,4 +121,55 @@ public class _45 {
         }
     }
 
+
+    static class _5th {
+        public static void main(String[] args) {
+
+        }
+
+
+        public int jump(int[] nums) {
+            int pos = nums.length - 1;
+            int step = 0;
+            while (pos >= 0) {
+                for (int i = 0; i < pos; i++) {
+                    if (i + nums[i] >= pos) {
+                        pos = i;
+                        step++;
+                        break;
+                    }
+                }
+            }
+            return step;
+        }
+
+
+    }
+
+
+    static class _6th {
+        public static void main(String[] args) {
+            _6th handler = new _6th();
+            int[] nums = new int[]{2, 3, 1, 1, 4};
+            Assert.assertEquals(handler.jump(nums), 2);
+        }
+
+
+        public int jump(int[] nums) {
+            //当前位置所能到达的最右的下标（最右下标和当前前位置之间的这个一段区域的任何点都是可达的，这很关键），当前所处的位置，步数
+            int rightMost = 0, currEnd = 0, step = 0;
+            for (int i = 0; i < nums.length - 1; i++) {//这里跳到最后一个位置的前一个结束，不然结果会多一个
+                rightMost = Math.max(rightMost, i + nums[i]);
+                if (i == currEnd) {
+                    step++;
+                    currEnd = rightMost;
+                }
+            }
+            return step;
+        }
+
+
+    }
+
+
 }
