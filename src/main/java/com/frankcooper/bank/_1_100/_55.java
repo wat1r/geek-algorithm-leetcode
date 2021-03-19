@@ -1,5 +1,8 @@
 package com.frankcooper.bank._1_100;
 
+import com.frankcooper._Model;
+import org.junit.Assert;
+
 //55. 跳跃游戏 55. Jump Game Medium
 public class _55 {
 
@@ -110,6 +113,91 @@ public class _55 {
             }
         }
         return lastPos == 0;
+    }
+
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums = {2, 3, 1, 1, 4};
+            Assert.assertTrue(handler.canJump(nums));
+        }
+
+        public boolean canJump(int[] nums) {
+            int N = nums.length;
+            int j = 0;
+            for (int i = 0; i < N; i++) {
+                if (i <= j) {
+                    j = Math.max(j, i + nums[i]);
+                    if (j >= N - 1) return true;
+                }
+            }
+            return false;
+        }
+    }
+
+
+    static class _2nd {
+        public static void main(String[] args) {
+
+            _2nd handler = new _2nd();
+        }
+
+
+        public boolean canJump(int[] nums) {
+            int j = 0, N = nums.length;
+            for (int i = 0; i < N; i++) {
+                if (i > j) return false;
+                j = Math.max(j, i + nums[i]);
+            }
+            return true;
+        }
+    }
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            int[] nums = {2, 3, 1, 1, 4};
+            Assert.assertTrue(handler.canJump(nums));
+        }
+
+        Boolean[] memo;
+        int N;
+
+        public boolean canJump(int[] nums) {
+            N = nums.length;
+            memo = new Boolean[N];
+            return helper(nums, 0);
+        }
+
+        public boolean helper(int[] nums, int idx) {
+            if (idx >= N - 1) return true;
+            if (memo[idx] != null) return memo[idx];
+            for (int i = 1; i <= nums[idx]; i++) {
+                if (helper(nums, idx + i)) {
+                    return memo[idx + i] = true;
+                }
+            }
+            return memo[idx] = false;
+        }
+    }
+
+    static class _4th{
+        int N;
+
+        public boolean canJump(int[] nums) {
+            N = nums.length;
+            return helper(nums, 0);
+        }
+
+        public boolean helper(int[] nums, int idx) {
+            if (idx >= N - 1) return true;
+            for (int i = 1; i <= nums[idx]; i++) {
+                if (helper(nums, idx + i)) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 }
