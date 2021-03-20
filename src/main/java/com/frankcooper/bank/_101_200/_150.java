@@ -24,4 +24,23 @@ public class _150 {
             return stk.pop();
         }
     }
+
+    static class _2nd {
+
+
+        public int evalRPN(String[] tokens) {
+            List<String> symbols = Arrays.asList("+", "-", "*", "/");
+            Stack<Integer> stk = new Stack<>();
+            for (String t : tokens) {
+                if (symbols.contains(t)) {
+                    int post = stk.pop(), prev = stk.pop();
+                    if (t.equals("+")) stk.push(prev + post);
+                    else if (t.equals("-")) stk.push(prev - post);
+                    else if (t.equals("*")) stk.push(prev * post);
+                    else if (t.equals("/")) stk.push(prev / post);
+                } else stk.push(Integer.valueOf(t));
+            }
+            return stk.peek();
+        }
+    }
 }
