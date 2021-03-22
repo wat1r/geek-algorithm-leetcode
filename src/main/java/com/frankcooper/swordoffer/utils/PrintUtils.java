@@ -137,6 +137,11 @@ public class PrintUtils {
     }
 
 
+    public static String toBinaryString(int i, int strLen) {
+        return addZeroForNum(Integer.toBinaryString(i), strLen);
+    }
+
+
     public static String addZeroForNum(String str, int strLength) {
         int strLen = str.length();
         if (strLen < strLength) {

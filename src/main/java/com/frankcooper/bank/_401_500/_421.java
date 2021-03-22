@@ -1,6 +1,7 @@
 package com.frankcooper.bank._401_500;
 
 
+import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.net.Inet4Address;
@@ -120,6 +121,9 @@ public class _421 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
             int[] nums = new int[]{3, 10, 5, 25, 2, 8};
+            for (int num : nums) System.out.println(PrintUtils.toBinaryString(num, 6));
+
+
             Assert.assertEquals(handler.findMaximumXOR(nums), 28);
 
         }
@@ -138,6 +142,7 @@ public class _421 {
                 Trie curr = root;
                 for (int i = 30; i >= 0; i--) {
                     int bit = (num >> i) & 1;
+//                    System.out.printf("num:%d,bit:%d\n", num, bit);
                     if (curr.children[bit] == null) {
                         curr.children[bit] = new Trie();
                     }
@@ -150,6 +155,7 @@ public class _421 {
                 int currSum = 0;
                 for (int i = 30; i >= 0; --i) {
                     int bit = (num >> i) & 1;
+//                    System.out.printf("num:%d,bit:%d\n", num, bit);
                     if (curr.children[bit ^ 1] != null) {
                         curr = curr.children[bit ^ 1];
                         currSum += (1 << i);
@@ -157,7 +163,7 @@ public class _421 {
                         curr = curr.children[bit];
                     }
                 }
-
+                System.out.println(currSum);
                 ans = Math.max(ans, currSum);
             }
 
