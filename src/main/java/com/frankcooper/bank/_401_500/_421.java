@@ -135,45 +135,7 @@ public class _421 {
         public int findMaximumXOR(int[] nums) {
             Trie root = new Trie();
             for (int num : nums) {
-                Trie curr = root;   class Trie {
-                    Trie[] children;
-
-                    public Trie() {
-                        this.children = new Trie[2];
-                    }
-                }
-
-                public int findMaximumXOR(int[] nums) {
-                    Trie root = new Trie();
-                    for (int num : nums) {
-                        Trie curr = root;
-                        for (int i = 30; i >= 0; i--) {
-                            int bit = (num >> i) & 1;
-                            if (curr.children[bit] == null) {
-                                curr.children[bit] = new Trie();
-                            }
-                            curr = curr.children[bit];
-                        }
-                    }
-                    int ans = Integer.MIN_VALUE;
-                    for (int num : nums) {
-                        Trie curr = root;
-                        int currSum = 0;
-                        for (int i = 30; i >= 0; --i) {
-                            int bit = (num >> i) & 1;
-                            if (curr.children[bit ^ 1] != null) {
-                                curr = curr.children[bit ^ 1];
-                                currSum += (1 << i);
-                            } else {
-                                curr = curr.children[bit];
-                            }
-                        }
-
-                        ans = Math.max(ans, currSum);
-                    }
-
-                    return ans;
-                }
+                Trie curr = root;
                 for (int i = 30; i >= 0; i--) {
                     int bit = (num >> i) & 1;
                     if (curr.children[bit] == null) {
@@ -201,6 +163,7 @@ public class _421 {
 
             return ans;
         }
+
     }
 
     static class _4th {
