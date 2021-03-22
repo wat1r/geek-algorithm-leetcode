@@ -5,7 +5,7 @@ import java.util.*;
 import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.junit.*;
 
-public class _233 {
+public class _Week233 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -116,9 +116,65 @@ public class _233 {
         }
     }
 
+    /*
+    https://leetcode-cn.com/problems/count-pairs-with-xor-in-a-range/solution/java01zi-dian-shu-by-simon123-t-eqv8/
+     */
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+        }
+
+
+        public int countPairs(int[] nums, int low, int high) {
+            int res = 0;
+            Trie root = new Trie();
+            for (int num : nums) {
+                res += query(root, num, high + 1) - query(root, num, low);
+                insert(root, num);
+            }
+            return res;
+        }
+
+        public int query(Trie root, int num, int low) {
+            int res = 0;
+            for (int i = 30; i >= 0; --i) {
+                if (root == null) return res;
+                int nbit = (num >> i) & 1;//low的第i位的值 0 1
+                int lbit = (low >> i) & 1;//num的第i位的值 0 1
+                if (lbit == 1) {//low的第i位为1的时候
+                    if (root.children[nbit] != null) {
+                        res += root.children[nbit].count;
+                    }
+                    root = root.children[nbit ^ 1];//统计了nbit的，需要统计1^nbit的
+                } else {
+                    root = root.children[nbit];
+                }
+            }
+            return res;
+
+        }
+
+        //生成字典树，并统计个数
+        public void insert(Trie root, int num) {
+            Trie curr = root;
+            for (int i = 30; i >= 0; --i) {
+                int bit = (num >> i) & 1;
+                if (curr.children[bit] == null) {
+                    curr.children[bit] = new Trie();
+                }
+                curr = curr.children[bit];
+                curr.count++;
+            }
+        }
+
+
+        class Trie {
+            int count = 0;
+            Trie[] children;
+
+            public Trie() {
+                this.children = new Trie[2];
+            }
         }
     }
 }
