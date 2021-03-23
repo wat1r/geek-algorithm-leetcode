@@ -1,6 +1,7 @@
 package com.frankcooper.bank.bi_weekly;
 
 
+import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.junit.Assert;
 import org.omg.CORBA.INTERNAL;
 
@@ -132,20 +133,62 @@ public class _BiWeek48 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+
+//            handler.count(17);
+            int[] nums = new int[]{3, 4, 6, 8};
+            handler.maxScore(nums);
         }
 
 
+//        public int maxScore(int[] nums) {
+//            int n = nums.length;
+//            int maxn = 1 << n;
+//            int[] dp = new int[maxn];
+//            int[] cnt = new int[maxn];
+//            return 0;
+//        }
+
+
+//        public int maxScore(int[] nums) {
+//            int N = nums.length;
+//            int[][] dp = new int[N / 2 + 1][1 << N];
+//            if()
+//        }
+
+
         public int maxScore(int[] nums) {
-            int n = nums.length;
-            int maxn = 1 << n;
-            int[] dp = new int[maxn];
-            int[] cnt = new int[maxn];
-            return 0;
+            int N = nums.length;
+            int[] dp = new int[1 << N];
+            for (int i = 0; i < 1 << N; i++) {
+                int cnt = count(i);
+                System.out.printf("i:%d,bin:%s,cnt:%d\n", i, PrintUtils.toBinaryString(i, 4), cnt);
+                if ((cnt & 1) == 1) continue;//奇数跳过
+                for (int j = 0; j < N; j++) {
+                    for (int k = j + 1; k < N; k++) {
+                        int tmp = (1 << j) | (1 << k);
+                        System.out.printf("  j:%d,k:%d,tmp:%d,bin:%s,if:%s\n", j, k, tmp, PrintUtils.toBinaryString(tmp, 4), (tmp & i) == tmp);
+                        if ((tmp & i) == tmp) {
+                            dp[i] = Math.max(dp[i], dp[i - tmp] + gcd(nums[j], nums[k]) * cnt / 2);
+                        }
+                    }
+                }
+            }
+            return dp[(1 << N) - 1]; // -的优先级要大于 <<
+        }
+
+
+        public int count(int i) {
+            int ans = 0;
+            while (i != 0) {
+                ans += i & 1;
+                i >>>= 1;
+            }
+            return ans;
         }
 
 
         public int gcd(int a, int b) {
-            System.out.printf("a:%d,b:%d\n", a, b);
+//            System.out.printf("a:%d,b:%d\n", a, b);
             return b == 0 ? a : gcd(b, a % b);
         }
     }
