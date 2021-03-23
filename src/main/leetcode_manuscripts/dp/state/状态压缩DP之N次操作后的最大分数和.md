@@ -2,7 +2,7 @@
 
 
 
-
+### 代码1
 
 
 
@@ -127,3 +127,70 @@ i:15,bin:1111,cnt:4
             return b == 0 ? a : gcd(b, a % b);
         }
 ```
+
+
+
+### 代码2
+
+> 摘自@Knarf大佬
+
+下面主要针对` cnt[i] = cnt[i - (i & (-i))] + 1` 做一点解读
+
+```java
+i:1,post:0001,i:0001,cnt[1]=1
+i:2,post:0010,i:0010,cnt[2]=1
+i:3,post:0001,i:0011,cnt[3]=2
+i:4,post:0100,i:0100,cnt[4]=1
+i:5,post:0001,i:0101,cnt[5]=2
+i:6,post:0010,i:0110,cnt[6]=2
+i:7,post:0001,i:0111,cnt[7]=3
+i:8,post:1000,i:1000,cnt[8]=1
+i:9,post:0001,i:1001,cnt[9]=2 //  1001 二进制抹掉低位1 得到 1000 也就是说1001 从1000 翻转来的 +1 得到二进制1的个数 cnt[9] = cnt[8] +1  = 1+1 =2
+i:10,post:0010,i:1010,cnt[10]=2
+i:11,post:0001,i:1011,cnt[11]=3
+i:12,post:0100,i:1100,cnt[12]=2// 1100 二进制抹掉低位1 得到1000  也就是说1100 从0100翻转来的 +1 得到二进制1的个数 cnt[12] = cnt[4]+1 =  1+1 =2 
+i:13,post:0001,i:1101,cnt[13]=3
+i:14,post:0010,i:1110,cnt[14]=3
+i:15,post:0001,i:1111,cnt[15]=4
+```
+
+
+
+```java
+       public int maxScore(int[] nums) {
+            int n = nums.length;
+            int N = 1 << n;
+            int[] dp = new int[N];
+            int[] cnt = new int[N];
+            for (int i = 1; i < N; i++) {
+                cnt[i] = cnt[i - (i & (-i))] + 1;//记录i的二进制中 1的个数   (i & (-i))返回的是i这个二进制的最低位为1的权值，i- (i & (-i)) 相当于抹掉最低位的1
+                System.out.printf("i:%d,post:%s,i:%s,cnt[%d]=%d\n", i, PrintUtils.toBinaryString((i & (-i)), 4), PrintUtils.toBinaryString(i, 4), i, cnt[i]);
+                if ((cnt[i] & 1) == 1) continue;//
+                // System.out.println(i);
+                for (int j = 0; (1 << j) < i; j++) { //枚举状态
+                    if (((1 << j) & i) == 0) continue;//如果j不在i中，没意义
+                    for (int k = j + 1; (1 << k) < i; k++) {
+                        if (((1 << k) & i) == 0) continue;//如果k不在i中，没意义
+                        // System.out.println(String.format("%d,%d,%d",i,j,k));
+                        //i - (1 << k) - (1 << j) i这个状态中抹掉j k这两个状态   (cnt[i] >> 1)是当前的1的数量 /2
+                        dp[i] = Math.max(dp[i], dp[i - (1 << k) - (1 << j)] + (cnt[i] >> 1) * gcd(nums[j], nums[k]));
+                    }
+                }
+            }
+            // System.out.println(Arrays.toString(cnt));
+            // System.out.println(Arrays.toString(dp));
+            return dp[N - 1]; //返回st中 都位1 的状态的值
+        }
+
+        int gcd(int a, int b) {
+            while (b > 0) {
+                int c = a % b;
+                a = b;
+                b = c;
+            }
+            return a;
+        }
+```
+
+
+

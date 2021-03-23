@@ -183,6 +183,7 @@ public class _BiWeek48 {
             return dp[(1 << N) - 1];//- 优先于 <<  相当于取二进制位上各位都为1的结果 恰好是整个数组
 
         }
+
         //计算i的1的个数
         public int count(int i) {
             int ans = 0;
@@ -200,4 +201,47 @@ public class _BiWeek48 {
         }
     }
 
+
+    static class _4th_2 {
+        public static void main(String[] args) {
+            _4th_2 handler = new _4th_2();
+            int[] nums = new int[]{3, 4, 6, 8};
+            handler.maxScore(nums);
+
+        }
+
+        public int maxScore(int[] nums) {
+            int n = nums.length;
+            int N = 1 << n;
+            int[] dp = new int[N];
+            int[] cnt = new int[N];
+            for (int i = 1; i < N; i++) {
+                cnt[i] = cnt[i - (i & (-i))] + 1;//记录i的二进制中 1的个数   (i & (-i))返回的是i这个二进制的最低位为1的权值，i- (i & (-i)) 相当于抹掉最低位的1
+                System.out.printf("i:%d,post:%s,i:%s,cnt[%d]=%d\n", i, PrintUtils.toBinaryString((i & (-i)), 4), PrintUtils.toBinaryString(i, 4), i, cnt[i]);
+                if ((cnt[i] & 1) == 1) continue;//
+                // System.out.println(i);
+                for (int j = 0; (1 << j) < i; j++) { //枚举状态
+                    if (((1 << j) & i) == 0) continue;//如果j不在i中，没意义
+                    for (int k = j + 1; (1 << k) < i; k++) {
+                        if (((1 << k) & i) == 0) continue;//如果k不在i中，没意义
+                        // System.out.println(String.format("%d,%d,%d",i,j,k));
+                        //i - (1 << k) - (1 << j) i这个状态中抹掉j k这两个状态   (cnt[i] >> 1)是当前的1的数量 /2
+                        dp[i] = Math.max(dp[i], dp[i - (1 << k) - (1 << j)] + (cnt[i] >> 1) * gcd(nums[j], nums[k]));
+                    }
+                }
+            }
+            // System.out.println(Arrays.toString(cnt));
+            // System.out.println(Arrays.toString(dp));
+            return dp[N - 1]; //返回st中 都位1 的状态的值
+        }
+
+        int gcd(int a, int b) {
+            while (b > 0) {
+                int c = a % b;
+                a = b;
+                b = c;
+            }
+            return a;
+        }
+    }
 }
