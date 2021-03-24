@@ -1,26 +1,20 @@
-# 经典Hard题集锦
+package com.frankcooper.bank._1_100;
 
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class _52 {
+
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+
+        }
 
 
-
-## 数独
-
-
-
-
-
-## N皇后I
-
-
-
-
-
-
-
-## N皇后II
-
-```java
         int n;
 
         public int totalNQueens(int n) {
@@ -49,47 +43,26 @@
             }
             return count;
         }
-```
 
 
+    }
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+        }
+    }
 
 
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+        }
+    }
 
-
-
-
-
-
-
-
-
-## 俄罗斯信封套套娃
-
-
-
-## 编辑距离
-
-
-
-## 接雨水
-
-
-
-
-
-## 高楼丢鸡蛋
-
-
-
-
-
-## LFU
-
-
-
-
-
-- [1246. 删除回文子数组](https://leetcode-cn.com/problems/palindrome-removal/)
-
-
-
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+        }
+    }
+}

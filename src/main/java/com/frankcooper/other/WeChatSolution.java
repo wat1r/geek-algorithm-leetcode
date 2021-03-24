@@ -2,6 +2,7 @@ package com.frankcooper.other;
 
 import com.alibaba.fastjson.JSON;
 import com.frankcooper.swordoffer.utils.PrintUtils;
+import org.junit.Assert;
 
 import java.util.*;
 
@@ -227,5 +228,52 @@ public class WeChatSolution {
     }
 
 
+    static class _5th {
+
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            String a = "aabbccccccc";
+            String b = "cccccccaabb";
+            String c = "aabbffffffffffff";
+            Assert.assertEquals(handler.process(a, b, c), 4);
+
+        }
+
+
+//        class Pair implements Comparable {
+//            private int len;
+//            private String str;
+//
+//
+//            @Override
+//            public int compareTo(Object o) {
+//                Pair p = (Pair) o;
+//                int res = this.len > p.len ? 1 : 0;
+//                return res;
+//            }
+//        }
+
+
+        public int process(String a, String b, String c) {
+            int N = 500;
+            int[][][] f = new int[N][N][N];
+            int I = a.length(), J = b.length(), K = c.length();
+            for (int i = 0; i <= I; i++)
+                for (int j = 0; j <= J; j++)
+                    for (int k = 0; k <= K; k++) {
+                        if (i == 0 || j == 0 || k == 0) f[i][j][k] = 0;
+                        else {
+                            if (a.charAt(i - 1) == b.charAt(j - 1) && b.charAt(j - 1) == c.charAt(k - 1)) {
+                                f[i][j][k] = f[i - 1][j - 1][k - 1] + 1;
+                            } else {
+                                f[i][j][k] = Math.max(f[i - 1][j][k], Math.max(f[i][j - 1][k], f[i][j][k - 1]));
+//                                f[i][j][k] = Math.max(f[i][j][k], Math.max(f[i - 1][j - 1][k], Math.max(f[i - 1][j][k - 1], f[i][j - 1][k - 1])));
+//                                f[i][j][k] = Math.max(f[i][j][k], f[i - 1][j - 1][k - 1]);
+                            }
+                        }
+                    }
+            return f[I][J][K];
+        }
+    }
 
 }

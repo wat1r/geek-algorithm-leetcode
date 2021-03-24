@@ -5,7 +5,7 @@ import java.util.*;
 import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.junit.*;
 
-public class _Week233 {
+public class Week233 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -113,6 +113,33 @@ public class _Week233 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int n = 4, index = 2, maxSum = 6;
+            Assert.assertEquals(handler.maxValue(n, index, maxSum), 2);
+        }
+
+
+        public int maxValue(int n, int index, int maxSum) {
+            int l = index, r = index;
+            int ans = 1;
+            // 整个数组一开始全部填充为1，
+            // rest记录先全部填充1后，剩下1的个数
+            int rest = maxSum - n;
+            while (l > 0 || r < n - 1) {
+                int len = r - l + 1;
+                if (rest >= len) {
+                    // 当前[l,r]范围全部+1
+                    rest -= len;
+                    ans++;
+                    // 往左右两边扩
+                    l = Math.max(0, l - 1);
+                    r = Math.min(n - 1, r + 1);
+                } else {
+                    break;
+                }
+            }
+            // 扩大到整个数组之后，剩余的值“雨露均沾”一下
+            ans += rest / n;
+            return ans;
         }
     }
 
