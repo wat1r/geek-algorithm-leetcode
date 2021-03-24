@@ -38,4 +38,25 @@ public class _82 {
             }
         }
     }
+
+    static class _3rd {
+        public ListNode deleteDuplicates(ListNode head) {
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode pre = dummy, curr;
+            while (pre.next != null) {
+                curr = pre.next;
+                while (curr.next != null && curr.val == curr.next.val) {
+                    curr = curr.next;
+                }
+                if (curr != pre.next) {
+                    pre.next = curr.next;
+                } else {
+                    pre = pre.next;
+                }
+
+            }
+            return dummy.next;
+        }
+    }
 }
