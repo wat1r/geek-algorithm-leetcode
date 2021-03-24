@@ -29,13 +29,30 @@ public class _191 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+        public int hammingWeight(int n) {
+            int res = 0;
+            while (n != 0) {
+                res++;
+//                n &= n - 1;
+                n -= n & (-n);
+            }
+            return res;
+        }
+
     }
 
 
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+
+
+
         }
+
+
     }
 
     static class _4th {

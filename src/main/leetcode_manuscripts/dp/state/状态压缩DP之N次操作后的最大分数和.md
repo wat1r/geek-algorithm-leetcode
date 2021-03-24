@@ -129,12 +129,13 @@ i:15,bin:1111,cnt:4
 ```
 
 
-
 ### 代码2
 
 > 摘自@Knarf大佬
 
-下面主要针对` cnt[i] = cnt[i - (i & (-i))] + 1` 做一点解读
+- 下面主要针对` cnt[i] = cnt[i - (i & (-i))] + 1` 做一点解读
+- 是求二进制汉明重量，191题，用数组保存了每个值
+
 
 ```java
 i:1,post:0001,i:0001,cnt[1]=1
@@ -153,6 +154,55 @@ i:13,post:0001,i:1101,cnt[13]=3
 i:14,post:0010,i:1110,cnt[14]=3
 i:15,post:0001,i:1111,cnt[15]=4
 ```
+
+
+
+> 番外
+----
+
+####  方法1
+
+```java
+        public int hammingWeight(int n) {
+            int res = 0;
+            while (n != 0) {
+                res++;
+                n &= n - 1;//抹去低位1
+            }
+            return res;
+        }
+```
+
+#### 方法2
+
+- 逻辑同方法1，写法细微区别
+
+```java
+        public int hammingWeight(int n) {
+            int res = 0;
+            while (n != 0) {
+                res++;
+                n -= n & (-n);
+            }
+            return res;
+        }
+```
+
+#### 方法3
+
+```java
+        public int hammingWeight(int n) {
+            int ans = 0;
+            while (n != 0) {
+                ans += n & 1;
+                n >>>= 1;//无符号右移 相当于 /2
+            }
+            return ans;
+        }
+```
+
+----
+
 
 
 
