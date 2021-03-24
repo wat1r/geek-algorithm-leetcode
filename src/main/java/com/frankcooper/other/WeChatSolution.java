@@ -254,6 +254,13 @@ public class WeChatSolution {
 //        }
 
 
+        /**
+         * 求3个字符的LCS
+         * @param a
+         * @param b
+         * @param c
+         * @return
+         */
         public int process(String a, String b, String c) {
             int N = 500;
             int[][][] f = new int[N][N][N];

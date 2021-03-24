@@ -114,11 +114,70 @@ public class Week233 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
             int n = 4, index = 2, maxSum = 6;
+//            Assert.assertEquals(handler.maxValue(n, index, maxSum), 2);
+            n = 6;
+            index = 1;
+            maxSum = 10;
+            n = 1;
+            index = 0;
+            maxSum = 780055968;
+            /**
+             * 2
+             * 3
+             * 155230825
+             */
             Assert.assertEquals(handler.maxValue(n, index, maxSum), 2);
         }
 
 
         public int maxValue(int n, int index, int maxSum) {
+            int diff = maxSum - n, left = index, right = index;
+            int res = 1, dl = 0, dr = 0;
+            while (diff > 0) {                     //当还有剩余砖块时
+                if (--left >= 0) dl++;              //尚未到达左边界
+                if (++right < n) dr++;              //尚未到达右边界
+                if (left < 0 && right >= n) {            //当到达左边界和右边界时 及时退出
+                    res += diff % n == 0 ? diff / n : diff / n + 1; //把剩余的砖块均分了，直接退出
+                    return res;
+                }
+                res += 1;          //层数更新
+                diff -= (dl + dr + 1); //使顶层堆成严格正三角形所需的砖块数(左边所需+右边所需+index处1个)
+            }
+            return res;
+        }
+
+
+        /*     *//**
+         * @param n      数组的所有的个数
+         * @param index  目标索引位置
+         * @param maxSum 最大值
+         * @return
+         *//*
+        public int maxValue(int n, int index, int maxSum) {
+            int l = 1, r = maxSum + 1;
+            while (l < r) {
+                int m = l + (r - l) / 2;
+                if (calSum(m, n, index) <= maxSum) {
+                    l = m + 1;
+                } else {
+                    r = m;
+                }
+            }
+            return l - 1;
+        }
+
+        private long calSum(int x, int n, int index) {
+            long sum = n - 1 + x;
+            long left = Math.min(x - 1, index);
+            sum += ((x - 1) + (x - left)) * left / 2;
+            long right = Math.min(x - 1, n - index - 1);
+            sum += ((x - 1) + (x - right)) * right / 2;
+            sum -= left + right;
+            return sum;
+        }*/
+
+
+       /* public int maxValue(int n, int index, int maxSum) {
             int l = index, r = index;
             int ans = 1;
             // 整个数组一开始全部填充为1，
@@ -140,7 +199,7 @@ public class Week233 {
             // 扩大到整个数组之后，剩余的值“雨露均沾”一下
             ans += rest / n;
             return ans;
-        }
+        }*/
     }
 
     /*
