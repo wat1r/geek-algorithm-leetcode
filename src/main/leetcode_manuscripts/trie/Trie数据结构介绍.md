@@ -1,5 +1,9 @@
 ![image-20210325075001616](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\trie\Trie数据结构介绍.assets\image-20210325075001616.png)
 
+还剩下692 + 336
+
+
+
 作者：cc0824
 链接：https://leetcode-cn.com/problems/maximum-xor-with-an-element-from-array/solution/java-zi-dian-shu-chun-tao-mo-ban-si-lu-j-hk51/
 来源：力扣（LeetCode）

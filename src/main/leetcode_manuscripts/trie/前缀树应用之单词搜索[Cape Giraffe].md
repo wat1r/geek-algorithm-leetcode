@@ -312,5 +312,13 @@ if ((nextI < 0 || nextI >= m || nextJ < 0 || nextJ >= n) || board[nextI][nextJ] 
 
 
 
+### 推荐阅读
+
+- [数据结构设计之实现 Trie (前缀树)[Sumatran Rhinoceros]](https://leetcode-cn.com/problems/implement-trie-prefix-tree/solution/shu-ju-jie-gou-she-ji-zhi-shi-xian-trie-qian-zhui-/)
+- [前缀树应用之单词搜索[Cape Giraffe]](https://leetcode-cn.com/problems/word-search-ii/solution/qian-zhui-shu-ying-yong-zhi-dan-ci-sou-suo-cape-gi/)
+- [畅游Trie之实现一个魔法字典](https://leetcode-cn.com/problems/implement-magic-dictionary/solution/chang-you-triezhi-shi-xian-yi-ge-mo-fa-z-d7wa/)
+
+- [畅游Trie之单词替换](https://leetcode-cn.com/problems/replace-words/solution/chang-you-triezhi-dan-ci-ti-huan-by-a-fe-hf6w/)
+
 
 
