@@ -1,11 +1,11 @@
 package com.frankcooper;
 
-
+/*
 import java.util.*;
 
 import org.junit.Assert;
 
-
+*/
 public class _Model {
 
     static class _1st {
@@ -13,7 +13,6 @@ public class _Model {
             _1st handler = new _1st();
 
         }
-
 
 
     }
