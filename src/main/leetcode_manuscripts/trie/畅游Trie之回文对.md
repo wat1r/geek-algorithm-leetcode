@@ -6,7 +6,7 @@
 
 ![image-20210326095659777](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\trie\畅游Trie之回文对.assets\image-20210326095659777.png)
 
-
+### 方法1：Tire
 
 ```java
         class TrieNode {
