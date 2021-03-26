@@ -128,6 +128,7 @@ public class _336 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
             String[] words = new String[]{"abcd", "dcba", "lls", "s", "sssll"};
+            words = new String[]{"zyx", "llxyz"};
             handler.palindromePairs(words);
         }
 
