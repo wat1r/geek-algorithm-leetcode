@@ -134,7 +134,7 @@ public class CommonFunction {
 
 
     /**
-     * 线性筛
+     * 线性筛 
      *
      * @param n
      * @return
