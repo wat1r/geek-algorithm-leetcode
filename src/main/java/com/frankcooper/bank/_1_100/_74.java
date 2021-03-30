@@ -14,8 +14,13 @@ public class _74 {
 
 
     public boolean searchMatrix(int[][] matrix, int target) {
-
-
+        int R = matrix.length, C = matrix[0].length;
+        int i = 0, j = C - 1;
+        while (i < R && j >= 0) {
+            if (matrix[i][j] > target) j--;
+            else if (matrix[i][j] < target) i++;
+            else if (matrix[i][j] == target) return true;
+        }
         return false;
     }
 }
