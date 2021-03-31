@@ -65,4 +65,26 @@ public class _90 {
         }
 
     }
+
+
+    static class _3rd {
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> subsetsWithDup(int[] nums) {
+            Arrays.sort(nums);
+            dfs(nums, 0, new ArrayList<>());
+            return res;
+        }
+
+
+        public void dfs(int[] nums, int idx, List<Integer> sub) {
+            res.add(new ArrayList<>(sub));
+            for (int i = idx; i < nums.length; i++) {
+                if (i > idx && nums[i - 1] == nums[i]) continue;//同层去除重复元素
+                sub.add(nums[i]);
+                dfs(nums, i + 1, sub);
+                sub.remove(sub.size() - 1);
+            }
+        }
+    }
 }
