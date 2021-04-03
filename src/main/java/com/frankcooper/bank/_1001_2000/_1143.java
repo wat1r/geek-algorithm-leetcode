@@ -50,6 +50,7 @@ public class _1143 {
         }
         return dp[m - 1][n - 1];
     }
+
     /*
     ##### 方法2：`DP` 优化版
 
@@ -109,5 +110,18 @@ public class _1143 {
         return dp[n];
     }
 
+
+    static class _1st {
+
+
+        public static void main(String[] args) {
+
+        }
+
+
+
+
+
+    }
 
 }
