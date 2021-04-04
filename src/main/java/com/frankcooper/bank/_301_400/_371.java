@@ -1,7 +1,7 @@
 package com.frankcooper.bank._301_400;
 
 
-import com.frankcooper.struct.pri.NestedInteger;
+import org.junit.Assert;
 
 import java.util.Iterator;
 import java.util.List;
@@ -11,25 +11,34 @@ public class _371 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-
+//            Assert.assertEquals(handler.getSum(1, 2), 3);
+//            Assert.assertEquals(handler.getSum(-2, 3), 1);
+//            Assert.assertEquals(handler.getSum(2, 3), 5);
+            Assert.assertEquals(handler.getSum(3, 4), 7);
         }
 
 
-        public class NestedIterator implements Iterator<Integer> {
+        public int getSum(int a, int b) {
+            int res = 0, carry = 0;
+            for (int i = 0; i < 32; i++) {
+                int bit_a = a >> i & 1;
+                int bit_b = b >> i & 1;
+                if ((bit_a & bit_b) == 1) {
+                    res |= carry << i;
+                    carry = 1;
+                } else if ((bit_a ^ bit_b) == 1) {
+                    if (carry == 1) carry = 1;
+                    else res |= 1 << i;
+                } else if (a != 0 && b != 0) {
+                    res |= carry << i;
+                }
 
-            public NestedIterator(List<NestedInteger> nestedList) {
-
+                a >>= i;
+                b >>= i;
             }
+            return res;
 
-            @Override
-            public Integer next() {
-                return 0;
-            }
 
-            @Override
-            public boolean hasNext() {
-                return false;
-            }
         }
 
     }
