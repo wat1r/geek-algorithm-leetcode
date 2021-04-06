@@ -36,6 +36,20 @@ https://visualgo.net/en
 
 
 
+[715. Range模块，难度：困难](https://leetcode-cn.com/problems/range-module/)（可以采用TreeSet构建线段树，需要熟悉TreeSet在Java中相关接口的用法）
+
+[732.我的日程安排表III ，难度：困难](https://leetcode-cn.com/problems/my-calendar-iii/) (可以采用TreeMap构建模拟化线段树，需要熟悉TreeMap在Java中相关接口的用法)
+
+[850.矩形面积II，难度：困难](https://leetcode-cn.com/problems/rectangle-area-ii/)（考察定义线段树的标准解法）
+
+
+
+TreeSet
+
+683 [ K 个关闭的灯泡](https://leetcode-cn.com/problems/k-empty-slots) 
+
+
+
 303
 
 307
