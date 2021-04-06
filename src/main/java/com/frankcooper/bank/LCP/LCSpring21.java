@@ -1,4 +1,4 @@
-package com.frankcooper.bank.bi_weekly;
+package com.frankcooper.bank.LCP;
 
 import java.util.*;
 
