@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.junit.Assert;
 
-public class _BiWeek49 {
+public class BiWeek49 {
 
     static class _1st {
         public static void main(String[] args) {
