@@ -64,7 +64,7 @@ public class Week235 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
-            handler.countDifferentSubsequenceGCDs(new int[]{6, 10, 3});
+//            handler.countDifferentSubsequenceGCDs(new int[]{6, 10, 3});
         }
 
 
