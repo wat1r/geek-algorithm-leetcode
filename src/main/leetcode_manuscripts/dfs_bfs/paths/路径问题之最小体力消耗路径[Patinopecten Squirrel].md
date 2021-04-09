@@ -172,6 +172,46 @@
         }
 ```
 
+> 另外一种写法
+
+```java
+public int minimumEffortPath(int[][] heights) {
+
+    int R = heights.length, C = heights[0].length;
+    int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    PriorityQueue<int[]> pq = new PriorityQueue<>(((o1, o2) -> o1[2] - o2[2]));
+    pq.offer(new int[]{0, 0, 0});
+    int[] dist = new int[R * C];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[0] = 0;
+    boolean[] vis = new boolean[R * C];//存的是每个点转换成一维下标
+    while (!pq.isEmpty()) {
+        int[] cur = pq.poll();
+        int x = cur[0], y = cur[1], d = cur[2];
+        int pos = x * C + y;//当前的position
+        if (x == R - 1 && y == C - 1) break;
+        if (vis[pos]) continue;
+        vis[pos] = true;
+        for (int[] dir : dirs) {
+            int nx = x + dir[0], ny = y + dir[1];
+            if (nx >= 0 && nx < R && ny >= 0 && ny < C) {
+                int npos = nx * C + ny;//下一个position
+                int p = Math.max(d, Math.abs(heights[nx][ny] - heights[x][y]));
+                if (p < dist[npos]) {
+                    dist[npos] = p;
+                    pq.offer(new int[]{nx, ny, dist[npos]});
+                }
+            }
+        }
+    }
+    return dist[R * C - 1];
+}
+```
+
+
+
+
+
 #### 方法4:并查集
 
 ##### 思路
