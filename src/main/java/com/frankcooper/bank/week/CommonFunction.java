@@ -134,7 +134,7 @@ public class CommonFunction {
 
 
     /**
-     * 线性筛 
+     * 线性筛
      *
      * @param n
      * @return
@@ -166,6 +166,17 @@ public class CommonFunction {
     private long factorial(long n) {
         if (n == 0) return 1;
         return n * factorial(n - 1) % MOD;
+    }
+
+    //求 (x^a) % p —— 快速幂求余
+    public int reminder(int x, int a, int p) {
+        int rem = 1;
+        while (a > 0) {
+            if ((a & 1) == 1) rem = (rem * x) % p;
+            x = x * x % p;
+            a /= 2;
+        }
+        return rem;
     }
 
 }
