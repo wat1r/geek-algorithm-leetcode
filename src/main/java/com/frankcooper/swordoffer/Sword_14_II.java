@@ -20,7 +20,7 @@ public class Sword_14_II {
 //            f[0] = f[1] = 0;
             for (int i = 2; i <= n; i++) {
                 for (int j = 0; j < i; j++) {
-                    f[i] = Math.max(f[i], (1L * j * Math.max(i - j, f[i - j])) % MOD);
+                    f[i] = Math.max(f[i], j * Math.max(i - j, f[i - j]) % MOD * 1L);
                 }
             }
             return (int) (f[n] % MOD);
