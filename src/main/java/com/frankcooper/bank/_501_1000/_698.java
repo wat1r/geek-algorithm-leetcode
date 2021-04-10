@@ -1,9 +1,7 @@
 package com.frankcooper.bank._501_1000;
 
 
-import java.util.*;
-
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 

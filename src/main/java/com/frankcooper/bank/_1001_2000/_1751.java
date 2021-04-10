@@ -5,8 +5,7 @@ package com.frankcooper.bank._1001_2000;
 // import org.junit.Assert;
 
 
-import com.frankcooper.bank.bi_weekly.BiWeek45;
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.util.Arrays;

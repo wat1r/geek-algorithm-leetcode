@@ -1,7 +1,7 @@
 package com.frankcooper.bank._501_1000;
 
 import com.alibaba.fastjson.JSON;
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 
 import java.util.*;
 

@@ -3,8 +3,7 @@ package com.frankcooper.bank._1001_2000;
 
 import java.util.*;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
-import org.junit.Assert;
+import com.frankcooper.utils.PrintUtils;
 
 
 public class _1229 {

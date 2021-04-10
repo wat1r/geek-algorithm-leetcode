@@ -1,7 +1,6 @@
 package com.frankcooper.bank.bi_weekly;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
-import com.sun.javafx.image.PixelUtils;
+import com.frankcooper.utils.PrintUtils;
 
 import java.util.*;
 

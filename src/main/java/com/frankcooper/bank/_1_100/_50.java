@@ -1,7 +1,6 @@
 package com.frankcooper.bank._1_100;
 
-import com.frankcooper._Model;
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 
 public class _50 {
 

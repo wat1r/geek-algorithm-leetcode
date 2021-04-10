@@ -1,9 +1,8 @@
 package com.frankcooper.bank.bi_weekly;
 
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
-import org.omg.CORBA.INTERNAL;
 
 import java.util.*;
 

@@ -1,11 +1,9 @@
 package com.frankcooper.bank.bi_weekly;
 
-import com.frankcooper.lintcode._300;
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class BiWeek45 {
 

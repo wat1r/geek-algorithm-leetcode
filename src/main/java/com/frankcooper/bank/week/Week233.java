@@ -2,7 +2,7 @@ package com.frankcooper.bank.week;
 
 import java.util.*;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 import org.junit.*;
 
 public class Week233 {

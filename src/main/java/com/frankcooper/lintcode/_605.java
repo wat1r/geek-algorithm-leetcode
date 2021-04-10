@@ -1,6 +1,6 @@
 package com.frankcooper.lintcode;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 
 import java.util.*;
 
