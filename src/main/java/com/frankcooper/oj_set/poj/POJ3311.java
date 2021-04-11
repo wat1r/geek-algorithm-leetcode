@@ -1,6 +1,6 @@
 package com.frankcooper.oj_set.poj;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 import java.util.Arrays;
 import java.util.Scanner;

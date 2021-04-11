@@ -2,7 +2,6 @@ package com.frankcooper.bank._501_1000;
 
 import java.util.*;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Occurs;
 import org.junit.Assert;
 
 public class _677 {

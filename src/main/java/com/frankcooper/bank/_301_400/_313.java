@@ -1,27 +1,28 @@
-package com.frankcooper.bank._201_300;
+package com.frankcooper.bank._301_400;
 
 import java.util.*;
 
 import org.junit.Assert;
 
-public class _264 {
+public class _313 {
 
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
+
         }
 
-
-        public int nthUglyNumber(int n) {
+        //丑数II 改一下
+        public int nthSuperUglyNumber(int n, int[] primes) {
             PriorityQueue<Long> pq = new PriorityQueue<>();
             Set<Long> vis = new HashSet<>();
             pq.offer(1L);
             long res = 0;
-            int[] factors = {2, 3, 5};
+            // int[] factors = {2, 3, 5};
             for (int i = 0; i < n; i++) {
                 long cur = pq.poll();
                 res = cur;
-                for (int f : factors) {
+                for (int f : primes) {
                     long t = f * cur;
                     if (!vis.contains(t)) {
                         vis.add(t);
@@ -31,25 +32,37 @@ public class _264 {
             }
             return (int) res;
         }
+
+
     }
 
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
-            Assert.assertEquals(handler.nthUglyNumber(10), 12);
+            int n = 12;
+            int[] primes = {2, 7, 13, 19};
+            handler.nthSuperUglyNumber(n, primes);
         }
 
-        public int nthUglyNumber(int n) {
+        public int nthSuperUglyNumber(int n, int[] primes) {
             int[] dp = new int[n];
+            int[] idx = new int[primes.length];
             dp[0] = 1;
-            int a = 0, b = 0, c = 0;
-            int x = 2, y = 3, z = 5;
             for (int i = 1; i < n; i++) {
-                int t1 = dp[a] * x, t2 = dp[b] * y, t3 = dp[c] * z;
-                dp[i] = Math.min(t1, Math.min(t2, t3));
-                if (dp[i] == t1) a++;
-                if (dp[i] == t2) b++;
-                if (dp[i] == t3) c++;
+                int min = Integer.MAX_VALUE;
+                for (int j = 0; j < primes.length; j++) {
+                    if (min > dp[idx[j]] * primes[j]) {
+                        min = dp[idx[j]] * primes[j];
+                    }
+                }
+                dp[i] = min;
+                for (int j = 0; j < primes.length; j++) {
+                    if (min == dp[idx[j]] * primes[j]) {
+                        idx[j]++;
+//                        break;
+                    }
+                }
+
             }
             return dp[n - 1];
         }

@@ -1,7 +1,7 @@
 package com.frankcooper.bank.week;
 
 import com.alibaba.fastjson.JSON;
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 import java.util.*;
 

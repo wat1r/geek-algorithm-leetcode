@@ -1,6 +1,6 @@
 package com.frankcooper.mixed.skill;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 public class IteratorOne {
     static IteratorOne iteratorOne = new IteratorOne();

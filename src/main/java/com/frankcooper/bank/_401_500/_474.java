@@ -1,6 +1,6 @@
 package com.frankcooper.bank._401_500;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 /**
  * @Date 2020/9/15

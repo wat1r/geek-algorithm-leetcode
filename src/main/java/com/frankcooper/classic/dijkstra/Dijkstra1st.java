@@ -1,6 +1,6 @@
 package com.frankcooper.classic.dijkstra;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 /**
  * Created by FrankCooper

@@ -1,7 +1,7 @@
 package com.frankcooper.lintcode;
 
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.util.*;

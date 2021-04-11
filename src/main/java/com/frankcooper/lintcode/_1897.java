@@ -1,6 +1,6 @@
 package com.frankcooper.lintcode;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 public class _1897 {
 

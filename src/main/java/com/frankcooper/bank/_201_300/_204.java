@@ -103,6 +103,25 @@ public class _204 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+//            handler.countPrimes(10);
+            handler.countPrimes(499979);
+        }
+
+        public int countPrimes(int n) {
+            int[] f = new int[n];
+            Arrays.fill(f, 1);//1表示是质数，0表示不是质数
+            f[0] = f[1] = 0;
+            int res = 0;
+            for (int i = 2; i < n; i++) {
+                if (f[i] == 1) {
+                    res++;
+                    for (int j = i * i; j < n; j += i) {
+                        System.out.printf("%d\n", j);
+                        f[j] = 0;
+                    }
+                }
+            }
+            return res;
         }
     }
 

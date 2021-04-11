@@ -2,7 +2,7 @@ package com.frankcooper.bank.LCP;
 
 import java.util.*;
 
-import com.frankcooper.utils.PrintUtils;
+import com.frankcooper.swordoffer.utils.PrintUtils;
 
 public class LCP03 {
 

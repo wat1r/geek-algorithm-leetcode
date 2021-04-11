@@ -1,4 +1,4 @@
-package com.frankcooper.utils;
+package com.frankcooper;
 
 public class BitOpUtils {
 
