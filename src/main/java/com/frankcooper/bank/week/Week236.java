@@ -132,33 +132,62 @@ public class Week236 {
 
             int size;
             int m, k;
-            List<Integer> l = new LinkedList<>();
-
+            int[] arr;
 
             public MKAverage(int m, int k) {
                 this.m = m;
                 this.k = k;
                 this.size = 0;
+                this.arr = new int[m];
             }
 
             public void addElement(int num) {
-                l.add(num);
+                arr[size % m] = num;
                 size++;
-
             }
 
             public int calculateMKAverage() {
                 if (size < m) return -1;
-                int[] arr = new int[m];
-                for (int i = 0; i < m; i++) {
-                    arr[i] = l.get(size - 1 - i);
-                }
-                Arrays.sort(arr);
-                int sum = 0;
+                //这一步是暴力枚举方法的关键，不能直接用arr去sort。因为calculateMKAverage()函数可能调用2次以上
+                int[] tmp = Arrays.copyOfRange(arr, 0, m);
+                Arrays.sort(tmp);
+                long sum = 0;
                 for (int j = k; j < m - k; j++) {
-                    sum += arr[j];
+                    sum += tmp[j];
                 }
-                return sum / (m - 2 * k);
+                return (int) (sum / (m - 2 * k));
+            }
+        }
+    }
+
+    static class _4th_1 {
+        public static void main(String[] args) {
+
+        }
+    }
+
+    static class _4th_2 {
+        public static void main(String[] args) {
+
+        }
+
+        class MKAverage {
+            int m, k, size;
+
+            PriorityQueue<Integer> maxPart = new PriorityQueue<>();//小根堆
+            PriorityQueue<Integer> minPart = new PriorityQueue<>((o1, o2) -> o2 - o1);//大根堆
+
+            public MKAverage(int m, int k) {
+
+            }
+
+            public void addElement(int num) {
+
+            }
+
+            public int calculateMKAverage() {
+
+                return 0;
             }
         }
     }
