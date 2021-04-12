@@ -1,6 +1,5 @@
 package com.frankcooper.bank._401_500;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.util.HashMap;

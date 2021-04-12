@@ -3,6 +3,7 @@ package com.frankcooper.bank.week;
 import java.util.*;
 //import com.frankcooper.swordoffer.utils.PrintUtils;
 
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 public class Week236 {
@@ -83,7 +84,7 @@ public class Week236 {
                     if (obstacles[i] == j + 1) continue;
                     dp[i][j] = dp[i - 1][j];
                 }
-
+                PrintUtils.printMatrix(dp);
                 for (int j = 0; j < 3; j++) {
                     if (obstacles[i] == j + 1) continue;
                     int x = (j + 1) % 3, y = (j + 2) % 3;
@@ -94,6 +95,9 @@ public class Week236 {
             return res;
 
         }
+
+
+
 
 
 
@@ -121,6 +125,35 @@ public class Week236 {
 //            if (last != 2) cnt++;
             return cnt;
         }*/
+    }
+
+    static class _3rd_1 {
+        public static void main(String[] args) {
+
+        }
+
+        public int minSideJumps(int[] obstacles) {
+
+
+            int res = 0;
+            int i = 0, n = obstacles.length;
+            int o = 2;
+            for (; i < n; i++) {
+                if (obstacles[i + 1] != o) {
+                    i++;
+                    continue;
+                }
+                int other = (o + 1) % 3, another = (o + 2) % 3;
+
+                int a = i, b = i;
+                while (a < n && obstacles[a] != other) {
+
+                }
+
+            }
+            return 0;
+
+        }
     }
 
     static class _4th {
@@ -173,22 +206,100 @@ public class Week236 {
 
         class MKAverage {
             int m, k, size;
+            int midLen;
+            long midSum = 0;
 
+            Deque<Integer> q = new LinkedList<>();
             PriorityQueue<Integer> maxPart = new PriorityQueue<>();//小根堆
             PriorityQueue<Integer> minPart = new PriorityQueue<>((o1, o2) -> o2 - o1);//大根堆
+            PriorityQueue<Integer> midPartMIN = new PriorityQueue<>();//小根堆
+            PriorityQueue<Integer> midPartMAX = new PriorityQueue<>((o1, o2) -> o2 - o1);//大根堆
+
 
             public MKAverage(int m, int k) {
-
+                this.m = m;
+                this.k = k;
+                this.midLen = m - 2 * k;
             }
 
             public void addElement(int num) {
+                if (size == m) {
+                    int t = q.removeLast();
+                    if (t > midPartMAX.peek()) {
+                        maxPart.remove(t);
+                    } else if (t < midPartMIN.peek()) {
+                        minPart.remove(t);
+                    } else {
+                        midPartMIN.remove(t);
+                        midPartMAX.remove(t);
+                        midSum -= t;
+                    }
+                } else {
+                    size++;
+                }
+                q.offerFirst(num);
+                //当前元素num大于maxPart的栈顶元素，因为maxPart是小根堆，弹出栈顶元素往midPart部分转移
+                if (maxPart.size() > 0 && num > maxPart.peek()) {
+                    maxPart.offer(num);
+                    if (maxPart.peek() > k) maxToMid();
+                }
+                //当前元素num小于minPart的栈顶元素，因为minPart是大根堆，弹出栈顶元素往midPart部分转移
+                else if (minPart.size() > 0 && num < minPart.peek()) {
+                    minPart.offer(num);
+                    if (minPart.peek() > k) minToMid();
+                }
+                //往midPart送
+                else {
+                    midPartMAX.offer(num);
+                    midPartMIN.offer(num);
+                    midSum += num;
+                }
 
+                if (midPartMIN.size() > midLen) {
+                    if (minPart.size() < k) {
+                        midToMin();
+                    } else {
+                        midToMax();
+                    }
+                }
+            }
+
+            private void midToMin() {
+                int t = midPartMIN.poll();
+                midPartMAX.remove(t);
+                minPart.offer(t);
+                midSum -= t;
+            }
+
+            private void midToMax() {
+                int t = midPartMAX.poll();
+                midPartMIN.remove(t);
+                maxPart.offer(t);
+                midSum -= t;
+            }
+
+            private void maxToMid() {
+                int t = maxPart.poll();
+                midPartMAX.offer(t);
+                midPartMIN.offer(t);
+                midSum += t;
+            }
+
+            private void minToMid() {
+                int t = minPart.poll();
+                midPartMIN.offer(t);
+                midPartMAX.offer(t);
+                midSum += t;
             }
 
             public int calculateMKAverage() {
-
-                return 0;
+                if (size < m) return -1;
+                return (int) (midSum / midLen);
             }
+
+
         }
+
+
     }
 }

@@ -1,6 +1,6 @@
 package com.frankcooper.bank._401_500;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 
 public class _498 {
 

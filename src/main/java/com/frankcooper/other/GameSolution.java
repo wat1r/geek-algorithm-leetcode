@@ -1,7 +1,7 @@
 package com.frankcooper.other;
 
 import com.alibaba.fastjson.JSONObject;
-import com.frankcooper.swordoffer.utils.PrintUtils;
+import com.frankcooper.utils.PrintUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

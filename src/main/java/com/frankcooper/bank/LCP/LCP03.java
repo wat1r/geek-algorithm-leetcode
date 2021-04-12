@@ -2,8 +2,6 @@ package com.frankcooper.bank.LCP;
 
 import java.util.*;
 
-import com.frankcooper.swordoffer.utils.PrintUtils;
-
 public class LCP03 {
 
     static class _1st {
