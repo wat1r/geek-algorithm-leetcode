@@ -4,7 +4,6 @@ import java.util.*;
 //import com.frankcooper.swordoffer.utils.PrintUtils;
 
 import com.frankcooper.utils.PrintUtils;
-import org.junit.Assert;
 
 public class Week236 {
 
@@ -302,4 +301,200 @@ public class Week236 {
 
 
     }
+
+
+    static class _4th_3 {
+        public static void main(String[] args) {
+
+        }
+
+        class MKAverage {
+
+            int m, k;
+            Deque<Integer> queue;
+            Fenwick idxs, vals;//
+
+            public MKAverage(int m, int k) {
+                this.m = m;
+                this.k = k;
+                this.queue = new LinkedList<>();
+                this.idxs = new Fenwick(10005);
+                this.vals = new Fenwick(10005);
+            }
+
+            public void addElement(int num) {
+                queue.offerFirst(num);
+                idxs.update(num, 1);
+                vals.update(num, num);
+                if (queue.size() > m) {
+                    int t = queue.removeLast();
+                    idxs.update(num, -1);
+                    vals.update(num, -t);
+                }
+            }
+
+            private int getIdx(int k) {//查找第k大的元素
+                int lo = 0, hi = 10005;
+                while (lo < hi) {
+                    int mid = lo + (hi - lo) / 2;
+                    if (idxs.sum(mid) < k) {
+                        lo = mid + 1;
+                    } else {
+                        hi = mid;
+                    }
+                }
+                return lo;
+            }
+
+
+            public int calculateMKAverage() {
+                if (queue.size() < m) return -1;
+                int lo = getIdx(k);
+                int hi = getIdx(m - k);
+                int res = vals.sum(hi) - vals.sum(lo);
+                res += (idxs.sum(lo) - k) * lo;
+                res -= (idxs.sum(hi) - (m - k)) * hi;
+                return res / (m - 2 * k);
+
+            }
+
+            /**
+             * ex. m = 6, k = 2, nums = [1,2,2,3,3,4]
+             * index_presum(0-index) = [0,1,3,5,6]
+             * -> index_presum[lo=2]=3>=k1=2
+             * -> index_presum[hi=3]=5>=k2=4
+             * ->self.value.sum(hi)-self.value.sum(lo) = sum([1,2,2,3,3]) - sum([1,2,2]) = sum([3,3])
+             * But the actual solution here is sum([2,3]), we need to remove a 3 and add back a 2.
+             *
+             *
+             * self.index.sum(x) stores counts of numbers >= x, and self.index.sum(x) >= k since we may have multiple the same x number but we only need self.index.sum(x) = k
+             */
+        }
+
+
+        class Fenwick {
+            private int[] tree;
+            private int len;
+
+            public Fenwick(int n) {
+                this.len = n;
+                tree = new int[n + 1];
+            }
+
+            // 单点更新：将 index 这个位置 + 1
+            public void update(int i, int delta) {
+                // 从下到上，最多到 size，可以等于 size
+                while (i <= this.len) {
+                    tree[i] += delta;
+                    i += lowbit(i);
+                }
+            }
+
+
+            // 区间查询：查询小于等于 index 的元素个数
+            // 查询的语义是"前缀和"
+            public int sum(int i) {
+                // 从右到左查询
+                int sum = 0;
+                while (i > 0) {
+                    sum += tree[i];
+                    i -= lowbit(i);
+                }
+                return sum;
+            }
+
+            public int lowbit(int x) {
+                return x & (-x);
+            }
+
+        }
+    }
+
+
+    /**
+     * treemap解法
+     * https://leetcode.com/problems/finding-mk-average/discuss/1152742/Clean-Java-with-3-TreeMaps
+     */
+    static class _4th_4 {
+        public static void main(String[] args) {
+
+        }
+
+
+        class MKAverage {
+
+            int m, k;
+            TreeMap<Integer, Integer> top = new TreeMap<>();
+            TreeMap<Integer, Integer> middle = new TreeMap<>();
+            TreeMap<Integer, Integer> bottom = new TreeMap<>();
+            Queue<Integer> q = new LinkedList<>();
+            long middleSum = 0;
+            int countTop, countBottom;
+
+            public MKAverage(int m, int k) {
+                this.m = m;
+                this.k = k;
+            }
+
+            public void addElement(int num) {
+                if (q.size() == m) {
+                    int t = q.poll();
+                    if (top.containsKey(t)) {
+                        remove(top, t);
+                        countTop--;
+                    } else if (middle.containsKey(t)) {
+                        remove(middle, t);
+                        middleSum -= t;
+                    } else {
+                        remove(bottom, t);
+                        countBottom--;
+                    }
+                }
+                add(middle, num);
+                q.offer(num);
+                middleSum += num;
+                while (countTop < k && !middle.isEmpty()) {
+                    countTop++;
+                    middleSum -= middle.lastKey();
+                    add(top, remove(middle, middle.lastKey()));
+                }
+                while (!middle.isEmpty() && !top.isEmpty() && top.firstKey() < middle.lastKey()) {
+                    middleSum += top.firstKey();
+                    add(middle, remove(top, top.firstKey()));
+                    middleSum -= middle.lastKey();
+                    add(top, remove(middle, middle.lastKey()));
+                }
+                while (countBottom < k && !middle.isEmpty()) {
+                    countBottom++;
+                    middleSum -= middle.firstKey();
+                    add(bottom, remove(middle, middle.firstKey()));
+                }
+                while (!middle.isEmpty() && !bottom.isEmpty() && bottom.lastKey() > middle.firstKey()) {
+                    middleSum += bottom.lastKey();
+                    add(middle, remove(bottom, bottom.lastKey()));
+                    middleSum -= middle.firstKey();
+                    add(bottom, remove(middle, middle.firstKey()));
+                }
+
+            }
+
+            public int calculateMKAverage() {
+                return q.size() == m ? (int) (middleSum / (m - 2 * k)) : -1;
+            }
+
+
+            private int remove(TreeMap<Integer, Integer> treeMap, int target) {
+                treeMap.put(target, treeMap.get(target) - 1);
+                if (treeMap.get(target) == 0) treeMap.remove(target);
+                return target;
+            }
+
+            private void add(TreeMap<Integer, Integer> treeMap, int target) {
+                treeMap.put(target, treeMap.getOrDefault(target, 0) + 1);
+            }
+        }
+
+
+    }
+
 }
