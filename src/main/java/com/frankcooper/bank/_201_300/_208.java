@@ -113,4 +113,77 @@ public class _208 {
     }
 
 
+    static class _3rd {
+        static class Trie {
+
+            Trie[] next;
+            boolean isEnd;
+
+
+            /**
+             * Initialize your data structure here.
+             */
+            public Trie() {
+                next = new Trie[26];
+                isEnd = false;
+            }
+
+            /**
+             * Inserts a word into the trie.
+             */
+            public void insert(String word) {
+                Trie cur = this;
+                char[] chas = word.toCharArray();
+                for (char ch : chas) {
+                    if (cur.next[ch - 'a'] == null) cur.next[ch - 'a'] = new Trie();
+                    cur = cur.next[ch - 'a'];
+                }
+                cur.isEnd = true;
+            }
+
+            /**
+             * Returns if the word is in the trie.
+             */
+            public boolean search(String word) {
+                Trie cur = this;
+                char[] chas = word.toCharArray();
+                for (char ch : chas) {
+                    if (cur.next[ch - 'a'] == null) return false;
+                    cur = cur.next[ch - 'a'];
+                }
+                return cur.isEnd;
+            }
+
+            /**
+             * Returns if there is any word in the trie that starts with the given prefix.
+             */
+            public boolean startsWith(String prefix) {
+                Trie cur = this;
+                char[] chas = prefix.toCharArray();
+                for (char ch : chas) {
+                    if (cur.next[ch - 'a'] == null) return false;
+                    cur = cur.next[ch - 'a'];
+                }
+                return true;
+            }
+
+
+        }
+
+        public static void main(String[] args) {
+            /**
+             * ["Trie","insert","search","search","startsWith","insert","search"]
+             * [[],["apple"],["apple"],["app"],["app"],["app"],["app"]]
+             */
+            Trie trie = new Trie();
+            trie.insert("apple");
+            trie.search("apple");
+            trie.search("apple");
+            trie.startsWith("app");
+            trie.insert("app");
+            trie.search("app");
+        }
+    }
+
+
 }
