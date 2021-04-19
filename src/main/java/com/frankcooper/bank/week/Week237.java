@@ -112,38 +112,83 @@ public class Week237 {
             for (int j = 1; j < n; j++) {
                 f[0][j] = (f[0][j - 1] ^ (arr1[0] & arr2[j]));
             }
-            PrintUtils.printMatrix(f);
             for (int i = 1; i < m; i++) {
                 for (int j = 1; j < n; j++) {
                     f[i][j] = (f[i][j - 1] ^ f[i - 1][j] ^ f[i - 1][j - 1]) ^ (arr1[i] & arr2[j]);
                 }
             }
-            PrintUtils.printMatrix(f);
             return (int) f[m - 1][n - 1];
         }
     }
 
     static class _4th_1 {
+
+        public static void main(String[] args) {
+            int[] arr1 = {1, 2, 3};
+            int[] arr2 = {6, 5};
+            _4th_1 handler = new _4th_1();
+            handler.getXORSum(arr1, arr2);
+        }
+
         public int getXORSum(int[] arr1, int[] arr2) {
             int m = arr1.length, n = arr2.length;
-//            long[][] f = new long[m][n];
-            long[] f = new long[m];
-//            f[0][0] = arr1[0] & arr2[0];
-//            for (int i = 1; i < m; i++) {
-//                f[i][0] = (f[i - 1][0] ^ (arr1[i] & arr2[0]));
-//            }
-//            for (int j = 1; j < n; j++) {
-//                f[0][j] = (f[0][j - 1] ^ (arr1[0] & arr2[j]));
-//            }
-//            PrintUtils.printMatrix(f);
-//            for (int i = 1; i < m; i++) {
-//                for (int j = 1; j < n; j++) {
-//                    f[i][j] = (f[i][j - 1] ^ f[i - 1][j] ^ f[i - 1][j - 1]) ^ (arr1[i] & arr2[j]);
-//                }
-//            }
-//            PrintUtils.printMatrix(f);
-//            return (int) f[m - 1][n - 1];
-            return 0;
+            int max = Math.max(m, n);
+            int min = Math.min(m, n);
+            boolean isRowMore = max == m;//行数是不是大于等于列数
+            long[] f = new long[min];
+            f[0] = arr1[0] & arr2[0];
+            for (int i = 1; i < min; i++) {
+                f[i] = f[i - 1] ^ (isRowMore ? arr1[i] & arr2[0] : arr2[i] & arr1[0]);
+            }
+            for (int i = 1; i < max; i++) {
+                f[0] = f[0] ^ (isRowMore ? arr1[i] & arr2[0] : arr2[i] & arr1[0]);
+                for (int j = 1; j < min; j++) {
+                    f[j] = f[j - 1] ^ f[j] ^ (isRowMore ? arr1[i] & arr2[j] : arr2[i] & arr1[j]);
+                }
+            }
+            return (int) f[min - 1];
         }
+    }
+
+    static class _4th_2 {
+        public int getXORSum(int[] arr1, int[] arr2) {
+            int m = arr1.length, n = arr2.length;
+            long[] f = new long[n];
+            f[0] = arr1[0] & arr2[0];
+            for (int j = 1; j < n; j++) {
+                f[j] = (f[j - 1] ^ (arr1[0] & arr2[j]));
+            }
+            for (int i = 1; i < m; i++) {
+                long[] nf = new long[n];
+                nf[0] = f[0] ^ (arr1[i] & arr2[0]);
+                for (int j = 1; j < n; j++) {
+                    nf[j] = (nf[j - 1] ^ f[j] ^ f[j - 1] ^ (arr1[i] & arr2[j]));
+                }
+                f = nf;
+            }
+            return (int) f[n - 1];
+        }
+    }
+
+    static class _4th_3 {
+        public int getXORSum(int[] arr1, int[] arr2) {
+            int res1 = 0, res2 = 0;
+            for (int x : arr1) res1 ^= x;
+            for (int x : arr2) res2 ^= x;
+            return res1 & res2;
+        }
+
+    }
+
+
+    static class _4th_4 {
+        public int getXORSum(int[] arr1, int[] arr2) {
+            int res1 = 0, res = 0;
+            for (int x : arr1) res1 ^= x;
+            for (int x : arr2) res ^= (x & res1);
+            return res;
+        }
+
+
     }
 }
