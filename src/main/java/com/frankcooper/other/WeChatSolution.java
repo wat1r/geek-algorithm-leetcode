@@ -5,6 +5,7 @@ import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class WeChatSolution {
 
@@ -256,6 +257,7 @@ public class WeChatSolution {
 
         /**
          * 求3个字符的LCS
+         *
          * @param a
          * @param b
          * @param c
@@ -280,6 +282,108 @@ public class WeChatSolution {
                         }
                     }
             return f[I][J][K];
+        }
+    }
+
+
+    static class _6th {
+        static class Print {
+
+            public static void main(String[] args) {
+                Print print = new Print();
+                Thread t1 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        print.first();
+                    }
+                });
+                Thread t2 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        print.second();
+                    }
+                });
+                Thread t3 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        print.third();
+                    }
+                });
+                t1.start();
+                t2.start();
+                t3.start();
+
+
+            }
+
+
+            private CyclicBarrier cyclicBarrier = new CyclicBarrier(3);
+            volatile boolean first = true;
+            volatile boolean second = false;
+            volatile boolean third = false;
+            private List<Integer> firstList = Arrays.asList(1, 2, 3, 4, 5);
+            private List<Integer> secondList = Arrays.asList(6, 7, 8, 9, 10);
+            private List<Integer> thirdList = Arrays.asList(11, 12, 13);
+
+            public void first() {
+                for (int i = 0; i < firstList.size(); i++) {
+                    while (second || third) ;
+                    System.out.print(firstList.get(i) + " ");
+                    if (i + 1 < firstList.size()) {
+                        i++;
+                        System.out.print(firstList.get(i) + " ");
+                    }
+                    first = false;
+                    second = true;
+                    try {
+                        cyclicBarrier.await();
+                    } catch (InterruptedException | BrokenBarrierException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+
+            public void second() {
+                for (int i = 0; i < secondList.size(); i++) {
+                    while (first || third) ;
+                    System.out.print(secondList.get(i) + " ");
+                    if (i + 1 < secondList.size()) {
+                        i++;
+                        System.out.print(secondList.get(i) + " ");
+                    }
+                    second = false;
+                    third = true;
+                    try {
+                        cyclicBarrier.await();
+                    } catch (InterruptedException | BrokenBarrierException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            public void third() {
+                for (int i = 0; i < thirdList.size(); i++) {
+                    while (first || second) ;
+                    System.out.print(thirdList.get(i) + " ");
+                    if (i + 1 < thirdList.size()) {
+                        i++;
+                        System.out.print(thirdList.get(i) + " ");
+                    }
+                    third = false;
+                    first = true;
+                    try {
+                        cyclicBarrier.await();
+                    } catch (InterruptedException | BrokenBarrierException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+
         }
     }
 

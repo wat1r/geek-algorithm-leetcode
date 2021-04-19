@@ -42,6 +42,17 @@ public class _220 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+            TreeSet<Long> treeSet = new TreeSet<>();
+            for (int i = 0; i < nums.length; i++) {
+                if (i > k) treeSet.remove((long) nums[i - k - 1]);
+                Long ceil = treeSet.ceiling((long) nums[i] - t);
+                if (ceil != null && ceil <= nums[i] + t) return true;
+                treeSet.add((long) nums[i]);
+            }
+            return false;
+        }
     }
 
 
