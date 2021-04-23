@@ -88,3 +88,7 @@ TreeSet
 
 
 
+#### [1830. 使字符串有序的最少操作次数](https://leetcode-cn.com/problems/minimum-number-of-operations-to-make-string-sorted/)
+
+> Hard 康拓展开，线段树，乘法逆元
+

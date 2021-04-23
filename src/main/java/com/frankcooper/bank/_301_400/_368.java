@@ -1,5 +1,7 @@
 package com.frankcooper.bank._301_400;
 
+import org.junit.Assert;
+
 import java.util.*;
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +74,7 @@ public class _368 {
         //排序
         Arrays.sort(nums);
         int n = nums.length;
-        List<ArrayList> resList = new ArrayList<>();
+        ArrayList<ArrayList> resList = new ArrayList<>();
         for (int num : nums) resList.add(new ArrayList());
         List<Integer> ans = new ArrayList();
         for (int i = 0; i < n; ++i) {
@@ -93,5 +95,39 @@ public class _368 {
         return ans;
     }
 
+
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums = new int[]{1, 2, 3};
+            Assert.assertEquals(handler.largestDivisibleSubset(nums), Arrays.asList(1, 2));
+        }
+
+        public List<Integer> largestDivisibleSubset(int[] nums) {
+            List<Integer> res = new ArrayList<>();
+            if (nums == null || nums.length == 0) return res;
+            Arrays.sort(nums);
+            List<List<Integer>> list = new ArrayList<>();
+            for (int x : nums) list.add(new ArrayList<>());
+            for (int i = 0; i < nums.length; i++) {
+                List<Integer> cur = list.get(i);//当前处理的i这个list
+                List<Integer> target = new ArrayList<>();
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] % nums[j] == 0 && target.size() < list.get(j).size()) {
+                        target = list.get(j);
+                    }
+                }
+                cur.addAll(target);
+                cur.add(nums[i]);
+                if (cur.size() > res.size()) res = cur;
+            }
+            return res;
+        }
+    }
+
+    static class _2nd{
+        //dp[i]表示以当前元素nums[i]结尾形成的整除子集的最长长度
+    }
 
 }
