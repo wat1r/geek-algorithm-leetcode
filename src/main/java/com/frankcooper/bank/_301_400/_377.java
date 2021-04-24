@@ -48,14 +48,14 @@ public class _377 {
             int[] cache = new int[target + 1];
 //            cache[0] = 1; 这种 [3,33,333]
 //10000 超时
-            Arrays.fill(cache,-1);
+            Arrays.fill(cache, -1);
             return dfs(nums, target, cache);
         }
 
 
         private int dfs(int[] nums, int target, int[] cache) {
             if (target < 0) return 0;
-            if (cache[target] !=-1) return cache[target];
+            if (cache[target] != -1) return cache[target];
 
             if (target == 0) {
                 return 1;
@@ -81,6 +81,44 @@ public class _377 {
                     if (nums[i] > t) continue;
                     f[t] += f[t - nums[i]];
 
+                }
+            }
+            return f[target];
+        }
+    }
+
+    static class _4th {
+
+        /**
+         * 记忆化
+         */
+        Integer[] memo;
+
+        public int combinationSum4(int[] nums, int target) {
+            memo = new Integer[target + 1];
+            return dfs(nums, target);
+        }
+
+        private int dfs(int[] nums, int target) {
+            if (target < 0) return 0;
+            if (memo[target] != null) return memo[target];
+            if (target == 0) return 1;
+            int res = 0;
+            for (int i = 0; i < nums.length; i++) {
+                res += dfs(nums, target - nums[i]);
+            }
+            return memo[target] = res;
+        }
+    }
+
+    static class _5th {
+        public int combinationSum4(int[] nums, int target) {
+            int[] f = new int[target + 1];//f[i]表示在使用nums数组形成i的组合的数量
+            f[0] = 1;
+            for (int i = 0; i <= target; i++) {
+                for (int j = 0; j < nums.length; j++) {
+                    if (nums[j] > i) continue;
+                    f[i] += f[i - nums[j]];
                 }
             }
             return f[target];
