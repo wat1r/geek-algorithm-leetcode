@@ -1,5 +1,8 @@
 package com.frankcooper.other;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -23,6 +26,7 @@ public class WeChatPacket {
 //                handler.process(3", new BigDecimal("100")", new BigDecimal("50")", new BigDecimal("25"));
             }
 
+
         }
 
         /**
@@ -33,7 +37,6 @@ public class WeChatPacket {
             Random random = new Random();
             int count = 3, base = 2000, delta = 101;
             double div = 100.0;
-
             String[] months = new String[]{"Jan", "Feb", "Mar", "Apr ", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
             String[] charger = new String[]{"FC  ", "NIU ", "WAY ", "TING"};
             Arrays.sort(charger, Comparator.reverseOrder());
@@ -55,7 +58,6 @@ public class WeChatPacket {
             }
         }
 
-
         private Double[] process(int count, BigDecimal total, BigDecimal max, BigDecimal min) {
             DecimalFormat df = new DecimalFormat("#.00");
             Double[] res = new Double[count];
@@ -67,22 +69,17 @@ public class WeChatPacket {
                 sum = sum.add(p);
             }
             res[idx] = Double.valueOf(df.format(total.subtract(sum)));
-//            System.out.println(Arrays.toString(res));
             return res;
         }
 
 
-        private String print(String target, int pos) {
-            System.out.printf("%" + pos + "s" + " ", target);
-            return "";
-        }
-
-        private String print(int target, int pos) {
-            print(String.valueOf(target), pos);
-            return "";
-        }
-
-
+        /**
+         * get date by year and month
+         *
+         * @param year
+         * @param month
+         * @return
+         */
         private List<String> getDate(int year, int month) {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
@@ -100,6 +97,68 @@ public class WeChatPacket {
                 res.add(month + "/" + day);
             }
             return res;
+        }
+
+        private String print(String target, int pos) {
+            System.out.printf("%" + pos + "s" + " ", target);
+            return "";
+        }
+
+        private String print(int target, int pos) {
+            print(String.valueOf(target), pos);
+            return "";
+        }
+    }
+
+
+    static class _2nd {
+
+        static _2nd handler = new _2nd();
+
+
+        public static void main(String[] args) {
+            int[] arr = new int[]{1, 10, 100, 200, 500, 1000, 2000};
+            for (int times : arr) {
+                handler.benchmark(times, new RedPackage(30, 200.0));
+            }
+        }
+
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        private void benchmark(int times, RedPackage rp) {
+            int size = rp.remainSize, t = times;
+            Double[] sum = new Double[size];
+            Arrays.fill(sum, 0.0);
+            while (times-- > 0) {
+                while (rp.remainSize > 0) {
+                    sum[rp.remainSize - 1] += handler.getRandomMoney(rp);
+                }
+                rp = new RedPackage(30, 200.0);
+            }
+            Double[] res = new Double[size];
+            for (int i = 0; i < sum.length; i++) {
+                res[i] = Double.valueOf(df.format(sum[i] / t));
+            }
+            System.out.printf("times:[%s]-->%s\n", String.format("%4d", t), Arrays.toString(res));
+        }
+
+
+        @Data
+        @AllArgsConstructor
+        static class RedPackage {
+            private int remainSize;//还剩下的红包个数
+            private double remainMoney;//还剩下的钱
+        }
+
+        public double getRandomMoney(RedPackage rp) {
+            Random random = new Random();
+            double min = 0.01, max = rp.remainMoney / rp.remainSize * 2;
+            double curMoney = random.nextDouble() * max;
+            curMoney = curMoney <= min ? 0.01 : curMoney;//单个红包不得少于0.01
+            curMoney = Math.floor(curMoney * 100) / 100;
+            rp.remainSize--;
+            rp.remainMoney -= curMoney;
+            return curMoney;
         }
     }
 }
