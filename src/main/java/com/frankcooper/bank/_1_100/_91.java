@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.junit.Assert;
 
-public class _27 {
+public class _91 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -13,21 +13,18 @@ public class _27 {
         }
 
 
-        public int removeElement(int[] nums, int val) {
-            int i = 0, j = 0;
-            for (; j < nums.length; j++) {
-                if (nums[j] != val) swap(nums, i++, j);
+        public int numDecodings(String s) {
+            if (s == null || s.charAt(0) == '0') return 0;
+            int n = s.length();
+            char[] chas = s.toCharArray();
+            int[] f = new int[n + 1];
+            f[0] = f[1] = 1;
+            for (int i = 2; i <= n; i++) {
+                if (chas[i - 1] != '0') f[i] += f[i - 1];
+                if (chas[i - 2] == '1' || chas[i - 2] == '2' && chas[i - 1] <= '6') f[i] += f[i - 2];
             }
-
-            return i;
+            return f[n];
         }
-
-        private void swap(int[] nums, int i, int j) {
-            int t = nums[i];
-            nums[i] = nums[j];
-            nums[j] = t;
-        }
-
 
     }
 

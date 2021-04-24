@@ -388,37 +388,6 @@ public class WeChatSolution {
     }
 
 
-    static class _7th {
-        public static void main(String[] args) {
 
 
-            Random random = new Random();
-            int floor = 2020, ceil = 2120;
-            //单个不大于1000
-            int N = 4;
-            int total = floor;
-
-            for (int i = 0; i < 4; i++) {
-                int x = (int) (random.nextInt() * random.nextDouble());
-                int y = (int) (random.nextInt() * random.nextDouble());
-                int z = total - x - y;
-
-                System.out.printf("BR:%d,%d,%d,%d\n", total, x, y, z);
-            }
-
-
-            System.exit(0);
-            for (int i = 0; i < N; i++) {
-                double a = random.nextDouble() * 0.5, b = random.nextDouble() * 0.5;
-                double c = 1.0 - a - b;
-                int x = (int) (floor * a), y = (int) (floor * b), z = (int) (floor * c);
-                int sum = x + y + z;
-
-            }
-
-
-        }
-
-
-    }
 }
