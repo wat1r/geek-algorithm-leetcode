@@ -25,6 +25,10 @@ public class _1011 {
                 int t = 0; //目标的可能天数
                 int cur = 0;
                 for (int w : weights) {
+                    if (cur == mid) {
+                        cur = 0;
+                        t++;
+                    }
                     if (cur > mid) {
                         cur = w;
                         t++;
@@ -35,7 +39,8 @@ public class _1011 {
                     }
                     cur += w;
                 }
-                if (t >= D) {
+                if (cur <= mid) t++;
+                if (t <= D) {
                     hi = mid;
                 } else {
                     lo = mid + 1;
