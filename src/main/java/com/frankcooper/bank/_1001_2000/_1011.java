@@ -29,7 +29,7 @@ public class _1011 {
                 int mid = lo + (hi - lo) / 2;//左移左动，向下取整
                 //判断这个数是否满足要求
                 int t = 0; //目标的可能天数
-                int cur = 0;
+                int cur = 0;//当前的weight的值
                 for (int w : weights) {
                     if (w > mid) {
                         /**
