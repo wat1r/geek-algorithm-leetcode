@@ -13,6 +13,12 @@ public class _1011 {
             int[] weights = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
             int D = 5;
             Assert.assertEquals(15, handler.shipWithinDays(weights, D));
+            weights = new int[]{3, 2, 2, 4, 1, 4};
+            D = 3;
+            Assert.assertEquals(6, handler.shipWithinDays(weights, D));
+            weights = new int[]{1, 2, 3, 1, 1};
+            D = 4;
+            Assert.assertEquals(3, handler.shipWithinDays(weights, D));
         }
 
 
@@ -25,11 +31,16 @@ public class _1011 {
                 int t = 0; //目标的可能天数
                 int cur = 0;
                 for (int w : weights) {
-                    if (cur == mid) {
-                        cur = 0;
-                        t++;
+                    if (w > mid) {
+                        /**
+                         *  weights = new int[]{1, 2, 3, 1, 1};
+                         *      D = 4;
+                         *      对应这个case
+                         */
+                        t = D + 1;//
+                        break;
                     }
-                    if (cur > mid) {
+                    if (cur + w > mid) {
                         cur = w;
                         t++;
                         continue;
