@@ -19,7 +19,7 @@ public class _1552 {
             while (lo < hi) {
                 int mid = lo + (hi - lo) / 2;
                 if (check(position, mid, m)) {
-                    res = mid;
+//                    res = mid;
                     lo = mid + 1;
                 } else {
                     hi = mid;
