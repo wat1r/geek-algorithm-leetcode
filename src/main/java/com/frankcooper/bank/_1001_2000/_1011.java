@@ -27,7 +27,7 @@ public class _1011 {
             for (int w : weights) hi += w;
             while (lo < hi) {
                 int mid = lo + (hi - lo) / 2;//左移左动，向下取整
-                //判断这个数是否满足要求
+                //判断这个数是否满足要求   c
                 int t = 0; //目标的可能天数
                 int cur = 0;//当前的weight的值
                 for (int w : weights) {
