@@ -40,7 +40,7 @@ public class _633 {
         }
 
         public boolean judgeSquareSum(int c) {
-            // n % 2^n = n & 2^n-1
+            // n % 2^n = n & 2^n-1s
             if ((c & 3) == 3)
                 return false;
             for (int i = 2; i * i <= c; i++) {
