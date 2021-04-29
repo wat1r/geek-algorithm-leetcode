@@ -20,6 +20,7 @@ public class _1482 {
             m = 3;
             k = 1;
 //            Assert.assertEquals(3, handler.minDays(nums, m, k));
+
             nums = new int[]{1000000000, 1000000000};
             m = k = 1;
             Assert.assertEquals(1000000000, handler.minDays(nums, m, k));
