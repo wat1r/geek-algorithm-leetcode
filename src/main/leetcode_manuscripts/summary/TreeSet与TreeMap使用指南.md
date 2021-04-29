@@ -103,6 +103,46 @@ LinkedHashMap映射减少了HashMap排序中的混乱，且不会导致TreeMap�
 
 
 
+
+
+## Python
+
+其中：数组a是升序排序的有序数组
+
+bisect_right()
+
+```python
+             描述：在数组a中找到x应该插入的索引，如果a中已经有了元素x，那么在右边找到其插入索引。
+             返回值：应该插入的位置
+```
+
+bisect_left()
+
+```python
+            描述：在数组a中找到x应该插入的索引，如果a中已经有了元素x，那么在左边找到其插入索引。
+            返回值：应该插入的位置
+```
+
+insort_right()
+
+                 描述：在数组a中插入x,如果x存在，那么将x插入在右边
+                 返回值：无
+
+insort_left()
+
+                 同上，右改为左即可
+
+insort():
+
+                 通过实验结果来看该方法和insort_right()是一样的.
+
+
+
+
+
+
+
+
 ## Reference
 
 - https://www.jianshu.com/p/e11fe1760a3d
