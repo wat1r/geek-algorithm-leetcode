@@ -1,15 +1,33 @@
-package com.frankcooper;
+package com.frankcooper.bank._1001_2000;
 
-/*
 import java.util.*;
+
 import org.junit.Assert;
-*/
-public class _Model {
+
+public class _1720 {
 
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
 
+        }
+
+
+        /**
+         * encoded[i-1] XOR arr[i-1] = arr[i]
+         *
+         * @param encoded
+         * @param first
+         * @return
+         */
+
+        public int[] decode(int[] encoded, int first) {
+            int[] arr = new int[encoded.length + 1];
+            arr[0] = first;
+            for (int i = 1; i < arr.length; i++) {
+                arr[i] = encoded[i-1] ^ arr[i-1];
+            }
+            return arr;
         }
 
 

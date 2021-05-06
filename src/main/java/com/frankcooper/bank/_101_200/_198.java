@@ -1,7 +1,5 @@
 package com.frankcooper.bank._101_200;
 
-import com.frankcooper._Model;
-
 public class _198 {
 
 

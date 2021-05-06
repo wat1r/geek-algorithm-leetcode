@@ -1,6 +1,5 @@
 package com.frankcooper.bank._1_100;
 
-import com.frankcooper._Model;
 import org.junit.Assert;
 
 //55. 跳跃游戏 55. Jump Game Medium
