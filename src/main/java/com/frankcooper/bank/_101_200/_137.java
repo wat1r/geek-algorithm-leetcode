@@ -37,6 +37,24 @@ public class _137 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int singleNumber(int[] nums) {
+            int[] arr = new int[32];
+            for (int i = 0; i < 32; i++) {
+                int bit = 0;
+                for (int x : nums) {
+                    if ((x >> i & 1) == 1) bit++;
+
+                }
+                arr[i] = bit;
+            }
+            int res = 0;
+            for (int i = 0; i < 32; i++) {
+                res |= (arr[i] % 3) << i;
+
+            }
+            return res;
+        }
     }
 
 

@@ -36,6 +36,7 @@ public class LCP12 {
         int minTime(int[] time, int m) {
             int left, right, middle;
             left = right = 0;
+
             for (int i = 0; i < time.length; ++i) {
                 right += time[i];
             }
