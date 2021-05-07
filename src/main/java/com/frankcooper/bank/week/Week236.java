@@ -52,6 +52,10 @@ public class Week236 {
         }
     }
 
+
+    /**
+     * 约瑟夫环  1823
+     */
     class _2nd_1 {
         public int findTheWinner(int n, int k) {
             return fun(n, k) + 1;
