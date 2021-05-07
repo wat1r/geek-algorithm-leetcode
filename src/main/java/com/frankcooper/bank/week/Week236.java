@@ -52,6 +52,18 @@ public class Week236 {
         }
     }
 
+    class _2nd_1 {
+        public int findTheWinner(int n, int k) {
+            return fun(n, k) + 1;
+        }
+
+        public int fun(int n, int k) {
+            return n == 1 ? 0 : (fun(n - 1, k) + k) % n;
+        }
+
+
+    }
+
 
     static class _3rd {
         public static void main(String[] args) {
