@@ -77,9 +77,28 @@ public class _1723 {
                      // s 是 u 的一个非空子集
                      }
                      */
-//                    for (int p = j; p > 0; p = (p - 1) ^ j) {
-//                        minn = Math.min(minn, Math.max(dp[i - 1][j - p], sum[p]));
-//                    }
+
+                    /**
+                     * for i in range(j+1):
+                     *     if (i&j)==i:
+                     *         pass
+                     *
+                     *
+                     * ---
+                     * x = j
+                     * while x:
+                     *     # x即是j的一个子集
+                     *     x=(x-1)&j
+                     *
+                     * # 最后单独处理空集
+                     *
+                     */
+
+                    for (int p = 1; p <= j; p++) {
+                        if ((p & j) == 1) continue;
+                        minn = Math.min(minn, Math.max(dp[i - 1][j - p], sum[p]));
+                    }
+
 
 //                    for (int p = j; p != 0; p = (p - 1) & j) {
 //                        minn = Math.min(minn, Math.max(dp[i - 1][j - p], sum[p]));
@@ -99,6 +118,7 @@ public class _1723 {
 
         /**
          * https://leetcode-cn.com/problems/find-minimum-time-to-finish-all-jobs/solution/zhuang-ya-dp-jing-dian-tao-lu-xin-shou-j-3w7r/
+         *
          * @param jobs
          * @param k
          * @return
