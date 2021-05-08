@@ -97,6 +97,12 @@ public class _1723 {
             _2nd handler = new _2nd();
         }
 
+        /**
+         * https://leetcode-cn.com/problems/find-minimum-time-to-finish-all-jobs/solution/zhuang-ya-dp-jing-dian-tao-lu-xin-shou-j-3w7r/
+         * @param jobs
+         * @param k
+         * @return
+         */
 
         public int minimumTimeRequired(int[] jobs, int k) {
             int n = jobs.length;
