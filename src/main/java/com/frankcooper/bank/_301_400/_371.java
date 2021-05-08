@@ -1,6 +1,7 @@
 package com.frankcooper.bank._301_400;
 
 
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 import java.util.Iterator;
@@ -46,7 +47,31 @@ public class _371 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+//            Assert.assertEquals(handler.getSum(3, 4), 7);
+            Assert.assertEquals(12, handler.getSum(5, 7));
         }
+
+
+        /**
+         * https://leetcode-cn.com/problems/sum-of-two-integers/solution/li-yong-wei-cao-zuo-shi-xian-liang-shu-qiu-he-by-p/
+         *
+         * @param a
+         * @param b
+         * @return
+         */
+
+        public int getSum(int a, int b) {
+            while (b != 0) {
+                System.out.printf("a:%s\nb:%s\n", PrintUtils.toBinaryString(a, 4), PrintUtils.toBinaryString(b, 4));
+                int t = a ^ b;
+                System.out.printf("t:%s\n", PrintUtils.toBinaryString(t, 4));
+                b = (a & b) << 1;
+                System.out.printf("b':%s\n", PrintUtils.toBinaryString(b, 4));
+                a = t;
+            }
+            return a;
+        }
+
     }
 
 
