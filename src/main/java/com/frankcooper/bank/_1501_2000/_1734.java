@@ -29,6 +29,8 @@ public class _1734 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+
+
         }
     }
 
