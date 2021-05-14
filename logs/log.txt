@@ -4,3 +4,9 @@
 小明 已经准备在下班了
 2021-05-13 22:21:01,515 [main] INFO [jexl.JexlTest] - 
  小明 是否成年 : 是
+2021-05-13 22:24:22,543 [main] INFO [jexl.JexlTest] - 
+ 字符 【测试】是否为空 :不是 
+2021-05-13 22:25:03,155 [main] INFO [jexl.JexlTest] - 
+小明 已经准备在下班了
+2021-05-13 22:25:26,573 [main] INFO [jexl.JexlTest] - 
+ 小明 是否成年 : 是
