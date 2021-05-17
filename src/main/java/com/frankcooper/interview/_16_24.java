@@ -1,8 +1,10 @@
-package com.frankcooper.bank;
+package com.frankcooper.interview;
 
+/*
 import java.util.*;
 import org.junit.Assert;
-public class _Model {
+*/
+public class _16_24 {
 
     static class _1st {
         public static void main(String[] args) {
