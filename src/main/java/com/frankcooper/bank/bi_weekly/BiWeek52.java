@@ -2,6 +2,7 @@ package com.frankcooper.bank.bi_weekly;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 
 public class BiWeek52 {
@@ -85,6 +86,77 @@ public class BiWeek52 {
             return res;
         }
     }
+
+    static class _3rd_1 {
+        public static void main(String[] args) {
+            _3rd_1 handler = new _3rd_1();
+            char[][] box = {{'#', '.', '*', '.'},
+                    {'#', '#', '*', '.'}};
+            handler.rotateTheBox(box);
+        }
+
+        /**
+         * 先转置后处理盒子
+         *
+         * @param box
+         * @return
+         */
+        public char[][] rotateTheBox(char[][] box) {
+            int m = box.length, n = box[0].length;
+            char[][] matrix = new char[n][m];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {//顺时针翻转90°的结果
+                    matrix[j][m - i - 1] = box[i][j];
+                }
+            }
+//            System.out.printf("%s\n", JSONObject.toJSONString(matrix));
+            for (int j = 0; j < m; j++) {//遍历每一列
+                int d = n - 1;//d用于盒子下落的能到达的最低位置
+                for (int i = n - 1; i >= 0; i--) {//从底部开始往上遍历
+                    if (matrix[i][j] == '*') {//如果当前是障碍物，d最高只能到达i-1，也就是当前障碍物上面的一个位置，
+                        d = i - 1;
+                    } else if (matrix[i][j] == '#') {//当前是 # 这个位置可能会下移
+                        matrix[i][j] = '.';//统一降落处理
+                        matrix[d--][j] = '#';//盒子掉入的位置
+                    }
+                }
+
+            }
+            return matrix;
+
+        }
+    }
+
+    static class _3rd_2 {
+        /**
+         * 先处理盒子，再转置
+         *
+         * @param box
+         * @return
+         */
+        public char[][] rotateTheBox(char[][] box) {
+            int m = box.length, n = box[0].length;
+            for (int i = 0; i < m; i++) {//遍历每一行
+                int p = n - 1;
+                for (int j = n - 1; j >= 0; --j) {//从右往左遍历
+                    if (box[i][j] == '*') p = j - 1;
+                    else if (box[i][j] == '#') {
+                        box[i][j] = '.';
+                        box[i][p--] = '#';
+                    }
+                }
+            }
+            char[][] mat = new char[n][m];
+            for (int j = m - 1; j >= 0; --j) {
+                for (int i = 0; i < n; i++) {
+                    mat[i][j] = box[m - 1 - j][i];
+                }
+            }
+            return mat;
+
+        }
+    }
+
 
     static class _4th {
         public static void main(String[] args) {
