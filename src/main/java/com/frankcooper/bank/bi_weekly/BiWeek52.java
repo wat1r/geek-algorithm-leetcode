@@ -161,6 +161,30 @@ public class BiWeek52 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            int[] nums = new int[]{2, 5, 9};
+            handler.sumOfFlooredPairs(nums);
         }
+
+
+        public int sumOfFlooredPairs(int[] nums) {
+//            int N = 100005, MOD = (int) 1e9 + 7;
+            int N = 10, MOD = (int) 1e9 + 7;
+            int[] s = new int[N];
+            for (int x : nums) s[x]++;//计算nums中x的个数
+            for (int i = 1; i < N; i++) s[i] += s[i - 1];//计算前缀和
+            System.out.printf("%s\n",Arrays.toString(nums));
+            int res = 0;
+            for (int i = 1; i < N; i++) {
+                for (int j = 1; j * i < N; j++) {
+                    int l = j * i, r = Math.min(N - 1, (j + 1) * i - 1);
+                    int sum = (s[r] - s[l - 1]) * j % MOD;
+                    res = (res + sum * (s[i] - s[i - 1])) % MOD;
+                }
+            }
+            return res;
+
+        }
+
+
     }
 }
