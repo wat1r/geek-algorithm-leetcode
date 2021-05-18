@@ -34,6 +34,21 @@ public class _1442 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+        public int countTriplets(int[] arr) {
+            int t = 0, res = 0;
+            for (int i = 0; i < arr.length - 1; i++) {
+                t = arr[i];
+                for (int k = i + 1; k < arr.length; k++) {
+                    t ^= arr[k];
+                    if (t == 0) {
+                        res += (k - i);
+                    }
+                }
+            }
+            return res;
+        }
     }
 
 
