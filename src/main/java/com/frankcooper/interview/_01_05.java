@@ -12,10 +12,15 @@ public class _01_05 {
 
         }
 
+        /**
+         * @param first
+         * @param second
+         * @return
+         */
         public boolean oneEditAway(String first, String second) {
 
             int m = first.length(), n = second.length();
-            int[][] dp = new int[m + 1][n + 1];
+            int[][] dp = new int[m + 1][n + 1];//两个字符的前i j 个字符变成一样的，编辑距离
             for (int i = 0; i <= m; i++) dp[i][0] = i;
             for (int j = 0; j <= n; j++) dp[0][j] = j;
             for (int i = 1; i <= m; i++) {
@@ -24,7 +29,7 @@ public class _01_05 {
                     else dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
                 }
             }
-            return dp[m][n] <= 1;
+            return dp[m][n] <= 1;//不编辑或者只有一次编辑的机会
         }
 
 
