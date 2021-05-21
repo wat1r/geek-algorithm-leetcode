@@ -2,6 +2,7 @@ package com.frankcooper;
 
 import static org.junit.Assert.assertTrue;
 
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -42,6 +43,28 @@ public class AppTest {
         int[][] result = list3.toArray(new int[0][0]);
         for (int[] r : result)
             System.out.println(r[0] + "-->" + r[1]);
+    }
+
+
+    @Test
+    public void testWheelTimer() {
+        int cap = 4096;
+        formatSize(cap);
+    }
+
+
+    public static int formatSize(int cap) {
+        PrintUtils.toBinaryString(cap, 16);
+        int n = cap - 1;
+        PrintUtils.toBinaryString(n, 16);
+        n |= n >>> 1;
+        PrintUtils.toBinaryString(n, 16);
+        n |= n >>> 2;
+        PrintUtils.toBinaryString(n, 16);
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        return n;
     }
 
 

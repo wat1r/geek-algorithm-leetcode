@@ -11,7 +11,6 @@ public class PrintUtils {
     public static void main(String[] args) {
         int[][] matrix = PrintUtils.processSymbol("[[7,3,6],[1,4,5],[9,8,2]]");
         PrintUtils.printMatrix(matrix);
-
     }
 
 
@@ -149,7 +148,9 @@ public class PrintUtils {
 
 
     public static String toBinaryString(int i, int strLen) {
-        return addZeroForNum(Integer.toBinaryString(i), strLen);
+        String res = addZeroForNum(Integer.toBinaryString(i), strLen);
+        System.out.println(res);
+        return res;
     }
 
 
