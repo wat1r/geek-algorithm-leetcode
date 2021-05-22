@@ -1,4 +1,4 @@
-package com.frankcooper.bank;
+package com.frankcooper.interview;
 
 import java.io.File;
 import java.io.IOException;
