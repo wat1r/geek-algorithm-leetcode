@@ -1,4 +1,4 @@
-## 区间DP之奇观的打印机[Parrot]
+## 区间DP之奇怪的打印机[Parrot]
 
 ![ara-4330867_640](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\dp\interval_dp\区间DP之奇观的打印机[Parrot].assets\ara-4330867_640.jpg)
 
@@ -56,7 +56,7 @@
 
 打印[2..4] `aaa`变成 `gbaaa`
 
-打印[3] `d`b变成 `gbada`
+打印[3] `d`变成 `gbada`
 
 这时候已经全部打印结束了，4次
 
