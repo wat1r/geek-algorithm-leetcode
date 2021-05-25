@@ -1,4 +1,4 @@
-package com.frankcooper.bank;
+package com.frankcooper.interview;
 
 import java.util.*;
 
@@ -10,16 +10,16 @@ public class _03_01 {
         public static void main(String[] args) {
             _1st handler = new _1st();
 
-/*            TripleInOne one = new TripleInOne(1);
+            TripleInOne one = new TripleInOne(1);
             one.push(0, 1);
             one.push(0, 2);
             one.pop(0);
             one.pop(0);
             one.pop(0);
-            one.isEmpty(0);*/
+            one.isEmpty(0);
 
 
-            TripleInOne one = new TripleInOne(18);
+/*            TripleInOne one = new TripleInOne(18);
             one.peek(1);
             one.pop(2);
             one.isEmpty(1);
@@ -32,12 +32,12 @@ public class _03_01 {
             one.push(0, 42);
             one.isEmpty(0);
             one.pop(1);
-            System.out.println(one.peek(1));
+            System.out.println(one.peek(1));*/
 
         }
 
         /**
-         * fail
+         *
          */
         static class TripleInOne {
             int[][] arr;
@@ -48,31 +48,30 @@ public class _03_01 {
                 this.stackSize = stackSize;
                 arr = new int[3][stackSize];
                 p = new int[3];
+                Arrays.fill(p, -1);
             }
 
             public void push(int stackNum, int value) {
-                if (p[stackNum] >= stackSize) return;
-                arr[stackNum][p[stackNum]] = value;
-                p[stackNum]++;
+                if (p[stackNum] >= stackSize - 1) return;
+                arr[stackNum][++p[stackNum]] = value;
+
             }
 
             public int pop(int stackNum) {
-                if (p[stackNum] == 0) return -1;
-                int val = arr[stackNum][p[stackNum]--];
+                if (p[stackNum] == -1) return -1;
+                int val = arr[stackNum][p[stackNum]];
                 arr[stackNum][p[stackNum]] = 0;
+                p[stackNum]--;
                 return val;
             }
 
             public int peek(int stackNum) {
-                if (p[stackNum] == 0) return -1;
-                if (arr[stackNum][p[stackNum]] == 0) {
-                    p[stackNum]--;
-                }
+                if (p[stackNum] == -1) return -1;
                 return arr[stackNum][p[stackNum]];
             }
 
             public boolean isEmpty(int stackNum) {
-                return p[stackNum] == 0;
+                return p[stackNum] == -1;
             }
         }
 
