@@ -14,6 +14,8 @@ public class _301 {
 //        handler.removeInvalidParentheses(s);
         System.out.println("---------------------");
         handler.removeInvalidParentheses1st(s);
+        System.out.println("---------------------");
+
     }
 
 
