@@ -1,7 +1,9 @@
 package com.frankcooper.interview;
 
 import java.util.*;
+
 import org.junit.Assert;
+
 public class _03_06 {
 
     static class _1st {
@@ -13,34 +15,40 @@ public class _03_06 {
 
         class AnimalShelf {
 
+
+            LinkedList<Integer> dog = new LinkedList<>();
+            LinkedList<Integer> cat = new LinkedList<>();
+
+
             public AnimalShelf() {
 
             }
 
             public void enqueue(int[] animal) {
-
+                if (animal[1] == 0) {
+                    cat.add(animal[0]);
+                }
+                if (animal[1] == 1) dog.add(animal[0]);
             }
 
             public int[] dequeueAny() {
-
-
-                return null;
+                if (dog.isEmpty() && cat.isEmpty()) return new int[]{-1, -1};
+                if (dog.isEmpty()) return new int[]{cat.pollFirst(), 0};
+                if (cat.isEmpty()) return new int[]{dog.pollFirst(), 1};
+                if (dog.peekFirst() < cat.peekFirst()) return new int[]{dog.pollFirst(), 1};
+                return new int[]{cat.pollFirst(), 0};
             }
 
             public int[] dequeueDog() {
-                return null;
+                if (dog.isEmpty()) return new int[]{-1, -1};
+                return new int[]{dog.pollFirst(), 1};
             }
 
             public int[] dequeueCat() {
-                return null;
+                if (cat.isEmpty()) return new int[]{-1, -1};
+                return new int[]{cat.pollFirst(), 0};
             }
         }
-
-
-
-
-
-
 
 
     }

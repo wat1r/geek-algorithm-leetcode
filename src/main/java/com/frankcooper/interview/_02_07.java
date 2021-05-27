@@ -1,7 +1,10 @@
 package com.frankcooper.interview;
 
 import java.util.*;
+
+import com.frankcooper.struct.ListNode;
 import org.junit.Assert;
+
 public class _02_07 {
 
     static class _1st {
@@ -11,13 +14,24 @@ public class _02_07 {
         }
 
 
+        /**
+         * need once more
+         * @param headA
+         * @param headB
+         * @return
+         */
 
 
-
-
-
-
-
+        public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            ListNode pA = headA, pB = headB;
+            while (pA != pB) {
+                if (pA == null) pA = headB;
+                else pA = pA.next;
+                if (pB == null) pB = headA;
+                else pB = pB.next;
+            }
+            return pA;
+        }
 
 
     }
