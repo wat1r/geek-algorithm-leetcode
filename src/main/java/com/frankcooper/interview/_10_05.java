@@ -41,32 +41,32 @@ public class _10_05 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            String[] words = {"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""};
+            String s = "ball";
+            words = new String[]{"CitZMIXZKoFbxvOlaza", "hBlKXdKJfBD"};
+            s = "hBlKXdKJfBD";
+            Assert.assertEquals(1, handler.findString(words, s));
         }
 
 
-        public void test() {
-
+        public int findString(String[] words, String s) {
+            int n = words.length, l = 0, r = n;
+            while (l < r) {
+                int m = l + (r - l) / 2;
+                int t = m;
+                while (m < r && words[m].equals("")) {
+                    m++;
+                }
+                if (r == m) {
+                    r = t;
+                    continue;
+                }
+                if (words[m].equals(s)) return m;
+                else if (words[m].compareTo(s) > 0) r = m;
+                else l = m + 1;
+            }
+            return -1;
         }
-
-//        public:
-//
-//        int findString(vector<string>&words, string s) {
-//            int L = 0, R = words.size() - 1;
-//            while (L <= R) {
-//                int mid = L + (R - L) / 2;
-//                if (words[mid] == s) {
-//                    return mid;
-//                } else {
-//                    if (words[mid] == "") {
-//                        while (mid != R) if (words[R] == s) return mid;
-//                        else R--;
-//                        R = mid;
-//                    } else if (words[mid] > s) R = mid - 1;
-//                    else L = mid + 1;
-//                }
-//            }
-//            return -1;
-//        }
 
     }
 
@@ -75,6 +75,31 @@ public class _10_05 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+
+        public int findString(String[] words, String s) {
+            int left = 0, right = words.length;
+            while (left < right) {
+                int mid = left + (right - left) / 2;
+                while (mid > left && words[mid].equals("")) {
+                    mid--;
+                }
+
+
+
+                if (words[mid].equals(s)) {
+                    return mid;
+                    //mid在s后面
+                } else if (words[mid].compareTo(s) > 0) {
+                    right = mid;
+                    //mid在s前面
+                } else if (words[mid].compareTo(s) < 0) {
+                    left = mid + 1;
+                }
+            }
+            return -1;
+        }
+
     }
 
     static class _4th {
