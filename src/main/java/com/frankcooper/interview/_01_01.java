@@ -10,6 +10,7 @@ public class _01_01 {
         public static void main(String[] args) {
             _1st handler = new _1st();
 
+            System.out.println("test");
         }
 
 
