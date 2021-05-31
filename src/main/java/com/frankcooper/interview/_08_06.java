@@ -38,6 +38,17 @@ public class _08_06 {
         }
 
 
+        public void test() {
+//            while ()
+
+
+            System.out.printf("%s", "DD");
+
+
+            return;
+        }
+
+
     }
 
     static class _2nd {
