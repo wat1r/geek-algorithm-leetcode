@@ -75,5 +75,23 @@ public class _Temp {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+
+        public int minimumXORSum(int[] nums1, int[] nums2) {
+            int n = nums2.length;
+            int[] f = new int[1 << n];
+            Arrays.fill(f, Integer.MAX_VALUE);
+            f[0] = 0;
+            for (int mask = 1; mask < (1 << n); mask++) {
+                for (int i = 0; i < n; i++) {
+                    if (((mask >> i) & 1) == 1) {
+                        f[mask] = Math.min(f[mask], f[mask ^ (1 << i)] + (nums1[Integer.bitCount(mask) - 1] ^ nums2[i]));
+                    }
+                }
+            }
+            return f[(1 << n) - 1];
+        }
+
+
     }
 }
