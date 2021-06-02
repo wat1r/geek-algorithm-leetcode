@@ -112,5 +112,22 @@ public class _477 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+
+        public int totalHammingDistance(int[] nums) {
+            int res = 0, n = nums.length;
+            for (int b = 0; b < 32; b++) {
+                int ones = 0;
+                for (int x : nums) {
+                    if (((x >> b) & 1) == 1) ones++;
+                }
+                res += ones * (n - ones);
+            }
+            return res;
+
+
+        }
+
+
     }
 }

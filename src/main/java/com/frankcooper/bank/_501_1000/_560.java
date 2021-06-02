@@ -1,6 +1,7 @@
 package com.frankcooper.bank._501_1000;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class _560 {
 
@@ -41,6 +42,55 @@ public class _560 {
         return res;
     }
 
+
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+
+        }
+
+
+        /**
+         * 两遍遍历，判断区间是否符合要求计数
+         *
+         * @param nums
+         * @param k
+         * @return
+         */
+        public int subarraySum(int[] nums, int k) {
+            int res = 0;
+            for (int i = 0; i < nums.length; i++) {
+                int sum = 0;
+                for (int j = i; j >= 0; --j) {
+                    sum += nums[j];
+                    if (sum == k) res++;
+                }
+            }
+            return res;
+        }
+    }
+
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+
+        }
+
+        public int subarraySum(int[] nums, int k) {
+            int res = 0;
+            Map<Integer, Integer> map = new HashMap<>();//k是和 v是出现的次数
+            map.put(0, 1);
+            int pre = 0;
+            for (int i = 0; i < nums.length; i++) {
+                pre += nums[i];
+                int t = pre - k;
+                if (map.containsKey(t)) res += map.get(t);
+                map.put(pre, map.getOrDefault(pre, 0) + 1);
+            }
+            return res;
+        }
+    }
 
 
 }
