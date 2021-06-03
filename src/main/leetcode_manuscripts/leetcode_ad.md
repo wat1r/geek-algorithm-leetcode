@@ -52,6 +52,7 @@
 ![flamingo-4945829_960_720.jpg](https://pic.leetcode-cn.com/1615799010-XXykji-flamingo-4945829_960_720.jpg)
 
 
+- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156)
 
 
 
@@ -72,3 +73,5 @@
 
 
 ![image.png](https://pic.leetcode-cn.com/1612578565-prDZec-image.png)
+
+- 公众号:阿飞算法 加我好友，拉群一起玩耍
