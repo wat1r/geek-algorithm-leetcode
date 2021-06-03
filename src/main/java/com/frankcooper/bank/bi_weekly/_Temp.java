@@ -74,6 +74,8 @@ public class _Temp {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            int[] nums1 = {1, 2}, nums2 = {2, 3};
+            Assert.assertEquals(2, handler.minimumXORSum(nums1, nums2));
         }
 
 
@@ -82,16 +84,30 @@ public class _Temp {
             int[] f = new int[1 << n];
             Arrays.fill(f, Integer.MAX_VALUE);
             f[0] = 0;
+            //f[mask]表示当nums2选中的元素的状态是mask时，并且选中了前count(mask)个元素的情况下，组成的最小的异或值之和
             for (int mask = 1; mask < (1 << n); mask++) {
                 for (int i = 0; i < n; i++) {
-                    if (((mask >> i) & 1) == 1) {
-                        f[mask] = Math.min(f[mask], f[mask ^ (1 << i)] + (nums1[Integer.bitCount(mask) - 1] ^ nums2[i]));
+                    if (((mask >> i) & 1) == 1) {//当前的mask有元素进来
+                        //  对应的nums1的元素是nums1[Integer.bitCount(mask) - 1 mask的个数少一个
+                        //当前进入候选的是nums2[i]这个元素
+                        //f[mask ^ (1 << i)]  是mask上一个状态
+//                        f[mask] = Math.min(f[mask], f[mask ^ (1 << i)] + (nums1[Integer.bitCount(mask) - 1] ^ nums2[i]));
+                        f[mask] = Math.min(f[mask], f[mask ^ (1 << i)] + (nums1[count(mask) - 1] ^ nums2[i]));
                     }
                 }
             }
             return f[(1 << n) - 1];
         }
 
+
+        private int count(int x) {
+            int ans = 0;
+            while (x != 0) {
+                ans++;
+                x -= (x & (-x));
+            }
+            return ans;
+        }
 
     }
 }
