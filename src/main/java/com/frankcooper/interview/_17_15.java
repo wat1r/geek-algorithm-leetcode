@@ -2,6 +2,8 @@ package com.frankcooper.interview;
 
 import java.util.*;
 
+import com.frankcooper.bank._201_300._208;
+import com.frankcooper.bank._Model;
 import org.junit.Assert;
 
 public class _17_15 {
@@ -235,4 +237,79 @@ public class _17_15 {
 
 
     }
+
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+        }
+
+        TrieNode root;
+
+        public String longestWord(String[] words) {
+            this.root = new TrieNode();
+            List<String> wordList = Arrays.asList(words);
+            //排序好，第一个返回的即是结果
+            wordList.sort((a, b) -> a.length() == b.length() ? a.compareTo(b) : b.length() - a.length());
+            //构造字典树
+            for (String word : wordList) insert(word);
+            for (String word : wordList) {
+                TrieNode cur = root;
+                int n = word.length();
+                for (int i = 0; i < n; i++) {
+                    char c = word.charAt(i);
+                    //排除掉自己组成自己，当前遍历到的字符是个单词，且剩余部分可以再次被切分
+                    if (i < n - 1 && cur.next.get(c).isEnd && canSplitToWord(word.substring(i + 1))) {
+                        return word;
+                    }
+                    cur = cur.next.get(c);
+                }
+            }
+            return "";
+        }
+
+
+        /**
+         * 当前的单词可以被切分，在wordList中找到
+         *
+         * @param remain
+         * @return
+         */
+        private boolean canSplitToWord(String remain) {
+            //当没有可以切分的了 返回True
+            if (remain.equals("")) return true;
+            TrieNode cur = root;
+            for (int i = 0; i < remain.length(); i++) {
+                char c = remain.charAt(i);//拿到当前的字符
+                if (!cur.next.containsKey(c)) return false;//这个节点找不到
+                //当前的节点是个单词，且剩余部分可以再次被切分
+                if (cur.next.get(c).isEnd && canSplitToWord(remain.substring(i + 1))) {
+                    return true;
+                }
+                cur = cur.next.get(c);
+            }
+            return false;
+        }
+
+
+        private void insert(String word) {
+            TrieNode cur = root;
+            for (char c : word.toCharArray()) {
+                if (!cur.next.containsKey(c)) {
+                    TrieNode t = new TrieNode();
+                    cur.next.put(c, t);
+                }
+                cur = cur.next.get(c);
+            }
+            cur.isEnd = true;
+        }
+
+
+        class TrieNode {
+            Map<Character, TrieNode> next = new HashMap<>();
+            boolean isEnd = false;
+        }
+    }
+
+
 }
