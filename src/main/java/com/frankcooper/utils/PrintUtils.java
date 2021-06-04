@@ -1,5 +1,7 @@
 package com.frankcooper.utils;
 
+import org.junit.Assert;
+
 /**
  * @Date 2020/9/13
  * @Author Frank Cooper
@@ -9,8 +11,12 @@ public class PrintUtils {
 
 
     public static void main(String[] args) {
-        int[][] matrix = PrintUtils.processSymbol("[[7,3,6],[1,4,5],[9,8,2]]");
-        PrintUtils.printMatrix(matrix);
+/*        int[][] matrix = PrintUtils.processSymbol("[[7,3,6],[1,4,5],[9,8,2]]");
+        PrintUtils.printMatrix(matrix);*/
+        //----
+        String s = "10111";
+        s = "10011110000011";
+        transformBinStr2Int(s);
     }
 
 
@@ -151,6 +157,26 @@ public class PrintUtils {
         String res = addZeroForNum(Integer.toBinaryString(i), strLen);
         System.out.println(res);
         return res;
+    }
+
+    /**
+     * 将一个01的二进制字符串转换成int。没有考虑数据溢出
+     *
+     * 如"10011110000011" (2进制) --> 10115 (10进制)
+     * @param s
+     * @return
+     */
+    public static int transformBinStr2Int(String s) {
+        int ans = 0;
+        int n = s.length();
+        for (int i = n - 1; i >= 0; --i) {
+            int cur = s.charAt(i) - '0';
+            ans |= cur << (n - 1 - i);
+        }
+        Assert.assertEquals(s, Integer.toBinaryString(ans));
+        System.out.println(ans);
+        return ans;
+
     }
 
 

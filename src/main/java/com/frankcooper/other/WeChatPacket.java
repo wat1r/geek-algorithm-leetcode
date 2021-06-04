@@ -90,7 +90,7 @@ public class WeChatPacket {
             int day = 0;
             List<String> res = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
-                day = 1 + (week - fistDayOfWeek) + i * 7;
+                day = 2 + (week - fistDayOfWeek) + i * 7;
                 if (day < 1 || day > allDays) {
                     continue;
                 }
