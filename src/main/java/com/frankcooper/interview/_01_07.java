@@ -78,7 +78,21 @@ public class _01_07 {
         }
 
 
-
+        public void rotate(int[][] mat) {
+            int N = mat.length;
+            int[][] grid = new int[N][N];
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    //旋转90°，利用空间数组
+                    grid[i][j] = mat[N - 1 - j][i];
+                }
+            }
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    mat[i][j] = grid[i][j];
+                }
+            }
+        }
 
 
     }
