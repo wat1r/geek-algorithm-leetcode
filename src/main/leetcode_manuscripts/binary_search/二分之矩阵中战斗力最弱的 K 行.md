@@ -1,32 +1,17 @@
-package com.frankcooper.bank._1001_1500;
-
-import java.util.*;
-
-import com.frankcooper.utils.PrintUtils;
-import org.junit.Assert;
-
-public class _1337 {
-
-    static class _1st {
-        public static void main(String[] args) {
-            _1st handler = new _1st();
-
-            int[][] mat = PrintUtils.processSymbol("[[1,1,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,1,0,0,0],[1,1,1,1,1]]");
-            int k = 3;
-//            Assert.assertArrayEquals(new int[]{2, 0, 3}, handler.kWeakestRows(mat, k));
-            mat = PrintUtils.processSymbol("[[1,0],[0,0],[1,0]]");
-            k = 2;
-            Assert.assertArrayEquals(new int[]{1, 0}, handler.kWeakestRows(mat, k));
-        }
 
 
-        /**
-         * @param mat
-         * @param k
-         * @return
-         */
 
-        public int[] kWeakestRows(int[][] mat, int k) {
+
+### 方法1：暴力
+
+- 生成m行的数组的值，排序取前k个
+
+- 代码略
+
+### 方法2: 优先队列+排序
+
+```java
+public int[] kWeakestRows(int[][] mat, int k) {
             int m = mat.length, n = mat[0].length;
             int[] sum = new int[m];
             PriorityQueue<int[]> pq = new PriorityQueue<>(k, (a, b) -> (b[1] - a[1]) == 0 ? b[0] - a[0] : b[1] - a[1]);
@@ -45,41 +30,17 @@ public class _1337 {
             }
             return ans;
         }
+```
 
+### 方法3：二分+排序(上取整)
 
-    }
-
-    static class _2nd {
-
-
-        /**
-         * int[][] arr = PrintUtils.processSymbol("[[1,0],[0,0],[1,0]]");
-         * Arrays.sort(arr, (a, b) -> a[0] - b[0]);
-         * Arrays.sort(arr, Comparator.comparingInt(a -> a[0]));
-         * Arrays.sort(arr, new Comparator<int[]>() {
-         *
-         * @Override public int compare(int[] o1, int[] o2) {
-         * return o1[0] - o2[0];
-         * }
-         * });
-         **/
-
-
-        public static void main(String[] args) {
-            _2nd handler = new _2nd();
-            int[][] mat = PrintUtils.processSymbol("[[1,1,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,1,0,0,0],[1,1,1,1,1]]");
-            int k = 3;
-            Assert.assertArrayEquals(new int[]{2, 0, 3}, handler.kWeakestRows(mat, k));
-
-        }
-
-
-        public int[] kWeakestRows(int[][] mat, int k) {
+```java
+  public int[] kWeakestRows(int[][] mat, int k) {
             int m = mat.length, n = mat[0].length;
             int[][] arr = new int[m][2];//[0]记录士兵的个数，[1]记录当前的行号
             for (int i = 0; i < m; i++) {
                 int cnt = binarySearch(mat[i], 0, n - 1);
-                System.out.printf("%d-->%d\n", i, cnt);
+               // System.out.printf("%d-->%d\n", i, cnt);
                 arr[i][0] = cnt;
                 arr[i][1] = i;
             }
@@ -90,29 +51,21 @@ public class _1337 {
         }
 
         //二分拿士兵的数量,士兵都在队伍的最左侧
+				
         private int binarySearch(int[] arr, int l, int r) {
             while (l < r) {
-                int mid = (l + r + 1) / 2;
+                int mid = (l + r + 1) / 2;//上取整 如果mid这个值时0，这个值一定不是我们想要的，需要被排除
                 if (arr[mid] == 0) r = mid - 1;
                 else l = mid;
             }
             return arr[l] == 0 ? 0 : l + 1;
         }
+```
 
+### 方法4：二分+排序(下取整)
 
-    }
-
-
-    static class _3rd {
-        public static void main(String[] args) {
-            _3rd handler = new _3rd();
-            int[][] mat = PrintUtils.processSymbol("[[1,1,0,0,0],[1,1,1,1,0],[1,0,0,0,0],[1,1,0,0,0],[1,1,1,1,1]]");
-            int k = 3;
-            Assert.assertArrayEquals(new int[]{2, 0, 3}, handler.kWeakestRows(mat, k));
-        }
-
-
-        public int[] kWeakestRows(int[][] mat, int k) {
+```java
+ public int[] kWeakestRows(int[][] mat, int k) {
             int m = mat.length, n = mat[0].length;
             int[][] arr = new int[m][2];//[0]记录士兵的个数，[1]记录当前的行号
             for (int i = 0; i < m; i++) {
@@ -136,12 +89,5 @@ public class _1337 {
             }
             return arr[l] == 1 ? l + 1 : l;
         }
+```
 
-    }
-
-    static class _4th {
-        public static void main(String[] args) {
-            _4th handler = new _4th();
-        }
-    }
-}
