@@ -90,12 +90,24 @@ public class _1337 {
         }
 
         //二分拿士兵的数量,士兵都在队伍的最左侧
+
+        /**
+         * 返回每一行的1的个数
+         * 上取整
+         * [mid,r]这个区间是需要的
+         * [l,mid-1]这个区间是需要的
+         * @param arr
+         * @param l
+         * @param r
+         * @return
+         */
         private int binarySearch(int[] arr, int l, int r) {
             while (l < r) {
-                int mid = (l + r + 1) / 2;
+                int mid = (l + r + 1) / 2;//上取整
                 if (arr[mid] == 0) r = mid - 1;
                 else l = mid;
             }
+            //l下标从0开始，要计算个数，士兵都是从左到右排序，l能越界
             return arr[l] == 0 ? 0 : l + 1;
         }
 

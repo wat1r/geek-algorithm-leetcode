@@ -66,7 +66,7 @@ TreeMap(SortedMap m)：由给定的有序map创建TreeMap，keys按照原顺序�
 #### 查找元素
 
 - `boolean containsKey(Object key)`：判断该`TreeMap`中是否包含指定`key`的映射
-- boolean containsValue(Object value)：判断该`TreeMap`中是否包含有关指定`value`的映射
+- `boolean containsValue(Object value)`：判断该`TreeMap`中是否包含有关指定`value`的映射
 - `Map.Entry<K, V> firstEntry()`：返回该`TreeMap`的第一个（最小的）映射
 - `K firstKey()`：返回该TreeMap的第一个（最小的）映射的`key`
 - `Map.Entry<K, V> lastEntry()`：返回该`TreeMap`的最后一个（最大的）映射
@@ -74,6 +74,11 @@ TreeMap(SortedMap m)：由给定的有序map创建TreeMap，keys按照原顺序�
 - `v get(K key)`：返回指定`key`对应的`value`
 - `SortedMap<K, V> headMap(K toKey)`：返回该`TreeMap`中严格小于指定key的映射集合
 - `SortedMap<K, V> subMap(K fromKey, K toKey)`：返回该`TreeMap`中指定范围的映射集合（大于等于`fromKey`，小于`toKey`）
+- **`Object ceilingKey（Object key）`**：返回大于或等于给定键的最小键，如果没有这样的键则返回null。
+- **`Object higherKey（Object key）`：**返回严格大于指定键的最小键。
+- **`Map.Entry<K,V>	higherEntry(K key) `**一个键-值映射关系，它与严格大于给定键的最小键关联；如果不存在这样的键，则返回 null。
+- 
+   **`Map.Entry<K,V>	ceilingEntry(K key) `**一个键-值映射关系，它与大于等于给定键的最小键关联；如果不存在这样的键，则返回 null。
 
 #### 遍历方式
 

@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.junit.Assert;
 
-public class _1300 {
+public class _1292 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -12,18 +12,14 @@ public class _1300 {
 
         }
 
-        public int findBestValue(int[] arr, int target) {
-            int lo = 1, hi = 100000;
-            Arrays.sort(arr);
+
+        public int maxSideLength(int[][] mat, int threshold) {
+
 
             return 0;
         }
 
 
-//         private int[] find(int[] )
-
-        //小于等于target的最大的值
-        //大于等于target的最小的值
     }
 
     static class _2nd {

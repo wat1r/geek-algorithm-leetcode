@@ -35,12 +35,12 @@ public int[] kWeakestRows(int[][] mat, int k) {
 ### 方法3：二分+排序(上取整)
 
 ```java
-  public int[] kWeakestRows(int[][] mat, int k) {
+public int[] kWeakestRows(int[][] mat, int k) {
             int m = mat.length, n = mat[0].length;
             int[][] arr = new int[m][2];//[0]记录士兵的个数，[1]记录当前的行号
             for (int i = 0; i < m; i++) {
                 int cnt = binarySearch(mat[i], 0, n - 1);
-               // System.out.printf("%d-->%d\n", i, cnt);
+                System.out.printf("%d-->%d\n", i, cnt);
                 arr[i][0] = cnt;
                 arr[i][1] = i;
             }
@@ -51,13 +51,24 @@ public int[] kWeakestRows(int[][] mat, int k) {
         }
 
         //二分拿士兵的数量,士兵都在队伍的最左侧
-				
+
+        /**
+         * 返回每一行的1的个数
+         * 上取整
+         * [mid,r]这个区间是需要的
+         * [l,mid-1]这个区间是需要的
+         * @param arr
+         * @param l
+         * @param r
+         * @return
+         */
         private int binarySearch(int[] arr, int l, int r) {
             while (l < r) {
-                int mid = (l + r + 1) / 2;//上取整 如果mid这个值时0，这个值一定不是我们想要的，需要被排除
+                int mid = (l + r + 1) / 2;//上取整
                 if (arr[mid] == 0) r = mid - 1;
                 else l = mid;
             }
+            //l下标从0开始，要计算个数，士兵都是从左到右排序，l能越界
             return arr[l] == 0 ? 0 : l + 1;
         }
 ```
