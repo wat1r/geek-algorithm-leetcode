@@ -4,8 +4,10 @@ import com.frankcooper.struct.ListNode;
 
 import java.util.List;
 
-/*import java.util.*;
-import org.junit.Assert;*/
+import java.util.*;
+
+import org.junit.Assert;
+
 public class _02_08 {
 
     static class _1st {
@@ -15,14 +17,26 @@ public class _02_08 {
         }
 
 
+        /**
+         * 同142题
+         * @param head
+         * @return
+         */
         public ListNode detectCycle(ListNode head) {
-
-            ListNode fast = head, slow = head;
-            while (slow != fast) {
+            if (head == null || head.next == null) return null;
+            ListNode slow = head, fast = head.next;
+            while (fast.next != null && fast.next.next != null) {
+                if (slow == fast) break;
                 slow = slow.next;
                 fast = fast.next.next;
             }
-            return slow;
+            if (slow != fast) return null;
+            ListNode cur = head;
+            while (cur != slow.next) {
+                cur = cur.next;
+                slow = slow.next;
+            }
+            return cur;
         }
 
 

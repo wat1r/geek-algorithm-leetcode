@@ -29,7 +29,6 @@ public class _05_04 {
          */
         public int[] findClosedNumbers(int num) {
             PrintUtils.toBinaryString(num, 14);
-
 //            getNextMax(num);
             getPrevMin(num);
             return null;
