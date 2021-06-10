@@ -14,31 +14,37 @@ public class _10_03 {
 //            Assert.assertEquals(8, handler.search(arr, target));
             arr = new int[]{1, 1, 1, 1, 1, 2, 1, 1, 1};
             target = 2;
-            Assert.assertEquals(5, handler.search(arr, target));
+//            Assert.assertEquals(5, handler.search(arr, target));
+            arr = new int[]{21, 21, -21, -20, -17, -8, -6, -2, -2, -1, 0, 2, 3, 4, 4, 6, 11, 13, 14, 16, 17, 18, 20};
+            target = 4;
+            Assert.assertEquals(13, handler.search(arr, target));
+
 
         }
 
 
         public int search(int[] arr, int target) {
             int l = 0, r = arr.length - 1;
-            while (l < r) {
+            while (l <= r) {//退出条件时l=r+1
+                //l 符合的时候，返回，找的是最小的索引
+                if (arr[l] == target) return l;
                 int mid = l + r >> 1;
                 if (arr[mid] == target) {
-                    if (mid > 0 && arr[mid - 1] == target) mid--;
-                    else return mid;
-                }
-                if (arr[0] <= arr[mid]) {
+                    r = mid;//等于target时，要找最小的mid，将右边界排除
+                } else if (arr[0] < arr[mid]) {
                     if (target >= arr[0] && target < arr[mid]) {
                         r = mid - 1;
                     } else {
                         l = mid + 1;
                     }
-                } else {
+                } else if (arr[0] > arr[mid]) {
                     if (target > arr[mid] && target <= arr[arr.length - 1]) {
                         l = mid + 1;
                     } else {
                         r = mid - 1;
                     }
+                } else {
+                    l++;//当中间数字与左边数字相等时，将左边界右移
                 }
             }
             return -1;
