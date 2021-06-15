@@ -3,6 +3,7 @@ package com.frankcooper.bank._201_300;
 //300. 最长上升子序列 300. Longest Increasing Subsequence Medium
 public class _300 {
     static _300 handler = new _300();
+
     public static void main(String[] args) {
         handler.lengthOfLISII(new int[]{10, 9, 2, 5, 3, 7, 101, 18});
         handler.lengthOfLISII(new int[]{-2, -1});
@@ -52,6 +53,53 @@ public class _300 {
         return end;
     }
 
+
+    static class _3rd {
+        public static void main(String[] args) {
+
+        }
+
+
+        public int lengthOfLIS(int[] nums) {
+            int n = nums.length;
+            int[] f = new int[n];
+            int res = 0;
+            for (int i = 0; i < n; i++) {
+                f[i] = 1;
+                for (int j = 0; j < i; j++) {
+                    if (nums[i] > nums[j]) {
+                        f[i] = Math.max(f[i], f[j] + 1);
+                    }
+                }
+                res = Math.max(res, f[i]);
+            }
+            return res;
+        }
+    }
+
+
+    static class _4th {
+
+        public static void main(String[] args) {
+
+        }
+
+        public int lengthOfLIS(int[] nums) {
+            int[] tails = new int[nums.length];
+            int res = 0;
+            for (int x : nums) {
+                int l = 0, r = res;
+                while (l < r) {
+                    int mid = l + r >> 1;
+                    if (tails[mid] < x) l = mid + 1;
+                    else r = mid;
+                }
+                tails[l] = x;
+                if (res == r) res++;
+            }
+            return res;
+        }
+    }
 
 
 }
