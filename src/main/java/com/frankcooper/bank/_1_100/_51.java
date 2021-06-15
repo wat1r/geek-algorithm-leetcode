@@ -67,7 +67,70 @@ public class _51 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            handler.solveNQueens(4);
         }
+
+        List<List<String>> res = new ArrayList<>();
+
+        public List<List<String>> solveNQueens(int n) {
+            char[][] board = new char[n][n];
+            for (int i = 0; i < n; i++) {
+                Arrays.fill(board[i], '.');
+            }
+            backtrack(board, 0);
+            return res;
+        }
+
+        private void backtrack(char[][] board, int row) {
+            if (row == board.length) {
+                res.add(build(board));
+                return;
+            }
+            for (int col = 0; col < board.length; col++) {
+                if (check(board, row, col)) {
+                    char[][] t = copy(board);
+                    t[row][col] = 'Q';
+                    backtrack(t, row + 1);
+                }
+            }
+        }
+
+        //把二维数组chess中的数据测下copy一份
+        private char[][] copy(char[][] board) {
+            char[][] t = new char[board.length][board[0].length];
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[0].length; j++) {
+                    t[i][j] = board[i][j];
+                }
+            }
+            return t;
+        }
+
+
+        private boolean check(char[][] board, int row, int col) {
+            for (int r = 0; r < row; r++) {
+                if (board[r][col] == 'Q') return false;
+            }
+            //右上角
+            for (int r = row - 1, c = col + 1; r >= 0 && c < board.length; r--, c++) {
+                if (board[r][c] == 'Q') return false;
+            }
+            //左上角
+            for (int r = row - 1, c = col - 1; r >= 0 && c >= 0; r--, c--) {
+                if (board[r][c] == 'Q') return false;
+            }
+            return true;
+        }
+
+
+        private List<String> build(char[][] board) {
+            List<String> res = new ArrayList<>();
+            for (int i = 0; i < board.length; i++) {
+                res.add(new String(board[i]));
+            }
+            return res;
+        }
+
     }
 
 
