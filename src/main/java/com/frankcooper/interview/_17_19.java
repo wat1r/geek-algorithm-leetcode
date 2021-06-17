@@ -47,6 +47,7 @@ public class _17_19 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
             int[] nums = new int[]{2, 3};
+            nums = new int[]{2};
             handler.missingTwo(nums);
         }
 
@@ -58,9 +59,9 @@ public class _17_19 {
             int one = 0;
             int diff = ans & -ans;
             for (int i = 1; i <= n + 2; i++)
-                if ((diff & i) == 1) one ^= i; // ?
+                if ((diff & i) != 0) one ^= i; // ?
             for (int x : nums)
-                if ((diff & x) == 1) one ^= x;
+                if ((diff & x) != 0) one ^= x;
             return new int[]{one, one ^ ans};
         }
 
@@ -89,7 +90,26 @@ public class _17_19 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int[] nums = new int[]{2};
+            handler.missingTwo(nums);
         }
+
+        public int[] missingTwo(int[] nums) {
+            int x = 0, n = nums.length;
+            for (int i = 1; i <= n + 2; i++) x ^= i;
+            for (int y : nums) x ^= y;
+            int diff = x & -x;
+            int one = 0;
+            for (int i = 1; i <= n + 2; i++) {
+                if ((diff & i) != 0) one ^= i;
+            }
+            for (int y : nums) {
+                if ((diff & y) != 0) one ^= y;
+            }
+            return new int[]{one, one ^ x};
+        }
+
+
     }
 
     static class _4th {

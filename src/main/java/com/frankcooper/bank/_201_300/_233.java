@@ -1,10 +1,10 @@
-package com.frankcooper.interview;
+package com.frankcooper.bank._201_300;
 
 import java.util.*;
-
 import org.junit.Assert;
+public class _233 {
 
-public class _17_06 {
+//    数位dp
 
     static class _1st {
         public static void main(String[] args) {
@@ -12,12 +12,6 @@ public class _17_06 {
 
         }
 
-
-        public int numberOf2sInRange(int n) {
-
-
-            return 0;
-        }
 
 
 
