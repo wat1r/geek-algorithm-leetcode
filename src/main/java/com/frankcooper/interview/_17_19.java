@@ -56,6 +56,7 @@ public class _17_19 {
             int ans = 0, n = nums.length;
             for (int i = 1; i <= n + 2; i++) ans ^= i;
             for (int x : nums) ans ^= x;
+
             int one = 0;
             int diff = ans & -ans;
             for (int i = 1; i <= n + 2; i++)
