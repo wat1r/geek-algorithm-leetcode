@@ -380,6 +380,167 @@ Windy 想知道，在 A 和 B 之间，包括 A 和 B，总共有多少个 Windy
 
 
 
+```c++
+n=345
+
+@"f[3][1]:50-->res:50\r\n"
+@"f[3][2]:51-->res:101\r\n"
+@"f[2][0]:8-->res:109\r\n"
+@"f[2][1]:7-->res:116\r\n"
+@"---------\r\n"
+@"f[1][1]:1-->res:117\r\n"
+@"f[1][2]:1-->res:118\r\n"
+@"f[1][3]:1-->res:119\r\n"
+@"f[1][4]:1-->res:120\r\n"
+@"f[1][5]:1-->res:121\r\n"
+@"f[1][6]:1-->res:122\r\n"
+@"f[1][7]:1-->res:123\r\n"
+@"f[1][8]:1-->res:124\r\n"
+@"f[1][9]:1-->res:125\r\n"
+@"f[2][1]:7-->res:132\r\n"
+@"f[2][2]:7-->res:139\r\n"
+@"f[2][3]:7-->res:146\r\n"
+@"f[2][4]:7-->res:153\r\n"
+@"f[2][5]:7-->res:160\r\n"
+@"f[2][6]:7-->res:167\r\n"
+@"f[2][7]:7-->res:174\r\n"
+@"f[2][8]:7-->res:181\r\n"
+@"f[2][9]:8-->res:189\r\n"
+
+  n=2572
+@"f[4][1]:362-->res:362\r\n"
+@"f[3][0]:57-->res:419\r\n"
+@"f[3][4]:51-->res:470\r\n"
+@"f[2][0]:8-->res:478\r\n"
+@"f[2][1]:7-->res:485\r\n"
+@"f[2][2]:7-->res:492\r\n"
+@"f[2][3]:7-->res:499\r\n"
+@"f[1][0]:1-->res:500\r\n"
+@"f[1][1]:1-->res:501\r\n"
+@"---------\r\n"
+@"f[1][1]:1-->res:502\r\n"
+@"f[1][2]:1-->res:503\r\n"
+@"f[1][3]:1-->res:504\r\n"
+@"f[1][4]:1-->res:505\r\n"
+@"f[1][5]:1-->res:506\r\n"
+@"f[1][6]:1-->res:507\r\n"
+@"f[1][7]:1-->res:508\r\n"
+@"f[1][8]:1-->res:509\r\n"
+@"f[1][9]:1-->res:510\r\n"
+@"f[2][1]:7-->res:517\r\n"
+@"f[2][2]:7-->res:524\r\n"
+@"f[2][3]:7-->res:531\r\n"
+@"f[2][4]:7-->res:538\r\n"
+@"f[2][5]:7-->res:545\r\n"
+@"f[2][6]:7-->res:552\r\n"
+@"f[2][7]:7-->res:559\r\n"
+@"f[2][8]:7-->res:566\r\n"
+@"f[2][9]:8-->res:574\r\n"
+@"f[3][1]:50-->res:624\r\n"
+@"f[3][2]:51-->res:675\r\n"
+@"f[3][3]:51-->res:726\r\n"
+@"f[3][4]:51-->res:777\r\n"
+@"f[3][5]:51-->res:828\r\n"
+@"f[3][6]:51-->res:879\r\n"
+@"f[3][7]:51-->res:930\r\n"
+@"f[3][8]:50-->res:980\r\n"
+@"f[3][9]:57-->res:1037\r\n"
+
+```
+
+
+
+#### 代码
+
+```c++
+#include <vector>
+#include <cstring>
+#include <iostream>
+
+using namespace std;
+
+const int N = 11;
+int f[N][10];
+
+void init()
+{
+    for (int i = 0; i <= 9; i++)
+        f[1][i] = 1;
+    for (int i = 2; i <= N; i++)
+    {
+        for (int j = 0; j <= 9; j++)
+        {
+            for (int k = 0; k <= 9; k++)
+            {
+                if (abs(j - k) >= 2)
+                    f[i][j] += f[i - 1][k];
+            }
+        }
+    }
+}
+
+int dp(int n)
+{
+    if (!n)
+        return 0;
+
+    vector<int> nums;
+    while (n)
+    {
+        nums.push_back(n % 10);
+        n /= 10;
+    }
+    int res = 0;
+    int last = -2;
+    for (int i = nums.size() - 1; i >= 0; i--)
+    {
+        int x = nums[i];
+        for (int j = i == nums.size() - 1; j < x; j++)
+        {
+            if (abs(last - j) >= 2)
+            {
+                res += f[i + 1][j];
+                printf("f[%d][%d]:%d-->res:%d\n", i + 1, j, f[i + 1][j], res);
+            }
+        }
+        if (abs(x - last) >= 2)
+            last = x;
+        else
+            break;
+        if (!x)
+            res++;
+    }
+    printf("---------\n");
+    //下面的是处理有前导0的结果 如 0013 0130这样的结果
+    for (int i = 1; i < nums.size(); i++)
+    {
+        for (int j = 1; j <= 9; j++)
+        {
+            res += f[i][j];
+            printf("f[%d][%d]:%d-->res:%d\n", i, j, f[i][j], res);
+        }
+    }
+
+    return res;
+}
+
+int main(int argc, char const *argv[])
+{
+    init();
+    int l, r;
+    //  l = 1, r = 899;
+    // l = 1, r = 345;
+    l = 1, r = 2572;
+    cout << dp(r) - dp(l - 1) << endl;
+    return 0;
+}
+
+```
+
+
+
+
+
 
 
 ### [1397. 找到所有好字符串](https://leetcode-cn.com/problems/find-all-good-strings/) 
