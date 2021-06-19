@@ -35,6 +35,19 @@ public class Sword_43 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+
+        public int countDigitOne(int n) {
+
+//            Math.log()
+
+            return 0;
+        }
+
+
+
+
     }
 
 

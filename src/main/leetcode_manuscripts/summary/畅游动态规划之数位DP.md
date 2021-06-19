@@ -65,6 +65,44 @@ eg:1086. 恨7不成妻
 
 
 
+
+
+#### 数位dp+dfs模板
+
+```c++
+ll dfs(int pos,int state,...,bool lead,bool limit){
+    if(!pos) return ...; //返回填完的数是否满足条件
+    //当前状态已经搜索过，直接使用dp值
+    if(dp[pos][state]...!=-1&&!limit&&!lead) return dp[pos][state]...;
+    ll ret=0; //暂时记录当前方案数
+    int bound=limit?a[pos]:9; //当前位能取到的最大值
+    for(int i=0;i<=bound;i++){
+        //有前导0并且当前位也是前导0
+        if(!i&&lead) ret+=dfs(pos-1,...,1,i==bound&&limit);
+        //有前导0但当前位不是前导0，当前位就是最高位
+        else if(i&&lead) ret+=dfs(pos-1,...,0,i==bound&&limit); 
+        else if(...) ...;
+    }
+    if(!limit&&!lead) dp[pos][state]...=ret; //当前状态方案数记录
+    return ret;
+}
+ll solve(ll x){
+    len=0; //数位长度
+    while(x) a[++len]=x%10,x/=10;
+    memset(dp,-1,sizeof(dp)); //初始化-1（因为方案数可能为0）
+    return dfs(len,...,1,1);
+}
+
+```
+
+
+
+
+
+
+
+
+
 ### 1081.度的数量
 
 

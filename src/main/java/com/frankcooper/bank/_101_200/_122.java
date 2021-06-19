@@ -1,5 +1,7 @@
 package com.frankcooper.bank._101_200;
 
+import org.junit.Assert;
+
 public class _122 {
     public static void main(String[] args) {
 
@@ -31,5 +33,30 @@ public class _122 {
             dp_i_1 = Math.max(dp_i_1, tmp - prices[i]);
         }
         return dp_i_0;
+    }
+
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            int[] prices = new int[]{7, 1, 5, 3, 6, 4};
+            Assert.assertEquals(7, handler.maxProfit(prices));
+
+        }
+
+
+        public int maxProfit(int[] prices) {
+            int n = prices.length;
+            //f[i][0]表示第i天手里没有股票获得的最大利润
+            //f[i][0]表示第i天手里有股票获得的最大利润
+            int[][] f = new int[n][2];
+            f[0][0] = 0;
+            f[0][1] = -prices[0];
+            for (int i = 1; i < n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1] + prices[i]);
+                f[i][1] = Math.max(f[i - 1][1], f[i - 1][0] - prices[i]);
+            }
+            return f[n - 1][0];
+        }
     }
 }
