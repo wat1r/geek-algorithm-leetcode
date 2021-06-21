@@ -9,6 +9,7 @@ public class _401 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
+            handler.readBinaryWatch(1);
 
         }
 
