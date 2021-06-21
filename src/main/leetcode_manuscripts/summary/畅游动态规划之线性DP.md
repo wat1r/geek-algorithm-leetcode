@@ -132,3 +132,67 @@ public int maxProfit(int[] prices) {
         }
 ```
 
+### 1049.大盗阿福
+
+![image-20210621185855747](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210621185855747.png)
+
+
+
+
+
+
+
+![image-20210621185929547](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210621185929547.png)
+
+
+
+```c++
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+
+const int N = 1000;
+
+int t, n;
+int w[N];
+int f[N];
+void fun1()
+{
+    scanf("%d", &t);
+    while (t--)
+    {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++)
+            scanf("%d", &w[i]);
+        f[0] = 0, f[1] = w[1];
+        for (int i = 2; i <= n; i++)
+        {
+            f[i] = max(f[i - 1], f[i - 2 + w[i]]);
+        }
+        printf("%d\n", f[n]);
+    }
+}
+
+int g[N][N];
+void fun2()
+{
+    scanf("%d", &t);
+    while (t--)
+    {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++)
+            scanf("%d", &w[i]);
+        g[0][0] = 0, g[1][1] = w[1];
+        for (int i = 2; i <= n; i++)
+        {
+            g[i][0] = max(g[i - 1][0], g[i - 1][1]);
+            g[i][1] = g[i - 1][1] + w[i];
+        }
+        printf("%d\n", max(g[n][0], g[n][1]));
+    }
+}
+```
+
