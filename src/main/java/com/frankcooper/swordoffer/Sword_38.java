@@ -1,6 +1,8 @@
 package com.frankcooper.swordoffer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Sword_38 {
@@ -8,9 +10,45 @@ public class Sword_38 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
+            String s = "abc";
+            handler.permutation(s);
+        }
+
+        List<String> res = new ArrayList<>();
+        char[] ch;
+        int n;
+
+
+        public String[] permutation(String s) {
+            n = s.length();
+            ch = s.toCharArray();
+            dfs(0);
+            return res.toArray(new String[res.size()]);
 
         }
 
+
+        private void dfs(int idx) {
+            if (idx == n - 1) {
+                res.add(String.valueOf(ch));
+                return;
+            }
+            Set<Character> vis = new HashSet<>();
+            for (int i = idx; i < n; i++) {
+                if (vis.contains(ch[i])) continue;
+                vis.add(ch[i]);
+                swap(i, idx);
+                dfs(idx + 1);
+                swap(i, idx);
+            }
+        }
+
+
+        private void swap(int x, int y) {
+            char t = ch[x];
+            ch[x] = ch[y];
+            ch[y] = t;
+        }
 
     }
 
