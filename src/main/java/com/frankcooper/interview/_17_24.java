@@ -52,9 +52,9 @@ public class _17_24 {
     }
 
     static class _2nd {
-        public static void main(String[] args) {
-            _2nd handler = new _2nd();
-        }
+
+
+
     }
 
 

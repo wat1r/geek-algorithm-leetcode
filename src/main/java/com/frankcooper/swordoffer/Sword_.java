@@ -2,7 +2,7 @@ package com.frankcooper.swordoffer;
 
 /*import java.util.*;
 import org.junit.Assert;*/
-public class Sword {
+public class Sword_ {
 
     static class _1st {
         public static void main(String[] args) {
