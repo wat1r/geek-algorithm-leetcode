@@ -23,16 +23,17 @@ public class _416 {
             return dfs(nums, 0, sum);
         }
 
+
         private boolean dfs(int[] nums, int idx, int target) {
             // System.out.printf("%d\n",idx);
             if (target < 0 || idx >= nums.length) return false;
             if (target == 0) return true;
             String key = idx + "#" + target;
             if (cache.containsKey(key)) return cache.get(key);
+            //选与不选
             boolean res = dfs(nums, idx + 1, target - nums[idx]) || dfs(nums, idx + 1, target);
             cache.put(key, res);
             return res;
-
         }
     }
 
