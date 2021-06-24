@@ -17,6 +17,46 @@
 
 
 
+#### 方法1：暴力递归
+
+```java
+        public int numTrees(int n) {
+            return dfs(n);
+        }
+        private int dfs(int n) {
+            if (n == 0 || n == 1) return 1;
+            int cnt = 0;
+            for (int i = 0; i <= n - 1; i++) {
+                cnt += dfs(i) * dfs(n - 1 - i);
+            }
+            return cnt;
+        }
+```
+
+
+
+#### 方法2：记忆化搜索
+
+```java
+Map<Integer, Integer> cache = new HashMap<>();
+
+public int numTrees(int n) {
+    return dfs(n);
+}
+
+
+private int dfs(int n) {
+    if (cache.containsKey(n)) return cache.get(n);
+    if (n == 0 || n == 1) return 1;
+    int cnt = 0;
+    for (int i = 0; i <= n - 1; i++) {
+        cnt += dfs(i) * dfs(n - 1 - i);
+    }
+    cache.put(n,cnt);
+    return cnt;
+}
+```
+
 #### 定义状态
 
 定义两个函数：
