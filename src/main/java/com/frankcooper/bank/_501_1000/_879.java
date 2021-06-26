@@ -125,4 +125,84 @@ public class _879 {
     }
 
 
+    static class _1st {
+        public static void main(String[] args) {
+            int res = 1925888070;
+            System.out.printf("%d\n", 0);
+        }
+
+        static int MOD = (int) (1e9 + 7);
+        Long[][][] cache;
+
+
+        public int profitableSchemes(int G, int P, int[] group, int[] profit) {
+            int M = group.length;//group数组的长度
+            cache = new Long[M + 1][G + 1][P + 1];
+            return (int) dfs(0, G, P, group, profit);
+        }
+
+        /**
+         * @param idx    当前处理到group数组的下标索引
+         * @param G      员工的数量
+         * @param P      至少产生的利润
+         * @param group  利润需要的员工数量数组
+         * @param profit 工作产生的利润数组
+         * @return 当前条件下产生的利润下的方案数量
+         */
+        private long dfs(int idx, int G, int P, int[] group, int[] profit) {
+            if (idx >= group.length) {
+                if (P <= 0) return 1;//获取利润0的方案数，认为是1一种方案
+                else return 0;//否则，idx越界了，方案数是0
+            }
+            long res = 0;
+            if (cache[idx][G][P] != null) return cache[idx][G][P];
+            if (G >= group[idx]) {
+                res += dfs(idx + 1, G - group[idx], Math.max(P - profit[idx], 0), group, profit);
+            }
+            res += dfs(idx + 1, G, P, group, profit);
+            res %= MOD;
+            cache[idx][G][P] = res;
+            return res;
+        }
+
+
+    }
+
+
+    static class _2nd {
+        static int MOD = (int) (1e9 + 7);
+        Long[][][] cache;
+
+
+        public int profitableSchemes(int G, int P, int[] group, int[] profit) {
+            int M = group.length;//group数组的长度
+            cache = new Long[M + 1][G + 1][P + 1];
+            return (int) dfs(M - 1, G, P, group, profit);
+        }
+
+        /**
+         * @param idx    当前处理到group数组的下标索引
+         * @param G      员工的数量
+         * @param P      至少产生的利润
+         * @param group  利润需要的员工数量数组
+         * @param profit 工作产生的利润数组
+         * @return 当前条件下产生的利润下的方案数量
+         */
+        private long dfs(int idx, int G, int P, int[] group, int[] profit) {
+            if (idx ==0) {
+                if (P <= 0) return 1;//获取利润0的方案数，认为是1一种方案
+                else return 0;//否则，idx越界了，方案数是0
+            }
+            long res = 0;
+            if (cache[idx][G][P] != null) return cache[idx][G][P];
+            if (G >= group[idx]) {
+                res += dfs(idx + 1, G - group[idx], Math.max(P - profit[idx], 0), group, profit);
+            }
+            res += dfs(idx + 1, G, P, group, profit);
+            res %= MOD;
+            cache[idx][G][P] = res;
+            return res;
+        }
+    }
+
 }
