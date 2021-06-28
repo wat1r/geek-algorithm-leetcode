@@ -1,5 +1,8 @@
 package com.frankcooper.bank._1001_1500;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Date 2020/9/16
  * @Author Frank Cooper
@@ -54,6 +57,48 @@ public class _1049 {
         }
         int res = sum - 2 * dp[n][sum / 2];
         return res;
+    }
+
+
+    static class _1st {
+
+
+        public static void main(String[] args) {
+
+        }
+
+//        Integer[][] cache = new Integer[35][3005];
+
+        HashMap<Map<Integer, Integer>, Integer> cache = new HashMap<>();
+
+        public int lastStoneWeightII(int[] stones) {
+            dfs(stones, 0, 0);
+            Map<Integer, Integer> key = new HashMap<Integer, Integer>() {{
+                put(0, 0);
+            }};
+            return cache.get(key);
+
+        }
+
+
+        private int dfs(int[] stones, int idx, int sum) {
+            //当idx到达数组末尾
+            Map<Integer, Integer> key = new HashMap<Integer, Integer>() {{
+                put(idx, sum);
+            }};
+            if (cache.containsKey(key)) {
+                return cache.get(key);
+            }
+            if (idx == stones.length) {
+                return sum >= 0 ? sum : Integer.MAX_VALUE;
+            }
+            int positive = dfs(stones, idx + 1, sum + stones[idx]);
+            int negative = dfs(stones, idx + 1, sum - stones[idx]);
+            int value = Math.min(positive, negative);
+            cache.put(key, value);
+            return value;
+        }
+
     }
 
 

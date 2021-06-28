@@ -138,10 +138,6 @@ public int maxProfit(int[] prices) {
 
 
 
-
-
-
-
 ![image-20210621185929547](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210621185929547.png)
 
 
@@ -195,4 +191,59 @@ void fun2()
     }
 }
 ```
+
+### [1911. 最大子序列交替和](https://leetcode-cn.com/problems/maximum-alternating-subsequence-sum/)
+
+
+
+- 状态定义
+  - $f[i][0]$ 表示$[0...i-1]$个数中选偶数个数的最大交替和
+  - $f[i][1]$ 表示$[0...i-1]$个数中选奇数个数的最大交替和
+
+- 状态机表示如下：
+
+![image-20210628203441588](D:\Dev\SrcCode\geek-algorithm-leetcode\src\main\leetcode_manuscripts\summary\畅游动态规划之线性DP.assets\image-20210628203441588.png)
+
+
+
+- 需要考察第$i$个数选|不选
+
+```java
+        //状态机DP
+        public long maxAlternatingSum(int[] nums) {
+            // f[i][0] 表示[]0...i-1]个数中选偶数个数的最大交替和
+            //f[i][1]  表示[]0...i-1]个数中选奇数个数的最大交替和
+            int n = nums.length;
+            long[][] f = new long[n + 1][2];
+            for (int i = 0; i <= n; i++) Arrays.fill(f[i], Integer.MIN_VALUE >> 1);//防止溢出
+            f[0][0] = 0;
+            for (int i = 1; i <= n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1] - nums[i - 1]);
+                f[i][1] = Math.max(f[i - 1][1], f[i - 1][0] + nums[i - 1]);
+            }
+            return Math.max(f[n][0], f[n][1]);
+        }
+```
+
+- 因为当前状态只依赖前一状态，可以去掉一维
+
+```java
+public long maxAlternatingSum(int[] nums) {
+    int n = nums.length;
+    long[] f = new long[2];
+    f[0] = 0;
+    f[1] = Integer.MIN_VALUE >> 1;
+    for (int i = 1; i <= n; i++) {
+        f[0] = Math.max(f[0], f[1] - nums[i - 1]);
+        f[1] = Math.max(f[1], f[0] + nums[i - 1]);
+    }
+    return Math.max(f[0], f[1]);
+}
+```
+
+
+
+
+
+
 
