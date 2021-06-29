@@ -1,4 +1,4 @@
-## FloodFill
+### FloodFill
 
 > 泛洪填充算法(**Flood Fill Algorithm**)泛洪填充算法又称洪水填充算法是在很多图形绘制软件中常用的填充算法，最熟悉不过就是 **windows paint**的油漆桶功能。算法的原理很简单，就是从一个点开始附近像素点，填充成新的颜色，直到封闭区域内的所有像素点都被填充新颜色为止。泛红填充实现最常见有四邻域像素填充法，八邻域像素填充法，基于扫描线的像素填充方法。根据实现又可以分为递归与非递归（基于栈）。
 
@@ -891,6 +891,92 @@ private boolean inArea(int r, int c) {
 
 
 
+### [1905. 统计子岛屿](https://leetcode-cn.com/problems/count-sub-islands/)
+
+#### 方法1：DFS染色
+
+- 核心的一点：$grid2$位置为1的点，$grid1$的同样位置的点必须也为1
+
+```java
+ int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int R, C;
+        int[][] grid1;
+        int[][] grid2;
+
+        public int countSubIslands(int[][] grid1, int[][] grid2) {
+            R = grid2.length;
+            C = grid2[0].length;
+            this.grid1 = grid1;
+            this.grid2 = grid2;
+            int res = 0;
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    if (grid2[r][c] == 1 && dfs(r, c)) {
+                        res++;
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        private boolean dfs(int r, int c) {
+            boolean f = true;
+            grid2[r][c] = 0;// -1 等!=1 的数均可
+            if (grid1[r][c] != 1) f = false;
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                if (nr >= 0 && nr < R && nc >= 0 && nc < C && grid2[nr][nc] == 1) {
+                    if (!dfs(nr, nc)) f = false;
+                }
+            }
+            return f;
+        }
+```
+
+#### 方法2:BFS染色
+
+```java
+int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int R, C;
+        int[][] grid1;
+        int[][] grid2;    
+public int countSubIslands(int[][] grid1, int[][] grid2) {
+        R = grid2.length;
+        C = grid2[0].length;
+        this.grid1 = grid1;
+        this.grid2 = grid2;
+        int res = 0;
+        for (int r = 0; r < R; r++) {
+            for (int c = 0; c < C; c++) {
+                if (grid2[r][c] == 1 && bfs(r, c)) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    private boolean bfs(int r, int c) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{r, c});
+        grid2[r][c] = 0;
+        boolean f = true;
+        if (grid1[r][c] != 1) f = false;
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
+            for (int[] d : dirs) {
+                int nr = cur[0] + d[0], nc = cur[1] + d[1];
+                if (nr >= 0 && nr < R && nc >= 0 && nc < C && grid2[nr][nc] == 1) {
+                    queue.offer(new int[]{nr, nc});
+                    grid2[nr][nc] = 0;
+                    if (grid1[nr][nc] != 1) f = false;
+                }
+            }
+        }
+        return f;
+    }
+```
 
 
 
