@@ -1,6 +1,5 @@
 package com.frankcooper.bank._401_500;
 
-import com.frankcooper.bank._Model;
 import com.frankcooper.utils.PrintUtils;
 
 /**

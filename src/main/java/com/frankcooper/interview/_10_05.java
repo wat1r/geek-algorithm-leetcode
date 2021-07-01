@@ -1,8 +1,5 @@
 package com.frankcooper.interview;
 
-import java.util.*;
-
-import com.frankcooper.bank._Model;
 import org.junit.Assert;
 
 public class _10_05 {

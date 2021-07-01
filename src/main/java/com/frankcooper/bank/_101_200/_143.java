@@ -1,6 +1,5 @@
 package com.frankcooper.bank._101_200;
 
-import com.frankcooper.bank._Model;
 import com.frankcooper.struct.ListNode;
 
 public class _143 {
