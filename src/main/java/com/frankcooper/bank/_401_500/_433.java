@@ -9,13 +9,31 @@ public class _433 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
+            String src = "AACCGGTT";
+            handler.transform(src);
 
         }
 
+        Set<String> bankSet;
 
         public int minMutation(String start, String end, String[] bank) {
-
-            return 0;
+            bankSet = new HashSet<>(Arrays.asList(bank));
+            int step = 0;
+            Queue<String> q = new LinkedList<>();
+            q.offer(start);
+            while (!q.isEmpty()) {
+                int size = q.size();
+                for (int i = 0; i < size; i++) {
+                    String u = q.poll();
+                    List<String> vs = transform(u);
+                    for (String v : vs) {
+                        if (v.equals(end)) return step;
+                        q.offer(v);
+                    }
+                }
+                step++;
+            }
+            return -1;
         }
 
         private List<String> transform(String src) {
@@ -25,7 +43,9 @@ public class _433 {
                 char c = src.charAt(i);
                 for (int j = 0; j < gen.length; j++) {
                     if (gen[j] == c) continue;
-//
+                    String s = src.substring(0, i) + gen[j] + src.substring(i + 1);
+                    if (!bankSet.contains(s)) continue;
+                    res.add(s);
                 }
             }
             return res;
