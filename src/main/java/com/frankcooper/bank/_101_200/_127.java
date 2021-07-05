@@ -45,7 +45,7 @@ public class _127 {
             if (!wordSet.contains(endWord)) return 0;
             Set<String> beginSet = new HashSet<>();
             Set<String> endSet = new HashSet<>();
-            Set<String> visitdSet = new HashSet<>();
+            Set<String> visSet = new HashSet<>();
             beginSet.add(beginWord);
             endSet.add(endWord);
             int steps = 1;
@@ -56,8 +56,8 @@ public class _127 {
                     endSet = tmpSet;
                 }
                 Set<String> tmpSet = new HashSet<>();
-                System.out.printf("beginSet:%s\n", JSON.toJSONString(beginSet));
-                System.out.printf("endSet:%s\n", JSON.toJSONString(endSet));
+//                System.out.printf("beginSet:%s\n", JSON.toJSONString(beginSet));
+//                System.out.printf("endSet:%s\n", JSON.toJSONString(endSet));
                 for (String word : beginSet) {
                     char[] chas = word.toCharArray();
                     for (int i = 0; i < chas.length; i++) {
@@ -71,9 +71,9 @@ public class _127 {
                                 return steps + 1;
                             }
                             //没有被访问过，且单词在wordSet中，添加进tmpSet ，本轮结束后赋值给beginSet
-                            if (!visitdSet.contains(nextWord) && wordSet.contains(nextWord)) {
+                            if (!visSet.contains(nextWord) && wordSet.contains(nextWord)) {
                                 tmpSet.add(nextWord);
-                                visitdSet.add(nextWord);
+                                visSet.add(nextWord);
                             }
                         }
                         chas[i] = src;
