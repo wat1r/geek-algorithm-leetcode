@@ -115,6 +115,62 @@ private int dfs(TreeNode root) {
 }
 ```
 
+### [1315. 祖父节点值为偶数的节点和](https://leetcode-cn.com/problems/sum-of-nodes-with-even-valued-grandparent/)
+
+#### 方法1：DFS
+
+- 传递三个节点，`grandfather` ,`father`,`cur`
+
+```java
+int res = 0;
+
+public int sumEvenGrandparent(TreeNode root) {
+    dfs(null, null, root);
+    return res;
+}
+
+
+private void dfs(TreeNode grandfather, TreeNode father, TreeNode cur) {
+    if (cur == null) return;
+    if (grandfather != null && grandfather.val % 2 == 0) res += cur.val;
+    dfs(father, cur, cur.left);
+    dfs(father, cur, cur.right);
+}
+```
+
+#### 方法2：BFS
+
+```java
+int res = 0;
+
+public int sumEvenGrandparent(TreeNode root) {
+    Queue<TreeNode> q = new LinkedList<>();
+    q.offer(root);
+    while (!q.isEmpty()) {
+        TreeNode cur = q.poll();
+        boolean isEven = (cur.val % 2 == 0);
+        if (cur.left != null) {
+            q.offer(cur.left);
+            if (isEven) res +=cal(cur.left);
+        }
+        if(cur.right!=null){
+            q.offer(cur.right);
+            if(isEven) res+=cal(cur.right);
+        }
+    }
+    return res;
+}
+
+private int cal(TreeNode node) {
+    int sum =0;
+    if(node.left!=null)sum+=node.left.val;
+    if(node.right!=null)sum+=node.right.val;
+    return sum;
+}
+```
+
+
+
 ### [1367. 二叉树中的列表](https://leetcode-cn.com/problems/linked-list-in-binary-tree/)
 
 #### 方法1：DFS
