@@ -43,3 +43,29 @@ private int dfs(TreeNode root) {
     return Math.max(l + root.val, r + root.val);
 }
 ```
+
+## two_pointers
+
+### [684 · 缺少的字符串](https://www.lintcode.com/problem/684/description)
+
+```java
+public List<String> missingString(String str1, String str2) {
+    List<String> res = new ArrayList<>();
+    if (str1.length() > str2.length()) {
+        String temp = str1;
+        str1 = str2;
+        str2 = temp;
+    }
+
+    String[] arr1 = str1.split(" ");
+    String[] arr2 = str2.split(" ");
+    Set<String> set = new HashSet<>(Arrays.asList(arr1));
+    for (String str : arr2) {
+        if (!set.contains(str)) {
+            res.add(str);
+        }
+    }
+    return res;
+}
+```
+

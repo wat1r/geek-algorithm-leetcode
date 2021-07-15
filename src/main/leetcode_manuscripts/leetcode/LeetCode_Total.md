@@ -198,14 +198,6 @@ private boolean checkEqual(ListNode head, TreeNode root) {
 
 
 
-
-
-
-
-#### 方法1：DFS
-
-
-
 ## two_pointers
 
 ### [541. 反转字符串 II](https://leetcode-cn.com/problems/reverse-string-ii/)
@@ -235,9 +227,29 @@ private boolean checkEqual(ListNode head, TreeNode root) {
         }
 ```
 
+### [905. 按奇偶排序数组](https://leetcode-cn.com/problems/sort-array-by-parity/)
 
+- 控制好边界
 
+```java
+public int[] sortArrayByParity(int[] nums) {
+    int i = 0, j = 0;
+    while (j < nums.length) {
+        while (j < nums.length && nums[j] % 2 == 1) j++;
+        if (j > nums.length - 1) break;
+        swap(nums, i, j);
+        i++;
+        j++;
+    }
+    return nums;
+}
 
+private void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+}
+```
 
 
 
