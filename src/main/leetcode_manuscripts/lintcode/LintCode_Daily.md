@@ -69,3 +69,30 @@ public List<String> missingString(String str1, String str2) {
 }
 ```
 
+### [521 · 去除重复元素](https://www.lintcode.com/problem/521/description)
+
+- 使用`set`标记元素是否出现过，当出现不一样的值的时候，`i`,`j`两个指针开始错位
+
+```java
+        public int deduplication(int[] nums) {
+            Set<Integer> set = new HashSet<>();
+            int i = 0, j = 0;
+            while (j < nums.length) {
+                while (!set.contains(nums[j])) {
+                    swap(nums, i, j);
+                    set.add(nums[i]);
+                    i++;
+                }
+                j++;
+            }
+            return i ;
+
+        }
+
+        private void swap(int[] nums, int i, int j) {
+            int t = nums[i];
+            nums[i] = nums[j];
+            nums[j] = t;
+        }
+```
+

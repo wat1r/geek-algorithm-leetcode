@@ -251,7 +251,100 @@ private void swap(int[] nums, int i, int j) {
 }
 ```
 
+### [917. 仅仅反转字母](https://leetcode-cn.com/problems/reverse-only-letters/)
 
+- 调用库函数判断一个字符是否是字母`Character.isLettee(char c)`
+
+```java
+public String reverseOnlyLetters(String s) {
+
+    char[] ch = s.toCharArray();
+    int l = 0, r = ch.length - 1;
+    while (l < r) {
+        if (Character.isLetter(ch[l]) && Character.isLetter(ch[r])) {
+            char t = ch[l];
+            ch[l++] = ch[r];
+            ch[r--] = t;
+        } else if (!Character.isLetter(ch[l])) l++;
+        else if (!Character.isLetter(ch[r])) r--;
+    }
+    return String.valueOf(ch);
+}
+```
+
+### [922. 按奇偶排序数组 II](https://leetcode-cn.com/problems/sort-array-by-parity-ii/)
+
+- 定好奇偶下标的索引，跳步2个
+
+```java
+public int[] sortArrayByParityII(int[] nums) {
+    int n = nums.length;
+    int even = 0, odd = 1;//偶数， 奇数指针
+    for (; even < n; even += 2) {
+        if (nums[even] % 2 == 1) {
+            while (nums[odd] % 2 == 1) odd += 2;
+            swap(nums,odd,even);
+        }
+    }
+    return nums;
+}
+
+private void swap(int[] arr, int i, int j) {
+    int t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+}
+```
+
+
+
+
+
+### [942. 增减字符串匹配](https://leetcode-cn.com/problems/di-string-match/)
+
+- 我们首先考虑字符串中的第一个字母。如果 S[0] == 'I'，那么我们只要令 A[0] = 0，就一定能满足 A[0] < A[1]。如果 S[0] == 'D'，同样我们只要令 A[0] = N，就一定能满足 A[0] > A[1]。
+- 接下来，当我们考虑 S 中剩下的 N - 1 个字母时，还剩下 N 个数可以使用，这 N 个数为 [0 .. N - 1] 或 [1 .. N]。可以发现，由于 S[0] 的值已经确定，那么剩下 S 中的 N - 1 个字母和 N 个可用的数变成了一个和原问题相同，但规模为 N - 1 的问题。即如果 S[1] == 'I'，我们就令 A[1] 为剩下数中最小的那个数；如果 S[1] == 'D'，我们就令 A[1] 为剩下数中最大的那个数
+
+
+```java
+public int[] diStringMatch(String s) {
+    int n = s.length();
+    int[] arr = new int[n + 1];
+    int l = 0, r = n;
+    int i = 0;
+    while (i < n) {
+        if (s.charAt(i) == 'I') arr[i] = l++;
+        else if (s.charAt(i) == 'D') arr[i] = r--;
+        i++;
+    }
+    arr[i] = l;
+    return arr;
+}
+```
+
+
+
+### [1385. 两个数组间的距离值](https://leetcode-cn.com/problems/find-the-distance-value-between-two-arrays/)
+
+- 数据范围小，暴力模拟能过
+
+```java
+public int findTheDistanceValue(int[] arr1, int[] arr2, int d) {
+    int res = 0;
+    for (int t : arr1) {
+        if (check(t, d, arr2)) res++;
+    }
+    return res;
+}
+
+
+private boolean check(int t, int d, int[] arr2) {
+    for (int x : arr2) {
+        if (Math.abs(x - t) <= d) return false;
+    }
+    return true;
+}
+```
 
 #### 方法1：DFS
 
