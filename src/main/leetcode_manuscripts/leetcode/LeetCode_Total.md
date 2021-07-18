@@ -346,6 +346,26 @@ private boolean check(int t, int d, int[] arr2) {
 }
 ```
 
+### [1768. 交替合并字符串](https://leetcode-cn.com/problems/merge-strings-alternately/)
+
+```java
+public String mergeAlternately(String w1, String w2) {
+    StringBuilder res = new StringBuilder();
+    int i = 0, j = 0;
+    while (i < w1.length() && j < w2.length()) {
+        res.append(w1.charAt(i++));
+        res.append(w2.charAt(j++));
+    }
+    while (i < w1.length()) res.append(w1.charAt(i++));
+    while (j < w2.length()) res.append(w2.charAt(j++));
+    return res.toString();
+}
+```
+
+
+
+
+
 #### 方法1：DFS
 
 
