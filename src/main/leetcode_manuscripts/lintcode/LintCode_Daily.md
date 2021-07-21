@@ -96,3 +96,76 @@ public List<String> missingString(String str1, String str2) {
         }
 ```
 
+### 1824 · [最频繁出现的子串](https://www.lintcode.com/problem/1824/)
+
+```java
+public int getMaxOccurrences(String s, int minLength, int maxLength, int maxUnique) {
+    int[] arr = new int[26];
+    int j = 0;
+    int unique_char = 0;
+    Map<String, Integer> map = new HashMap<>();
+    for (int i = 0; i < s.length(); i++) {
+        while (j < s.length() && j - i + 1 <= minLength && unique_char <= maxUnique) {
+            arr[s.charAt(j) - 'a']++;
+            if (arr[s.charAt(j) - 'a'] == 1) unique_char++;
+            j++;
+        }
+        if (j < s.length() && minLength == j - i && unique_char <= maxUnique) {
+            String k = s.substring(i, j);
+            map.put(k, map.getOrDefault(k, 0) + 1);
+        }
+        arr[s.charAt(i) - 'a']--;
+        if (arr[s.charAt(i) - 'a'] == 0) unique_char--;
+    }
+    int res= 0;
+    for (String k : map.keySet()) {
+        res = Math.max(res,map.get(k));
+    }
+    return res;
+}
+```
+
+
+
+### [404 · 子数组求和 II](https://www.lintcode.com/problem/404/description)
+
+
+
+```java
+public int subarraySumII(int[] A, int start, int end) {
+    int n = A.length;
+    int[] preSum = new int[n + 1];
+    for (int i = 0; i < n; i++) preSum[i + 1] = preSum[i] + A[i];
+    int res = 0;
+    int l = 0, r = 0;
+    for (int i = 0; i <= n; i++) {
+        while (r < i && preSum[i] - preSum[r] >= start) r++;
+        while (l <= r && preSum[i] - preSum[l] > end) l++;
+        res += r - l;
+    }
+    return res;
+}
+```
+
+
+
+### [174 · 删除链表中倒数第n个节点](https://www.lintcode.com/problem/174/)
+
+```java
+public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode fast = head;
+    ListNode slow = head;
+    ListNode prev = dummy;
+    for (int i = 0; i < n; i++) fast = fast.next;
+    while (fast != null) {
+        prev = prev.next;
+        slow = slow.next;
+        fast = fast.next;
+    }
+    prev.next = slow.next;
+    slow.next = null;
+    return dummy.next;
+}
+```
