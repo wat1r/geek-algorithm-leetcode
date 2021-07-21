@@ -200,6 +200,39 @@ private boolean checkEqual(ListNode head, TreeNode root) {
 
 ## two_pointers
 
+- 模拟，需要读懂题意
+
+```java
+   public int magicalString(int n) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(1);
+            int idx = 1;
+            while (sb.length() < n) {
+                if (idx == sb.length()) {
+                    sb.append(sb.charAt(sb.length() - 1) == '1' ? 22 : 1);
+                    idx++;
+                } else {
+                    if (sb.charAt(sb.length() - 1) == '1') {
+                        sb.append(sb.charAt(idx++) == '1' ? 2 : 22);
+                    } else {
+                        sb.append(sb.charAt(idx++) == '1' ? 1 : 11);
+                    }
+                }
+            }
+            int res = 0;
+            for (int i = 0; i < n; i++) {
+                if (sb.charAt(i) == '1') res++;
+            }
+            return res;
+        }
+```
+
+
+
+
+
+
+
 ### [541. 反转字符串 II](https://leetcode-cn.com/problems/reverse-string-ii/)
 
 - 注意快要越界时最右边数组下标的取法
@@ -361,6 +394,10 @@ public String mergeAlternately(String w1, String w2) {
     return res.toString();
 }
 ```
+
+
+
+
 
 
 
