@@ -200,6 +200,8 @@ private boolean checkEqual(ListNode head, TreeNode root) {
 
 ## two_pointers
 
+### [481. 神奇字符串](https://leetcode-cn.com/problems/magical-string/)
+
 - 模拟，需要读懂题意
 
 ```java
