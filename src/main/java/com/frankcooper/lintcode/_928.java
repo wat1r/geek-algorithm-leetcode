@@ -1,9 +1,11 @@
 package com.frankcooper.lintcode;
 
 
+import com.google.common.collect.Maps;
 import org.junit.Assert;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /*
@@ -42,6 +44,27 @@ public class _928 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            String s = "a";
+            s = "eceba";
+            handler.lengthOfLongestSubstringTwoDistinct(s);
+        }
+
+        public int lengthOfLongestSubstringTwoDistinct(String s) {
+            int i = 0, j = 0;
+            int[] dict = new int[256];
+            int cnt = 0;
+            int res = 0;
+            for (; i < s.length(); i++) {
+                while (j < s.length() && cnt <= 2) {
+                    dict[s.charAt(j)]++;
+                    if (dict[s.charAt(j)] == 1) cnt++;//第一次从0到1
+                    if (cnt <= 2) res = Math.max(res, j - i + 1);
+                    j++;
+                }
+                dict[s.charAt(i)]--;
+                if (dict[s.charAt(i)] == 0) cnt--;
+            }
+            return res;
         }
     }
 
