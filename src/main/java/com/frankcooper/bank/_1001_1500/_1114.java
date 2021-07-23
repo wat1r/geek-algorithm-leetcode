@@ -374,4 +374,61 @@ public class _1114 {
             }
         }
     }
+
+
+    static class _7th {
+
+
+        public static void main(String[] args) {
+
+        }
+
+
+        class Foo {
+
+            public Foo() {
+
+            }
+
+            private int signal = 1;
+            private Object obj = new Object();
+
+            public void first(Runnable printFirst) throws InterruptedException {
+                synchronized (obj) {
+                    while (signal != 1) {
+                        obj.wait();
+                    }
+                    printFirst.run();
+                    signal = 2;
+                    obj.notifyAll();
+                }
+
+            }
+
+            public void second(Runnable printSecond) throws InterruptedException {
+                synchronized (obj) {
+                    while (signal != 2) {
+                        obj.wait();
+                    }
+                    printSecond.run();
+                    signal = 3;
+                    obj.notifyAll();
+                }
+
+            }
+
+            public void third(Runnable printThird) throws InterruptedException {
+                synchronized (obj) {
+                    while (signal != 3) {
+                        obj.wait();
+                    }
+                    printThird.run();
+                    signal = 1;
+                    obj.notifyAll();
+                }
+            }
+        }
+
+
+    }
 }
