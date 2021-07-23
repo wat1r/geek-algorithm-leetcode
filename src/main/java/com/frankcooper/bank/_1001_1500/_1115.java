@@ -11,7 +11,7 @@ public class _1115 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-            FooBar fooBar = new FooBar(2);
+            FooBar fooBar = new FooBar(3);
             Thread t1 = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -19,7 +19,7 @@ public class _1115 {
                         fooBar.foo(new Runnable() {
                             @Override
                             public void run() {
-                                System.out.print("foo");
+                                System.out.print("foo\n");
                             }
                         });
                     } catch (InterruptedException e) {
@@ -34,7 +34,7 @@ public class _1115 {
                         fooBar.bar(new Runnable() {
                             @Override
                             public void run() {
-                                System.out.print("bar");
+                                System.out.print("bar\n");
                             }
                         });
                     } catch (InterruptedException e) {
@@ -42,16 +42,34 @@ public class _1115 {
                     }
                 }
             });
+            Thread t3 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        fooBar.go(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.print("go\n");
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             t1.start();
             t2.start();
+            t3.start();
 
         }
 
         static class FooBar {
             private int n;
 
-            Semaphore foo = new Semaphore(1);
-            Semaphore bar = new Semaphore(0);
+            Semaphore foo = new Semaphore(0);
+            Semaphore bar = new Semaphore(1);
+            Semaphore go = new Semaphore(2);
 
 
             public FooBar(int n) {
@@ -74,6 +92,16 @@ public class _1115 {
                     bar.acquire();
                     // printBar.run() outputs "bar". Do not change or remove this line.
                     printBar.run();
+                    go.release();
+                }
+            }
+
+            public void go(Runnable printGo) throws InterruptedException {
+
+                for (int i = 0; i < n; i++) {
+                    go.acquire();
+                    // printBar.run() outputs "bar". Do not change or remove this line.
+                    printGo.run();
                     foo.release();
                 }
             }

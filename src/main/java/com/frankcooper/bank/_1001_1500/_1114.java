@@ -68,10 +68,23 @@ public class _1114 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+
+//            Foo foo = new Foo();
+//            Thread t1 = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                   foo.first(new Runnable() {
+//                       @Override
+//                       public void run() {
+//
+//                       }
+//                   });
+//                }
+//            });
         }
 
 
-        class Foo {
+        static class Foo {
 
             Semaphore s12 = new Semaphore(0);
             Semaphore s23 = new Semaphore(0);
@@ -103,8 +116,18 @@ public class _1114 {
 
 
     static class _3rd {
-        public static void main(String[] args) {
+        public static void main(String[] args) throws InterruptedException {
 //            _3rd handler = new _3rd();
+            for (int i = 0; i < 50; i++) {
+                CountDownLatch countDownLatch = new CountDownLatch(4);
+                run(countDownLatch);
+                countDownLatch.await();
+            }
+
+        }
+
+
+        private static void run(CountDownLatch countDownLatch) {
             Foo foo = new Foo();
 
             Thread t1 = new Thread(new Runnable() {
@@ -115,6 +138,7 @@ public class _1114 {
                             @Override
                             public void run() {
                                 System.out.println("first");
+                                countDownLatch.countDown();
                             }
                         });
                     } catch (InterruptedException e) {
@@ -130,6 +154,7 @@ public class _1114 {
                             @Override
                             public void run() {
                                 System.out.println("second");
+                                countDownLatch.countDown();
                             }
                         });
                     } catch (InterruptedException e) {
@@ -145,6 +170,7 @@ public class _1114 {
                             @Override
                             public void run() {
                                 System.out.println("third");
+                                countDownLatch.countDown();
                             }
                         });
                     } catch (InterruptedException e) {
@@ -152,6 +178,23 @@ public class _1114 {
                     }
                 }
             });
+            Thread t4 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        foo.first(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("first");
+                                countDownLatch.countDown();
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            t4.start();
             t3.start();
             t2.start();
             t1.start();

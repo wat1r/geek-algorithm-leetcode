@@ -388,6 +388,153 @@ public class WeChatSolution {
     }
 
 
+    static class _7th {
+        static class Print {
+
+            public static void main(String[] args) {
+                Print print = new Print();
+                Thread t1 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        print.first();
+                    }
+                });
+                Thread t2 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        print.second();
+                    }
+                });
+                Thread t3 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        print.third();
+                    }
+                });
+                t1.start();
+                t2.start();
+                t3.start();
+
+
+            }
+
+
+            private CyclicBarrier cyclicBarrier = new CyclicBarrier(3);
+            volatile boolean first = true;
+            volatile boolean second = false;
+            volatile boolean third = false;
+            private List<Integer> firstList = Arrays.asList(1, 1, 1, 1, 1);
+            private List<Integer> secondList = Arrays.asList(2, 2, 2, 2, 2);
+            private List<Integer> thirdList = Arrays.asList(3, 3, 3, 3, 3);
+
+            public void first() {
+                for (int i = 0; i < firstList.size(); i++) {
+                    while (second || third) ;
+                    System.out.print(firstList.get(i) + " ");
+                    if (i + 1 < firstList.size()) {
+                        i++;
+                        System.out.print(firstList.get(i) + " ");
+                    }
+                    first = false;
+                    second = true;
+                    try {
+                        cyclicBarrier.await();
+                    } catch (InterruptedException | BrokenBarrierException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            }
+
+            public void second() {
+                for (int i = 0; i < secondList.size(); i++) {
+                    while (first || third) ;
+                    System.out.print(secondList.get(i) + " ");
+                    if (i + 1 < secondList.size()) {
+                        i++;
+                        System.out.print(secondList.get(i) + " ");
+                    }
+                    second = false;
+                    third = true;
+                    try {
+                        cyclicBarrier.await();
+                    } catch (InterruptedException | BrokenBarrierException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            public void third() {
+                for (int i = 0; i < thirdList.size(); i++) {
+                    while (first || second) ;
+                    System.out.print(thirdList.get(i) + " ");
+                    if (i + 1 < thirdList.size()) {
+                        i++;
+                        System.out.print(thirdList.get(i) + " ");
+                    }
+                    third = false;
+                    first = true;
+                    try {
+                        cyclicBarrier.await();
+                    } catch (InterruptedException | BrokenBarrierException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+
+        }
+    }
+
+
+    static class _8th {
+
+        public static void main(String[] args) {
+            _8th handler = new _8th();
+            List<String> list = new ArrayList<String>() {{
+                add("python");
+                add("hadoop");
+                add("hadoop");
+                add("hadoop");
+                add("hadoop");
+                add("java");
+                add("java");
+                add("java");
+                add("java");
+                add("java");
+                add("java");
+                add("java");
+                add("python");
+            }};
+            handler.sort(list);
+        }
+
+
+        public Map<String, Long> sort(List<String> list) {
+            ExecutorService pool = Executors.newFixedThreadPool(10);
+            ConcurrentHashMap<String, Long> res = new ConcurrentHashMap<>();
+            for (String s : list) {
+                pool.submit(() -> {
+                    res.put(s, res.getOrDefault(s, 0L) + 1L);
+                });
+            }
+            pool.shutdown();
+            List<Map.Entry<String, Long>> sortlist = new LinkedList<Map.Entry<String, Long>>(res.entrySet());
+            Collections.sort(sortlist, (o1, o2) -> {
+                int compare = o1.getValue().compareTo(o2.getValue());
+                return compare;
+            });
+            Map<String, Long> result = new LinkedHashMap<>();
+            for (Map.Entry<String, Long> entry : sortlist) {
+                result.put(entry.getKey(), entry.getValue());
+            }
+            System.out.printf("%s\n", JSON.toJSONString(result));
+            return result;
+        }
+    }
 
 
 }
