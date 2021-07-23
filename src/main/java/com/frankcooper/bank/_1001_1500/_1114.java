@@ -2,8 +2,10 @@ package com.frankcooper.bank._1001_1500;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.junit.Assert;
@@ -94,21 +96,18 @@ public class _1114 {
             }
 
             public void first(Runnable printFirst) throws InterruptedException {
-                // printFirst.run() outputs "first". Do not change or remove this line.
                 printFirst.run();
-                s12.release();
+                s12.release();//释放后s12的值会变成1
             }
 
             public void second(Runnable printSecond) throws InterruptedException {
-                s12.acquire();//没有会阻塞
-                // printSecond.run() outputs "second". Do not change or remove this line.
+                s12.acquire();//没有会阻塞  当为1的时候，说明线程2可以拿到s12了
                 printSecond.run();
-                s23.release();
+                s23.release();//释放后s23的值会变成1
             }
 
             public void third(Runnable printThird) throws InterruptedException {
-                s23.acquire();
-                // printThird.run() outputs "third". Do not change or remove this line.
+                s23.acquire();//0的时候拿不到，1的时候可以拿到
                 printThird.run();
             }
         }
@@ -210,22 +209,18 @@ public class _1114 {
             }
 
             public void first(Runnable printFirst) throws InterruptedException {
-
-                // printFirst.run() outputs "first". Do not change or remove this line.
                 printFirst.run();
-                latch12.countDown();
+                latch12.countDown();//唤醒线程2
             }
 
             public void second(Runnable printSecond) throws InterruptedException {
-                latch12.await();
-                // printSecond.run() outputs "second". Do not change or remove this line.
+                latch12.await();//latch12的值为0会执行下面的语句，否则会在此次阻塞
                 printSecond.run();
-                latch23.countDown();
+                latch23.countDown();//准备唤醒线程3
             }
 
             public void third(Runnable printThird) throws InterruptedException {
-                latch23.await();
-                // printThird.run() outputs "third". Do not change or remove this line.
+                latch23.await();//latch23的值为0会执行下面的语句，否则会在此次阻塞
                 printThird.run();
             }
         }
@@ -246,14 +241,12 @@ public class _1114 {
             }
 
             public void first(Runnable printFirst) throws InterruptedException {
-                // printFirst.run() outputs "first". Do not change or remove this line.
                 printFirst.run();
                 block12.put(1);
             }
 
             public void second(Runnable printSecond) throws InterruptedException {
-                block12.take();
-                // printSecond.run() outputs "second". Do not change or remove this line.
+                block12.take();//
                 printSecond.run();
                 block23.put(1);
             }
@@ -285,7 +278,7 @@ public class _1114 {
             public void first(Runnable printFirst) throws InterruptedException {
                 lock.lock();
                 try {
-                    while (num != 1) {
+                    while (num != 1) {//不是1的时候，阻塞
                         condition1.await();
                     }
                     // printFirst.run() outputs "first". Do not change or remove this line.
@@ -302,7 +295,7 @@ public class _1114 {
             public void second(Runnable printSecond) throws InterruptedException {
                 lock.lock();
                 try {
-                    while (num != 2) {
+                    while (num != 2) {//不是2的时候，阻塞
                         condition2.await();
                     }
                     // printSecond.run() outputs "second". Do not change or remove this line.
@@ -319,7 +312,7 @@ public class _1114 {
             public void third(Runnable printThird) throws InterruptedException {
                 lock.lock();
                 try {
-                    while (num != 3) {
+                    while (num != 3) {//不是3的时候，阻塞
                         condition3.await();
                     }
                     // printThird.run() outputs "third". Do not change or remove this line.
@@ -430,5 +423,117 @@ public class _1114 {
         }
 
 
+    }
+
+
+    static class _8th {
+        class Foo {
+
+            public Foo() {
+
+            }
+
+            public void first(Runnable printFirst) throws InterruptedException {
+
+                printFirst.run();
+            }
+
+            public void second(Runnable printSecond) throws InterruptedException {
+
+                printSecond.run();
+            }
+
+            public void third(Runnable printThird) throws InterruptedException {
+
+                printThird.run();
+            }
+        }
+    }
+
+    static class _9th {
+        class Foo {
+
+            boolean first = false;
+            boolean second = false;
+            Object obj = new Object();
+
+            public Foo() {
+
+            }
+
+            public void first(Runnable printFirst) throws InterruptedException {
+                synchronized (obj) {
+                    first = true;
+                    printFirst.run();
+                    obj.notifyAll();
+                }
+            }
+
+            public void second(Runnable printSecond) throws InterruptedException {
+                synchronized (obj) {
+                    while (!first) {
+                        obj.wait();
+                    }
+                    printSecond.run();
+                    second = true;
+                    obj.notifyAll();
+                }
+
+            }
+
+            public void third(Runnable printThird) throws InterruptedException {
+                synchronized (obj) {
+                    while (!second) {
+                        obj.wait();
+                    }
+                    printThird.run();
+                    obj.notifyAll();
+                }
+
+            }
+        }
+    }
+
+
+    static class _10th {
+        class Foo {
+            private AtomicInteger counter = new AtomicInteger(0);
+            private Map<String, Thread> threads = new HashMap<>();
+
+
+            public Foo() {
+
+            }
+
+            public void first(Runnable printFirst) throws InterruptedException {
+                while (counter.get() != 0) {
+                    threads.put("first", Thread.currentThread());
+                    LockSupport.park();
+                }
+                printFirst.run();
+                counter.getAndIncrement();
+                threads.forEach((k, v) -> LockSupport.unpark(v));
+            }
+
+            public void second(Runnable printSecond) throws InterruptedException {
+                while (counter.get() != 1) {
+                    threads.put("second",Thread.currentThread());
+                    LockSupport.park();
+                }
+                printSecond.run();
+                counter.getAndIncrement();
+                threads.forEach((k, v) -> LockSupport.unpark(v));
+            }
+
+            public void third(Runnable printThird) throws InterruptedException {
+                while (counter.get() != 2) {
+                    threads.put("third",Thread.currentThread());
+                    LockSupport.park();
+                }
+                printThird.run();
+                counter.getAndIncrement();
+                threads.forEach((k, v) -> LockSupport.unpark(v));
+            }
+        }
     }
 }
