@@ -1,13 +1,14 @@
 package com.frankcooper.bank._1001_1500;
 
 import java.util.*;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.LockSupport;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.frankcooper.struct.pri.IntConsumer;
-import org.junit.Assert;
 
 public class _1116 {
 
@@ -176,7 +177,7 @@ public class _1116 {
                     latchEven.await();
                     printNumber.accept(i);
                     latchEven = new CountDownLatch(1);
-                    latchZero.countDown();
+                    latchZero.countDown();//
                 }
             }
 
@@ -224,7 +225,7 @@ public class _1116 {
 
             public void even(IntConsumer printNumber) throws InterruptedException {
                 for (int i = 2; i <= n; i += 2) {
-                    while (state != 2) {
+                    while (state != 2) {//当state不为2的时候，为就绪状态
                         Thread.yield();
                     }
                     printNumber.accept(i);
@@ -241,6 +242,357 @@ public class _1116 {
                     printNumber.accept(i);
                     control = false;
                     state = 0;
+                }
+            }
+        }
+
+    }
+
+    static class _5th_1 {
+        class ZeroEvenOdd {
+            private int n;
+            private Semaphore zeroSema = new Semaphore(1);
+            private Semaphore oddSema = new Semaphore(0);//奇数
+            private Semaphore evenSema = new Semaphore(0);//偶数
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    zeroSema.acquire();
+                    printNumber.accept(0);
+                    if ((i & 1) == 1) {//奇数
+                        oddSema.release();
+                    } else {
+                        evenSema.release();
+                    }
+                }
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    if ((i & 1) == 0) {//偶数 打印偶数 并释放zero的线程
+                        evenSema.acquire();
+                        printNumber.accept(i);
+                        zeroSema.release();
+                    }
+                }
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    if ((i & 1) == 1) {//奇数，打印奇数，并释放zero的线程
+                        oddSema.acquire();
+                        printNumber.accept(i);
+                        zeroSema.release();
+                    }
+                }
+            }
+        }
+    }
+
+
+    static class _5th_2 {
+        class ZeroEvenOdd {
+            private int n;
+
+            private CountDownLatch zeroLatch = new CountDownLatch(0);
+            private CountDownLatch evenLatch = new CountDownLatch(1);//偶数
+            private CountDownLatch oddLatch = new CountDownLatch(1);//奇数
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    zeroLatch.await();
+                    printNumber.accept(0);//打印0
+                    zeroLatch = new CountDownLatch(1);
+                    if ((i & 1) == 1) oddLatch.countDown();//如果是奇数，就打印奇数
+                    else evenLatch.countDown();
+
+                }
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    if ((i & 1) == 0) {
+                        evenLatch.await();//开始打印偶数
+                        printNumber.accept(i);
+                        evenLatch = new CountDownLatch(1);
+                        zeroLatch.countDown();//是否zero线程
+                    }
+                }
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    if ((i & 1) == 1) {
+                        oddLatch.await();//开始打印奇数
+                        printNumber.accept(i);
+                        oddLatch = new CountDownLatch(1);
+                        zeroLatch.countDown();//是否zero线程
+                    }
+                }
+            }
+        }
+    }
+
+
+    static class _5th_3 {
+        class ZeroEvenOdd {
+            private int n;
+            private Map<String, Thread> map = new ConcurrentHashMap<>();
+            volatile int state = 0;//0 打印 0 ， 1 打印奇数， 2 打印偶数
+
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                map.put("zero", Thread.currentThread());
+                for (int i = 1; i <= n; i++) {
+                    while (state != 0) {
+                        LockSupport.park();
+                    }
+                    printNumber.accept(0);
+                    if ((i & 1) == 0) {//偶数
+                        state = 2;
+                    } else {
+                        state = 1;
+                    }
+                    map.forEach((k, v) -> LockSupport.unpark(v));//通知其他两个线程
+                }
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                map.put("even", Thread.currentThread());
+                for (int i = 2; i <= n; i += 2) {
+                    while (state != 1) {//当为2的时候，一直在这里阻塞着
+                        LockSupport.park();
+                    }
+                    printNumber.accept(i);
+                    state = 0;
+                    LockSupport.unpark(map.get("zero"));//通知zero线程
+                }
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                map.put("odd", Thread.currentThread());
+                for (int i = 1; i <= n; i += 2) {
+                    while (state != 2) {
+                        LockSupport.park();
+                    }
+                    printNumber.accept(i);
+                    state = 0;
+                    LockSupport.unpark(map.get("zero"));
+                }
+            }
+        }
+    }
+
+    static class _5th_4 {
+        class ZeroEvenOdd {
+            private int n;
+            private ReentrantLock lock = new ReentrantLock();
+            private Condition zeroCon = lock.newCondition();
+            private Condition evenCon = lock.newCondition();//偶数
+            private Condition oddCon = lock.newCondition();//奇数
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                try {
+                    lock.lock();
+                    for (int i = 0; i < n; i++) {
+                        printNumber.accept(0);
+                        if ((i & 1) == 0)//偶数
+                        {
+                            evenCon.signal();
+                        } else {
+                            oddCon.signal();
+                        }
+                        zeroCon.await();
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                try {
+                    lock.lock();
+                    for (int i = 2; i <= n; i += 2) {
+                        evenCon.await();
+                        printNumber.accept(i);
+                        zeroCon.signal();
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                try {
+                    lock.lock();
+                    for (int i = 1; i <= n; i += 2) {
+                        oddCon.await();
+                        printNumber.accept(i);
+                        zeroCon.signal();
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }
+        }
+    }
+
+
+    static class _5th_5 {
+        class ZeroEvenOdd {
+            private int n;
+            private AtomicInteger ai = new AtomicInteger(0);
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 0; i < n; i++) {
+                    while (ai.get() != 0 && ai.get() != 2) {
+                        Thread.yield();
+                    }
+                    printNumber.accept(0);
+                    ai.incrementAndGet();
+                }
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 2; i <= n; i += 2) {
+                    while (ai.get() != 3) {
+                        Thread.yield();
+                    }
+                    printNumber.accept(i);
+                    ai.set(0);
+                }
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                for (int i = 1; i <= n; i++) {
+                    while (ai.get() != 1) {
+                        Thread.yield();
+                    }
+                    printNumber.accept(i);
+                    ai.set(2);
+                }
+            }
+        }
+    }
+
+
+    static class _5th_6 {
+        class ZeroEvenOdd {
+            private int n;
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+
+            }
+        }
+    }
+
+
+    static class _5th_7 {
+        class ZeroEvenOdd {
+            private int n;
+
+            private volatile int start = 1;
+
+            private volatile int state;
+            private Lock lock = new ReentrantLock();
+            private Condition zero = lock.newCondition();
+            private Condition even = lock.newCondition();
+            private Condition odd = lock.newCondition();
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            // printNumber.accept(x) outputs "x", where x is an integer.
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                lock.lock();
+                try {
+                    while (start <= n) {
+                        if (state != 0) {
+                            zero.await();
+                        }
+                        printNumber.accept(0);
+                        if (start % 2 == 0) {
+                            state = 2;
+                            even.signal();
+                        } else {
+                            state = 1;
+                            odd.signal();
+                        }
+                        zero.await();
+                    }
+                    odd.signal();
+                    even.signal();
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            //偶数
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                lock.lock();
+                try {
+                    while (start <= n) {
+                        if (state != 2) {
+                            even.await();
+                        } else {
+                            printNumber.accept(start++);
+                            state = 0;
+                            zero.signal();
+                        }
+                    }
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            //基数
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                lock.lock();
+                try {
+                    while (start <= n) {
+                        if (state != 1) {
+                            odd.await();
+                        } else {
+                            printNumber.accept(start++);
+                            state = 0;
+                            zero.signal();
+                        }
+                    }
+                } finally {
+                    lock.unlock();
                 }
             }
         }
