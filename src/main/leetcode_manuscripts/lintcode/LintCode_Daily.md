@@ -113,6 +113,33 @@ public int subarraySumII(int[] A, int start, int end) {
 
 
 
+
+
+### [415 · 有效回文串](https://www.lintcode.com/problem/415)
+
+- 注意数组下标越界：
+- 转大小写利用位运算：[位运算操作常见技巧](https://blog.csdn.net/wat1r/article/details/114298873)
+
+```java
+public boolean isPalindrome(String s) {
+    int n = s.length(), l = 0, r = n - 1;
+    while (l < r) {
+        while (l < r && !(Character.isLetter(s.charAt(l)) || Character.isDigit(s.charAt(l)))) l++;
+        while (r > l && !(Character.isLetter(s.charAt(r)) || Character.isDigit(s.charAt(r)))) r--;
+        if ((s.charAt(l) & '_') != (s.charAt(r) & '_')) return false;
+        l++;
+        r--;
+    }
+    return true;
+}
+```
+
+
+
+### 
+
+
+
 ### [547 · 两数组的交集](https://www.lintcode.com/problem/547/description)
 
 ```java
@@ -218,6 +245,34 @@ public double findMaxAverage(int[] nums, int k) {
 
 
 
+### [891 · 有效回文 II](https://www.lintcode.com/problem/891/description)
+
+- 左右各去掉一个判断
+
+```java
+public boolean validPalindrome(String s) {
+    int n = s.length(), l = 0, r = n - 1;
+    while (l < r) {
+        if (s.charAt(l) != s.charAt(r)) {
+            return check(s, l + 1, r) || check(s, l, r - 1);
+        }
+        l++;
+        r--;
+    }
+    return true;
+
+}
+
+private boolean check(String s, int l, int r) {
+    while (l < r) {
+        if (s.charAt(l++) != s.charAt(r--)) return false;
+    }
+    return true;
+}
+```
+
+
+
 ### [928 · 最多有两个不同字符的最长子串](https://www.lintcode.com/problem/928/description)
 
 #### 方法1
@@ -262,8 +317,6 @@ public int lengthOfLongestSubstringTwoDistinct(String s) {
     return ans;
 }
 ```
-
-
 
 
 

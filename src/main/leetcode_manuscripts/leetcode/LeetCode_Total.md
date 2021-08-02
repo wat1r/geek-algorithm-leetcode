@@ -233,6 +233,46 @@ private boolean checkEqual(ListNode head, TreeNode root) {
 
 
 
+### [524. 通过删除字母匹配到字典里最长单词](https://leetcode-cn.com/problems/longest-word-in-dictionary-through-deleting/)
+
+```java
+        public String findLongestWord(String s, List<String> dictionary) {
+            String res = "";
+            for (String target : dictionary) {
+                if (target.length() >= res.length() && check(s, target)) {
+                    if (res.equals("") ||
+                            (res.length() == target.length() && res.compareTo(target) > 0)
+                            || target.length() > res.length()) {
+                        res = target;
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        private boolean check(String source, String target) {
+            int i = 0, j = 0;
+            while (i < source.length()) {
+                while (i < source.length() && source.charAt(i) != target.charAt(j)) {
+                    i++;
+                }
+                i++;
+                j++;
+                //i <= source.length() 这个条件时判断source到结尾的位置
+                if (i <= source.length() && j == target.length()) return true;
+            }
+            return false;
+        }
+
+```
+
+
+
+
+
+
+
 
 
 ### [541. 反转字符串 II](https://leetcode-cn.com/problems/reverse-string-ii/)
