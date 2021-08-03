@@ -365,7 +365,7 @@ public int lengthOfLongestSubstringTwoDistinct(String s) {
 
 
 
-### 1824 · [最频繁出现的子串](https://www.lintcode.com/problem/1824/)
+### [1824 · 最频繁出现的子串](https://www.lintcode.com/problem/1824/)
 
 ```java
 public int getMaxOccurrences(String s, int minLength, int maxLength, int maxUnique) {
@@ -394,3 +394,106 @@ public int getMaxOccurrences(String s, int minLength, int maxLength, int maxUniq
 }
 ```
 
+## binary_search
+
+### 二分查找的两个模板
+
+```c++
+二分模板一共有两个，分别适用于不同情况。
+算法思路：假设目标值在闭区间[l, r]中， 每次将区间长度缩小一半，当l = r时，我们就找到了目标值。
+
+版本1
+当我们将区间[l, r]划分成[l, mid]和[mid + 1, r]时，其更新操作是r = mid或者l = mid + 1;，计算mid时不需要加1。
+
+C++ 代码模板：
+int bsearch_1(int l, int r)
+{
+    while (l < r)
+    {
+        int mid = l + r >> 1;
+        if (check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    return l;
+}
+版本2
+当我们将区间[l, r]划分成[l, mid - 1]和[mid, r]时，其更新操作是r = mid - 1或者l = mid;，此时为了防止死循环，计算mid时需要加1。
+
+C++ 代码模板：
+
+int bsearch_2(int l, int r)
+{
+    while (l < r)
+    {
+        int mid = l + r + 1 >> 1;
+        if (check(mid)) l = mid;
+        else r = mid - 1;
+    }
+    return l;
+}
+```
+
+
+
+
+
+### [1272 · 有序矩阵中的第K小元素](https://www.lintcode.com/problem/1272/description)
+
+```java
+int n;
+
+public int kthSmallest(int[][] matrix, int k) {
+    this.n = matrix.length;
+    int lo = matrix[0][0], hi = matrix[n - 1][n - 1];
+    while (lo < hi) {
+        int mid = lo + hi >> 1;
+        int count = check(matrix, mid);
+        if (count < k) {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    return lo;
+}
+
+
+/**
+ * 判断matrix中小于等于target的数量
+ *
+ * @param matrix
+ * @param target
+ * @return
+ */
+private int check(int[][] matrix, int target) {
+    int ans = 0;
+    int i = n - 1, j = 0;
+    while (i >= -0 && j < n) {
+        if (matrix[i][j] <= target) {
+            ans += i + 1;
+            j++;
+        } else {
+            i--;
+        }
+    }
+    return ans;
+}
+```
+
+
+
+
+
+### [1476 · 山形数组的顶峰坐标](https://www.lintcode.com/problem/1476/)
+
+```java
+public int peakIndexInMountainArray(int[] A) {
+    int n = A.length - 1, lo = 0, hi = n - 1;
+    while (lo < hi) {
+        int mid = lo + hi >> 1;
+        if (A[mid] < A[mid + 1]) lo = mid + 1;
+        else hi = mid;
+    }
+    return lo;
+}
+```
