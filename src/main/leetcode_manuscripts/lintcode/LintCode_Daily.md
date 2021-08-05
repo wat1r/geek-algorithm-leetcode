@@ -435,6 +435,30 @@ int bsearch_2(int l, int r)
 
 
 
+### [293 · 隧道的深度](https://www.lintcode.com/problem/293/)
+
+
+
+```java
+public int FindDepth(int[][] matrix) {
+    int m = matrix.length, n = matrix[0].length;
+    int lo = 0, hi = m - 1;
+    while (lo <= hi) {
+        int mid = lo + hi >> 1;
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (matrix[mid][i] == 1) count++;
+        }
+        if (count >= 2) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return lo - 1;
+
+}
+```
+
+
+
 
 
 ### [1272 · 有序矩阵中的第K小元素](https://www.lintcode.com/problem/1272/description)

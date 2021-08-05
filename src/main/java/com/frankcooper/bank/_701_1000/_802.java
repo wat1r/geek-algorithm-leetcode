@@ -77,6 +77,7 @@ public class _802 {
 
         public List<Integer> eventualSafeNodes(int[][] graph) {
             int n = graph.length;
+            //原图是从u->v 存的反图 v->u
             List<List<Integer>> reverseGraph = new ArrayList<>();
             for (int i = 0; i < n; i++) reverseGraph.add(new ArrayList<>());
             int[] indegrees = new int[n];//入度数组
@@ -84,20 +85,20 @@ public class _802 {
                 for (int v : graph[u]) {
                     reverseGraph.get(v).add(u);
                 }
-                indegrees[u] = graph[u].length;
+                indegrees[u] = graph[u].length;//u节点原图的出度，即为反图u节点的入度
             }
             Queue<Integer> q = new LinkedList<>();
             for (int u = 0; u < n; u++) {
-                if (indegrees[u] == 0) q.offer(u);
+                if (indegrees[u] == 0) q.offer(u);//将入度为0的节点加入到队列中，该节点是「安全点」
             }
             while (!q.isEmpty()) {
                 int v = q.poll();
-                for (int u : reverseGraph.get(v)) {
+                for (int u : reverseGraph.get(v)) {//开始遍历q
                     if (--indegrees[u] == 0) q.offer(u);
                 }
             }
             List<Integer> res = new ArrayList<>();
-            for (int u = 0; u < n; u++) {
+            for (int u = 0; u < n; u++) {//入度为0的点为「安全点」
                 if (indegrees[u] == 0) res.add(u);
             }
 
