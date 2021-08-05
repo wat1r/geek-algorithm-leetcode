@@ -2,6 +2,7 @@ package com.frankcooper.bank._1001_1500;
 
 import java.util.Map;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -613,6 +614,71 @@ public class _1115 {
                 for (int i = 0; i < n; i++) {
 
                     printBar.run();
+                }
+            }
+        }
+    }
+
+    static class _6th_1 {
+
+        public static void main(String[] args) {
+            FooBar fooBar = new FooBar(5);//打印10次foo bar
+            Runnable printFoo = () -> {
+                System.out.printf("%s\n", "foo");
+            };
+            Runnable printBar = () -> {
+                System.out.printf("%s\n", "bar");
+            };
+            Thread fooThread = new Thread(() -> {
+                try {
+                    fooBar.foo(printFoo);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            Thread barThread = new Thread(() -> {
+                try {
+                    fooBar.bar(printBar);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            fooThread.start();
+            barThread.start();
+        }
+
+
+        /**
+         * TLE
+         */
+        static class FooBar {
+            private int n;
+            AtomicInteger fooAi = new AtomicInteger(0);
+            AtomicInteger barAi = new AtomicInteger(-1);
+
+            public FooBar(int n) {
+                this.n = n;
+            }
+
+            public void foo(Runnable printFoo) throws InterruptedException {
+
+                for (int i = 0; i < n; i++) {
+                    while (fooAi.get() != i) {
+                        System.out.printf("fooAi：%d\n", fooAi.get());
+                    }
+                    printFoo.run();
+                    barAi.incrementAndGet();
+                }
+            }
+
+            public void bar(Runnable printBar) throws InterruptedException {
+                for (int i = 0; i < n; i++) {
+                    while (barAi.get() != i) {
+                        System.out.printf("barAi：%d\n", barAi.get());
+                    }
+                    ;
+                    printBar.run();
+                    fooAi.incrementAndGet();
                 }
             }
         }
