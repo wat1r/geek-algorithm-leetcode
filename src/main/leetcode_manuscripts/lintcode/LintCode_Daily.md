@@ -482,6 +482,23 @@ private int check(int[][] matrix, int target) {
 
 
 
+### [1371 · 链表组件](https://www.lintcode.com/problem/1371/description)
+
+```java
+public int numComponents(ListNode head, int[] G) {
+
+    Set<Integer> set = new HashSet<>();
+    for (int x : G) set.add(x);
+    int res = 0;
+    while (head != null) {
+        if (set.contains(head.val) && (head.next == null || !set.contains(head.next.val))) res++;
+        head = head.next;
+    }
+    return res;
+
+}
+```
+
 
 
 ### [1476 · 山形数组的顶峰坐标](https://www.lintcode.com/problem/1476/)
