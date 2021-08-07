@@ -33,6 +33,7 @@ public class UnionFind {
             return subsets[i].parent;
         }
 
+        //按秩进行合并
         void union(Subset[] subsets, int x, int y) {
             int xroot = find(subsets, x);
             int yroot = find(subsets, y);
@@ -56,7 +57,7 @@ public class UnionFind {
             //遍历每一条边
             for (int e = 0; e < E; e++) {//边的索引
                 Edge edge = graph.edges[e];//当前的边
-                int x = edge.u, y = edge.v;
+                int x = edge.u, y = edge.v;//分别找到x y 的根节点
                 int xroot = find(subsets, x);
                 int yroot = find(subsets, y);
                 if (xroot == yroot) return 1;//出现根一样的，出现了环
