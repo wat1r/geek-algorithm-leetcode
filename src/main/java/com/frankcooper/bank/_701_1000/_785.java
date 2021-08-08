@@ -1,9 +1,13 @@
 package com.frankcooper.bank._701_1000;
 
+import com.frankcooper.utils.PrintUtils;
+
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class _785 {
+public class
+_785 {
 
 
     public static void main(String[] args) {
@@ -84,5 +88,103 @@ public class _785 {
 
     }
 
+
+    static class _3rd {
+
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            int[][] graph = {{}, {2, 4, 6}, {1, 4, 8, 9}, {7, 8}, {1, 2, 8, 9}, {6, 9}, {1, 5, 7, 8, 9}, {3, 6, 9}, {2, 3, 4, 6, 9}, {2, 4, 5, 6, 7, 8}};
+            handler.isBipartite(graph);
+        }
+
+        public boolean isBipartite(int[][] graph) {
+            int V = graph.length;
+            int[] colors = new int[V];
+            Arrays.fill(colors, -1);//-1表示未着色
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < V; i++) {
+                if (colors[i] == -1) {//当前点未着色
+                    queue.offer(i);
+                    colors[i] = 0;//着色0
+                    while (!queue.isEmpty()) {
+                        int u = queue.poll();
+                        for (int v : graph[u]) {
+                            if (colors[v] == colors[u]) return false;
+                            if (colors[v] == -1) {
+                                colors[v] = 1 - colors[u];//着色u的颜色的相反色 只有两种颜色， 0和1
+                                queue.offer(v);
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+
+    }
+
+
+    static class _4th {
+        public static void main(String[] args) {
+
+        }
+
+        public boolean isBipartite(int[][] graph) {
+            int V = graph.length;
+            int[] colors = new int[V];//默认0为未着色
+            Queue<Integer> queue = new LinkedList<>();
+            for (int i = 0; i < V; i++) {
+                if (colors[i] == 0) {//当前点未着色
+                    queue.offer(i);
+                    colors[i] = 1;//着色1
+                    while (!queue.isEmpty()) {
+                        int u = queue.poll();
+                        for (int v : graph[u]) {
+                            if (colors[v] == colors[u]) return false;
+                            if (colors[v] == 0) {
+                                colors[v] = -colors[u];//着色u的颜色的相反色 只有两种颜色， -1和1
+                                queue.offer(v);
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+
+    static class _4th_1 {
+
+        public boolean isBipartite(int[][] graph) {
+            int V = graph.length;
+            int[] colors = new int[V];//默认0为未着色
+            for (int i = 0; i < V; i++) {
+                if (colors[i] == 0 && !helper(graph, colors, i, 1)) return false;
+            }
+            return true;
+        }
+
+
+        /**
+         * @param graph  图
+         * @param colors colors数组
+         * @param u      当前要处理的顶点
+         * @param c      要为u着色的颜色color
+         * @return
+         */
+        private boolean helper(int[][] graph, int[] colors, int u, int c) {
+            if (colors[u] != 0) {
+                return colors[u] == c;
+            }
+            colors[u] = c;
+            for (int v : graph[u]) {
+                if (!helper(graph, colors, v, -c)) return false;
+            }
+            return true;
+        }
+
+    }
 
 }
