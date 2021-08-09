@@ -538,3 +538,39 @@ public int peakIndexInMountainArray(int[] A) {
     return lo;
 }
 ```
+
+
+
+
+
+## graph
+
+### bipartite
+
+### [1031 · 图可以被二分么？](https://www.lintcode.com/problem/1031/)
+
+```java
+        public boolean isBipartite(int[][] graph) {
+            int V = graph.length;
+            Queue<Integer> q = new LinkedList<>();
+            int[] colors = new int[V];
+            for (int i = 0; i < V; i++) {
+                if (colors[i] == 0) {
+                    q.offer(i);
+                    colors[i] = 1;
+                    while (!q.isEmpty()) {
+                        int u = q.poll();
+                        for (int v : graph[u]) {
+                            if (colors[v] == colors[u]) return false;
+                            if (colors[v] == 0) {
+                                colors[v] = -colors[u];
+                                q.offer(v);
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+```
+
