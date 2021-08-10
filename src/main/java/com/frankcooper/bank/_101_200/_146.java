@@ -1,5 +1,7 @@
 package com.frankcooper.bank._101_200;
 
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.NOTATIONDatatypeValidator;
+
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -121,5 +123,95 @@ public class _146 {
         }
     }
 
+
+    static class _1st {
+        class LRUCache {
+
+
+            int capacity;
+            Map<Integer, DoubleLinkedNode> cache;
+            DoubleLinkedNode head;
+            DoubleLinkedNode tail;
+
+
+            class DoubleLinkedNode {
+                int k, v;
+                DoubleLinkedNode prev, next;
+
+                public DoubleLinkedNode(int k, int v) {
+                    this.k = k;
+                    this.v = v;
+                }
+
+                public DoubleLinkedNode() {
+                }
+            }
+
+
+            private void removeNode(DoubleLinkedNode node) {
+                DoubleLinkedNode next = node.next;
+                DoubleLinkedNode prev = node.prev;
+                prev.next = next;
+                next.prev = prev;
+            }
+
+
+            private void addFirst(DoubleLinkedNode node) {
+                node.prev = head;
+                node.next = head.next;
+
+                head.next.prev = node;
+                head.next = node;
+
+            }
+
+
+            private DoubleLinkedNode popLast() {
+                DoubleLinkedNode node = tail.prev;
+                removeNode(node);
+                return node;
+            }
+
+
+            private void moveToHead(DoubleLinkedNode node) {
+                removeNode(node);
+                addFirst(node);
+
+            }
+
+
+            public LRUCache(int capacity) {
+                this.capacity = capacity;
+                this.cache = new HashMap<>();
+                this.head = new DoubleLinkedNode();
+                this.tail = new DoubleLinkedNode();
+                head.next = tail;
+                tail.prev = head;
+            }
+
+            public int get(int key) {
+                if (!cache.containsKey(key)) return -1;
+                DoubleLinkedNode node = cache.get(key);
+                moveToHead(node);
+                return node.v;
+            }
+
+            public void put(int key, int value) {
+                DoubleLinkedNode node = cache.get(key);
+                if (node == null) {
+                    node = new DoubleLinkedNode(key, value);
+                    addFirst(node);
+                    cache.put(key, node);
+                    if (cache.size() > capacity) {
+                        DoubleLinkedNode lastNode = popLast();
+                        cache.remove(lastNode.k);
+                    }
+                } else {
+                    node.v = value;
+                    moveToHead(node);
+                }
+            }
+        }
+    }
 
 }
