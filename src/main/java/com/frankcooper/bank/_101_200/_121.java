@@ -84,6 +84,10 @@ public class _121 {
         }
 
 
+        /**
+         * @param prices
+         * @return
+         */
         public int maxProfit(int[] prices) {
             int n = prices.length;
             //f[i][0]表示第i天手里没有股票获得的最大利润
@@ -93,7 +97,26 @@ public class _121 {
             f[0][1] = -prices[0];
             for (int i = 1; i < n; i++) {
                 f[i][0] = Math.max(f[i - 1][0], f[i - 1][1] + prices[i]);
-                f[i][1] = Math.max(f[i - 1][1], prices[i]);
+                f[i][1] = Math.max(f[i - 1][1], -prices[i]);
+            }
+            return f[n - 1][0];
+        }
+    }
+
+    static class _2nd_1 {
+        public int maxProfit(int[] prices) {
+
+            //f[i][0]表示第i天手里没有股票获得的最大利润
+            //f[i][1]表示第i天手里有股票获得的最大利润
+
+            int n = prices.length;
+            int[][] f = new int[n][2];
+            f[0][0] = 0;
+            f[0][1] = -prices[0];
+            for (int i = 1; i < n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1] + prices[i]);
+                f[i][1] = Math.max(f[i - 1][1], -prices[i]);
+//                System.out.printf("i：%d, %d,%d\n", i, f[i][0], f[i][1]);
             }
             return f[n - 1][0];
         }
