@@ -1,28 +1,31 @@
 package com.frankcooper;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine().trim());
-        boolean[] vis = new boolean[n + 1];
-        for (int i = 0; i < n; i++) {
-            String[] choices = br.readLine().split(" ");
-            for (int j = 0; j < choices.length; j++) {
-                int cur = Integer.parseInt(choices[j]);
-                if (!vis[cur]) {
-                    vis[cur] = true;
-                    System.out.printf("%d ", cur);
-                    break;
-                }
-            }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt(), b = sc.nextInt(), c = sc.nextInt(), d = sc.nextInt();
+        int e = sc.nextInt(), f = sc.nextInt(), g = sc.nextInt();
+        List<int[]> list = new ArrayList<int[]>() {{
+            add(new int[]{e, a});
+            add(new int[]{f, b});
+            add(new int[]{g, c});
+        }};
+        list.sort(((o1, o2) -> o2[0] - o1[0]));
+        long res = 0;
+        for (int i = 0; i < list.size(); i++) {
+            int[] cur = list.get(i);
+            int value = cur[0];
+            int cnt = Math.min(cur[1], d);
+            res += (long) value * cnt;
+            d -= cnt;
         }
+        System.out.printf("%d", res);
     }
 
 }

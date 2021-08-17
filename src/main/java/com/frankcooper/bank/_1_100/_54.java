@@ -74,4 +74,27 @@ public class _54 {
         }
     }
 
+
+    static class _2nd {
+        public List<Integer> spiralOrder(int[][] mat) {
+            int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+            int R = mat.length, C = mat[0].length;
+            List<Integer> res = new ArrayList<>();
+            int r = 0, c = 0, d = 0;
+            for (int k = 0; k < R * C; k++) {
+                res.add(mat[r][c]);
+                mat[r][c] = -100;
+                int nr = r + dirs[d][0], nc = c + dirs[d][1];
+                if (nr >= R || nr < 0 || nc >= C || nc < 0 || mat[nr][nc] == -100) {
+                    d = (d + 1) % 4;
+                    nr = r + dirs[d][0];
+                    nc = c + dirs[d][1];
+                }
+                r = nr;
+                c = nc;
+            }
+            return res;
+        }
+    }
+
 }

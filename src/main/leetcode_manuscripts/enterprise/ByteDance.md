@@ -144,6 +144,10 @@ class LRUCache {
 }
 ```
 
+## [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+
+
 ### [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)->[链表]
 
 
@@ -186,3 +190,122 @@ public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
     return result;
 }
 ```
+
+
+
+### [15. 三数之和](https://leetcode-cn.com/problems/3sum/)->[三指针]
+
+```java
+     public List<List<Integer>> threeSum(int[] nums) {
+            List<List<Integer>> res = new ArrayList<>();
+            int n = nums.length;
+            Arrays.sort(nums);
+            for (int i = 0; i < n; i++) {
+                if (nums[i] > 0) break;
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
+                int l = i + 1, r = n - 1;
+                while (l < r) {
+                    int t = nums[i] + nums[l] + nums[r];
+                    if (t == 0) {
+                        res.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                        while (l < r && nums[l] == nums[l + 1]) l++;
+                        while (l < r && nums[r] == nums[r - 1]) r--;
+                        l++;
+                        r--;
+                    } else if (t > 0) {
+                        r--;
+                    } else if (t < 0) {
+                        l++;
+                    }
+                }
+            }
+            return res;
+        }
+```
+
+
+
+### [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)->[DP]
+
+```java
+     public int maxProfit(int[] prices) {
+
+            //f[i][0]表示第i天手里没有股票获得的最大利润
+            //f[i][1]表示第i天手里有股票获得的最大利润
+
+            int n = prices.length;
+            int[][] f = new int[n][2];
+            f[0][0] = 0;
+            f[0][1] = -prices[0];
+            for (int i = 1; i < n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1] + prices[i]);
+                f[i][1] = Math.max(f[i - 1][1], -prices[i]);
+//                System.out.printf("i：%d, %d,%d\n", i, f[i][0], f[i][1]);
+            }
+            return f[n - 1][0];
+        }
+```
+
+
+
+
+
+### [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)->[Hash]
+
+```java
+public int[] twoSum(int[] nums, int target) {
+    Map<Integer,Integer> map = new HashMap<>();
+    for(int i =0;i<nums.length;i++){
+       int t = target - nums[i];
+        if(map.containsKey(t)){
+            return new int[] {map.get(t),i};
+        }
+        map.put(nums[i],i);
+    }
+    return null;    
+}
+```
+
+
+
+### [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)->[双指针]
+
+```java
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    ListNode l1 = headA, l2 = headB;
+    while (l1 != l2) {
+        l1 = (l1 == null) ? headB : l1.next;
+        l2 = (l2 == null) ? headA : l2.next;
+    }
+    return l1;
+}
+```
+
+
+
+
+
+### [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/)
+
+```java
+public List<Integer> spiralOrder(int[][] mat) {
+    int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    int R = mat.length, C = mat[0].length;
+    List<Integer> res = new ArrayList<>();
+    int r = 0, c = 0, d = 0;
+    for (int k = 0; k < R * C; k++) {
+        res.add(mat[r][c]);
+        mat[r][c] = -100;
+        int nr = r + dirs[d][0], nc = c + dirs[d][1];
+        if (nr >= R || nr < 0 || nc >= C || nc < 0 || mat[nr][nc] == -100) {
+            d = (d + 1) % 4;
+            nr = r + dirs[d][0];
+            nc = c + dirs[d][1];
+        }
+        r = nr;
+        c = nc;
+    }
+    return res;
+}
+```
+

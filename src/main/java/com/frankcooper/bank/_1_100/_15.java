@@ -45,4 +45,39 @@ public class _15 {
         return results;
     }
 
+
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums = {-1, 0, 1, 2, -1, -4};
+            handler.threeSum(nums);
+        }
+
+        public List<List<Integer>> threeSum(int[] nums) {
+            List<List<Integer>> res = new ArrayList<>();
+            int n = nums.length;
+            Arrays.sort(nums);
+            for (int i = 0; i < n; i++) {
+                if (nums[i] > 0) break;
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
+                int l = i + 1, r = n - 1;
+                while (l < r) {
+                    int t = nums[i] + nums[l] + nums[r];
+                    if (t == 0) {
+                        res.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                        while (l < r && nums[l] == nums[l + 1]) l++;
+                        while (l < r && nums[r] == nums[r - 1]) r--;
+                        l++;
+                        r--;
+                    } else if (t > 0) {
+                        r--;
+                    } else if (t < 0) {
+                        l++;
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
