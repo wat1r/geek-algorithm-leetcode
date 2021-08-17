@@ -1,31 +1,50 @@
 package com.frankcooper;
 
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt(), b = sc.nextInt(), c = sc.nextInt(), d = sc.nextInt();
-        int e = sc.nextInt(), f = sc.nextInt(), g = sc.nextInt();
-        List<int[]> list = new ArrayList<int[]>() {{
-            add(new int[]{e, a});
-            add(new int[]{f, b});
-            add(new int[]{g, c});
-        }};
-        list.sort(((o1, o2) -> o2[0] - o1[0]));
-        long res = 0;
-        for (int i = 0; i < list.size(); i++) {
-            int[] cur = list.get(i);
-            int value = cur[0];
-            int cnt = Math.min(cur[1], d);
-            res += (long) value * cnt;
-            d -= cnt;
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        String[] arr = reader.readLine().split(" ");
+        int x = Integer.parseInt(arr[0]);
+        int y = Integer.parseInt(arr[1]);
+        int n = x + y;
+        if (x == y) {
+            for (int i = 0; i < x; i++) writer.write("A");
+            for (int i = 0; i < y; i++) writer.write("B");
+        } else {
+            List<int[]> vals = new ArrayList<>();
+            arr = reader.readLine().split(" ");
+            for (int i = 0; i < n; i++) {
+                int t = Integer.parseInt(arr[i]);
+                vals.add(new int[]{t, i});
+            }
+            vals.sort((Comparator.comparingInt(o -> o[0])));
+            int[] res = new int[n];
+            for (int i = 0; i < n; i++) res[vals.get(i)[1]] = i;
+            for (int i = 0; i < n; i++) {
+                if (x > y) {
+                    if (res[i] >= y) writer.write("A");
+                    else writer.write("B");
+                } else {
+                    if (res[i] < x) writer.write("A");
+                    else writer.write("B");
+                }
+            }
         }
-        System.out.printf("%d", res);
+        writer.flush();
+        reader.close();
+        writer.close();
     }
 
 }
