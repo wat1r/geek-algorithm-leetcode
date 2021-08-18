@@ -14,5 +14,6 @@
 ### 更多阅读
 
 
-- [算法之搜索与图论](https://blog.csdn.net/wat1r/article/details/113528460)
+- **目录索引:[畅游面试中算法题集锦](https://blog.csdn.net/wat1r/article/details/115614680)**
+- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，拉群一起玩耍
 
