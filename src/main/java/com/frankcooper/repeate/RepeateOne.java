@@ -94,4 +94,43 @@ public class RepeateOne {
             return (int) (l * l == x ? l : l - 1);
         }
     }
+
+    //887
+    static class _2nd {
+        int INF = Integer.MAX_VALUE >> 1;
+
+        public int superEggDrop(int K, int N) {
+            //f[i][j]：i层楼，j个鸡蛋的时候，找到临界楼层的操作次数
+            int[][] f = new int[N + 1][K + 1];
+            for (int i = 1; i <= N; i++) {
+                for (int j = 1; j <= K; j++) {
+                    f[i][j] = INF;
+                }
+            }
+            for (int i = 1; i <= N; i++) f[i][1] = i;
+            for (int j = 1; j <= K; j++) f[1][j] = 1;
+            for (int i = 2; i <= N; i++) {
+                for (int j = 2; j <= K; j++) {
+                    int l = 1, r = i;
+                    while (l < r) {
+                        int mid = l + (r - l + 1) / 2;
+                        int t1 = f[mid - 1][j - 1];
+                        int t2 = f[i - mid][j];
+                        if (t1 > t2) {
+                            r = mid - 1;
+                        } else {
+                            l = mid;
+                        }
+                    }
+                    f[i][j] = Math.min(f[i][j], Math.max(f[l - 1][j - 1], f[i - l][j]) + 1);
+                }
+            }
+
+            return f[N][K];
+        }
+    }
+
+    static class _3rd{
+
+    }
 }
