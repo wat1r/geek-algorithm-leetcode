@@ -50,7 +50,7 @@
 
 
 - [畅游面试中的动态规划套路](https://blog.csdn.net/wat1r/article/details/114377702?spm=1001.2014.3001.5501)
-- [位运算操作常见技巧](https://blog.csdn.net/wat1r/article/details/114298873?spm=1001.2014.3001.5501)
+- [位运算操作常见技巧](https://blog.csdn.net/wat1r/article/details/114298873)
 
 - [美团 2021 届秋季校园招聘笔试真题](https://blog.csdn.net/wat1r/article/details/119669619)
 

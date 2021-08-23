@@ -130,7 +130,36 @@ public class RepeateOne {
         }
     }
 
-    static class _3rd{
+    static class _3rd {
 
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            String s = "A man, a plan, a canal: Panama";
+            s = "OP";
+            s = "0P";
+            handler.isPalindrome(s);
+        }
+
+        public boolean isPalindrome(String s) {
+            char[] ch = s.toCharArray();
+            int l = 0, r = ch.length - 1;
+            while (l < r) {
+                while (l < r && !check(ch[l])) l++;
+                while (r > l && !check(ch[r])) r--;
+                int lc = ch[l] | ' ';
+                int rc = ch[r] | ' ';
+                if (lc != rc) return false;
+                else {
+                    l++;
+                    r--;
+                }
+            }
+            return true;
+        }
+
+        private boolean check(char c) {
+            c = (char) (c | ' ');
+            return (c >= '0' && c <= '9') || c >= 'a' && c <= 'z';
+        }
     }
 }

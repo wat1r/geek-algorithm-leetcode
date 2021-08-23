@@ -210,4 +210,40 @@ public class _131 {
     }
 
 
+    static class _6th {
+
+        List<List<String>> res = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+
+        public List<List<String>> partition(String s) {
+            dfs(s, 0);
+            return res;
+        }
+
+        public void dfs(String s, int index) {
+            if (index >= s.length()) {
+                res.add(new ArrayList<>(path));
+                return;
+            }
+            for (int i = index; i < s.length(); i++) {
+                if (!check(s, index, i)) continue;
+                path.add(s.substring(index, i + 1));
+                dfs(s, i + 1);
+                path.remove(path.size() - 1);
+            }
+        }
+
+
+        private boolean check(String s, int l, int r) {
+            while (l < r) {
+                if (s.charAt(l) != s.charAt(r)) return false;
+                l++;
+                r--;
+            }
+            return true;
+        }
+
+    }
+
+
 }
