@@ -1,12 +1,17 @@
-## 【重温经典】单词拆分 II
+package com.frankcooper.bank._101_200;
 
+import java.util.*;
 
+import org.junit.Assert;
 
-#### 方法1:记忆化搜索
+public class _140 {
 
-- 不带记忆化TLE
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
 
-```java
+        }
+
         Map<String, List<String>> cache = new HashMap<>();
         List<String> wordDict;
 
@@ -36,5 +41,26 @@
             cache.put(s, res);//更新cache，避免重复搜索
             return res;
         }
-```
 
+
+    }
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+        }
+    }
+
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+        }
+    }
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+        }
+    }
+}
