@@ -87,4 +87,4 @@
 
 ![image.png](https://pic.leetcode-cn.com/1612578565-prDZec-image.png)
 
-- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，拉群一起玩耍
+- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 进群一起玩耍

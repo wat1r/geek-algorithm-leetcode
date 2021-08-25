@@ -120,4 +120,26 @@ public class _787 {
     }
 
 
+    static class _4th {
+        int INF = Integer.MAX_VALUE;
+
+        public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+            int[] f = new int[n];
+            Arrays.fill(f, INF);
+            f[src] = 0;
+            for (int i = 0; i <= K; i++) {
+                int[] t = Arrays.copyOf(f, n);
+                for (int[] x : flights) {
+                    int cur = x[0], next = x[1], price = x[2];
+                    if (f[cur] == INF) continue;
+                    t[next] = Math.min(t[next], f[cur] + price);
+                }
+                f = t;
+            }
+            return f[dst] == INF ? -1 : f[dst];
+        }
+
+    }
+
+
 }
