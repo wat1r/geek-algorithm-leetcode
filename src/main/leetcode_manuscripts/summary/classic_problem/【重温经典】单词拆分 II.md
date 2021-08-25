@@ -1,5 +1,7 @@
 ## 【重温经典】单词拆分 II
 
+![image-20210825211615260](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210825211615260.png)
+
 ![image-20210825202837310](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210825202837310.png)
 
 #### 方法1:切片函数+记忆化搜索
