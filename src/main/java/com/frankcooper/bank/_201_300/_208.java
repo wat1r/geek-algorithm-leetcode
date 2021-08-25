@@ -186,4 +186,46 @@ public class _208 {
     }
 
 
+    static class _3rd_1 {
+        class Trie {
+
+            Trie[] next = new Trie[26];
+            boolean isEnd = false;
+
+            public Trie() {
+
+            }
+
+            public void insert(String word) {
+                Trie cur = this;
+                for (char c : word.toCharArray()) {
+                    if (cur.next[c - 'a'] == null) {
+                        cur.next[c - 'a'] = new Trie();
+                    }
+                    cur = cur.next[c - 'a'];
+                }
+                cur.isEnd = true;
+            }
+
+            public boolean search(String word) {
+                Trie cur = this;
+                for (char c : word.toCharArray()) {
+                    if (cur.next[c - 'a'] == null) return false;
+                    cur = cur.next[c - 'a'];
+                }
+                return cur.isEnd;
+            }
+
+            public boolean startsWith(String prefix) {
+                Trie cur = this;
+                for (char c : prefix.toCharArray()) {
+                    if (cur.next[c - 'a'] == null) return false;
+                    cur = cur.next[c - 'a'];
+                }
+                return true;
+            }
+        }
+    }
+
+
 }
