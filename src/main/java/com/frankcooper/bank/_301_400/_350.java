@@ -36,7 +36,7 @@ public class _350 {
         List<Integer> list = new ArrayList<>();
         int i = 0, j = 0, m = nums1.length, n = nums2.length;
         int index = 0;
-        int[] tmp = new int[Math.min(m,n)];
+        int[] tmp = new int[Math.min(m, n)];
         while (i < m && j < n) {
             if (nums1[i] < nums2[j]) i++;
             else if (nums1[i] > nums2[j]) j++;
@@ -46,7 +46,27 @@ public class _350 {
                 j++;
             }
         }
-        return Arrays.copyOfRange(tmp,0,index);
+        return Arrays.copyOfRange(tmp, 0, index);
+    }
+
+    static class _1st {
+        public int[] intersect(int[] nums1, int[] nums2) {
+            Arrays.sort(nums1);
+            Arrays.sort(nums2);
+            int i = 0, j = 0, m = nums1.length, n = nums2.length;
+            int index = 0;
+            int[] tmp = new int[Math.min(m, n)];
+            while (i < m && j < n) {
+                if (nums1[i] < nums2[j]) i++;
+                else if (nums1[i] > nums2[j]) j++;
+                else if (nums1[i] == nums2[j]) {
+                    tmp[index++] = nums1[i];
+                    i++;
+                    j++;
+                }
+            }
+            return Arrays.copyOfRange(tmp, 0, index);
+        }
     }
 
 
