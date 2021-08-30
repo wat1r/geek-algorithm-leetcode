@@ -222,16 +222,5 @@ public class _887 {
         }
     }
 
-    static class _4th{
-        public static void main(String[] args) {
-            _4th handler = new _4th();
-        }
 
-        public int superEggDrop(int k, int n) {
-
-            return 0;
-        }
-
-
-    }
 }
