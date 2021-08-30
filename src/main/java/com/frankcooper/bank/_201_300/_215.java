@@ -40,4 +40,15 @@ public class _215 {
             return pq.peek();
         }
     }
+
+    static class _3rd {
+        public int findKthLargest(int[] nums, int k) {
+            PriorityQueue<Integer> pq = new PriorityQueue<>();
+            for (int i = 0; i < nums.length; i++) {
+                if (i < k || nums[i] > pq.peek()) pq.offer(nums[i]);
+                if (pq.size() > k) pq.poll();
+            }
+            return pq.peek();
+        }
+    }
 }

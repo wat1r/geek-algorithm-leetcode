@@ -37,7 +37,6 @@ public class _230 {
 
         //迭代，一直压到left没有为止
         public int kthSmallest(TreeNode root, int k) {
-
             Stack<TreeNode> stk = new Stack<>();
             while (root != null) {
                 stk.add(root);
