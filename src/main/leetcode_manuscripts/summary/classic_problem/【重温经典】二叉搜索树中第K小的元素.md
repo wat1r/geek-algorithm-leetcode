@@ -2,6 +2,8 @@
 
 这是一道求kth的问题
 
+题目描述：给定一个二叉搜索树的根节点 `root` ，和一个整数 `k` ，请你设计一个算法查找其中第 `k` 个最小元素（从 1 开始计数）。
+
 ![image-20210830192316014](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210830192316014.png)
 
 ![image-20210830192327619](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210830192327619.png)

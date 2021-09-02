@@ -108,6 +108,8 @@ public class _1117 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+
+
         }
 
         class H2O {
