@@ -88,3 +88,13 @@
 ![image.png](https://pic.leetcode-cn.com/1612578565-prDZec-image.png)
 
 - [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 进群一起玩耍
+
+
+
+ 
+
+## 番外：
+
+最近阿飞把链接做成了脑图（下图），整理起来，会做成PDF，感兴趣的同学关注下，不迷路，[个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) ，关注公众号会弹出资料下载地址，每个分支都可以点击链接跳转，欢迎入群交流学习。
+
+![阿飞算法.png](https://pic.leetcode-cn.com/1630892220-MyzuIE-%E9%98%BF%E9%A3%9E%E7%AE%97%E6%B3%95.png)
