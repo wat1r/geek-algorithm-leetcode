@@ -71,6 +71,28 @@ public class _295 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        class MedianFinder {
+            PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>((o1, o2) -> o2 - o1);
+            PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+
+            public MedianFinder() {
+
+            }
+
+            public void addNum(int num) {
+                maxHeap.offer(num);
+                minHeap.offer(maxHeap.poll());
+                if (maxHeap.size() < minHeap.size()) maxHeap.offer(minHeap.poll());
+            }
+
+            public double findMedian() {
+                if (maxHeap.size() == minHeap.size())
+                    return (maxHeap.peek() + minHeap.peek()) / 2.0;
+                else
+                    return maxHeap.peek();
+            }
+        }
     }
 
 
