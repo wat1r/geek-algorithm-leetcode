@@ -1,5 +1,7 @@
 package com.frankcooper.bank._301_400;
 
+import java.util.*;
+
 public class _378 {
 
 
@@ -66,9 +68,26 @@ public class _378 {
 
     static class _2nd {
         public static void main(String[] args) {
-
+            _2nd handler = new _2nd();
+            int[][] matrix = {{1, 5, 9},
+                    {10, 11, 13},
+                    {12, 13, 15}};
+            int k = 8;
+            handler.kthSmallest(matrix, k);
         }
 
+        public int kthSmallest(int[][] matrix, int k) {
+            PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> o2 - o1);
+            int R = matrix.length, C = matrix[0].length;
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    int cur = matrix[r][c];
+                    pq.offer(cur);
+                    if (pq.size() > k) pq.poll();
+                }
+            }
+            return pq.peek();
+        }
 
     }
 }
