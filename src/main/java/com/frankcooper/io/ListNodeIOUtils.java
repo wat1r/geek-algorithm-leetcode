@@ -18,6 +18,12 @@ public class ListNodeIOUtils {
     }
 
 
+    /**
+     * [1,2,3,4,5]
+     *
+     * @param arrStr
+     * @return
+     */
     public static ListNode transform(String arrStr) {
         ListNode head = Wrapper.stringToListNode(arrStr);
         Wrapper.prettyPrintLinkedList(head);

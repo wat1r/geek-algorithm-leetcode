@@ -29,6 +29,16 @@ public class _179 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public String largestNumber(int[] nums) {
+            List<String> l = new ArrayList<>();
+            for (int x : nums) l.add(String.valueOf(x));
+            l.sort((o1, o2) -> (o2 + o1).compareTo(o1 + o2));
+            if (l.get(0).equals("0")) return "0";
+            StringBuilder res = new StringBuilder();
+            for (String s : l) res.append(s);
+            return res.toString();
+        }
     }
 
 

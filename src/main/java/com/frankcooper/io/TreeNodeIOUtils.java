@@ -12,7 +12,6 @@ public class TreeNodeIOUtils {
     public static void main(String[] args) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
-        //[3,9,20,null,null,15,7]
         while ((line = in.readLine()) != null) {
             TreeNode root = Wrapper.stringToTreeNode(line);
             Wrapper.prettyPrintTree(root);
@@ -20,7 +19,12 @@ public class TreeNodeIOUtils {
 
     }
 
-
+    /**
+     * [3,9,20,null,null,15,7]
+     *
+     * @param arrStr
+     * @return
+     */
     public static TreeNode transform(String arrStr) {
         TreeNode root = Wrapper.stringToTreeNode(arrStr);
         Wrapper.prettyPrintTree(root);
