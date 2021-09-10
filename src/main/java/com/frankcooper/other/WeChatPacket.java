@@ -27,6 +27,8 @@ public class WeChatPacket {
             }
 
 
+//            handler.getDate(2021, 9);
+
         }
 
         /**
@@ -38,12 +40,12 @@ public class WeChatPacket {
             int count = 3, base = 2000, delta = 101;
             double div = 100.0;
             String[] months = new String[]{"Jan", "Feb", "Mar", "Apr ", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-            String[] charger = new String[]{"FC  ", "NIU ", "WAY ", "TING"};
+            String[] charger = new String[]{"FC  [03]", "NIU [04]", "WAY [07]", "TING[10]"};
             Arrays.sort(charger, Comparator.reverseOrder());
             int N = charger.length;
             int pos = 7;
             for (int i = 0; i < months.length; i++) {
-                System.out.printf("[%s] TOTAL", months[i]);
+                System.out.printf("[%s]     TOTAL", months[i]);
                 int year = i < 4 ? 2022 : 2021;
                 List<String> fris = getDate(year, i + 1);
                 fris.forEach(fri -> print(fri, pos));
@@ -84,13 +86,13 @@ public class WeChatPacket {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month - 1);
-            int fistDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+            int fistDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 2;//注意-1开始的是星期天
             int allDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
             int week = 7;  //要求的星期（1-7）
             int day = 0;
             List<String> res = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
-                day =  (week - fistDayOfWeek) + i * 7;
+                day = (week - fistDayOfWeek) + i * 7;
                 if (day < 1 || day > allDays) {
                     continue;
                 }
@@ -108,6 +110,8 @@ public class WeChatPacket {
             print(String.valueOf(target), pos);
             return "";
         }
+
+
     }
 
 
