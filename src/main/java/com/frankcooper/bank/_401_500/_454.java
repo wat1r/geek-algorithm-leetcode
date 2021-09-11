@@ -24,10 +24,31 @@ public class _454 {
         for (int c : C) {
             for (int d : D) {
                 int sum2 = c + d;
-                if(map1.containsKey(-sum2))  res += map1.get(-sum2);
+                if (map1.containsKey(-sum2)) res += map1.get(-sum2);
             }
         }
         return res;
+    }
+
+    static class _2nd {
+
+        public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+            int res = 0;
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int a : nums1) {
+                for (int b : nums2) {
+                    int sum1 = a + b;
+                    map.put(sum1, map.getOrDefault(sum1, 0) + 1);
+                }
+            }
+            for (int c : nums3) {
+                for (int d : nums4) {
+                    int sum2 = c + d;
+                    if (map.containsKey(-sum2)) res += map.get(-sum2);
+                }
+            }
+            return res;
+        }
     }
 
 }
