@@ -32,7 +32,7 @@
         }
 ```
 
-### 方法2：BFS
+### 方法2：DFS+压栈
 
 ```java
 public int kthSmallest(TreeNode root, int k) {
