@@ -13,8 +13,8 @@ _236 {
         public static void main(String[] args) {
             _1st handler = new _1st();
             TreeNode root = TreeNodeIOUtils.transform("[3,5,1,6,2,0,8,null,null,7,4]");
-            TreeNode p = new TreeNode(5);
-            TreeNode q = new TreeNode(1);
+            TreeNode p = root.left;//5
+            TreeNode q = root.right;//1
             TreeNode ancestor = handler.lowestCommonAncestor(root, p, q);
             System.out.printf("%d", ancestor.val);
         }
@@ -62,6 +62,16 @@ _236 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            TreeNode root = TreeNodeIOUtils.transform("[3,5,1,6,2,0,8,null,null,7,4]");
+            TreeNode p = root.left;//5
+            TreeNode q = root.right;//1
+//            TreeNode ancestor = handler.lowestCommonAncestor(root, p, q);
+//            System.out.printf("%d\n", ancestor.val);
+            root = TreeNodeIOUtils.transform("[3,5,1,6,null,null,null,7,2,null,null,null,4]");
+            p = root.left.left.left;
+            q = root.left.left.right.right;
+            TreeNode ancestor = handler.lowestCommonAncestor(root, p, q);
+            System.out.printf("%d\n", ancestor.val);
         }
 
         public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -79,6 +89,43 @@ _236 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            TreeNode root = TreeNodeIOUtils.transform("[3,5,1,6,null,null,null,7,2,null,null,null,4]");
+            TreeNode p = root.left.left.left;
+            TreeNode q = root.left.left.right.right;
+            TreeNode ancestor = handler.lowestCommonAncestor(root, p, q);
+            System.out.printf("%d\n", ancestor.val);
+        }
+
+
+        public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            //存当前节点的父节点，k:当前节点，v:当前节点的父节点，root节点的父节点为null
+            Map<TreeNode, TreeNode> parent = new HashMap<>();
+            parent.put(root, null);
+            Deque<TreeNode> stk = new ArrayDeque<>();
+            stk.push(root);
+            //step1:率先找到p或者q，先左节点，后右节点，然后出栈的时候，选右节点优先
+            while (!parent.containsKey(p) || !parent.containsKey(q)) {
+                TreeNode cur = stk.pop();
+                if (cur.left != null) {
+                    parent.put(cur.left, cur);
+                    stk.push(cur.left);
+                }
+                if (cur.right != null) {
+                    parent.put(cur.right, cur);
+                    stk.push(cur.right);
+                }
+            }
+            //step2：set收集的是p节点的所有祖先节点，包括p节点的直系父节点
+            Set<TreeNode> set = new HashSet<>();
+            while (p != null) {
+                set.add(p);
+                p = parent.get(p);
+            }
+            //step3:找q的父节点，第一个出现在set集合中的即是LCA
+            while (!set.contains(q)) {
+                q = parent.get(q);
+            }
+            return q;
         }
     }
 }
