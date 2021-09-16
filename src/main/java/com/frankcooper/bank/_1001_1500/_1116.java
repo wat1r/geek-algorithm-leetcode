@@ -598,4 +598,107 @@ public class _1116 {
         }
 
     }
+
+
+    static class _6th {
+        public static void main(String[] args) {
+            int n = 10;
+            while (n-- > 0) {
+                print();
+                System.out.println();
+            }
+
+        }
+
+        public static void print() {
+            ZeroEvenOdd zeo = new ZeroEvenOdd(6);
+            new Thread(() -> {
+                try {
+                    zeo.zero(new IntConsumer() {
+                        public void accept(int value) {
+                            System.out.print(value);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try {
+                    zeo.odd(new IntConsumer() {
+                        public void accept(int value) {
+                            System.out.print(value);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            new Thread(() -> {
+                try {
+                    zeo.even(new IntConsumer() {
+                        public void accept(int value) {
+                            System.out.print(value);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+
+
+        static class ZeroEvenOdd {
+            private int n;
+            private Semaphore zero = new Semaphore(1);
+            private Semaphore odd = new Semaphore(0);
+            private Semaphore even = new Semaphore(0);
+            private boolean flag = true;
+            private AtomicInteger atomicInteger = new AtomicInteger(1);
+
+            public ZeroEvenOdd(int n) {
+                this.n = n;
+            }
+
+            // printNumber.accept(x) outputs "x", where x is an integer.
+            public void zero(IntConsumer printNumber) throws InterruptedException {
+                while (true) {
+                    zero.acquire();
+                    if (atomicInteger.intValue() > n) {
+//                        System.exit(0);
+                        break;
+                    }
+                    printNumber.accept(0);
+                    if (flag) {
+                        odd.release();
+                    } else {
+                        even.release();
+                    }
+                    flag = !flag;
+                }
+            }
+
+            public void even(IntConsumer printNumber) throws InterruptedException {
+                while (true) {
+                    even.acquire();
+                    int intValue = atomicInteger.intValue();
+                    if (intValue > n) break;
+                    printNumber.accept(intValue);
+                    atomicInteger.incrementAndGet();
+                    zero.release();
+                }
+            }
+
+            public void odd(IntConsumer printNumber) throws InterruptedException {
+                while (true) {
+                    odd.acquire();
+                    int intValue = atomicInteger.intValue();
+                    if (intValue > n) break;
+                    printNumber.accept(intValue);
+                    atomicInteger.incrementAndGet();
+                    zero.release();
+                }
+            }
+        }
+    }
 }
