@@ -31,6 +31,7 @@ public class _231 {
         }
 
 
+        //2的n次幂与 去掉一位后，除了当前位，其他位都会翻转
         public boolean isPowerOfTwo(int n) {
             return n > 0 && (n & (n - 1)) == 0;
         }
