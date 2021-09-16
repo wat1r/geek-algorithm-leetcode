@@ -71,5 +71,14 @@ public class _461 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+        public int hammingWeight(int n) {
+            int ans = 0;
+            while (n != 0) {
+                ans += n & 1;
+                n >>>= 1;
+            }
+            return ans;
+        }
     }
 }

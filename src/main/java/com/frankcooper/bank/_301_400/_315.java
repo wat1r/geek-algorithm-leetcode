@@ -32,6 +32,7 @@ public class _315 {
         class FenwickTree {
             int n;
             int[] C;
+
             //初始化
             public FenwickTree(int n) {
                 this.n = n;
@@ -56,6 +57,7 @@ public class _315 {
                 }
                 return sum;
             }
+
             //算lowbit
             public int lowbit(int x) {
                 return x & (-x);
