@@ -92,12 +92,53 @@ public class _279 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            handler.numSquares(13);
+        }
+
+        public int numSquares(int n) {
+            Queue<Integer> q = new LinkedList<>();
+            Set<Integer> vis = new HashSet<>();
+            q.offer(n);
+            int level = 0;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                while (size-- > 0) {
+                    int cur = q.poll();
+                    if (cur == 0) return level;
+                    for (int i = 1; i * i <= n; i++) {
+                        int next = cur - i * i;
+                        if (!vis.contains(next)) {
+                            vis.add(next);
+                            q.offer(next);
+                        }
+                    }
+                }
+                level++;
+            }
+            return level;
         }
     }
 
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+//            System.out.printf("%d\n", );
+
+            Assert.assertEquals(2, handler.numSquares(13));
+
+        }
+
+        public int numSquares(int n) {
+            int[] f = new int[n + 1];
+            int INF = Integer.MAX_VALUE >> 1;
+            Arrays.fill(f, INF);
+            f[0] = 0;
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j * j <= i; j++) {
+                    f[i] = Math.min(f[i], f[i - j * j] + 1);
+                }
+            }
+            return f[n];
         }
     }
 }
