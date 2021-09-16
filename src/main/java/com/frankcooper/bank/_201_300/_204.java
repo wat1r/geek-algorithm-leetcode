@@ -41,14 +41,13 @@ public class _204 {
             if (n <= 1) return 0;
             int[] isPrime = new int[n];
             Arrays.fill(isPrime, 1);
-            isPrime[0] = isPrime[1] = 0;
+            isPrime[0] = isPrime[1] = 0;//
             int p = 0;
             for (int i = 2; i < n; i++) {
                 if (isPrime[i] == 1) {
                     isPrime[p++] = i;// prime[p]是i,后置自增运算代表当前素数数量
                     if ((long) i * i < n) {
-                        // 因为从 2 到 i - 1 的倍数我们之前筛过了，这里直接从 i
-                        // 的倍数开始，提高了运行速度
+                        // 因为从 2 到 i - 1 的倍数我们之前筛过了，这里直接从 i的倍数开始，提高了运行速度
                         for (int j = i * i; j < n; j += i) {
                             isPrime[j] = 0;// 是i的倍数的均不是素数
                         }
@@ -129,5 +128,49 @@ public class _204 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+        public int countPrimes(int n) {
+            int res = 0;
+            for (int i = 2; i < n; i++) {
+                if (isPrime(i)) res++;
+            }
+            return res;
+        }
+
+        private boolean isPrime(int num) {
+            int N = (int) Math.sqrt(num);
+            for (int i = 2; i <= N; i++) {
+                if (num % i == 0) return false;
+            }
+            return true;
+        }
+    }
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            handler.countPrimes(16);
+        }
+
+        public int countPrimes(int n) {
+            if (n <= 1) return 0;
+            int[] prime = new int[n];
+            Arrays.fill(prime, 1);
+            prime[0] = prime[1] = 0;
+            int p = 0;
+            for (int i = 2; i < n; i++) {
+                if (prime[i] == 1) {
+                    prime[p++] = i;
+                    if ((long) i * i < n) {
+                        // 因为从 2 到 i - 1 的倍数我们之前筛过了，这里直接从 i的倍数开始，提高了运行速度
+                        for (int j = i * i; j < n; j += i) {
+                            prime[j] = 0;// 是i的倍数的均不是素数
+                        }
+                    }
+                }
+            }
+            return p;
+        }
+
     }
 }
