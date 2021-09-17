@@ -1,5 +1,7 @@
 package com.frankcooper.bank._301_400;
 
+import org.junit.Assert;
+
 import java.util.HashMap;
 import java.util.*;
 
@@ -88,5 +90,73 @@ public class _322 {
 
     //https://leetcode-cn.com/problems/coin-change/solution/yong-bei-bao-wen-ti-si-xiang-lai-li-jie-ying-bi-zh/
 
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+
+        }
+
+        Integer[] cache;
+
+        public int coinChange(int[] coins, int amount) {
+            this.cache = new Integer[amount + 1];
+            return dfs(coins, amount);
+        }
+
+
+        private int dfs(int[] coins, int remain) {
+            if (remain < 0) return -1;
+            if (remain == 0) return 0;
+            if (cache[remain] != null) return cache[remain];
+            int res = Integer.MAX_VALUE;
+            for (int coin : coins) {
+                int t = dfs(coins, remain - coin);
+                if (t != -1) {
+                    res = Math.min(res, t + 1);
+                }
+            }
+            return cache[remain] = (res == Integer.MAX_VALUE ? -1 : res);
+        }
+    }
+
+    static class _3rd {
+        public int coinChange(int[] coins, int amount) {
+            if (coins == null || coins.length == 0) return -1;
+            int[] f = new int[amount + 1];
+            f[0] = 0;
+            for (int i = 1; i <= amount; i++) {
+                f[i] = Integer.MAX_VALUE;
+                for (int coin : coins) {
+                    if (i >= coin && f[i - coin] != -1) {
+                        f[i] = Math.min(f[i], f[i - coin] + 1);
+                    }
+                }
+                f[i] = f[i] == Integer.MAX_VALUE ? -1 : f[i];
+            }
+            return f[amount];
+        }
+    }
+
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            int[] coins = {2};
+            int amount = 3;
+            Assert.assertEquals(-1, handler.coinChange(coins, amount));
+        }
+
+        public int coinChange(int[] coins, int amount) {
+            int[] f = new int[amount + 1];
+            Arrays.fill(f, Integer.MAX_VALUE >> 1);
+            f[0] = 0;
+            for (int coin : coins) {
+                for (int i = coin; i <= amount; i++) {
+                    f[i] = Math.min(f[i], f[i - coin] + 1);
+                }
+            }
+            return f[amount] >= (Integer.MAX_VALUE >> 1) ? -1 : f[amount];
+        }
+    }
 
 }
