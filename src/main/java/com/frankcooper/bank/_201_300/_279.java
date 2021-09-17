@@ -2,6 +2,7 @@ package com.frankcooper.bank._201_300;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Assert;
 
 public class _279 {
@@ -139,6 +140,91 @@ public class _279 {
                 }
             }
             return f[n];
+        }
+    }
+
+    static class _5th {
+
+
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            System.out.println(handler.numSquares(8935));
+        }
+
+        public int numSquares(int n) {
+
+            Queue<Integer> q = new LinkedList();
+            HashSet<Integer> hs = new HashSet();
+            int depth = 0;
+            q.add(0);
+            while (!q.isEmpty()) {
+                int size = q.size();
+                depth++;
+                while (size-- > 0) {
+                    int num = q.remove();
+
+                    for (int i = 1; i * i <= n; i++) {
+                        int u = i * i;
+                        if (num + u == n)
+                            return depth;
+                        if (num + u > n)
+                            break;
+                        if (!hs.contains(num + u)) {
+                            q.add(num + u);
+                            hs.add(num);
+                        }
+
+                    }
+                }
+
+            }
+            return depth;
+        }
+    }
+
+
+    static class _6th {
+        public static void main(String[] args) {
+            _6th handler = new _6th();
+            handler.numSquares(13);
+
+        }
+
+
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> squares;
+
+        public int numSquares(int n) {
+            this.squares = generateSquares(n);
+            dfs(n, new ArrayList<>());
+            for (List<Integer> r : res) {
+                System.out.println(JSON.toJSONString(r));
+            }
+            return -1;
+        }
+
+
+        private void dfs(int n, List<Integer> sub) {
+            if (n < 0) return;
+            if (n == 0) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int x : squares) {
+                sub.add(x);
+                dfs(n - x, sub);
+                sub.remove(sub.size() - 1);
+            }
+        }
+
+
+        private List<Integer> generateSquares(int n) {
+            List<Integer> squares = new ArrayList<>();
+            int base = (int) Math.sqrt(n);
+            for (int i = 1; i <= base; i++) {
+                squares.add((int) Math.pow(i, 2));
+            }
+            return squares;
         }
     }
 }
