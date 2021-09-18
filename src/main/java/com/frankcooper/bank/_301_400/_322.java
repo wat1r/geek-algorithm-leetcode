@@ -1,5 +1,6 @@
 package com.frankcooper.bank._301_400;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Assert;
 
 import java.util.HashMap;
@@ -158,5 +159,13 @@ public class _322 {
             return f[amount] >= (Integer.MAX_VALUE >> 1) ? -1 : f[amount];
         }
     }
+
+
+    static class _5th {
+
+
+
+    }
+
 
 }
