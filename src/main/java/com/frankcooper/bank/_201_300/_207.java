@@ -100,4 +100,34 @@ public class _207 {
 
         return numCourses == 0;
     }
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+        }
+
+
+        public boolean canFinish(int n, int[][] ps) {
+            int[] indegrees = new int[n];
+            for (int[] p : ps) {
+                indegrees[p[0]]++;
+            }
+            Queue<Integer> q = new LinkedList<>();
+            for (int i = 0; i < indegrees.length; i++) {
+                if (indegrees[i] == 0) q.offer(i);
+            }
+            while (!q.isEmpty()) {
+                int cur = q.poll();
+                n--;
+                for (int[] p : ps) {
+                    if (p[1] != cur) continue;
+                    indegrees[p[0]]--;
+                    if (indegrees[p[0]] == 0) q.offer(p[0]);
+                }
+            }
+            return n == 0;
+        }
+
+
+    }
 }

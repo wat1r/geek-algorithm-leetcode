@@ -111,4 +111,35 @@ public class _210 {
         return numCourses == 0 ? paths : new int[0];
     }
 
+
+    static class _2nd {
+        public static void main(String[] args) {
+
+        }
+
+
+        public int[] findOrder(int n, int[][] ps) {
+            int[] indegrees = new int[n];
+            for (int[] p : ps) {
+                indegrees[p[0]]++;
+            }
+            int[] res = new int[n];
+            Queue<Integer> q = new LinkedList<>();
+            for (int i = 0; i < indegrees.length; i++) {
+                if (indegrees[i] == 0) q.offer(i);
+            }
+            int idx = 0;
+            while (!q.isEmpty()) {
+                int cur = q.poll();
+                res[idx++] = cur;
+                n--;
+                for (int[] p : ps) {
+                    if (p[1] != cur) continue;
+                    indegrees[p[0]]--;
+                    if (indegrees[p[0]] == 0) q.offer(p[0]);
+                }
+            }
+            return n == 0 ? res : new int[]{0};
+        }
+    }
 }

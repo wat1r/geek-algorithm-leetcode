@@ -33,4 +33,44 @@ public class _200 {
             }
         }
     }
+
+
+    static class _2nd {
+
+        public static void main(String[] args) {
+
+        }
+
+        int R, C;
+
+        public int numIslands(char[][] grid) {
+            this.R = grid.length;
+            this.C = grid[0].length;
+            int res = 0;
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    if (grid[r][c] == '1') {
+                        dfs(grid, r, c);
+                        res++;
+                    }
+                }
+            }
+            return res;
+        }
+
+        int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        private void dfs(char[][] grid, int r, int c) {
+            if (r < 0 || r >= R || c < 0 || c >= C || grid[r][c] != '1') {
+                return;
+            }
+            grid[r][c] = '0';
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                dfs(grid, nr, nc);
+            }
+        }
+
+    }
+
 }

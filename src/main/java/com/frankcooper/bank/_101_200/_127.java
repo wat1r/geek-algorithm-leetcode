@@ -144,7 +144,6 @@ public class _127 {
             }
             sb.setCharAt(i, tmp);//结束本轮loop后，恢复原样
         }
-
         return resList;
     }
 
