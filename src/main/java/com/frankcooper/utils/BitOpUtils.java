@@ -19,7 +19,22 @@ public class BitOpUtils {
 //        x = 1;
 //        x = -(~x);
 
-        handler.enumerateSubset();
+//        handler.enumerateSubset();
+
+//        System.out.println(String.valueOf(Math.pow(2, 31)));
+//        System.out.println(Integer.MAX_VALUE);
+//        System.out.println((1 << 31) - 1);
+
+        int start = (int) (Math.pow(2, 16) * 2), end = (int) (Math.pow(2, 16) * 3);
+        int res = 0;
+        for (int i = start; i <= end; i++) {
+            if (i % 2 == 0) {
+//                System.out.printf("%d  ", i);
+                res++;
+            }
+        }
+        System.out.println(res);
+
     }
 
 
