@@ -214,4 +214,90 @@ public class _146 {
         }
     }
 
+
+    static class _2nd {
+        class LRUCache {
+
+            DoubleLinkedNode head;
+            DoubleLinkedNode tail;
+            int capacity;
+            Map<Integer, DoubleLinkedNode> cache;
+
+            public LRUCache(int capacity) {
+                this.capacity = capacity;
+                head = new DoubleLinkedNode();
+                tail = new DoubleLinkedNode();
+                head.next = tail;
+                tail.prev = head;
+                cache = new HashMap<>();
+            }
+
+            public int get(int key) {
+                if (!cache.containsKey(key)) return -1;
+                DoubleLinkedNode node = cache.get(key);
+                moveToHead(node);
+                return node.value;
+            }
+
+            public void put(int key, int value) {
+                DoubleLinkedNode node = cache.get(key);
+                if (node == null) { //node为空
+                    node = new DoubleLinkedNode(key, value);
+                    addFirst(node);
+                    cache.put(key, node);
+                    if (cache.size() > capacity) {
+                        DoubleLinkedNode last = popLast();
+                        cache.remove(last.key);
+                    }
+                } else { //node不为空
+                    node.value = value;
+                    moveToHead(node);
+                }
+
+
+            }
+
+
+            private void addFirst(DoubleLinkedNode node) {
+                node.prev = head;
+                node.next = head.next;
+
+                head.next.prev = node;
+                head.next = node;
+            }
+
+            private void remove(DoubleLinkedNode node) {
+                DoubleLinkedNode prev = node.prev;
+                DoubleLinkedNode next = node.next;
+                prev.next = next;
+                next.prev = prev;
+            }
+
+            private DoubleLinkedNode popLast() {
+                DoubleLinkedNode last = tail.prev;
+                remove(last);
+                return last;
+            }
+
+            private void moveToHead(DoubleLinkedNode node) {
+                remove(node);
+                addFirst(node);
+            }
+        }
+
+
+        class DoubleLinkedNode {
+            int key, value;
+            DoubleLinkedNode prev, next;
+
+            public DoubleLinkedNode(int key, int value) {
+                this.key = key;
+                this.value = value;
+            }
+
+            public DoubleLinkedNode() {
+            }
+        }
+    }
+
 }
