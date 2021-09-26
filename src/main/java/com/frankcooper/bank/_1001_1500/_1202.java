@@ -136,7 +136,7 @@ public class _1202 {
         public boolean union(int x, int y) {
             int rootX = find(x), rootY = find(y);
             if (rootX == rootY) return false;
-            if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
+            if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX; 
             if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
             if (ranks[rootX] == ranks[rootY]) {
                 parents[rootY] = rootX;
