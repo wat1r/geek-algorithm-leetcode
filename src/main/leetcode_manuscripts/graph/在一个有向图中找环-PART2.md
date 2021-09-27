@@ -322,3 +322,6 @@ class Edge<T> {
 - [Detect Cycle in Directed Graph Algorithm](https://www.youtube.com/watch?v=rKQaZuoUR4M&t=1s&ab_channel=TusharRoy-CodingMadeSimple)
 
 - [Detect Cycle in a Directed Graph](https://www.geeksforgeeks.org/detect-cycle-in-a-graph/)
+
+- [Struct](
+  https://github.com/mission-peace/interview/blob/master/src/com/interview/graph/CycleInDirectedGraph.java)
