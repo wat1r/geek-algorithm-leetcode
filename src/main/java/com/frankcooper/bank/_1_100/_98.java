@@ -39,5 +39,22 @@ public class _98 {
         }
     }
 
+    static class _2nd {
+        TreeNode prev = null;
+
+        public boolean isValidBST(TreeNode root) {
+            if (root == null) return true;
+            if (!isValidBST(root.left)) {
+                return false;
+            }
+            if (prev != null && prev.val >= root.val) return false;
+            prev = root;
+            if (!isValidBST(root.right)) {
+                return false;
+            }
+            return true;
+        }
+    }
+
 
 }

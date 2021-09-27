@@ -36,6 +36,21 @@ public class _124 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        int res = Integer.MIN_VALUE;
+
+        public int maxPathSum(TreeNode root) {
+            dfs(root);
+            return res;
+        }
+
+        private int dfs(TreeNode root) {
+            if (root == null) return 0;
+            int lval = Math.max(dfs(root.left), 0);
+            int rval = Math.max(dfs(root.right), 0);
+            res = Math.max(res, root.val + lval + rval);
+            return root.val + Math.max(lval, rval);
+        }
     }
 
 

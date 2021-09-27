@@ -1,5 +1,8 @@
 package com.frankcooper.repeate;
 
+import com.frankcooper.io.TreeNodeIOUtils;
+import com.frankcooper.struct.TreeNode;
+
 import java.util.*;
 
 /**
@@ -160,6 +163,46 @@ public class RepeateOne {
         private boolean check(char c) {
             c = (char) (c | ' ');
             return (c >= '0' && c <= '9') || c >= 'a' && c <= 'z';
+        }
+    }
+
+    static class _3nd {
+
+        public static void main(String[] args) {
+            _3nd handler = new _3nd();
+            TreeNode root = TreeNodeIOUtils.transform("[10,16,5,null,-3,6,11]");
+            List<Integer> res = new ArrayList<>();
+            int sum = 26;
+            handler.rootToLeafSum(root, sum, res);
+            res.forEach(System.out::println);
+        }
+
+        boolean rootToLeafSum(TreeNode root, int sum, List<Integer> res) {
+            if (root == null) return false;
+            if (root.left == null && root.right == null) {
+                if (root.val == sum) {
+                    res.add(root.val);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            if (rootToLeafSum(root.left, sum - root.val, res)) {
+                res.add(root.val);
+                return true;
+            }
+            if (rootToLeafSum(root.right, sum - root.val, res)) {
+                res.add(root.val);
+                return true;
+            }
+            return false;
+        }
+
+        public int sizeOfBinaryTree(TreeNode root) {
+            if (root == null) return 0;
+            int l = sizeOfBinaryTree(root.left);
+            int r = sizeOfBinaryTree(root.right);
+            return l + r + 1;
         }
     }
 }
