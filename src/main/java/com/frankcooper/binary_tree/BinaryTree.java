@@ -14,9 +14,9 @@ import java.util.Queue;
  */
 public class BinaryTree {
 
-    static class _1st {
+    static class _1st_1 {
         public static void main(String[] args) {
-            _1st handler = new _1st();
+            _1st_1 handler = new _1st_1();
             TreeNode root = TreeNodeIOUtils.transform("[1,2,3,4,5,null,null]");
             Assert.assertEquals(3, handler.maxDepth(root));
         }
@@ -27,9 +27,9 @@ public class BinaryTree {
         }
     }
 
-    static class _2nd {
+    static class _1st_2 {
         public static void main(String[] args) {
-            _2nd handler = new _2nd();
+            _1st_2 handler = new _1st_2();
             TreeNode root = TreeNodeIOUtils.transform("[1,2,3,4,5,null,null]");
             Assert.assertEquals(3, handler.maxDepth(root));
         }
@@ -52,7 +52,7 @@ public class BinaryTree {
         }
     }
 
-    static class _3rd {
+    static class _1st_3 {
         public int maxDepth(TreeNode root) {
             if (root == null) return 0;
             Queue<TreeNode> queue = new LinkedList<>();
@@ -70,4 +70,48 @@ public class BinaryTree {
             return level;
         }
     }
+
+
+    static class _2nd_1 {
+        public static void main(String[] args) {
+            _2nd_1 handler = new _2nd_1();
+            TreeNode root = TreeNodeIOUtils.transform("[1,2,3,4,5,null,null]");
+            handler.printLevelOrder(root);
+        }
+
+        public void printLevelOrder(TreeNode root) {
+            int height = height(root);
+            for (int i = 1; i <= height; i++) {
+                printCurrentLevel(root, i);
+            }
+        }
+
+        private int height(TreeNode root) {
+            if (root == null)
+                return 0;
+            else {
+                /* compute  height of each subtree */
+                int lheight = height(root.left);
+                int rheight = height(root.right);
+                /* use the larger one */
+                if (lheight > rheight)
+                    return (lheight + 1);
+                else return (rheight + 1);
+            }
+        }
+
+
+        private void printCurrentLevel(TreeNode root, int level) {
+            if (root == null)
+                return;
+            if (level == 1)
+                System.out.print(root.val + " ");
+            else if (level > 1) {
+                printCurrentLevel(root.left, level - 1);
+                printCurrentLevel(root.right, level - 1);
+            }
+        }
+    }
+
+
 }
