@@ -8,6 +8,7 @@ public class _One {
     static class _1st {
         static int M, N;
         static int[][] grid;
+        static int[] P;
 
         public static void main(String[] args) {
             _1st handler = new _1st();
@@ -38,6 +39,7 @@ public class _One {
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
             int Px = 10, Py = 0;//P点
+            P = new int[]{Px, Py};
             M = grid.length;
             N = grid[0].length;
             handler.exec();
@@ -48,7 +50,8 @@ public class _One {
             //step1
             int[] E = findE();
             //step2
-            
+            int[] A = findA(E);
+
         }
 
 
@@ -66,6 +69,7 @@ public class _One {
                     }
                 }
             }
+            System.out.printf("E:%d--->%d\n", res[0], res[1]);
             return res;
         }
 
@@ -83,17 +87,57 @@ public class _One {
         }
 
 
-        private int[] findA() {
+        private int[] findA(int[] E) {
+            int[] A = null;
+            int minDis = Integer.MAX_VALUE;
+            for (int i = 0; i < M; i++) {
+                for (int j = 0; j < N; j++) {
+                    if (isCoast(new int[]{i, j})) {
+                        int dis = calDistance(E, new int[]{i, j});
+                        System.out.printf("%d--->%d,%d\n", dis, i, j);
+                        if (dis <= minDis) {
+                            if (dis == minDis) {
+                                int curPA = calDistance(P, new int[]{i, j});
+                                int prePA = calDistance(P, A);
+                                if (curPA < prePA) {
+                                    A = new int[]{i, j};
+                                }
+                            } else {
+                                A = new int[]{i, j};
+                            }
+                            minDis = dis;
 
-            return null;
+                        }
+                    }
+                }
+            }
+            System.out.printf("A:%d-->%d\n", A[0], A[1]);
+            return A;
+        }
+
+        private boolean isCoast(int[] p) {
+            int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+            if (grid[p[0]][p[1]] == 1) {
+                for (int[] d : dirs) {
+                    int nx = p[0] + d[0], ny = p[1] + d[1];
+                    if (nx >= 0 && nx < M && ny >= 0 && ny < N) {
+                        if (grid[nx][ny] == 0) return true;
+                    }
+                }
+            }
+            return false;
         }
 
 
-        private int minPath() {
+        private int minPathP2A(int[] P, int[] A) {
 
             return 0;
         }
 
+        private int minPathA2E(int[] A, int[] E) {
+
+            return 0;
+        }
 
         private int calDistance(int[] p0, int[] p1) {
             return Math.abs(p0[0] - p1[0]) + Math.abs(p0[1] - p1[1]);

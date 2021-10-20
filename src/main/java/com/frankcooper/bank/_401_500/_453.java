@@ -1,20 +1,23 @@
-package com.frankcooper;
+package com.frankcooper.bank._401_500;
 
-/*import java.util.*;
-import org.junit.Assert;*/
-public class _Model {
+import java.util.*;
+
+import org.junit.Assert;
+
+public class _453 {
 
     static class _1st {
         public static void main(String[] args) {
-//            _1st handler = new _1st();
+            _1st handler = new _1st();
 
-            long start = System.currentTimeMillis();
-            for (int i = 0; i < 10000000; i++) {
-                System.out.println(i);
-            }
-            long end = System.currentTimeMillis();
-            System.out.println("共耗时" + (end - start) + "毫秒");
+        }
 
+        public int minMoves(int[] nums) {
+            int minn = Integer.MAX_VALUE;
+            for (int x : nums) minn = Math.min(minn, x);
+            int res = 0;
+            for (int x : nums) res += x - minn;
+            return res;
         }
 
 
