@@ -1,9 +1,5 @@
 ## Level Order Binary Tree Traversal
 
-
-
-
-
 ### 方法1：利用函数打印当前层
 
 有两种方式打印，printCurrentLevel是打印当前层的方法，从root节点开始，可挨层打印，printLevelorder是打印整个树的节点

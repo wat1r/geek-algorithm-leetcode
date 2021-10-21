@@ -1,6 +1,7 @@
 package com.frankcooper.binary_tree;
 
 import com.frankcooper.io.TreeNodeIOUtils;
+import com.frankcooper.struct.ConnectTreeNode;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
@@ -68,6 +69,139 @@ public class BinaryTree {
                 level++;
             }
             return level;
+        }
+    }
+
+
+    static class _1st_4 {
+
+        public static void main(String[] args) {
+            _1st_4 handler = new _1st_4();
+            TreeNode r1 = TreeNodeIOUtils.transform("[26,10,3,4,6,null,3,null,30,null,null,null,null]");
+            // TREE 1
+//              26
+//             /   \
+//            10     3
+//           /    \     \
+//          4      6      3
+//           \
+//            30
+
+//            // TREE 2
+//           10
+//         /    \
+//         4      6
+//          \
+//          30
+            TreeNode r2 = TreeNodeIOUtils.transform("[10,4,6,null,30,null,null]");
+            if (handler.isSubTree(r1, r2))
+                System.out.println("Tree 2 is subtree of Tree 1 ");
+            else
+                System.out.println("Tree 2 is not a subtree of Tree 1");
+//
+        }
+
+        //判断S是否是T的一棵子树
+        public boolean isSubTree(TreeNode T, TreeNode S) {
+            if (S == null) return true;//S已经遍历完成
+            if (T == null) return false;//T已经遍历完成，但S还有没有走完的节点
+            if (areIdentical(T, S)) return true;//是否当前的两棵树是完全一样的
+            //T的左子树为根节点和S 对比  || T的右子树为根节点和S 对比
+            return isSubTree(T.left, S) || isSubTree(T.right, S);
+        }
+
+        //判断r1和r2为根节点的两棵树，是不是完全相同的
+        public boolean areIdentical(TreeNode r1, TreeNode r2) {
+            if (r1 == null && r2 == null) return true;
+            if (r1 == null || r2 == null) return false;
+            //判断左右子树是否相同
+            return r1.val == r2.val && areIdentical(r1.left, r2.left) && areIdentical(r1.right, r2.right);
+        }
+    }
+
+    static class _1st_5 {
+        public static void main(String[] args) {
+            _1st_5 handler = new _1st_5();
+            //Constructed binary tree is
+//             10
+//            /  \
+//          8     2
+//         /
+//        3
+//            TreeNode
+
+//            // Let us check the values of nextRight pointers
+//            System.out.println("Following are populated nextRight pointers in "
+//                    + "the tree"
+//                    + "(-1 is printed if there is no nextRight)");
+//            int a = tree.root.nextRight != null ? tree.root.nextRight.data : -1;
+//            System.out.println("nextRight of " + tree.root.data + " is "
+//                    + a);
+//            int b = tree.root.left.nextRight != null ? tree.root.left.nextRight.data : -1;
+//            System.out.println("nextRight of " + tree.root.left.data + " is "
+//                    + b);
+//            int c = tree.root.right.nextRight != null ? tree.root.right.nextRight.data : -1;
+//            System.out.println("nextRight of " + tree.root.right.data + " is "
+//                    + c);
+//            int d = tree.root.left.left.nextRight != null ? tree.root.left.left.nextRight.data : -1;
+//            System.out.println("nextRight of " + tree.root.left.left.data + " is "
+//                    + d);
+
+            ConnectTreeNode root = new ConnectTreeNode(10);
+            root.left = new ConnectTreeNode(8);
+            root.right = new ConnectTreeNode(2);
+            root.left.left = new ConnectTreeNode(3);
+
+            // Populates nextRight pointer in all nodes
+            handler.connectII(root);
+
+            // Let us check the values
+            // of nextRight pointers
+            System.out.print("Following are populated nextRight pointers in the tree"
+                    + " (-1 is printed if there is no nextRight)\n");
+            System.out.print(
+                    "nextRight of " + root.val + " is " + (root.nextRight != null ? root.nextRight.val : -1) + "\n");
+            System.out.print("nextRight of " + root.left.val + " is "
+                    + (root.left.nextRight != null ? root.left.nextRight.val : -1) + "\n");
+            System.out.print("nextRight of " + root.right.val + " is "
+                    + (root.right.nextRight != null ? root.right.nextRight.val : -1) + "\n");
+            System.out.print("nextRight of " + root.left.left.val + " is "
+                    + (root.left.left.nextRight != null ? root.left.left.nextRight.val : -1) + "\n");
+
+        }
+
+        public void connect(ConnectTreeNode root) {
+            Queue<ConnectTreeNode> q = new LinkedList<>();
+            q.offer(root);
+            ConnectTreeNode cur = null;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                for (int i = 0; i < size; i++) {
+                    ConnectTreeNode prev = cur;
+                    cur = q.poll();
+                    if (i > 0) prev.nextRight = cur;
+                    if (cur.left != null) q.offer(cur.left);
+                    if (cur.right != null) q.offer(cur.right);
+                }
+                cur.nextRight = null;
+            }
+        }
+
+
+        public void connectII(ConnectTreeNode root) {
+            //出口条件
+            if (root == null) return;
+            //当前节点的左子节点，执行当前节点的右子节点
+            if (root.left != null) {
+                root.left.nextRight = root.right;
+            }
+            //当前节点的右子节点指向当前节点的下一个节点的左子节点或者null
+            if (root.right != null) {
+                root.right.nextRight = (root.nextRight != null ? root.nextRight.left : null);
+            }
+            //处理当前节点的左右子节点
+            connectII(root.left);
+            connectII(root.right);
         }
     }
 

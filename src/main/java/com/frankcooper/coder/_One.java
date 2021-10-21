@@ -6,6 +6,11 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+
 public class _One {
 
     static class _1st {
@@ -54,6 +59,8 @@ public class _One {
             int[] E = findE();
             //step2
             int[] A = findA(E);
+            //step3
+            minPathP2A(P, A);
 
         }
 
@@ -118,8 +125,9 @@ public class _One {
             return A;
         }
 
+        int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
         private boolean isCoast(int[] p) {
-            int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
             if (grid[p[0]][p[1]] == 1) {
                 for (int[] d : dirs) {
                     int nx = p[0] + d[0], ny = p[1] + d[1];
@@ -132,9 +140,44 @@ public class _One {
         }
 
 
-        private int minPathP2A(int[] P, int[] A) {
+        private void minPathP2A(int[] P, int[] A) {
+            Queue<int[]> q = new LinkedList<>();
+            Map<String, Boolean> vis = new HashMap<>();
+            q.offer(P);
+            int level = -1;
+            boolean find = false;
+            while (!q.isEmpty() && !find) {
+                int size = q.size();
+                for (int i = 0; i < size; i++) {
+                    int[] c = q.poll();
+                    String k = c[0] + "#" + c[1];
+                    vis.put(k, true);
+                    if (c[0] == A[0] && c[1] == A[1]) {
+                        find = true;
+                    }
+                    for (int[] d : dirs) {
+                        int nx = c[0] + d[0], ny = c[1] + d[1];
+                        if (nx >= 0 && nx < M && ny >= 0 && ny < N && grid[nx][ny] == 1) {
+                            k = nx + "#" + ny;
+                            if (vis.get(k) == null || !vis.get(k)) {
+                                q.offer(new int[]{nx, ny});
+                                vis.put(k, true);
+                            }
+                        }
+                    }
+                }
+                level++;
+            }
+            System.out.printf("%d\n", level);
 
-            return 0;
+            //17
+            //P[10,0]->A[16,9]  : [10,0]->[11,0]->[11,1]->[12,1]->[13,1]->[13,2]->[14,2]->[14,3]->[15,3]->[16,3]->[17,3]->[17,4]->[17,5]->[16,5]->[16,6]->[16,7]->[16,8]->[16,9]
+            //A->E([17,9])
+            //[16,9]->[17,9]
+        }
+
+        private void printPathP2A(int[] P, int[] A, int path) {
+
         }
 
         private int minPathA2E(int[] A, int[] E) {
