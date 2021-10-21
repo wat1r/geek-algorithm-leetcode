@@ -254,7 +254,7 @@ public class _One {
             }
             if (maxx == Integer.MIN_VALUE) {
                 System.out.printf("Player:[%s]-->can't pass\n", player.name);
-            }else {
+            } else {
                 System.out.printf("Player:[%s]-->max XOR :[%d]\n", player.name, maxx);
             }
 
@@ -313,8 +313,75 @@ public class _One {
 
 
     static class _3rd {
+
+        static int M = 10, N = 10;
+        static int targetXOR = 88;
+        static int si = 0, sj = 0, ei = 9, ej = 9;
+        static int MOD = 100;
+
+        static int[][] grid = new int[M][N];
+
+
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            handler.exec();
+        }
+
+
+        private void exec() {
+            build();
+            int cnt = 0;
+            List<List<int[]>> paths = dfs(si, sj);
+            for (List<int[]> path : paths) {
+                int xor = calXOR(path);
+                System.out.printf("%d\n", xor);
+                if (xor == targetXOR) {
+                    cnt++;
+                }
+            }
+            System.out.printf("cnt:%d\n", cnt % MOD);
+        }
+
+
+        private void build() {
+            int idx = 1;
+            for (int i = 0; i < M; i++) {
+                for (int j = 0; j < N; j++) {
+                    grid[i][j] = idx++;
+                }
+            }
+        }
+
+        int[][] dirs = {{1, 0}, {0, 1}};
+
+        private List<List<int[]>> dfs(int i, int j) {
+            List<List<int[]>> res = new ArrayList<>();
+            if (i == ei && j == ej) {
+                List<int[]> path = new ArrayList<>();
+                path.add(new int[]{i, j});
+                res.add(path);
+                return res;
+            }
+            for (int[] d : dirs) {
+                int ni = i + d[0], nj = j + d[1];
+                if (ni >= 0 && ni < M && nj >= 0 && nj < N) {
+//                    System.out.printf("->[%d,%d]", ni, nj);
+                    List<List<int[]>> paths = dfs(ni, nj);
+                    for (List<int[]> path : paths) {
+                        path.add(0, new int[]{i, j});
+                        res.add(path);
+                    }
+                }
+            }
+            return res;
+        }
+
+        private int calXOR(List<int[]> path) {
+            int res = 0;
+            for (int[] x : path) {
+                res ^= grid[x[0]][x[1]];
+            }
+            return res;
         }
 
 
