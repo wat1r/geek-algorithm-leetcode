@@ -52,7 +52,8 @@ public class _797 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
             int[][] graph = {{1, 2}, {3}, {3}, {}};
-            handler.allPathsSourceTarget(graph);
+            List<List<Integer>> res = handler.allPathsSourceTarget(graph);
+            System.out.printf("");
         }
 
         //已经建好图了，不需要再建图

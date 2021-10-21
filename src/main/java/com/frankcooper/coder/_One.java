@@ -3,6 +3,9 @@ package com.frankcooper.coder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class _One {
 
     static class _1st {
@@ -155,9 +158,157 @@ public class _One {
     }
 
     static class _2nd {
+
+
+        static int[][] standard = new int[][]
+                {{6, 5, 2, 6, 7, 9, 4, 5, 1, 3},
+                        {3, 3, 3, 2, 3, 6, 7, 2, 7, 2},
+                        {5, 10, 3, 2, 2, 3, 6, 5, 2, 8},
+                        {4, 3, 6, 6, 6, 3, 8, 50, 3, 2},
+                        {4, 7, 1, 2, 8, 2, 6, 4, 7, 5},
+                        {5, 4, 2, 80, 2, 0, 2, 5, 7, 9},
+                        {1, 3, 7, 6, 1, 9, 3, 3, 8, 9},
+                        {3, 1, 8, 9, 3, 9, 0, 8, 1, 3},
+                        {30, 2, 3, 3, 8, 5, 7, 2, 5, 6},
+                        {5, 6, 6, 7, 2, 3, 3, 5, 3, 8}};
+        static int[][] A = new int[][]
+                {{0, 2, 9, 6, 5, 8, 8, 4, 5, 7},
+                        {6, 5, 4, 2, 5, 6, 6, 7, 9, 1},
+                        {3, 3, 9, 3, 4, 2, 5, 3, 6, 5},
+                        {4, 2, 1, 1, 2, 3, 4, 6, 4, 3},
+                        {5, 1, 4, 3, 7, 2, 5, 2, 3, 4},
+                        {4, 3, 6, 6, 9, 6, 1, 6, 3, 2},
+                        {3, 2, 3, 5, 2, 1, 3, 3, 4, 7},
+                        {2, 6, 4, 5, 3, 6, 4, 7, 5, 3},
+                        {3, 1, 2, 8, 2, 9, 8, 3, 9, 4},
+                        {1, 3, 2, 7, 2, 6, 6, 1, 9, 6}};
+
+        static int[][] B =
+                {{4, 6, 7, 3, 2, 6, 2, 7, 3, 0},
+                        {5, 4, 6, 5, 5, 3, 9, 6, 1, 3},
+                        {9, 7, 3, 7, 2, 3, 6, 9, 7, 2},
+                        {7, 3, 6, 5, 6, 4, 1, 4, 4, 3},
+                        {5, 6, 7, 9, 5, 6, 5, 5, 2, 8},
+                        {4, 8, 2, 1, 5, 7, 5, 2, 3, 2},
+                        {4, 3, 5, 2, 5, 1, 4, 2, 3, 7},
+                        {6, 4, 2, 3, 2, 5, 1, 6, 4, 6},
+                        {9, 0, 4, 5, 8, 1, 5, 2, 1, 3},
+                        {4, 3, 1, 6, 3, 3, 2, 1, 8, 9}};
+        static int[][] C = new int[][]
+                {{4, 3, 6, 6, 9, 6, 1, 6, 3, 2},
+                        {2, 4, 4, 1, 7, 9, 6, 2, 9, 8},
+                        {3, 2, 3, 5, 2, 1, 3, 3, 4, 7},
+                        {2, 6, 4, 5, 3, 6, 4, 7, 5, 3},
+                        {3, 1, 2, 8, 2, 9, 8, 3, 9, 4},
+                        {2, 4, 3, 7, 6, 5, 6, 5, 2, 8},
+                        {1, 3, 2, 7, 2, 6, 6, 1, 9, 6},
+                        {3, 2, 1, 3, 6, 3, 9, 8, 5, 8},
+                        {5, 6, 5, 6, 1, 7, 4, 2, 3, 8},
+                        {0, 1, 3, 5, 3, 2, 6, 1, 5, 4}};
+        static int[][] D = new int[][]
+                {{4, 8, 2, 1, 5, 7, 5, 2, 3, 2},
+                        {5, 4, 2, 3, 6, 2, 2, 3, 9, 6},
+                        {4, 3, 5, 2, 5, 1, 4, 2, 3, 7},
+                        {6, 4, 2, 3, 2, 5, 1, 6, 4, 6},
+                        {9, 0, 4, 5, 8, 1, 5, 2, 1, 3},
+                        {7, 6, 2, 4, 8, 6, 6, 2, 1, 5},
+                        {4, 3, 1, 6, 3, 3, 2, 1, 8, 9},
+                        {4, 7, 6, 5, 2, 6, 7, 7, 5, 6},
+                        {9, 3, 5, 1, 5, 9, 4, 5, 3, 8},
+                        {2, 4, 3, 1, 8, 5, 3, 2, 3, 0}};
+
+        static int height = 3;
+
+
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int[][] dirsA = {{0, 1}, {1, 0}};//右，下
+            Player playerA = new Player("A", 0, 0, M - 1, N - 1, dirsA, A);
+            int[][] dirsB = {{0, -1}, {1, 0}};//左，下
+            Player playerB = new Player("B", 0, N - 1, M - 1, 0, dirsB, B);
+            int[][] dirsC = {{0, 1}, {-1, 0}};//右，上
+            Player playerC = new Player("C", M - 1, 0, 0, N - 1, dirsC, C);
+            int[][] dirsD = {{0, -1}, {-1, 0}};//左，上
+            Player playerD = new Player("D", M - 1, N - 1, 0, 0, dirsD, D);
+            List<Player> players = new ArrayList<Player>() {{
+                add(playerA);
+                add(playerB);
+                add(playerC);
+                add(playerD);
+            }};
+            for (Player player : players) {
+                if (player.grid != null) {
+                    handler.calMaxXOR(player);
+                }
+            }
         }
+
+        static int M = standard.length, N = standard[0].length;
+
+        private void calMaxXOR(Player player) {
+            List<List<int[]>> allPaths = dfs(player.si, player.sj, player);
+            int maxx = Integer.MIN_VALUE;
+            for (List<int[]> path : allPaths) {
+                int res = calXOR(path);
+                maxx = Math.max(maxx, res);
+            }
+            if (maxx == Integer.MIN_VALUE) {
+                System.out.printf("Player:[%s]-->can't pass\n", player.name);
+            }else {
+                System.out.printf("Player:[%s]-->max XOR :[%d]\n", player.name, maxx);
+            }
+
+        }
+
+        private List<List<int[]>> dfs(int i, int j, Player player) {
+            List<List<int[]>> res = new ArrayList<>();
+            if (i == player.ei && j == player.ej) {
+                List<int[]> path = new ArrayList<>();
+                path.add(new int[]{i, j});
+                res.add(path);
+                return res;
+            }
+            for (int[] d : player.dirs) {
+                int ni = i + d[0], nj = j + d[1];
+                if (ni >= 0 && ni < M && nj >= 0 && nj < N && valid(i, j, ni, nj, player.grid)) {
+//                    System.out.printf("->[%d,%d]", ni, nj);
+                    List<List<int[]>> paths = dfs(ni, nj, player);
+                    for (List<int[]> path : paths) {
+                        path.add(0, new int[]{i, j});
+                        res.add(path);
+                    }
+                }
+            }
+            return res;
+        }
+
+        private boolean valid(int i, int j, int ni, int nj, int[][] grid) {
+            return Math.abs(grid[i][j] - grid[ni][nj]) <= height;
+        }
+
+        private int calXOR(List<int[]> path) {
+            int res = 0;
+            for (int[] x : path) {
+                res ^= standard[x[0]][x[1]];
+            }
+            return res;
+        }
+
+
+        @Data
+        @AllArgsConstructor
+        public static class Player {
+            private String name;
+            //起始坐标
+            private int si;
+            private int sj;
+            private int ei;
+            private int ej;
+            //移动的坐标
+            private int[][] dirs;
+            private int[][] grid;
+        }
+
     }
 
 
@@ -165,6 +316,8 @@ public class _One {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+
     }
 
     static class _4th {

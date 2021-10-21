@@ -6,14 +6,8 @@ public class _Model {
 
     static class _1st {
         public static void main(String[] args) {
-//            _1st handler = new _1st();
+            _1st handler = new _1st();
 
-            long start = System.currentTimeMillis();
-            for (int i = 0; i < 10000000; i++) {
-                System.out.println(i);
-            }
-            long end = System.currentTimeMillis();
-            System.out.println("共耗时" + (end - start) + "毫秒");
 
         }
 
