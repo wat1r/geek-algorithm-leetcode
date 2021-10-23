@@ -433,6 +433,60 @@ public class _One {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            //
+            System.out.println(handler.A01());
+
+//            System.out.println((1>>2)+1);
+//
+            System.out.println((char) 'E' - 65);
+//            System.out.println((char)  - 7);
+            int ans1 = 7, ans2 = 14, ans3 = 15, ans4 = 4;
+            System.out.println(  handler.A05(ans1,ans2,ans3,ans4));
         }
+
+        int[] array = new int[]{13, 14, 15};
+
+        public int A01() {
+            fun(array);
+            return sum(array);
+        }
+
+        private void fun(int[] array) {
+            array = new int[]{16, 17, 18};
+//            System.out.println(sum(array));
+        }
+
+        private int sum(int[] array) {
+            int res = 0;
+            for (int i : array) {
+                res += i % 2 + 2;
+            }
+            return res - 1;
+        }
+
+
+        public int A02(int input) {
+            int O = 14;
+//            String res = String.format("")
+            return 0;
+        }
+//
+//        public int A03(float input) {
+//            int i = 0;
+//            if ((float) (input +  (1e-5))) {
+//
+//            }
+//        }
+
+        public String A05(int ans1, int ans2, int ans3, int ans4) {
+            String res = "";
+            res += (char) (ans1 + 65);
+            res += (char) (ans2 + 65);
+            res += (char) (ans3 + 65);
+            res += (char) (ans4 + 65);
+            return res;
+        }
+
+
     }
 }

@@ -1,7 +1,9 @@
 package com.frankcooper.binary_tree;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.ConnectTreeNode;
+import com.frankcooper.struct.ListNode;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
@@ -205,6 +207,163 @@ public class BinaryTree {
         }
     }
 
+    static class _1st_6 {
+        public static void main(String[] args) {
+            _1st_6 handler = new _1st_6();
+            TreeNode root = TreeNodeIOUtils.transform("[1,2,3,4,5,8,null]");
+            int K = 2;
+            handler.printKDistant(root, K);
+
+        }
+
+        public void printKDistant(TreeNode root, int K) {
+            if (root == null || K < 0) return;
+            if (K == 0) {
+                System.out.printf("%d ", root.val);
+                return;
+            }
+            printKDistant(root.left, K - 1);
+            printKDistant(root.right, K - 1);
+        }
+    }
+
+    static class _1st_7 {
+        public static void main(String[] args) {
+
+        }
+
+        public int minValue(TreeNode node) {
+            TreeNode cur = node;
+            while (cur.left != null) {
+                cur = cur.left;
+            }
+            return cur.val;
+        }
+    }
+
+
+    static class _1st_8 {
+        public static void main(String[] args) {
+            _1st_8 handler = new _1st_8();
+            TreeNode root = TreeNodeIOUtils.transform("[4,2,5,1,3,null,null]");
+            if (handler.isBST_III(root)) {
+                System.out.println("is BST");
+            } else {
+                System.out.println("is not BST");
+            }
+        }
+
+        public boolean isBST(TreeNode node) {
+            if (node == null) return true;//为空
+            //左节点比当前节点值大，右节点比当前节点值小，不是BST，返回false
+            if (node.left != null && node.left.val > node.val) return false;
+            if (node.right != null && node.right.val < node.val) return false;
+            //如果node节点的左右子树都不是BST，返回false，不是BST
+            if (!isBST(node.left) || !isBST(node.right)) return false;
+            return true;
+        }
+
+
+        public boolean isBST_II(TreeNode node) {
+            if (node == null) return true;//为空
+            //左节点下的最大值比当前节点值大，右节点下的最小值比当前节点值小，不是BST，返回false
+            if (node.left != null && maxValue(node.left) > node.val) return false;
+            if (node.right != null && minValue(node.right) < node.val) return false;
+            //如果node节点的左右子树都不是BST，返回false，不是BST
+            if (!isBST_II(node.left) || !isBST_II(node.right)) return false;
+            return true;
+        }
+
+        private int minValue(TreeNode root) {
+            return 0;
+        }
+
+        private int maxValue(TreeNode root) {
+            return 0;
+        }
+
+        public boolean isBST_III(TreeNode node) {
+            return isBSTUtil(node, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        }
+
+        private boolean isBSTUtil(TreeNode node, int minn, int maxx) {
+            if (node == null) return true;
+            if (node.val < minn || node.val > maxx) return false;
+            return isBSTUtil(node.left, minn, node.val - 1)
+                    && isBSTUtil(node.right, node.val + 1, maxx);
+
+        }
+
+        TreeNode prev = null;
+
+        public boolean isBST_IV(TreeNode node) {
+            if (node == null) return true;
+            if (!isBST_IV(node.left)) return false;
+            if (prev != null && node.val <= prev.val) return false;
+            prev = node;
+            if (!isBST_IV(node.right)) return false;
+            return true;
+        }
+    }
+
+    static class _1st_9 {
+        public static void main(String[] args) {
+            _1st_9 handler = new _1st_9();
+            TreeNode root1 = TreeNodeIOUtils.transform("[10,8,20,25,null,15,5,3,7]");
+            handler.printInOrder(root1);
+            System.out.println();
+//            handler.correctBST(root1);
+            handler.printInOrder(root1);
+            System.out.println();
+            TreeNode root2 = TreeNodeIOUtils.transform("[10,7,20,5,null,15,25,3,8]");
+            handler.printInOrder(root2);
+            System.out.println();
+            handler.correctBST(root2);
+            handler.printInOrder(root2);
+            System.out.println();
+        }
+
+        TreeNode first, middle, last;
+        TreeNode prev;
+
+        public void correctBST(TreeNode root) {
+            correctBSTUtil(root);
+            if (first != null && last != null) {//case1
+                int t = first.val;
+                first.val = last.val;
+                last.val = t;
+            } else if (first != null && middle != null) {//case2 last is null
+                int t = first.val;
+                first.val = middle.val;
+                middle.val = t;
+            }
+
+        }
+
+        public void correctBSTUtil(TreeNode root) {
+            if (root == null) return;
+            correctBSTUtil(root.left);
+            if (prev != null && root.val < prev.val) {
+                if (first == null) {
+                    first = prev;
+                    middle = root;
+                } else {
+                    last = root;
+                }
+            }
+            prev = root;
+            correctBSTUtil(root.right);
+        }
+
+        public void printInOrder(TreeNode root) {
+            if (root == null) return;
+            printInOrder(root.left);
+            System.out.printf("%d ", root.val);
+            printInOrder(root.right);
+        }
+
+
+    }
 
     static class _2nd_1 {
         public static void main(String[] args) {
