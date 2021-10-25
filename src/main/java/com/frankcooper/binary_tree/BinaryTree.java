@@ -491,6 +491,47 @@ public class BinaryTree {
     }
 
 
+    static class _2nd_3 {
+        public static void main(String[] args) {
+            _2nd_3 handler = new _2nd_3();
+            TreeNode root = TreeNodeIOUtils.transform("[20,8,22,4,12,null,null,null,null,10,14]");
+            int n1 = 10, n2 = 14;
+//            TreeNode res1 = handler.lca(root, n1, n2);
+            TreeNode res1 = handler.lca_iterate(root, n1, n2);
+            System.out.println("LCA of " + n1 + " and " + n2 + " is " + res1.val);
+
+            n1 = 14;
+            n2 = 8;
+//            res1 = handler.lca(root, n1, n2);
+            res1 = handler.lca_iterate(root, n1, n2);
+            System.out.println("LCA of " + n1 + " and " + n2 + " is " + res1.val);
+
+            n1 = 10;
+            n2 = 22;
+//            res1 = handler.lca(root, n1, n2);
+            res1 = handler.lca_iterate(root, n1, n2);
+            System.out.println("LCA of " + n1 + " and " + n2 + " is " + res1.val);
+        }
+
+
+        public TreeNode lca(TreeNode root, int n1, int n2) {
+            if (root == null) return null;
+            if (root.val > n1 && root.val > n2) return lca(root.left, n1, n2);
+            if (root.val < n1 && root.val < n2) return lca(root.right, n1, n2);
+            return root;
+        }
+
+        public TreeNode lca_iterate(TreeNode root, int n1, int n2) {
+            while (root != null) {
+                if (root.val > n1 && root.val > n2) root = root.left;
+                else if (root.val < n1 && root.val < n2) root = root.right;
+                else break;
+            }
+            return root;
+        }
+
+    }
+
     static class _2nd_0 {
         public static void main(String[] args) {
 
