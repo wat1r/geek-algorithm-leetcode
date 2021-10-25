@@ -7,7 +7,9 @@ import com.frankcooper.struct.ListNode;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -406,5 +408,94 @@ public class BinaryTree {
         }
     }
 
+    static class _2nd_2 {
+        public static void main(String[] args) {
+            _2nd_2 handler = new _2nd_2();
+            TreeNode node1 = TreeNodeIOUtils.transform("[100,50,300,20,70]");
+            TreeNode node2 = TreeNodeIOUtils.transform("[80,40,200]");
+            TreeNode resNode = handler.mergeTrees(node1, node2);
+            handler.inorderUtil(resNode);
+
+        }
+
+        public List<Integer> storeInorder(TreeNode node) {
+            List<Integer> list1 = new ArrayList<>();
+            List<Integer> list2 = storeInorderUtil(node, list1);
+            return list2;
+        }
+
+        //中序遍历存储BST的结果集
+        public List<Integer> storeInorderUtil(TreeNode node, List<Integer> list) {
+            if (node == null) return list;
+            storeInorderUtil(node.left, list);
+            list.add(node.val);
+            storeInorderUtil(node.right, list);
+            return list;
+        }
+
+
+        //合并list1和list2
+        public List<Integer> merge(List<Integer> list1, List<Integer> list2, int m, int n) {
+            List<Integer> list3 = new ArrayList<>();
+            int i = 0, j = 0;
+            while (i < m && j < n) {
+                if (list1.get(i) < list2.get(j)) {
+                    list3.add(list1.get(i));
+                    i++;
+                } else {
+                    list3.add(list2.get(j));
+                    j++;
+                }
+            }
+            while (i < m) {
+                list3.add(list1.get(i));
+                i++;
+            }
+            while (j < n) {
+                list3.add(list2.get(j));
+                j++;
+            }
+            return list3;
+        }
+
+        //将list的start到end的元素转换成TreeNode
+        public TreeNode arrayList2BST(List<Integer> list, int start, int end) {
+            if (start > end) return null;//越界，返回
+            int mid = (start + end) / 2;//中间点
+            TreeNode node = new TreeNode(list.get(mid));//新建节点
+            //构建左右子树节点
+            node.left = arrayList2BST(list, start, mid - 1);
+            node.right = arrayList2BST(list, mid + 1, end);
+            return node;
+        }
+
+        //合并node1和node2的两棵BST
+        public TreeNode mergeTrees(TreeNode node1, TreeNode node2) {
+            List<Integer> list1 = storeInorder(node1);
+            List<Integer> list2 = storeInorder(node2);
+            int m = list1.size(), n = list2.size();
+            List<Integer> list3 = merge(list1, list2, m, n);
+            TreeNode resNode = arrayList2BST(list3, 0, list3.size() - 1);
+            return resNode;
+        }
+
+
+        public void inorderUtil(TreeNode node) {
+            if (node == null)
+                return;
+            inorderUtil(node.left);
+            System.out.print(node.val + " ");
+            inorderUtil(node.right);
+        }
+
+    }
+
+
+    static class _2nd_0 {
+        public static void main(String[] args) {
+
+        }
+
+    }
 
 }
