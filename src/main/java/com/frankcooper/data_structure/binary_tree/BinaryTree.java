@@ -1,4 +1,4 @@
-package com.frankcooper.binary_tree;
+package com.frankcooper.data_structure.binary_tree;
 
 import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.ConnectTreeNode;
