@@ -29,6 +29,39 @@ T中n1和n2的LCA是距离根最远的n1和n2的共同祖先。例如，作为�
 2.在哈希表中插入n1及其所有祖先。
 3.检查哈希表中是否存在n2或其任何祖先，如果是，则返回第一个现有祖先。
 
+```java
+ public ParentTreeNode insert(ParentTreeNode node, int key) {
+            /* If the tree is empty, return a new node */
+            if (node == null) return new ParentTreeNode(key);
+            /* Otherwise, recur down the tree */
+            if (key < node.key) {
+                node.left = insert(node.left, key);
+                node.left.parent = node;
+            } else if (key > node.key) {
+                node.right = insert(node.right, key);
+                node.right.parent = node;
+            }
+            /* return the (unchanged) node pointer */
+            return node;
+        }
+
+
+        public ParentTreeNode lca(ParentTreeNode node1, ParentTreeNode node2) {
+            Map<ParentTreeNode, Boolean> ancestors = new HashMap<>();
+            while (node1 != null) {
+                ancestors.put(node1, true);
+                node1 = node1.parent;
+            }
+            while (node2 != null) {
+                if (ancestors.containsKey(node2)) {
+                    return node2;
+                }
+                node2 = node2.parent;
+            }
+            return null;
+        }
+```
+
 
 
 
@@ -42,4 +75,6 @@ T中n1和n2的LCA是距离根最远的n1和n2的共同祖先。例如，作为�
 ### Reference
 
 - [Lowest Common Ancestor in a Binary Tree | Set 2 (Using Parent Pointer)](https://www.geeksforgeeks.org/lowest-common-ancestor-in-a-binary-tree-set-2-using-parent-pointer/)
+
+  
 

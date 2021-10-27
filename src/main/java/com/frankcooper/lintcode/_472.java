@@ -3,7 +3,6 @@ package com.frankcooper.lintcode;
 import java.util.*;
 
 import com.frankcooper.struct.ParentTreeNode;
-import org.junit.Assert;
 
 public class _472 {
 
@@ -38,8 +37,8 @@ public class _472 {
         private void dfs(ParentTreeNode root, Set<ParentTreeNode> set, List<Integer> path, int target) {
             if (root == null || set.contains(root)) return;
             set.add(root);
-            path.add(root.val);
-            target -= root.val;
+            path.add(root.key);
+            target -= root.key;
             if (target == 0) {
                 res.add(new ArrayList<>(path));
             }
@@ -48,7 +47,7 @@ public class _472 {
             dfs(root.parent, set, path, target);
             set.remove(root);
             path.remove(path.size() - 1);
-            target += root.val;
+            target += root.key;
         }
 
     }

@@ -6,6 +6,10 @@ package com.frankcooper.struct;
  * @description:
  */
 public class ParentTreeNode {
-    public int val;
+    public int key;
     public ParentTreeNode parent, left, right;
+
+    public ParentTreeNode(int val) {
+        this.key = val;
+    }
 }

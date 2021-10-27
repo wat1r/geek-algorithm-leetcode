@@ -1,16 +1,12 @@
 package com.frankcooper.binary_tree;
 
-import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.ConnectTreeNode;
-import com.frankcooper.struct.ListNode;
+import com.frankcooper.struct.ParentTreeNode;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author: wangzhou(Frank Cooper)
@@ -511,6 +507,10 @@ public class BinaryTree {
 //            res1 = handler.lca(root, n1, n2);
             res1 = handler.lca_iterate(root, n1, n2);
             System.out.println("LCA of " + n1 + " and " + n2 + " is " + res1.val);
+
+
+
+
         }
 
 
@@ -529,6 +529,39 @@ public class BinaryTree {
             }
             return root;
         }
+
+        public ParentTreeNode insert(ParentTreeNode node, int key) {
+            /* If the tree is empty, return a new node */
+            if (node == null) return new ParentTreeNode(key);
+            /* Otherwise, recur down the tree */
+            if (key < node.key) {
+                node.left = insert(node.left, key);
+                node.left.parent = node;
+            } else if (key > node.key) {
+                node.right = insert(node.right, key);
+                node.right.parent = node;
+            }
+            /* return the (unchanged) node pointer */
+            return node;
+        }
+
+
+        public ParentTreeNode lca(ParentTreeNode node1, ParentTreeNode node2) {
+            Map<ParentTreeNode, Boolean> ancestors = new HashMap<>();
+            while (node1 != null) {
+                ancestors.put(node1, true);
+                node1 = node1.parent;
+            }
+            while (node2 != null) {
+                if (ancestors.containsKey(node2)) {
+                    return node2;
+                }
+                node2 = node2.parent;
+            }
+            return null;
+        }
+
+
 
     }
 
