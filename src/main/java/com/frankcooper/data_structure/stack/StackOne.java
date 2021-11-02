@@ -118,6 +118,8 @@ public class StackOne {
             System.out.println("Item popped is " + myStack.pop());
             System.out.println("Item popped is " + myStack.pop());
             System.out.println("Middle Element is " + myStack.findMiddle());
+            System.out.println("Deleted Middle Element is  " + myStack.deleteMiddle());
+            System.out.println("Middle Element is " + myStack.findMiddle());
         }
 
 
@@ -132,8 +134,8 @@ public class StackOne {
         }
 
         class MyStack {
-            private DLLNode head;
-            private DLLNode mid;
+            private DLLNode head;//头指针
+            private DLLNode mid;//中间指针
             private int count;
 
             public MyStack() {
@@ -141,17 +143,20 @@ public class StackOne {
 
             public void push(int data) {
                 DLLNode node = new DLLNode(data);
+                //当前的节点的next指针指向head 并将count++
                 node.prev = null;
                 node.next = head;
                 count++;
+                //如果只有一个元素，移动mid到当前节点
                 if (count == 1) {
                     mid = node;
-                } else {
+                } else {//如果不止一个元素，将head指针的prev指针指向当前节点
                     head.prev = node;
-                    if (count % 2 != 0) {//odd 奇数
+                    if (count % 2 != 0) {//odd 奇数 移动mid指针
                         mid = mid.prev;
                     }
                 }
+                //head指针前移
                 head = node;
             }
 
@@ -161,12 +166,14 @@ public class StackOne {
                     return -1;
                 }
                 int item = head.data;
+                //移动head指针到下一个节点
                 head = head.next;
+                //head指针不为空的时候，prev指针置为空
                 if (head != null) {
                     head.prev = null;
                 }
                 count--;
-                if (count % 2 == 0) {
+                if (count % 2 == 0) {//数量-1 ，偶数时，移动到当前mid的下一个节点
                     mid = mid.next;
                 }
                 return item;
@@ -182,6 +189,19 @@ public class StackOne {
             }
 
 
+            public int deleteMiddle() {
+                if (count == 0) {
+                    System.out.println("Stack is empty!");
+                    return -1;
+                }
+                int item = mid.data;
+                mid.next.prev = mid.prev;
+                mid.prev.next = mid.next;
+                mid = mid.next;
+                count--;
+                return item;
+
+            }
 
 
         }
