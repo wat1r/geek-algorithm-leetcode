@@ -20,7 +20,7 @@ public class _162 {
                 if (nums[mid] > nums[mid + 1]) {
                     r = mid;
                 } else {
-                    l = mid + 1;
+                    l = mid + 1;//mid这个数肯定不是峰值，可以排除掉
                 }
             }
             return l;
