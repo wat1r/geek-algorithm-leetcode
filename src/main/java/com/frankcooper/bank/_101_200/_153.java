@@ -14,7 +14,7 @@ public class _153 {
         public int findMin(int[] nums) {
             int l = 0, r = nums.length - 1;
             while (l < r) {
-                int m = l + (r - l) / 2;
+                int m = l + (r - l) / 2;//和最右端点r比较
                 if (nums[m] == nums[r]) return nums[m];
                 else if (nums[m] > nums[r]) {
                     l = m + 1;
@@ -36,6 +36,22 @@ public class _153 {
                 else r = mid;
             }
             return nums[r];
+        }
+    }
+
+    static class _3rd {
+        public int findMin(int[] nums) {
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (nums[mid] == nums[r]) return mid;
+                else if (nums[mid] < nums[r]) {
+                    r = mid;
+                } else if (nums[mid] > nums[r]) {
+                    l = mid + 1;
+                }
+            }
+            return nums[l];
         }
     }
 }
