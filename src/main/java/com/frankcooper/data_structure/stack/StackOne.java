@@ -100,6 +100,76 @@ public class StackOne {
         }
     }
 
+    static class _1st_3 {
+        public static void main(String[] args) {
+            _1st_3 newStack = new _1st_3();
+            newStack.addElement(5);
+            newStack.addElement(7);
+            newStack.addElement(3);
+            System.out.println("min element :: " + newStack.getMin());
+            newStack.removeLastElement();
+            newStack.addElement(2);
+            newStack.addElement(9);
+            System.out.println("last element :: " + newStack.getLastElement());
+            newStack.addElement(0);
+            System.out.println("min element :: " + newStack.getMin());
+            newStack.removeLastElement();
+            newStack.addElement(11);
+            System.out.println("min element :: " + newStack.getMin());
+        }
+
+        static class Pair {
+            int ele;
+            int minEle;
+
+            public Pair(int ele, int minEle) {
+                this.ele = ele;
+                this.minEle = minEle;
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+        List<Pair> stk = new ArrayList<>();
+
+        public void addElement(int x) {
+            if (stk.size() == 0 || x < min) {
+                min = x;
+            }
+            Pair pair = new Pair(x, min);
+            stk.add(pair);
+            System.out.println(x + " inserted successfully");
+        }
+
+        public int getLastElement() {
+            if (stk.size() == 0) {
+                System.out.println("UnderFlow Error");
+                return -1;
+            }
+            return stk.get(stk.size() - 1).ele;
+        }
+
+        public void removeLastElement() {
+            if (stk.size() == 0) {
+                System.out.println("UnderFlow Error");
+            } else if (stk.size() == 1) {
+                min = Integer.MAX_VALUE;
+            } else {
+                min = stk.get(stk.size() - 2).minEle;
+            }
+            stk.remove(stk.size() - 1);
+            System.out.println("removed successfully");
+        }
+
+
+        public int getMin() {
+            if (stk.size() == 0) {
+                System.out.println("UnderFlow Error");
+                return -1;
+            }
+            return stk.get(stk.size() - 1).minEle;
+        }
+    }
+
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
