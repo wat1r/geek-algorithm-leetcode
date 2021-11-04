@@ -48,4 +48,90 @@ public class _34 {
             return nums[l] == target ? l : -1;
         }
     }
+
+    static class _2nd {
+        /**
+         * [1]
+         * 1
+         * []
+         * 0
+         * 注意上面的两个边界case
+         **/
+        public int[] searchRange(int[] nums, int target) {
+            if (nums == null || nums.length == 0) return new int[]{-1, -1};
+            int[] res = new int[2];
+            res[0] = getFirst(nums, target);
+            res[1] = getLast(nums, target);
+            return res;
+        }
+
+
+        private int getFirst(int[] nums, int target) {
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (nums[mid] >= target) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            return nums[l] == target ? l : -1;
+        }
+
+        private int getLast(int[] nums, int target) {
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int mid = l + (r - l + 1) / 2;
+                if (nums[mid] <= target) {
+                    l = mid;
+                } else {
+                    r = mid - 1;
+                }
+            }
+            return nums[l] == target ? l : -1;
+
+        }
+    }
+
+    static class _3rd {
+        public int[] searchRange(int[] nums, int target) {
+            int[] result = new int[2];
+            result[0] = findFirst(nums, target);
+            result[1] = findLast(nums, target);
+            return result;
+        }
+
+        private int findFirst(int[] nums, int target) {
+            int idx = -1;
+            int start = 0;
+            int end = nums.length - 1;
+            while (start <= end) {
+                int mid = (start + end) / 2;
+                if (nums[mid] >= target) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+                if (nums[mid] == target) idx = mid;
+            }
+            return idx;
+        }
+
+        private int findLast(int[] nums, int target) {
+            int idx = -1;
+            int start = 0;
+            int end = nums.length - 1;
+            while (start <= end) {
+                int mid = (start + end) / 2;
+                if (nums[mid] <= target) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+                if (nums[mid] == target) idx = mid;
+            }
+            return idx;
+        }
+    }
 }
