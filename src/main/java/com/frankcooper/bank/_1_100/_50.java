@@ -107,22 +107,31 @@ public class _50 {
         }
 
         public double myPow(double x, int n) {
+            //转化成long类型，进行移位操作
             long N = n;
+            //当n为负数的时候，x^n = 1/(x^(-n))
             if (N < 0) {
                 x = 1 / x;
                 N = -N;
             }
             double res = 1.0;
             while (N != 0) {
-                if ((N & 1) == 1) res *= x;
-                x *= x;
-                N >>= 1;
+                if ((N & 1) == 1) res *= x;//多余一位x累乘到res
+                x *= x;//底数x翻倍
+                N >>= 1;//N减半
             }
             return res;
         }
     }
 
     static class _4th_2 {
+        public static void main(String[] args) {
+            _4th_2 handler = new _4th_2();
+            double x = 2.00000;
+            int n = -2;
+            handler.myPow(x, n);
+        }
+
         public double myPow(double x, int n) {
             double res = 1.0;
             for (int i = n; i != 0; i /= 2) {
@@ -131,6 +140,7 @@ public class _50 {
                 }
                 x *= x;
             }
+            //如 x = 2.00000   n=-2这样的case，当n是负数的时候，取倒数
             return n < 0 ? 1 / res : res;
         }
     }
@@ -151,6 +161,7 @@ public class _50 {
          */
         public double myPow(double x, int n) {
             if (n == 0) return 1.0;
+            //对n<0的情况单独判断处理 当n为负数的时候，取相反数 -(n+1)
             if (n < 0) {
                 return 1 / x * myPow(1 / x, -(n + 1));
             }
@@ -161,17 +172,26 @@ public class _50 {
     }
 
     static class _4th_4 {
+        public static void main(String[] args) {
+            _4th_4 handler = new _4th_4();
+            double x = 2.00000;
+            int n = -2;
+            n = -2147483648;
+            handler.myPow(x, n);
+        }
+
         public double myPow(double x, int n) {
             if (n == 0) return 1;
+            //对于MIN_VALUE这个数时，特判
             if (n == Integer.MIN_VALUE) {
                 x = x * x;
                 n = n / 2;
             }
+            //n为负数的时候，取相反数
             if (n < 0) {
                 n = -n;
                 x = 1 / x;
             }
-
             return (n % 2 == 0) ? myPow(x * x, n / 2) : x * myPow(x * x, n / 2);
         }
     }
