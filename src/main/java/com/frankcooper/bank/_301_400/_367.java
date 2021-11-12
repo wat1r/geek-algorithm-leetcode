@@ -83,5 +83,18 @@ public class _367 {
         }
 
 
+        public boolean isPerfectSquare(int num) {
+            if (num == 1) return true;
+            long l = 1, r = num >> 1;
+            while (l < r) {
+                long mid = l + (r - l) / 2;
+                long t = mid * mid;
+                if (t == num) return true;
+                else if (t > num) r = mid;
+                else l = mid + 1;
+            }
+            return l * l == num;
+        }
+
     }
 }
