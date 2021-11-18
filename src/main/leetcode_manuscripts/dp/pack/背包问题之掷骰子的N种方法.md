@@ -1,6 +1,4 @@
-## [掷骰子的N种方法](https://leetcode-cn.com/problems/number-of-dice-rolls-with-target-sum/)
-
-
+## 背包问题之掷骰子的N种方法
 
 ### 方法1：朴素DP
 
