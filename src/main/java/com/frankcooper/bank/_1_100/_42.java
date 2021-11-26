@@ -121,5 +121,70 @@ public class _42 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+
+        public int trap(int[] height) {
+            //左右索引
+            int l = 0, r = height.length - 1;
+            //左右两侧都不能形成一个封闭的区域
+            //从左侧往右找，一直递增地找
+            //从右侧往左找，一直递增地找
+            while (l < r && height[l] <= height[l + 1]) l++;
+            while (r > l && height[r] <= height[r - 1]) r--;
+            int res = 0;//结果
+            while (l < r) {
+                //左右索引所在的柱子的高度
+                int left = height[l], right = height[r];
+                //优先左段
+                if (left <= right) {
+                    //如果基准的left高度比其右侧的l的高度大，是可以形成雨水的，因为right比left大
+                    //++l精髓，强制向右滑动
+                    while (l < r && left >= height[++l]) {
+                        res += left - height[l];
+                    }
+                } else {
+                    //如果基准的right高度比其左侧的l的高度大，是可以形成雨水的，因为left比right大
+                    //--r精髓，强制向左滑动
+                    //这里可能会出现相等高度的柱子，体积是0
+                    while (r > l && right >= height[--r]) {
+                        res += right - height[r];
+                    }
+                }
+            }
+            return res;
+        }
+
+    }
+
+    static class _4th_1 {
+        public static void main(String[] args) {
+            _4th_1 handler = new _4th_1();
+            int[] height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+            Assert.assertEquals(handler.trap(height), 6);
+        }
+
+        public int trap(int[] height) {
+            int res = 0;
+            //左右侧的索引
+            int l = 0, r = height.length - 1;
+            //l r 对应的height，初始值是MIN
+            int left = Integer.MIN_VALUE, right = Integer.MIN_VALUE;
+            while (l < r) {
+                //获取当前索引 l r的最大高度
+                left = Math.max(left, height[l]);
+                right = Math.max(right, height[r]);
+                //优先低的高度进行计算
+                if (left < right) {
+                    //l 要强制向右滑动 计算雨水的面积，更新左侧的最大高度left
+                    res += left - height[l++];
+                    left = Math.max(left, height[l]);
+                } else {
+                    //r 要强制向左滑动 计算雨水的面积，更新右侧的最大高度right
+                    res += right - height[r--];
+                    right = Math.max(right, height[r]);
+                }
+            }
+            return res;
+        }
     }
 }
