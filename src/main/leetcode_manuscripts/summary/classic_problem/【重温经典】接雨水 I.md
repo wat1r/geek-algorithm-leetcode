@@ -42,6 +42,30 @@
         }
 ```
 
+**另外一种写法，大同小异**:
+
+```java
+        public int trap(int[] height) {
+            Stack<Integer> stk = new Stack<>();
+            int res = 0, cur = 0;
+            while (cur < height.length) {
+                if (stk.isEmpty() || height[cur] <= height[stk.peek()]) {
+                    stk.push(cur++);
+                } else {
+                  //前一个栈弹出的节点
+                    int pre = stk.pop();
+                    if (!stk.isEmpty()) {
+                      //木桶原理，取最小高度
+                        int m = Math.min(height[stk.peek()], height[cur]);
+                        res += (m - height[pre]) * (cur - stk.peek() - 1);
+                    }
+                }
+            }
+            return res;
+        }
+
+```
+
 
 
 
@@ -111,5 +135,36 @@ public int trap(int[] height) {
     }
     return res;
 }
+```
+
+### 方法3：动态规划
+
+```java
+       public int trap(int[] height) {
+            int n = height.length;
+            //leftH[i]表示第i个柱子左边最高的柱子的高度
+            int[] leftH = new int[n];
+            //rightH[i]表示第i个柱子右边最高的柱子的高度
+            //上述的两个数组应该是符合单调性的
+            int[] rightH = new int[n];
+            //最左边的柱子的左边没有柱子了，leftH[0]=0
+            for (int i = 0; i < n - 2; i++) {
+                leftH[i + 1] = Math.max(leftH[i], height[i]);
+            }
+            //最右边的柱子的右边没有柱子了，rightH[n-1]=0
+            for (int i = n - 2; i >= 0; --i) {
+                rightH[i] = Math.max(rightH[i + 1], height[i + 1]);
+            }
+            int res = 0;
+            //每次取左右两侧的最小值，做高度，每次步进1个长度
+            for (int i = 1; i < n - 1; i++) {
+                int m = Math.min(leftH[i], rightH[i]);
+                if (m > height[i]) {
+                    res += (m - height[i]);
+                }
+            }
+            return res;
+        }
+
 ```
 
