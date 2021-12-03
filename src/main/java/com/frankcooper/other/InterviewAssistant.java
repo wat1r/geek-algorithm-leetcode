@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.LockSupport;
 
 public class InterviewAssistant {
@@ -178,8 +179,6 @@ public class InterviewAssistant {
                 idx++;
             }
             process();
-//            System.out.println(JSON.toJSONString(numList));
-//            System.out.println(JSON.toJSONString(charList));
         }
 
 
@@ -200,6 +199,7 @@ public class InterviewAssistant {
         public static void process() {
             numThread = new Thread(() -> {
                 for (int num : numList) {
+                    //每次一开始就阻塞自己，等charThread唤醒
                     LockSupport.park();
                     System.out.printf("%d", num);
                     LockSupport.unpark(charThread);
@@ -207,10 +207,59 @@ public class InterviewAssistant {
             }, "numThread");
             charThread = new Thread(() -> {
                 for (String ch : charList) {
+                    //每次charThread会先打印，打印后马上去解开numThread的限制，然后让自己线程阻塞
                     System.out.printf("%s", ch);
                     LockSupport.unpark(numThread);
                     LockSupport.park();
 
+                }
+            }, "charThread");
+
+            numThread.start();
+            charThread.start();
+        }
+
+
+    }
+
+    static class _5th_2 {
+        static int MAX = 100;
+        static List<Integer> numList;
+        static List<String> charList;
+
+        public static void main(String[] args) {
+            int idx = 1;
+            numList = new ArrayList<>();
+            charList = new ArrayList<>();
+            while (idx < MAX) {
+                numList.add(idx);
+                charList.add(String.valueOf((char) (idx % 26 == 0 ? 'Z' : idx % 26 + 'A' - 1)));
+                idx++;
+            }
+            process();
+        }
+
+        static Thread numThread;
+        static Thread charThread;
+        static AtomicInteger singnal = new AtomicInteger(1);
+
+        public static void process() {
+            numThread = new Thread(() -> {
+                for (int num : numList) {
+                    while (singnal.get() != 2) {
+                    }
+
+                    System.out.printf("%d", num);
+                    singnal.set(1);
+                }
+            }, "numThread");
+            charThread = new Thread(() -> {
+                for (String ch : charList) {
+                    while (singnal.get() != 1) {
+
+                    }
+                    System.out.printf("%s", ch);
+                    singnal.set(2);
                 }
             }, "charThread");
 
