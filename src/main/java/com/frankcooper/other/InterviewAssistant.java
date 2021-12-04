@@ -1,7 +1,5 @@
 package com.frankcooper.other;
 
-import com.alibaba.fastjson.JSON;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -325,4 +323,55 @@ public class InterviewAssistant {
         }
     }
 
+
+    static class _5th_4 {
+        static int MAX = 100;
+        static List<Integer> numList;
+        static List<String> charList;
+
+        public static void main(String[] args) {
+            int idx = 1;
+            numList = new ArrayList<>();
+            charList = new ArrayList<>();
+            while (idx < MAX) {
+                numList.add(idx);
+                charList.add(String.valueOf((char) (idx % 26 == 0 ? 'Z' : idx % 26 + 'A' - 1)));
+                idx++;
+            }
+            process();
+        }
+
+        static Thread numThread;
+        static Thread charThread;
+        private static Semaphore numSema = new Semaphore(0);
+        private static Semaphore charSema = new Semaphore(1);
+
+        public static void process() {
+            numThread = new Thread(() -> {
+                for (int num : numList) {
+                    try {
+                        numSema.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.printf("%d", num);
+                    charSema.release();
+                }
+            }, "numThread");
+            charThread = new Thread(() -> {
+                for (String ch : charList) {
+                    try {
+                        charSema.acquire();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.printf("%s", ch);
+                    numSema.release();
+                }
+            }, "charThread");
+
+            numThread.start();
+            charThread.start();
+        }
+    }
 }
