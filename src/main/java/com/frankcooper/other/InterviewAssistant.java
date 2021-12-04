@@ -268,4 +268,61 @@ public class InterviewAssistant {
         }
     }
 
+
+    //暂未实现
+    static class _5th_3 {
+        static int MAX = 100;
+        static List<Integer> numList;
+        static List<String> charList;
+
+        public static void main(String[] args) {
+            int idx = 1;
+            numList = new ArrayList<>();
+            charList = new ArrayList<>();
+            while (idx < MAX) {
+                numList.add(idx);
+                charList.add(String.valueOf((char) (idx % 26 == 0 ? 'Z' : idx % 26 + 'A' - 1)));
+                idx++;
+            }
+            process();
+        }
+
+        static Thread numThread;
+        static Thread charThread;
+        static Object obj = new Object();
+
+        public static void process() {
+            numThread = new Thread(() -> {
+                synchronized (obj) {
+                    for (int num : numList) {
+                        System.out.printf("%d", num);
+                        obj.notify();
+                        try {
+                            obj.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    obj.notify();
+                }
+            }, "numThread");
+            charThread = new Thread(() -> {
+                synchronized (obj) {
+                    for (String ch : charList) {
+                        System.out.printf("%s", ch);
+                        try {
+                            obj.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        obj.notify();
+                    }
+                }
+            }, "charThread");
+
+            numThread.start();
+            charThread.start();
+        }
+    }
+
 }
