@@ -16,6 +16,10 @@ public class RepeateOne {
 
     public static void main(String[] args) {
 
+	    
+
+	    RepeateOne handler = new RepeateOne();
+
     }
 
 
