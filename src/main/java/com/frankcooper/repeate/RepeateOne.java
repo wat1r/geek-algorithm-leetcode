@@ -203,10 +203,10 @@ public class RepeateOne {
         }
 
         public int sizeOfBinaryTree(TreeNode root) {
-            if (root == null) return 0;
-            int l = sizeOfBinaryTree(root.left);
-            int r = sizeOfBinaryTree(root.right);
-            return l + r + 1;
-        }
+		    if (root == null) return 0;
+		    int l = sizeOfBinaryTree(root.left);
+		    int r = sizeOfBinaryTree(root.right);
+		    return l + r + 1;
+	}
     }
 }
