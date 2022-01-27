@@ -100,6 +100,7 @@ public class StackOne {
         }
     }
 
+
     static class _1st_3 {
         public static void main(String[] args) {
             _1st_3 newStack = new _1st_3();
@@ -274,8 +275,7 @@ public class StackOne {
             }
 
 
-        }
-    }
+
 
     static class _4th {
         public static void main(String[] args) {
