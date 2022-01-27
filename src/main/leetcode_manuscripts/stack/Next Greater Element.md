@@ -64,9 +64,6 @@ Element       NGE
 ```
 
 
-
-
-
 ### 方法2（使用栈）
 
 - 将第一个元素推送到栈。
@@ -376,11 +373,6 @@ public int[] nextGreaterElement(int[] nums1, int[] nums2) {
             return res;
         }
 ```
-
-
-
-
-
 
 
 ### Reference
