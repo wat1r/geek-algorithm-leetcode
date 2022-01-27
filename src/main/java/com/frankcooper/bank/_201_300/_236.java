@@ -3,6 +3,7 @@ package com.frankcooper.bank._201_300;
 import java.util.*;
 
 import com.frankcooper.io.TreeNodeIOUtils;
+import com.frankcooper.struct.ParentTreeNode;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
@@ -127,5 +128,45 @@ _236 {
             }
             return q;
         }
+    }
+
+    static class _5th {
+        public static void main(String[] args) {
+
+        }
+
+
+
+        public ParentTreeNode insert(ParentTreeNode node, int key) {
+            /* If the tree is empty, return a new node */
+            if (node == null) return new ParentTreeNode(key);
+            /* Otherwise, recur down the tree */
+            if (key < node.key) {
+                node.left = insert(node.left, key);
+                node.left.parent = node;
+            } else if (key > node.key) {
+                node.right = insert(node.right, key);
+                node.right.parent = node;
+            }
+            /* return the (unchanged) node pointer */
+            return node;
+        }
+
+
+        public ParentTreeNode lca(ParentTreeNode node1, ParentTreeNode node2) {
+            Map<ParentTreeNode, Boolean> ancestors = new HashMap<>();
+            while (node1 != null) {
+                ancestors.put(node1, true);
+                node1 = node1.parent;
+            }
+            while (node2 != null) {
+                if (ancestors.containsKey(node2)) {
+                    return node2;
+                }
+                node2 = node2.parent;
+            }
+            return null;
+        }
+
     }
 }

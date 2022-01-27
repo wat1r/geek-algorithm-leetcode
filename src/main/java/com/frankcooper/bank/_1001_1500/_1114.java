@@ -517,7 +517,7 @@ public class _1114 {
 
             public void second(Runnable printSecond) throws InterruptedException {
                 while (counter.get() != 1) {
-                    threads.put("second",Thread.currentThread());
+                    threads.put("second", Thread.currentThread());
                     LockSupport.park();
                 }
                 printSecond.run();
@@ -527,12 +527,71 @@ public class _1114 {
 
             public void third(Runnable printThird) throws InterruptedException {
                 while (counter.get() != 2) {
-                    threads.put("third",Thread.currentThread());
+                    threads.put("third", Thread.currentThread());
                     LockSupport.park();
                 }
                 printThird.run();
                 counter.getAndIncrement();
                 threads.forEach((k, v) -> LockSupport.unpark(v));
+            }
+        }
+    }
+
+
+    static class _11th {
+        class Foo {
+
+            Semaphore s12 = new Semaphore(0);
+            Semaphore s23 = new Semaphore(0);
+
+            public Foo() {
+
+            }
+
+            public void first(Runnable printFirst) throws InterruptedException {
+                printFirst.run();
+                s12.release();
+            }
+
+            public void second(Runnable printSecond) throws InterruptedException {
+                s12.acquire();
+                printSecond.run();
+                s23.release();
+            }
+
+            public void third(Runnable printThird) throws InterruptedException {
+                s23.acquire();
+                printThird.run();
+                s12.release();
+            }
+        }
+    }
+
+    static class _13th {
+        class Foo {
+
+            CountDownLatch l12 = new CountDownLatch(1);
+            CountDownLatch l23 = new CountDownLatch(1);
+
+            public Foo() {
+
+            }
+
+            public void first(Runnable printFirst) throws InterruptedException {
+                printFirst.run();
+                l12.countDown();
+            }
+
+            public void second(Runnable printSecond) throws InterruptedException {
+                l12.await();
+                printSecond.run();
+                l23.countDown();
+            }
+
+            public void third(Runnable printThird) throws InterruptedException {
+                l23.await();
+                printThird.run();
+                l12.countDown();
             }
         }
     }

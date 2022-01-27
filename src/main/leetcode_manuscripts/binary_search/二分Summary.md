@@ -65,7 +65,7 @@ int bsearch_1(int l, int r)
 {
     while (l < r)
     {
-        int mid = l + r >> 1;
+        int mid = l + r >> 1;  //mid = l +(r-l)/2; 用这个防止溢出
         if (check(mid)) r = mid;
         else l = mid + 1;
     }

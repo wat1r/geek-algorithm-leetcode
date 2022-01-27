@@ -53,4 +53,25 @@ public class ExploreDemo {
 
         }
     }
+
+
+    static class _2nd{
+        public static void main(String[] args) {
+
+        }
+    }
+
+
+    static class _3rd{
+        public static void main(String[] args) {
+
+        }
+    }
+
+
+    static class _4th{
+        public static void main(String[] args) {
+
+        }
+    }
 }

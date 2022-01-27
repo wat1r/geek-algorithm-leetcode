@@ -62,6 +62,7 @@ public class _677 {
 
             /**
              * 计算curr当前节点树上的val
+             *
              * @param curr
              * @return
              */
@@ -81,6 +82,61 @@ public class _677 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+        }
+
+
+        class TrieNode {
+            TrieNode[] next = new TrieNode[26];
+            int val;
+
+            public TrieNode() {
+            }
+        }
+
+
+        class MapSum {
+
+            TrieNode root;
+
+            /**
+             * Initialize your data structure here.
+             */
+            public MapSum() {
+                root = new TrieNode();
+            }
+
+            public void insert(String key, int val) {
+                TrieNode cur = root;
+                for (char c : key.toCharArray()) {
+                    if (cur.next[c - 'a'] == null) {
+                        cur.next[c - 'a'] = new TrieNode();
+                    }
+                    cur = cur.next[c - 'a'];
+                }
+                cur.val = val;
+            }
+
+            public int sum(String prefix) {
+                TrieNode cur = root;
+                int sum = 0;
+                for (char c : prefix.toCharArray()) {
+                    if (cur.next[c - 'a'] == null) {
+                        return sum;
+                    }
+                    cur = cur.next[c - 'a'];
+                }
+                return dfs(cur);
+            }
+
+
+            private int dfs(TrieNode cur) {
+                if (cur == null) return 0;
+                int sum = cur.val;
+                for (char c = 'a'; c <= 'z'; c++) {
+                    sum += dfs(cur.next[c - 'a']);
+                }
+                return sum;
+            }
         }
     }
 
