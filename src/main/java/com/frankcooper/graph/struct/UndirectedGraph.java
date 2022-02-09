@@ -1,6 +1,5 @@
 package com.frankcooper.graph.struct;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

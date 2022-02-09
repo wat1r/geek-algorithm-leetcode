@@ -1,38 +1,32 @@
-package com.frankcooper.lintcode;
+package com.frankcooper.bank._1501_2000;
 
 import java.util.*;
 
 import org.junit.Assert;
 
-public class _684 {
+public class _1748 {
 
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
 
+
         }
 
 
-        public List<String> missingString(String str1, String str2) {
-            // Write your code here
-            List<String> res = new ArrayList<>();
-            if (str1.length() > str2.length()) {
-                String temp = str1;
-                str1 = str2;
-                str2 = temp;
+        public int sumOfUnique(int[] nums) {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int x : nums) {
+                map.put(x, map.getOrDefault(x, 0) + 1);
             }
-
-            String[] arr1 = str1.split(" ");
-            String[] arr2 = str2.split(" ");
-            Set<String> set = new HashSet<>(Arrays.asList(arr1));
-            for (String str : arr2) {
-                if (!set.contains(str)) {
-                    res.add(str);
+            int res = 0;
+            for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+                if (e.getValue() == 1) {
+                    res += e.getKey();
                 }
             }
             return res;
         }
-
 
     }
 

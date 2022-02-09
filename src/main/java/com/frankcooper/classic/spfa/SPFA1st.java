@@ -4,7 +4,6 @@ package com.frankcooper.classic.spfa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import sun.security.provider.certpath.Vertex;
 
 import java.util.*;
 import java.util.stream.Collectors;

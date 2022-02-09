@@ -28,6 +28,17 @@ public class _2022 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int sumOfUnique(int[] nums) {
+            int n = nums.length;
+            int[] arr = new int[101];
+            for (int a : nums) arr[a]++;
+            int ans = 0;
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] == 1) ans += i;
+            }
+            return ans;
+        }
     }
 
 

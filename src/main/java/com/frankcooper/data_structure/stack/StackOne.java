@@ -275,11 +275,12 @@ public class StackOne {
             }
 
 
+        }
 
-
-    static class _4th {
-        public static void main(String[] args) {
-            _4th handler = new _4th();
+        static class _4th {
+            public static void main(String[] args) {
+                _4th handler = new _4th();
+            }
         }
     }
 }
