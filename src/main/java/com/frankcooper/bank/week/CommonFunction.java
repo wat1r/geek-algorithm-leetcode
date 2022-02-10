@@ -28,6 +28,20 @@ public class CommonFunction {
         return b == 0 ? a : gcd(b, a % b);
     }
 
+    /**
+     * 更相减损法 求GCD
+     * @param a
+     * @param b
+     * @return
+     */
+    public int gcd1(int a, int b) {
+        while (true) {
+            if (a > b) a -= b;
+            else if (a < b) b -= a;
+            else return a;
+        }
+    }
+
 
     public long MOD(long a, long m) {
         a %= m;
