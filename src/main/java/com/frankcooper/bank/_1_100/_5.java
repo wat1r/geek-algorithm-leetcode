@@ -194,5 +194,28 @@ public class _5 {
 
     }
 
+    static class _7th {
+        public String longestPalindrome(String s) {
+            int n = s.length();
+            //f[i][j]表示s中[i...j]下标范围内是否是一个回文子串
+            boolean[][] f = new boolean[n][n];
+            for (int i = 0; i < n; i++) f[i][i] = true;
+            int maxLen = 1, startIdx = 0;
+            for (int k = 2; k <= n; k++) {
+                for (int i = 0; i < n - k + 1; i++) {
+                    int j = i + k - 1;
+                    if (s.charAt(i) == s.charAt(j) && (k == 2 || f[i + 1][j - 1])) {
+                        f[i][j] = true;
+                        if (k > maxLen) {
+                            startIdx = i;
+                            maxLen = k;
+                        }
+                    }
+                }
+            }
+            return s.substring(startIdx, startIdx + maxLen);
+        }
+    }
+
 
 }
