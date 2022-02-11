@@ -29,7 +29,7 @@ public class _1219 {
                 for (int c = 0; c < C; c++) {
                     if (grid[r][c] != 0) {
                         vis[r][c] = 1;
-                        res = Math.max(res, dfs(r, c));
+                        res = Math.max(res, dfs(r, -c));
                         vis[r][c] = 0;
 //                        System.out.println(res);
                     }
