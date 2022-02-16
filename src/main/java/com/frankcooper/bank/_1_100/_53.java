@@ -17,4 +17,15 @@ public class _53 {
         return maxSum;
     }
 
+
+    static class _1st {
+        public int maxSubArray(int[] nums) {
+            int cur = nums[0], res = cur;
+            for (int i = 1; i < nums.length; i++) {
+                cur = Math.max(nums[i], nums[i] + cur);
+                res = Math.max(res, cur);
+            }
+            return res;
+        }
+    }
 }

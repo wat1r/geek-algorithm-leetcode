@@ -31,6 +31,20 @@ public class _334 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int[] nums = new int[]{2,1,5,0,4,6};
+            handler.increasingTriplet(nums);
+        }
+
+        public boolean increasingTriplet(int[] nums) {
+            if(nums.length<3) return false;
+            int maxx = Integer.MAX_VALUE;
+            int minn = Integer.MAX_VALUE;
+            for(int x : nums){
+                if(x<=minn) minn =x;//首先拿到最小的
+                else if(x<=maxx) maxx= x;
+                else return true;
+            }
+            return false;
         }
     }
 
