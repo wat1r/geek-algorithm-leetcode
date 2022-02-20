@@ -70,4 +70,27 @@ public class _350 {
     }
 
 
+    static class _2nd {
+        public int[] intersect(int[] nums1, int[] nums2) {
+            Arrays.sort(nums1);
+            Arrays.sort(nums2);
+            int i = 0, j = 0, m = nums1.length, n = nums2.length;
+            int[] res = new int[Math.min(m, n)];
+            int idx = 0;
+            while (i < m && j < n) {
+                if (nums1[i] == nums2[j]) {
+                    res[idx++] = nums1[i];
+                    i++;
+                    j++;
+                } else if (nums1[i] > nums2[j]) {
+                    j++;
+                } else {
+                    i++;
+                }
+            }
+            return Arrays.copyOfRange(res, 0, idx);
+        }
+    }
+
+
 }
