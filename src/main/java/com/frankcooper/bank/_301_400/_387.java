@@ -30,6 +30,18 @@ public class _387 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int firstUniqChar(String s) {
+            char[] chs = s.toCharArray();
+            int[] t = new int[26];
+            for (char c : chs) {
+                t[c - 'a']++;
+            }
+            for (int i = 0; i < s.length(); i++) {
+                if (t[s.charAt(i) - 'a'] == 1) return i;
+            }
+            return -1;
+        }
     }
 
 
