@@ -83,5 +83,27 @@ public class _206 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+        public ListNode reverseList(ListNode head) {
+            ListNode prev = null, cur = head;
+            while (cur != null) {
+                ListNode t = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = t;
+            }
+            return prev;
+
+        }
+    }
+
+    static class _5th {
+        public ListNode reverseList(ListNode head) {
+            if (head == null || head.next == null) return head;
+            ListNode node = reverseList(head.next);
+            head.next.next = head;
+            head.next = null;
+            return node;
+        }
     }
 }

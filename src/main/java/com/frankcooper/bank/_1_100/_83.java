@@ -19,4 +19,22 @@ public class _83 {
             return dummy.next;
         }
     }
+
+    static class _2nd {
+        public ListNode deleteDuplicates(ListNode head) {
+            ListNode dummy = new ListNode(-101);
+            dummy.next = head;
+            ListNode prev = dummy, cur = head;
+            while (cur != null && cur.next != null) {
+                while (cur.next != null && cur.val == cur.next.val) {
+                    cur = cur.next;
+                }
+                prev.next = cur;
+                prev = prev.next;
+                cur = cur.next;
+
+            }
+            return dummy.next;
+        }
+    }
 }

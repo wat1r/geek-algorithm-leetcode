@@ -35,6 +35,18 @@ public class _242 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+        public boolean isAnagram(String s, String t) {
+            char[] chs = s.toCharArray(), cht = t.toCharArray();
+            if (chs.length != cht.length) return false;
+            int[] arr = new int[26];
+            for (char c : chs) arr[c - 'a']++;
+            for (char c : cht) {
+                if (--arr[c - 'a'] < 0) return false;
+            }
+            return true;
+        }
     }
 
 

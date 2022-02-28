@@ -3,6 +3,7 @@ package com.frankcooper.bank._101_200;
 import java.util.*;
 
 import com.frankcooper.struct.ListNode;
+import com.frankcooper.utils.ListNodeUtils;
 import org.junit.Assert;
 
 public class _141 {
@@ -36,6 +37,23 @@ public class _141 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            ListNode head = ListNodeUtils.buildListNodeList(new int[]{3, 2, 0, -4});
+            ListNode l1 = head.next;
+            ListNode l2 = l1.next;
+            ListNode l3 = l2.next;
+            l3.next = l1;
+            handler.hasCycle(head);
+        }
+
+        public boolean hasCycle(ListNode head) {
+            if (head == null || head.next == null) return false;
+            ListNode slow = head, fast = head.next;
+            while (fast.next != null && fast.next.next != null) {
+                if (slow == fast) return true;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return false;
         }
     }
 
