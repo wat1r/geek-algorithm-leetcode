@@ -39,6 +39,7 @@ public class _98 {
         }
     }
 
+    //中序遍历记录前一个节点的值，比较前一个节点和当前节点
     static class _2nd {
         TreeNode prev = null;
 
@@ -57,4 +58,22 @@ public class _98 {
     }
 
 
+    static class _3rd {
+        TreeNode prev = null;
+
+        public boolean isValidBST(TreeNode root) {
+            if (root == null) return true;
+            if (!isValidBST(root.left)) {
+                return false;
+            }
+            if (prev != null && prev.val >= root.val) {
+                return false;
+            }
+
+            prev = root;
+            return isValidBST(root.right);
+
+
+        }
+    }
 }
