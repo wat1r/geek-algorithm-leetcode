@@ -3,6 +3,7 @@ package com.frankcooper.bank._101_200;
 import com.frankcooper.struct.TreeNode;
 
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -83,4 +84,44 @@ public class _112 {
         return false;
     }
 
+
+    static class _1st {
+        public boolean hasPathSum(TreeNode root, int targetSum) {
+            if (root == null) return false;
+            return dfs(root, targetSum);
+        }
+
+        public boolean dfs(TreeNode root, int sum) {
+            if (root.left == null && root.right == null && sum == root.val) return true;
+            boolean f = false;
+            if (root.left != null) f = f || dfs(root.left, sum - root.val);
+            if (root.right != null) f = f || dfs(root.right, sum - root.val);
+            return f;
+        }
+    }
+
+
+    static class _2nd {
+        public boolean hasPathSum(TreeNode root, int targetSum) {
+            if (root == null) return false;
+            Queue<TreeNode> nodeQ = new LinkedList<>();
+            Queue<Integer> sumQ = new LinkedList<>();
+            nodeQ.add(root);
+            sumQ.add(root.val);
+            while (!nodeQ.isEmpty()) {
+                TreeNode curNode = nodeQ.poll();
+                int curSum = sumQ.poll();
+                if (curNode.left == null && curNode.right == null && curSum == targetSum) return true;
+                if (curNode.left != null) {
+                    nodeQ.add(curNode.left);
+                    sumQ.add(curSum + curNode.left.val);
+                }
+                if (curNode.right != null) {
+                    nodeQ.add(curNode.right);
+                    sumQ.add(curSum + curNode.right.val);
+                }
+            }
+            return false;
+        }
+    }
 }

@@ -25,4 +25,20 @@ public class _20 {
         }
         return stack.isEmpty();
     }
+
+    static class _1st {
+        public boolean isValid(String s) {
+            Map<Character, Character> dict = new HashMap<>();
+            dict.put(']', '[');
+            dict.put(')', '(');
+            dict.put('}', '{');
+            Stack<Character> stk = new Stack<>();
+            for (char c : s.toCharArray()) {
+                if (c == '[' || c == '(' || c == '{') stk.push(c);
+                else if (!stk.isEmpty() && dict.containsKey(c) && dict.get(c) == stk.peek()) stk.pop();
+                else return false;
+            }
+            return stk.isEmpty();
+        }
+    }
 }

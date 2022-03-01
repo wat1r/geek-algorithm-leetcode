@@ -87,4 +87,22 @@ public class _144 {
     }
 
 
+    static class _2nd {
+        List<Integer> res = new ArrayList<>();
+
+        public List<Integer> preorderTraversal(TreeNode root) {
+            if (root == null) return res;
+            dfs(root);
+            return res;
+
+        }
+
+        private void dfs(TreeNode root) {
+            if (root != null) res.add(root.val);
+            if (root.left != null) dfs(root.left);
+            if (root.right != null) dfs(root.right);
+        }
+    }
+
+
 }

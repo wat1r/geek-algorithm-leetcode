@@ -26,4 +26,25 @@ public class _102 {
         }
         return res;
     }
+
+    static class _1st {
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            List<List<Integer>> res = new ArrayList<>();
+            if (root == null) return res;
+            Queue<TreeNode> q = new LinkedList<>();
+            q.add(root);
+            while (!q.isEmpty()) {
+                int size = q.size();
+                List<Integer> sub = new ArrayList<>();
+                for (int i = 0; i < size; i++) {
+                    TreeNode cur = q.poll();
+                    sub.add(cur.val);
+                    if (cur.left != null) q.add(cur.left);
+                    if (cur.right != null) q.add(cur.right);
+                }
+                res.add(sub);
+            }
+            return res;
+        }
+    }
 }

@@ -10,8 +10,8 @@ import com.frankcooper.struct.TreeNode;
 public class _101 {
 
     public boolean isSymmetric(TreeNode root) {
-        if(root==null) return false;
-        return helper(root.left,root.right);
+        if (root == null) return false;
+        return helper(root.left, root.right);
     }
 
 
@@ -21,4 +21,17 @@ public class _101 {
         return left.val == right.val && helper(left.left, right.right) && helper(left.right, right.left);
     }
 
+
+    static class _2nd {
+        public boolean isSymmetric(TreeNode root) {
+            if (root == null) return false;
+            return helper(root.left, root.right);
+        }
+
+        public boolean helper(TreeNode l, TreeNode r) {
+            if (l == null && r == null) return true;
+            if (l == null || r == null) return false;
+            return l.val == r.val && helper(l.left, r.right) && helper(l.right, r.left);
+        }
+    }
 }
