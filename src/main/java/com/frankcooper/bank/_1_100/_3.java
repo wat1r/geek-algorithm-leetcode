@@ -114,4 +114,19 @@ public class _3 {
             return maxLen;
         }
     }
+
+    static class _4th {
+        public int lengthOfLongestSubstring(String s) {
+            int n = s.length(), l = 0, r = 0;
+            int[] arr = new int[128];
+            int maxLen = 0;
+            while (r < n) {
+                l = Math.max(l, arr[s.charAt(r)]);
+                maxLen = Math.max(maxLen, r - l + 1);
+                arr[s.charAt(r)] = 1 + r;
+                r++;
+            }
+            return maxLen;
+        }
+    }
 }
