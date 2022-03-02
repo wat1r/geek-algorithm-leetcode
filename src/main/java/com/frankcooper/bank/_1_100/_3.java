@@ -96,4 +96,22 @@ public class _3 {
             return res;
         }
     }
+
+    static class _3rd {
+        public int lengthOfLongestSubstring(String s) {
+            Set<Character> set = new HashSet<>();
+            int maxLen = 0;
+            int i = 0, j = 0;
+            while (i < s.length() && j < s.length()) {
+                if (!set.contains(s.charAt(j))) {
+                    set.add(s.charAt(j++));
+                    maxLen = Math.max(maxLen, j - i);
+                } else {
+                    //一直移动到不出现s.charAt(j)字符为止
+                    set.remove(s.charAt(i++));
+                }
+            }
+            return maxLen;
+        }
+    }
 }

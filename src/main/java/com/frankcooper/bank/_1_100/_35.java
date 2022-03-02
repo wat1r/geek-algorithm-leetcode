@@ -42,4 +42,17 @@ public class _35 {
 //            return l;
         }
     }
+
+    static class _2nd {
+        public int searchInsert(int[] nums, int target) {
+            int n = nums.length, l = 0, r = n - 1;
+            if (nums[r] < target) return n;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (nums[mid] < target) l = mid + 1;
+                else r = mid;
+            }
+            return l;
+        }
+    }
 }
