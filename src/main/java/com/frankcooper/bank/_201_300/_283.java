@@ -63,4 +63,26 @@ public class _283 {
             arr[n] = temp;
         }
     }
+
+    static class _2nd {
+        public void moveZeroes(int[] nums) {
+            // if(nums == null ||)
+            int idx = 0;
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] != 0) {
+                    swap(nums, idx++, i);
+                }
+            }
+        }
+
+
+        public void swap(int[] arr, int m, int n) {
+            int temp = arr[m];
+            arr[m] = arr[n];
+            arr[n] = temp;
+//        arr[m] = arr[m] ^ arr[n];
+//        arr[n] = arr[m] ^ arr[n];
+//        arr[m] = arr[m] ^ arr[n];
+        }
+    }
 }

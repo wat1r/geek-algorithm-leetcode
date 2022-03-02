@@ -1,7 +1,9 @@
 package com.frankcooper.repeate;
 
 import com.frankcooper.io.TreeNodeIOUtils;
+import com.frankcooper.struct.ListNode;
 import com.frankcooper.struct.TreeNode;
+import com.frankcooper.utils.ListNodeUtils;
 
 import java.util.*;
 
@@ -16,9 +18,8 @@ public class RepeateOne {
 
     public static void main(String[] args) {
 
-	    
 
-	    RepeateOne handler = new RepeateOne();
+        RepeateOne handler = new RepeateOne();
 
     }
 
@@ -203,10 +204,30 @@ public class RepeateOne {
         }
 
         public int sizeOfBinaryTree(TreeNode root) {
-		    if (root == null) return 0;
-		    int l = sizeOfBinaryTree(root.left);
-		    int r = sizeOfBinaryTree(root.right);
-		    return l + r + 1;
-	}
+            if (root == null) return 0;
+            int l = sizeOfBinaryTree(root.left);
+            int r = sizeOfBinaryTree(root.right);
+            return l + r + 1;
+        }
     }
+
+    static class _4th {
+
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            ListNode head = ListNodeUtils.buildListNodeList(new int[]{1, 2, 3, 4, 5});
+            handler.middleNode(head);
+        }
+
+        public ListNode middleNode(ListNode head) {
+            if(head == null|| head.next==null) return head;
+            ListNode slow = head, fast = head.next;
+            while (fast != null && fast.next != null && fast.next.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow.next;
+        }
+    }
+
 }
