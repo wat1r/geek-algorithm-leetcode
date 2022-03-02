@@ -216,17 +216,34 @@ public class RepeateOne {
         public static void main(String[] args) {
             _4th handler = new _4th();
             ListNode head = ListNodeUtils.buildListNodeList(new int[]{1, 2, 3, 4, 5});
-            handler.middleNode(head);
+//            handler.middleNode(head);
+            int n = 2;
+            handler.removeNthFromEnd(head, n);
         }
 
         public ListNode middleNode(ListNode head) {
-            if(head == null|| head.next==null) return head;
+            if (head == null || head.next == null) return head;
             ListNode slow = head, fast = head.next;
             while (fast != null && fast.next != null && fast.next.next != null) {
                 slow = slow.next;
                 fast = fast.next.next;
             }
             return slow.next;
+        }
+
+        public ListNode removeNthFromEnd(ListNode head, int n) {
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode fast = dummy;
+            for (int i = 0; i <= n; i++) fast = fast.next;
+            ListNode slow = dummy;
+            while (fast != null) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            slow.next = slow.next.next;
+            return dummy.next;
+
         }
     }
 
