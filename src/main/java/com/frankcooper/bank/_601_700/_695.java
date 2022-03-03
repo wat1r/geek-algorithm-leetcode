@@ -42,4 +42,40 @@ public class _695 {
         return i < 0 || i >= m || j < 0 || j >= n;
     }
 
+
+    static class _2nd {
+
+
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            int[][] grid = new int[][]{{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}};
+        }
+
+        int R, C;
+        int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};//对应了上右下左四个方向
+
+        public int maxAreaOfIsland(int[][] grid) {
+            R = grid.length;
+            C = grid[0].length;
+            int maxArea = 0;
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    maxArea = Math.max(maxArea, dfs(grid, r, c));
+                }
+            }
+            return maxArea;
+        }
+
+        public int dfs(int[][] grid, int r, int c) {
+            if (r >= R || r < 0 || c >= C || c < 0 || grid[r][c] != 1) return 0;
+            int res = 1;
+            grid[r][c] = 2;
+            for (int[] d : dirs) {
+                int nr = r + d[0], nc = c + d[1];
+                res += dfs(grid, nr, nc);
+            }
+            return res;
+
+        }
+    }
 }

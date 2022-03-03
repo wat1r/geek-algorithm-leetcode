@@ -115,5 +115,31 @@ public class _733 {
         }
     }
 
+    static class _4th {
+        int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+            int R = image.length, C = image[0].length;
+            if (image[sr][sc] == newColor) return image;
+            int oldColor = image[sr][sc];
+            Queue<int[]> q = new LinkedList<>();
+            q.add(new int[]{sr, sc});
+            image[sr][sc] = newColor;
+            while (!q.isEmpty()) {
+                int[] cur = q.poll();
+                for (int[] d : dirs) {
+                    int nr = cur[0] + d[0], nc = cur[1] + d[1];
+                    if (nr >= R || nr < 0 || nc >= C || nc < 0) continue;
+                    if (image[nr][nc] != oldColor) continue;
+                    image[nr][nc] = newColor;
+                    q.add(new int[]{nr, nc});
+                }
+            }
+            return image;
+
+
+        }
+    }
+
 
 }

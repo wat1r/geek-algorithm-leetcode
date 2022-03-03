@@ -14,7 +14,8 @@
         int R, C;
 
         public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-            int oldColor = image[sr][sc];
+            //一开始的起始的颜色，后续要染色的区域要和这个颜色相同才可以染色
+          	int oldColor = image[sr][sc];
             if (oldColor == newColor) return image;
             R = image.length;
             C = image[0].length;
@@ -23,6 +24,7 @@
         }
         public void dfs(int[][] image, int r, int c, int newColor, int oldColor) {
             if (!inArea(r, c)) return;
+         		 //当前的待染色的点与oldColor不同，该点不能被着色
             if (image[r][c] != oldColor) return;
             image[r][c] = newColor;
             for (int[] d : dirs) {
