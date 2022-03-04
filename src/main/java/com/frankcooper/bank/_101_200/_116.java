@@ -1,6 +1,7 @@
 package com.frankcooper.bank._101_200;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class _116 {
 
@@ -63,7 +64,28 @@ public class _116 {
 
 
     static class _3rd {
+        public Node connect(Node root) {
+            if (root == null) return root;
+            Queue<Node> q = new LinkedList<>();
+            q.offer(root);
+            while (!q.isEmpty()) {
+                int size = q.size();
+                Node prev = null;
+                for (int i = 0; i < size; i++) {
+                    Node cur = q.poll();
+                    if (cur.left != null) q.offer(cur.left);
+                    if (cur.right != null) q.offer(cur.right);
+                    if (prev != null) {
+                        prev.next = cur;
+                        prev = cur;
+                    }
+                    if (prev == null) prev = cur;
 
+
+                }
+            }
+            return root;
+        }
     }
 
     static class Node {
