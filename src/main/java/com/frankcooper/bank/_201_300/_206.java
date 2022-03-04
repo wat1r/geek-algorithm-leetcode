@@ -106,4 +106,14 @@ public class _206 {
             return node;
         }
     }
+
+    static class _6th {
+        public ListNode reverseList(ListNode head) {
+            if (head == null || head.next == null) return head;
+            ListNode node = reverseList(head.next);
+            head.next.next = head;
+            head.next = null;
+            return node;
+        }
+    }
 }

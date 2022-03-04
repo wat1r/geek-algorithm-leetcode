@@ -71,4 +71,86 @@ public class _542 {
     private boolean inArea(int i, int j) {
         return i >= 0 && i < m && j >= 0 && j < n;
     }
+
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            int[][] matrix = {{0, 0, 0},
+                    {0, 1, 0},
+                    {1, 1, 1}};
+            handler.updateMatrix(matrix);
+        }
+
+        int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};//四个方向
+
+
+        public int[][] updateMatrix(int[][] mat) {
+            int R = mat.length, C = mat[0].length;
+            boolean[][] vis = new boolean[R][C];
+            Queue<int[]> q = new LinkedList<>();
+            for (int i = 0; i < R; i++) {
+                for (int j = 0; j < C; j++) {
+                    if (mat[i][j] == 0) {
+                        q.offer(new int[]{i, j});
+                        vis[i][j] = true;
+                    }
+                }
+            }
+            int dist = 0;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                for (int k = 0; k < size; k++) {
+                    int[] c = q.poll();
+                    if (mat[c[0]][c[1]] == 1) mat[c[0]][c[1]] = dist;
+                    for (int[] d : dirs) {
+                        int nr = c[0] + d[0], nc = c[1] + d[1];
+                        if (nr < 0 || nr >= R || nc < 0 || nc >= C || vis[nr][nc]) {
+                            continue;
+                        }
+                        q.offer(new int[]{nr, nc});
+                        vis[nr][nc] = true;
+                    }
+                }
+                dist++;
+            }
+            return mat;
+        }
+    }
+
+    static class _3rd {
+        int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};//四个方向
+
+
+        public int[][] updateMatrix(int[][] mat) {
+            int R = mat.length, C = mat[0].length;
+            Queue<int[]> q = new LinkedList<>();
+            for (int i = 0; i < R; i++) {
+                for (int j = 0; j < C; j++) {
+                    if (mat[i][j] == 0) {
+                        q.offer(new int[]{i, j});
+                    } else {
+                        mat[i][j] = -1;
+                    }
+                }
+            }
+            while (!q.isEmpty()) {
+                int size = q.size();
+                for (int k = 0; k < size; k++) {
+                    int[] p = q.poll();
+                    int r = p[0], c = p[1];
+                    for (int[] d : dirs) {
+                        int nr = r + d[0], nc = c + d[1];
+                        if (nr < 0 || nr >= R || nc < 0 || nc >= C || mat[nr][nc] != -1) {
+                            continue;
+                        }
+                        mat[nr][nc] = mat[r][c] + 1;
+                        q.offer(new int[]{nr, nc});
+                    }
+                }
+            }
+            return mat;
+        }
+    }
 }
+
