@@ -77,6 +77,26 @@ public class _77 {
     }
 
 
-    static class _4th{
+    static class _4th {
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> combine(int n, int k) {
+            dfs(new ArrayList<>(), 1, n, k);
+            return res;
+        }
+
+
+        public void dfs(List<Integer> sub, int idx, int n, int k) {
+            if (sub.size() == k) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+
+            for (int i = idx; i <= n; i++) {
+                sub.add(i);
+                dfs(sub, i + 1, n, k);
+                sub.remove(sub.size() - 1);
+            }
+        }
     }
 }

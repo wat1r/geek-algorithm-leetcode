@@ -247,4 +247,30 @@ public class RepeateOne {
         }
     }
 
+    static class _1st_1 {
+        List<String> res = new ArrayList<>();
+
+        public List<String> letterCasePermutation(String s) {
+            int n = s.length();
+            char[] chs = new char[n];
+            dfs(chs, 0, n, s);
+            return res;
+        }
+
+
+        private void dfs(char[] chs, int idx, int n, String s) {
+            if (idx == n) {
+                res.add(new String(chs));
+                return;
+            }
+            chs[idx] = s.charAt(idx);
+            dfs(chs, idx + 1, n, s);
+            if (Character.isLetter(chs[idx])) {
+                chs[idx] = (char) (s.charAt(idx) ^ ' ');
+                dfs(chs, idx + 1, n, s);
+            }
+        }
+
+    }
+
 }

@@ -49,7 +49,15 @@ public class _191 {
             _3rd handler = new _3rd();
 
 
+        }
 
+        public int hammingWeight(int n) {
+            int res = 0;
+            while (n != 0) {
+                res += (n & 1);
+                n >>>= 1;
+            }
+            return res;
         }
 
 
@@ -59,5 +67,7 @@ public class _191 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+
     }
 }

@@ -156,4 +156,16 @@ public class _198 {
             return cur;
         }
     }
+
+    static class _10th {
+        public int rob(int[] nums) {
+            int n = nums.length;
+            int[][] f = new int[n + 1][2];//0表示今天没偷
+            for (int i = 1; i <= n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1]);
+                f[i][1] = f[i - 1][0] + nums[i - 1];
+            }
+            return Math.max(f[n][0], f[n][1]);
+        }
+    }
 }
