@@ -168,4 +168,48 @@ public class _198 {
             return Math.max(f[n][0], f[n][1]);
         }
     }
+
+    static class _10th_1 {
+        public int rob(int[] nums) {
+            int n = nums.length;
+            int[][] f = new int[n][2];//0表示今天没偷
+            f[0][0] = 0;
+            f[0][1] = nums[0];
+            for (int i = 1; i < n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1]);
+                f[i][1] = f[i - 1][0] + nums[i];
+            }
+            return Math.max(f[n - 1][0], f[n - 1][1]);
+        }
+    }
+
+    static class _10th_2 {
+        public int rob(int[] nums) {
+            int n = nums.length;
+            if (n == 0) return 0;
+            int[] f = new int[n + 1];
+            f[0] = 0;
+            f[1] = nums[0];
+            for (int i = 2; i <= n; i++) {
+                f[i] = Math.max(f[i - 1], f[i - 2] + nums[i - 1]);
+            }
+            return f[n];
+        }
+    }
+
+    static class _10_3 {
+        public int rob(int[] nums) {
+            //到达前一个房间时，获得的最大收益
+            int prev = 0;
+            int cur = 0;
+            for (int x : nums) {
+                //max{前一个房间收益，前前一个房间收益+当前房间价值}
+                int t = Math.max(cur, prev + x);
+                //滚动
+                prev = cur;
+                cur = t;
+            }
+            return cur;
+        }
+    }
 }
