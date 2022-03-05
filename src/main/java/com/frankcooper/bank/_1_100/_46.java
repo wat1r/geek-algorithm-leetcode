@@ -7,10 +7,10 @@ import java.util.List;
 public class _46 {
 
 
-    static class _1st{
+    static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-            handler.permute(new int[]{1,2,3});
+            handler.permute(new int[]{1, 2, 3});
         }
 
 
@@ -23,10 +23,10 @@ public class _46 {
         }
 
         /**
-         * @param nums      源数组
-         * @param res   结果集
-         * @param sub 每一层的子结果集
-         * @param vis   记录当前的元素是否被访问过
+         * @param nums 源数组
+         * @param res  结果集
+         * @param sub  每一层的子结果集
+         * @param vis  记录当前的元素是否被访问过
          */
         private void dfs(int[] nums, List<List<Integer>> res, List<Integer> sub, boolean[] vis) {
             //当子结果集的大小等于源数组的长度时，即源数组整个已经访问结束，排列结束，开始收集结果
@@ -45,12 +45,6 @@ public class _46 {
             }
         }
     }
-
-
-
-
-
-
 
 
     public List<List<Integer>> permute2nd(int[] nums) {
@@ -95,5 +89,55 @@ public class _46 {
         }
     }
 
+
+    /*
+        本题不包含有重复元素
+     */
+    static class _2nd {
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> permute(int[] nums) {
+            dfs(new ArrayList<>(), nums);
+            return res;
+        }
+
+        public void dfs(List<Integer> sub, int[] nums) {
+            if (sub.size() == nums.length) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int x : nums) {
+                if (sub.contains(x)) continue;
+                sub.add(x);
+                dfs(sub, nums);
+                sub.remove(sub.size() - 1);
+            }
+        }
+    }
+
+    static class _3rd {
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> permute(int[] nums) {
+            boolean[] vis = new boolean[nums.length];
+            dfs(new ArrayList<>(), nums, vis);
+            return res;
+        }
+
+        public void dfs(List<Integer> sub, int[] nums, boolean[] vis) {
+            if (sub.size() == nums.length) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int i = 0; i < nums.length; i++) {
+                if (vis[i]) continue;
+                vis[i] = true;
+                sub.add(nums[i]);
+                dfs(sub, nums, vis);
+                sub.remove(sub.size() - 1);
+                vis[i] = false;
+            }
+        }
+    }
 
 }
