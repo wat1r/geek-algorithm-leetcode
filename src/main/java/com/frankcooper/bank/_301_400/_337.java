@@ -90,21 +90,14 @@ public class _337 {
                 if (root.left != null) lv = dfs(root.left, false);
                 if (root.right != null) rv = dfs(root.right, false);
                 x = root.val + lv + rv;
-                System.out.printf("val:%d,lv:%d,rv:%d\n", root.val, lv, rv);
-//                memo.put(root, x);
-//                return x;
             } else {
                 if (root.left != null) lv = Math.max(dfs(root.left, false), dfs(root.left, true));
                 if (root.right != null) rv = Math.max(dfs(root.right, false), dfs(root.right, true));
                 y = lv + rv;
-                System.out.printf("lv:%d,rv:%d\n", lv, rv);
-//                memo.put(root, x);
-//                return x;
             }
             int res = Math.max(x, y);
             memo.put(root, res);
             return res;
-//            memo.put(root, x);
         }
 
 
@@ -134,21 +127,58 @@ public class _337 {
 
     static class _6th {
         public int rob(TreeNode root) {
-                int[] t = rob_sub(root);
-                return Math.max(t[0], t[1]);
-            }
+            int[] t = rob_sub(root);
+            return Math.max(t[0], t[1]);
+        }
 
-            private int[] rob_sub(TreeNode root) {
-                if (root == null) return new int[2];
-                int[] t = new int[2];
-                //当前节点的左孩子节点所能带来的偷|不偷带来的最大金额 left_values -> lvs
-                int[] lvs = rob_sub(root.left);
-                //当前节点的右孩子节点所能带来的偷|不偷带来的最大金额 right_values -> rvs
-                int[] rvs = rob_sub(root.right);
-                //[0]表示当前节点不偷，[1]表示当前节点偷了
-                t[0] = Math.max(lvs[0], lvs[1]) + Math.max(rvs[0], rvs[1]);
-                t[1] = root.val + lvs[0] + rvs[0];
-                return t;
+        private int[] rob_sub(TreeNode root) {
+            if (root == null) return new int[2];
+            int[] t = new int[2];
+            //当前节点的左孩子节点所能带来的偷|不偷带来的最大金额 left_values -> lvs
+            int[] lvs = rob_sub(root.left);
+            //当前节点的右孩子节点所能带来的偷|不偷带来的最大金额 right_values -> rvs
+            int[] rvs = rob_sub(root.right);
+            //[0]表示当前节点不偷，[1]表示当前节点偷了
+            t[0] = Math.max(lvs[0], lvs[1]) + Math.max(rvs[0], rvs[1]);
+            t[1] = root.val + lvs[0] + rvs[0];
+            return t;
+        }
+    }
+
+    static class _7th {
+
+        //记忆化，按steal和non_steal存两份，写法丑陋~
+        Map<TreeNode, Integer> steal_map = new HashMap<>();//steal
+        Map<TreeNode, Integer> non_steal_map = new HashMap<>();//non_steal
+
+        public int rob(TreeNode root) {
+            if (root == null) return 0;
+            if (root.left == null && root.right == null) return root.val;
+            return Math.max(dfs(root, true), dfs(root, false));
+
+        }
+
+        private int dfs(TreeNode root, boolean visit) {
+            if (root.left == null && root.right == null) return visit ? root.val : 0;
+            //这里如果两个map都有值，需要结合visit状态来选，只有一个map有值的情况也是同样处理
+            if (steal_map.containsKey(root) && non_steal_map.containsKey(root))
+                return visit ? steal_map.get(root) : non_steal_map.get(root);
+            if (visit && steal_map.containsKey(root)) return steal_map.get(root);
+            if (!visit && non_steal_map.containsKey(root)) return non_steal_map.get(root);
+            int leftValue = 0, rightValue = 0;
+            if (visit) {
+                if (root.left != null) leftValue = dfs(root.left, false);
+                if (root.right != null) rightValue = dfs(root.right, false);
+                int res = root.val + leftValue + rightValue;
+                steal_map.put(root, res);
+                return res;
+            } else {
+                if (root.left != null) leftValue = Math.max(dfs(root.left, true), dfs(root.left, false));
+                if (root.right != null) rightValue = Math.max(dfs(root.right, true), dfs(root.right, false));
+                int res = leftValue + rightValue;
+                non_steal_map.put(root, res);
+                return res;
+            }
         }
     }
 
