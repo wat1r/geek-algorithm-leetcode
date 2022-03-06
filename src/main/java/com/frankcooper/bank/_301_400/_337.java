@@ -2,6 +2,9 @@ package com.frankcooper.bank._301_400;
 
 import com.frankcooper.struct.TreeNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Date 2020/8/5
  * @Author Frank Cooper
@@ -63,6 +66,89 @@ public class _337 {
             if (root.left != null) leftValue = Math.max(dfs(root.left, true), dfs(root.left, false));
             if (root.right != null) rightValue = Math.max(dfs(root.right, true), dfs(root.right, false));
             return leftValue + rightValue;
+        }
+    }
+
+
+    static class _4th {
+
+        Map<TreeNode, Integer> memo = new HashMap<>();
+
+        public int rob(TreeNode root) {
+            return Math.max(dfs(root, false), dfs(root, true));
+        }
+
+        private int dfs(TreeNode root, boolean steal) {
+            if (root.left == null && root.right == null) return steal ? root.val : 0;
+            if (memo.containsKey(root)) {
+                return memo.get(root);
+            }
+            int lv = 0, rv = 0;
+            int x = 0;
+            int y = 0;
+            if (steal) {
+                if (root.left != null) lv = dfs(root.left, false);
+                if (root.right != null) rv = dfs(root.right, false);
+                x = root.val + lv + rv;
+                System.out.printf("val:%d,lv:%d,rv:%d\n", root.val, lv, rv);
+//                memo.put(root, x);
+//                return x;
+            } else {
+                if (root.left != null) lv = Math.max(dfs(root.left, false), dfs(root.left, true));
+                if (root.right != null) rv = Math.max(dfs(root.right, false), dfs(root.right, true));
+                y = lv + rv;
+                System.out.printf("lv:%d,rv:%d\n", lv, rv);
+//                memo.put(root, x);
+//                return x;
+            }
+            int res = Math.max(x, y);
+            memo.put(root, res);
+            return res;
+//            memo.put(root, x);
+        }
+
+
+    }
+
+    static class _5th {
+        Map<TreeNode, Integer> memo = new HashMap<>();
+
+        public int rob(TreeNode root) {
+            if (root == null) return 0;
+            if (memo.containsKey(root)) return memo.get(root);
+            int val = 0;
+            if (root.left != null) {
+                val += rob(root.left.left) + rob(root.left.right);
+            }
+            if (root.right != null) {
+                val += rob(root.right.left) + rob(root.right.right);
+            }
+            int steal = root.val + val;
+            int non_steal = rob(root.left) + rob(root.right);
+            int res = Math.max(steal, non_steal);
+            memo.put(root, res);
+            return res;
+        }
+    }
+
+
+    static class _6th {
+        public int rob(TreeNode root) {
+                int[] t = rob_sub(root);
+                return Math.max(t[0], t[1]);
+            }
+
+            private int[] rob_sub(TreeNode root) {
+                if (root == null) return new int[2];
+                int[] t = new int[2];
+                //当前节点的左孩子节点所能带来的偷|不偷带来的最大金额 left_values -> lvs
+                int[] lvs = rob_sub(root.left);
+                //当前节点的右孩子节点所能带来的偷|不偷带来的最大金额 right_values -> rvs
+                int[] rvs = rob_sub(root.right);
+                //[0]表示当前节点不偷，[1]表示当前节点偷了
+                t[0] = Math.max(lvs[0], lvs[1]) + Math.max(rvs[0], rvs[1]);
+                t[1] = root.val + lvs[0] + rvs[0];
+                return t;
         }
     }
 
