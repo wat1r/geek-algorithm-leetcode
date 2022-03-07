@@ -134,4 +134,42 @@ public class _34 {
             return idx;
         }
     }
+
+    static class _3rd_1 {
+        public int[] searchRange(int[] nums, int target) {
+            if (nums == null || nums.length == 0) return new int[]{-1, -1};
+            int[] ans = new int[2];
+            ans[0] = findFirst(nums, target);
+            ans[1] = findLast(nums, target);
+            return ans;
+        }
+
+
+        private int findFirst(int[] nums, int t) {
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;//左
+                if (nums[mid] >= t) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            return nums[l] == t ? l : -1;
+        }
+
+
+        private int findLast(int[] nums, int t) {
+            int l = 0, r = nums.length - 1;
+            while (l < r) {
+                int mid = l + (r - l + 1) / 2;
+                if (nums[mid] <= t) {
+                    l = mid;
+                } else {
+                    r = mid - 1;
+                }
+            }
+            return nums[l] == t ? l : -1;
+        }
+    }
 }
