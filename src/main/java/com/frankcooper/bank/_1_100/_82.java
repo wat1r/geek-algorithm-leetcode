@@ -59,4 +59,25 @@ public class _82 {
             return dummy.next;
         }
     }
+
+
+    static class _4th {
+        public ListNode deleteDuplicates(ListNode head) {
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode prev = dummy, cur;
+            while (prev.next != null) {
+                cur = prev.next;
+                while (cur.next != null && cur.val == cur.next.val) {
+                    cur = cur.next;
+                }
+                if (prev.next != cur) {
+                    prev.next = cur.next;
+                } else {
+                    prev = prev.next;
+                }
+            }
+            return dummy.next;
+        }
+    }
 }
