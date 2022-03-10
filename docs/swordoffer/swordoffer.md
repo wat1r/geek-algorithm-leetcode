@@ -37,7 +37,7 @@
 - 采用递归的方式，不断进入下一个节点，当到达最后一个节点指向`null`时，开始返回
 - 出口条件：当节点是`null`的时候
 
-![image-20220307191100466](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220307191100466.png)
+![image-20220307191100466](/imgs/swordoffer/image-20220307191100466.png)
 
 ##### 代码
 
