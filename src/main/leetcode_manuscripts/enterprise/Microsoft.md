@@ -434,7 +434,35 @@ https://leetcode-cn.com/problems/merge-k-sorted-lists/solution/c-you-xian-dui-li
     }
 ```
 
-#### [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+### [24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+
+
+```java
+public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null ) return head;
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+        while(prev.next!=null && prev.next.next!=null){
+            ListNode first = prev.next;
+            ListNode second = prev.next.next;
+            ListNode nxt = second.next;
+            //step1
+            second.next = first;
+            //step2
+            first.next = nxt;
+            //step3
+            prev.next = second;
+            prev= first;
+        }
+        return dummy.next;
+    }
+```
+
+
+
+### [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
 
 ```java
 public ListNode reverseKGroup(ListNode head, int k) {
@@ -1620,6 +1648,15 @@ https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/tu-jie-kge-yi
         return pre;
     }
 ```
+
+
+
+### Reference
+
+- https://blog.csdn.net/zhangzhuoyang/article/details/98489312
+- [如何答好面试中的系统设计题？](https://www.zhihu.com/question/26312148)
+
+
 
 
 
