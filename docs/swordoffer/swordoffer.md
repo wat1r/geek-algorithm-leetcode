@@ -4,7 +4,7 @@
 
 ### JZ6 从尾到头打印链表
 
-![image-20220307191118762](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220307191118762.png)
+![](/imgs/swordoffer/image-20220307191118762.png)
 
 #### 方法1.遍历
 
