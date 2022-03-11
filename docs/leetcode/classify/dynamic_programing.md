@@ -129,6 +129,35 @@ f_i_1 = Math.max(f_i_1, tmp - prices[i]);
             }
 ```
 
+## [123. 买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/)
+
+### 方法1:朴素版DP
+
+```java
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int maxK = 2;
+        int[][][] dp = new int[n][maxK + 1][2];
+        dp[0][1][0] = 0;//交易了一次 手里没有股票
+        dp[0][1][1] = -prices[0];//交易了一次 手里有股票
+        dp[0][2][0] = 0;//交易了两次 手里没有股票
+        dp[0][2][1] = -prices[0];//交易了两次 手里有股票
+        for (int i = 1; i < n; i++) {
+            for (int k = 1; k <= maxK; k++) {//最多两次
+                //今天在交易了k次的情况下，手里没有股票 =
+                // max{昨天在交易了k次的情况下，手里没有股票 , 昨天在交易了k次的情况下，手里有股票 + 出售股票的收益}
+                dp[i][k][0] = Math.max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
+                //今天在交易了k次的情况下，手里有股票 =
+                // max{昨天在交易了k次的情况下，手里有股票 , 昨天在交易了k次的情况下，手里没有股票 + 买入了股票产生的负收益}
+                dp[i][k][1] = Math.max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);
+            }
+        }
+        //k次，最后一天，手里没有股票 后价值
+        return dp[n - 1][maxK][0];
+    }
+
+```
+
 ## [188. 买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
 ### 方法1:朴素版DP
