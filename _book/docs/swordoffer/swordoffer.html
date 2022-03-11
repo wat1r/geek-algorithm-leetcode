@@ -299,6 +299,39 @@
             <span class="hljs-keyword">return</span> res;
         }
 </code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x7A7A;&#x95F4;&#x538B;&#x7F29;dp">&#x65B9;&#x6CD5;2&#xFF1A;&#x7A7A;&#x95F4;&#x538B;&#x7F29;DP</h3>
+<pre><code class="lang-java">   <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] FindGreatestSumOfSubArray(<span class="hljs-keyword">int</span>[] arr) {
+            <span class="hljs-keyword">if</span> (arr == <span class="hljs-keyword">null</span> || arr.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{};
+            <span class="hljs-keyword">int</span> n = arr.length;
+            <span class="hljs-keyword">int</span> prev = arr[<span class="hljs-number">0</span>], cur = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> maxSum = prev;
+            <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;</span>
+            <span class="hljs-keyword">int</span> resl = <span class="hljs-number">0</span>, resr = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x7ED3;&#x679C;&#x96C6;&#x6ED1;&#x7A97;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+                r++;<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;&#x7684;&#x53F3;&#x533A;&#x95F4;</span>
+                <span class="hljs-comment">//&#x66F4;&#x65B0;&#x8FD9;&#x4E2A;f[i]&#x7684;&#x503C;</span>
+                cur = Math.max(prev + arr[i], arr[i]);
+                <span class="hljs-comment">//&#x5982;&#x679C;&#x533A;&#x95F4;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x91CD;&#x65B0;&#x79FB;&#x52A8;&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;</span>
+                <span class="hljs-keyword">if</span> (prev + arr[i] &lt; arr[i]) {<span class="hljs-comment">//&#x91CD;&#x65B0;</span>
+                    l = r;
+                }
+                <span class="hljs-comment">//maxSum&#x9047;&#x5230;&#x66F4;&#x5927;&#x7684;&#xFF0C;&#x66F4;&#x65B0;resl resr&#x533A;&#x95F4;</span>
+                <span class="hljs-comment">//&#x5982;&#x679C;maxSum&#x76F8;&#x540C;&#xFF0C;&#x66F4;&#x65B0;&#x4E00;&#x4E2A;&#x6700;&#x957F;&#x7684;resl resr&#x533A;&#x95F4;</span>
+                <span class="hljs-keyword">if</span> (cur &gt; maxSum || (cur == maxSum &amp;&amp; (resr - resl + <span class="hljs-number">1</span>) &lt; (r - l + <span class="hljs-number">1</span>))) {
+                    maxSum = cur;
+                    resl = l;
+                    resr = r;
+                }
+                prev = cur;
+            }
+            <span class="hljs-comment">//&#x7EC4;&#x88C5;&#x7ED3;&#x679C;</span>
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[resr - resl + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = resl; i &lt;= resr; i++) {
+                res[i - resl] = arr[i];
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
 <hr>
 <h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1.</h3>
 <h3 id="&#x65B9;&#x6CD5;2">&#x65B9;&#x6CD5;2.</h3>
@@ -341,7 +374,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"剑指Offer","level":"1.3","depth":1,"previous":{"title":"LeetCode","level":"1.2","depth":1,"path":"docs/leetcode/bank/leetcode_bank.md","ref":"docs/leetcode/bank/leetcode_bank.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/swordoffer.md","mtime":"2022-03-11T01:48:21.030Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-11T04:58:59.276Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"剑指Offer","level":"1.3","depth":1,"previous":{"title":"LeetCode","level":"1.2","depth":1,"path":"docs/leetcode/bank/leetcode_bank.md","ref":"docs/leetcode/bank/leetcode_bank.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/swordoffer.md","mtime":"2022-03-11T05:16:53.721Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-11T05:18:32.827Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
