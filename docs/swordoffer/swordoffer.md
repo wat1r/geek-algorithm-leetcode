@@ -6,7 +6,7 @@
 
 ## JZ6 从尾到头打印链表
 
-![](/imgs/swordoffer/image-20220307191118762.png)
+![](/imgs/swordoffer/JZ_6_title.png)
 
 ### 方法1.遍历
 
@@ -126,6 +126,8 @@
 ```
 
 ## **JZ85** **连续子数组的最大和(二)**
+
+![](/imgs/swordoffer/JZ_85_title.png)
 
 ### 方法1：朴素版DP
 
