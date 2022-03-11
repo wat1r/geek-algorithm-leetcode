@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 
-* [TEST](/docs/leetcode/algorithm/info.txt)
+* [LeetCode](/docs/leetcode/bank/leetcode_bank.md)
 
 * [剑指Offer](/docs/swordoffer/swordoffer.md)
 
