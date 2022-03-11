@@ -4,6 +4,10 @@
 
 ## [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
 
+### 分析
+
+> ***只能买卖一次***
+
 ### 方法1:朴素版DP
 
 - 股票只能买卖一次
@@ -56,6 +60,10 @@
 
 
 ## [122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
+
+### 分析
+
+> ***可以买卖多次***
 
 ### 方法1:朴素版DP
 
@@ -131,6 +139,10 @@ f_i_1 = Math.max(f_i_1, tmp - prices[i]);
 
 ## [123. 买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/)
 
+### 分析
+
+> ***最多只能买卖两次***
+
 ### 方法1:朴素版DP
 
 ```java
@@ -159,6 +171,10 @@ f_i_1 = Math.max(f_i_1, tmp - prices[i]);
 ```
 
 ## [188. 买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
+
+### 分析
+
+> ***基于上一种的最多买卖2次，这里允许2变成一般的次数k，最多买卖k次***
 
 ### 方法1:朴素版DP
 
@@ -202,6 +218,10 @@ public int maxProfit(int k, int[] prices) {
 
 ## [309. 最佳买卖股票时机含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
 
+### 分析
+
+> ***可以买卖多次，但是卖出有一天冷冻期***
+
 ### 方法1:朴素版DP
 
 ![](/imgs/leetcode/classify/image-20210619215929902.png)
@@ -241,4 +261,96 @@ public int maxProfit(int[] prices) {
 
 ## [714. 买卖股票的最佳时机含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
 
+### 分析
+
+> ***可以买卖多次，但是每次卖出收取手续费fee***
+
 ### 方法1:朴素版DP
+
+```java
+    public int maxProfit(int[] prices, int fee) {
+        if (prices == null || prices.length == 0) return 0;
+        int n = prices.length;
+        //f[i][0]表示第i天手里没有股票，持有的总收益
+        //f[i][1]表示第i天手里有股票，持有的总收益
+        //规定买入（buy）的时候利润为负 即-prices[i]
+        //规定卖出（sell）的时候利润为正，即+prices[i]
+        //卖出（sell）的时候需要扣除手续费，为-fee
+        int[][] f = new int[n][2];
+        f[0][0] = 0;
+        f[0][1] = -prices[0];
+        for(int i =1;i<n;i++){
+            f[i][0] = Math.max(f[i-1][0],f[i-1][1]+prices[i]-fee);
+            f[i][1] =Math.max(f[i-1][1], f[i-1][0]-prices[i]);
+        }
+        return f[n-1][0];
+    }
+```
+
+- 不过也可以，在处理`fee`的时候，上面的做法是卖出（`sell`）的时候，算扣除的手续费`-fee`，也可以在买入（`buy`）的时候算利润`-fee`，有如下代码
+
+```java
+       //基于上一种方法，fee`的话相当于在卖入`buy`的时候算负债，或者在卖出`sell`的时候扣除得到的利润
+        //当前方法是在买入（buy）的时候算负债-fee,注意在初始化f[0][1]时的处理，
+        public int maxProfit(int[] prices, int fee) {
+            if (prices == null || prices.length == 0) return 0;
+            int n = prices.length;
+            //f[i][0]表示第i天手里没有股票，持有的总收益
+            //f[i][1]表示第i天手里有股票，持有的总收益
+            //规定买入（buy）的时候利润为负 即-prices[i]
+            //规定卖出（sell）的时候利润为正，即+prices[i]
+            //卖出（sell）的时候需要扣除手续费，为-fee
+            int[][] f = new int[n][2];
+            f[0][0] = 0;
+            f[0][1] = -prices[0] - fee;//买入(buy),股票的价值为prices[i]，需要负债手续费-fee
+            for (int i = 1; i < n; i++) {
+                f[i][0] = Math.max(f[i - 1][0], f[i - 1][1] + prices[i]);
+                f[i][1] = Math.max(f[i - 1][1], f[i - 1][0] - prices[i] - fee);//买入的时候算负债和手续费
+            }
+            return f[n - 1][0];
+        }
+```
+
+### 方法2:空间压缩DP
+
+- 基于上面方法的第一段代码，去掉一维，改成如下的形式：
+
+```java
+        public int maxProfit(int[] prices, int fee) {
+            if (prices == null || prices.length == 0) return 0;
+            int n = prices.length;
+            //f[0] 是当前无股票状态时 持有的总收益
+            //f[1] 是当前有股票状态时 持有的总收益
+            int[] f = new int[2];
+            f[0] = 0;
+            f[1] = -prices[0];
+            for (int i = 1; i < n; i++) {
+                f[0] = Math.max(f[0], f[1] + prices[i] - fee);
+                f[1] = Math.max(f[1], f[0] - prices[i]);
+            }
+            return f[0];
+        }
+```
+
+- 或者基于变量的方式有下面的改写方式：
+
+```java
+        public int maxProfit(int[] prices, int fee) {
+            if (prices == null || prices.length == 0) return 0;
+            int n = prices.length;
+            //f[0] 是当前无股票状态时 持有的总收益
+            //f[1] 是当前有股票状态时 持有的总收益
+            int f_i_0 = 0, f_i_1 = -prices[0];
+            //从 0 开始 1 开始都可以
+            for (int i = 0; i < n; i++) {
+                //暂存下变量值，在紧接着这个值会给覆盖掉
+                int t = f_i_0;
+                f_i_0 = Math.max(f_i_0, f_i_1 + prices[i] - fee);
+                f_i_1 = Math.max(f_i_1, t - prices[i]);
+            }
+            return f_i_0;
+        }
+```
+
+
+
