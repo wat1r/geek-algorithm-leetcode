@@ -89,10 +89,15 @@ f_i_0 = Math.max(f_i_0, f_i_1 + prices[i]);
 f_i_1 = Math.max(f_i_1, tmp - prices[i]);
 ```
 
-          - `f_i_0` 是昨天无股票`f_i_0` 或者是昨天持有股票，今天卖出了`sell`,卖出相当于盈利为`f_i_1+prices(i)`
-            - 这时为 `f_i_0 = max(f_i_0, f_i_1 + prices[i])`
-                    - `f_i_1`是昨天持有股票`f_i_1`,或者是昨天无股票状态，今天买入了股票`buy`，买入相当于负债，但是需要提前记录下`tmp =f_i_0`,因为上面的转移方程已经改变了`f_i_0`的值
-            - 这时为`f_i_1 = max(f_i_1, tmp - prices[i])`
+
+
+   - `f_i_0` 是昨天无股票`f_i_0` 或者是昨天持有股票，今天卖出了`sell`,卖出相当于盈利为`f_i_1+prices(i)`
+
+        - 这时为 `f_i_0 = max(f_i_0, f_i_1 + prices[i])`
+                  - `f_i_1`是昨天持有股票`f_i_1`,或者是昨天无股票状态，今天买入了股票`buy`，买入相当于负债，但是需要提前记录下`tmp =f_i_0`,因为上面的转移方程已经改变了`f_i_0`的值
+        - 这时为`f_i_1 = max(f_i_1, tmp - prices[i])`
+
+        
 
 ```java
     public int maxProfit(int[] prices) {
