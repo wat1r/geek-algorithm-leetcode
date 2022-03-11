@@ -1,14 +1,16 @@
  #!/bin/sh
  
-  echo "=========git pull======="
-  git pull
+echo "=========git pull======="
+git pull
  
+echo "=========gitbook build=======" 
+gitbook  build
+
+
+
+echo "=========deploy======="
+git add . && git commit -m "deploy" && git push
  
-  echo "=========deploy======="
-  git add . && git commit -m "deploy" && git push
- 
-  echo "=========git build======="
-  gitbook  build
  
 #echo "=========git serve======="
 #gitbook serve
