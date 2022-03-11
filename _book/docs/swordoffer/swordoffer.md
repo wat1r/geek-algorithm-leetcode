@@ -6,7 +6,7 @@
 
 ## JZ6 从尾到头打印链表
 
-![](/imgs/swordoffer/image-20220307191118762.png)
+![](/imgs/swordoffer/JZ_6_title.png)
 
 ### 方法1.遍历
 
@@ -127,6 +127,8 @@
 
 ## **JZ85** **连续子数组的最大和(二)**
 
+![](/imgs/swordoffer/JZ_85_title.png)
+
 ### 方法1：朴素版DP
 
 ```java
@@ -154,6 +156,42 @@
                     resl = l;
                     resr = r;
                 }
+            }
+            //组装结果
+            int[] res = new int[resr - resl + 1];
+            for (int i = resl; i <= resr; i++) {
+                res[i - resl] = arr[i];
+            }
+            return res;
+        }
+```
+
+### 方法2：空间压缩DP
+
+```java
+   public int[] FindGreatestSumOfSubArray(int[] arr) {
+            if (arr == null || arr.length == 0) return new int[]{};
+            int n = arr.length;
+            int prev = arr[0], cur = 0;
+            int maxSum = prev;
+            int l = 0, r = 0;//当前的滑窗
+            int resl = 0, resr = 0;//结果集滑窗
+            for (int i = 1; i < n; i++) {
+                r++;//当前的滑窗的右区间
+                //更新这个f[i]的值
+                cur = Math.max(prev + arr[i], arr[i]);
+                //如果区间发生变化，重新移动当前的滑窗
+                if (prev + arr[i] < arr[i]) {//重新
+                    l = r;
+                }
+                //maxSum遇到更大的，更新resl resr区间
+                //如果maxSum相同，更新一个最长的resl resr区间
+                if (cur > maxSum || (cur == maxSum && (resr - resl + 1) < (r - l + 1))) {
+                    maxSum = cur;
+                    resl = l;
+                    resr = r;
+                }
+                prev = cur;
             }
             //组装结果
             int[] res = new int[resr - resl + 1];
