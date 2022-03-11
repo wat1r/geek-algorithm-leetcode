@@ -57,9 +57,52 @@
         }
 ```
 
+## **JZ25** **合并两个排序的链表**
 
+![](/imgs/swordoffer/JZ_25_title.png)
 
+### 方法1：递归
 
+```java
+    public ListNode Merge(ListNode list1,ListNode list2) {
+         if (list1 == null || list2 == null) return list1 == null ? list2 : list1;
+            if (list1.val > list2.val) {
+                list2.next = Merge(list1, list2.next);
+                return list2;
+            } else {
+                list1.next = Merge(list1.next, list2);
+                return list1;
+            }
+    }
+```
+
+### 方法2：迭代
+
+```java
+    public ListNode Merge(ListNode l1,ListNode l2) {
+             if (l1 == null || l2 == null) {
+                return l1 == null ? l2 : l1;
+            }
+            ListNode head = new ListNode(0);
+            ListNode node = head;
+            while (l1 != null && l2 != null) {
+                if (l1.val < l2.val) {
+                    node.next = l1;
+                    l1 = l1.next;
+                } else {
+                    node.next = l2;
+                    l2 = l2.next;
+                }
+                node = node.next;
+            }
+            if (l1 != null) {
+                node.next = l1;
+            } else {
+                node.next = l2;
+            }
+            return head.next;
+    }
+```
 
 ## 树
 

@@ -239,4 +239,6 @@ public int maxProfit(int[] prices) {
         }
 ```
 
-### 
+## [714. 买卖股票的最佳时机含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+
+### 方法1:朴素版DP
