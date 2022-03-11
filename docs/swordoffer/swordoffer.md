@@ -4,17 +4,17 @@
 
 ## 链表
 
-### JZ6 从尾到头打印链表
+## JZ6 从尾到头打印链表
 
 ![](/imgs/swordoffer/image-20220307191118762.png)
 
-#### 方法1.遍历
+### 方法1.遍历
 
-##### 分析
+#### 分析
 
 - 简单的遍历，收集每个节点的`val`，然后对结果翻转，返回
 
-##### 代码
+#### 代码
 
 ```java
         public ArrayList<Integer> printListFromTailToHead(ListNode node) {
@@ -32,16 +32,16 @@
         }
 ```
 
-#### 方法2.递归
+### 方法2.递归
 
-##### 分析
+#### 分析
 
 - 采用递归的方式，不断进入下一个节点，当到达最后一个节点指向`null`时，开始返回
 - 出口条件：当节点是`null`的时候
 
 ![image-20220307191100466](/imgs/swordoffer/image-20220307191100466.png)
 
-##### 代码
+#### 代码
 
 ```java
   ArrayList<Integer> res = new ArrayList<>();
@@ -65,9 +65,9 @@
 
 ## 树
 
-### JZ77 按之字形顺序打印二叉树
+## JZ77 按之字形顺序打印二叉树
 
-#### 方法1.
+### 方法1.
 
 ```java
         public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
@@ -101,11 +101,11 @@
 
 ## 动态规划
 
-### JZ42连续子数组的最大和
+## JZ42连续子数组的最大和
 
 ![](/imgs/swordoffer/JZ_42_title.png)
 
-#### 方法1.动态规划
+### 方法1.动态规划
 
 ```java
         public int FindGreatestSumOfSubArray(int[] array) {
@@ -141,6 +141,6 @@
 
 ---
 
-#### 方法1.
+### 方法1.
 
-#### 方法2.
+### 方法2.
