@@ -37,7 +37,7 @@
 
 ### 方法2:空间压缩DP
 
-- 由于值依赖前一天的收益情况（有无股票的状态）,$f$只需要来回滚动即可，去掉一维
+- 由于值依赖前一天的收益情况（有无股票的状态）,`f`只需要来回滚动即可，去掉一维
 
 ```java
         public int maxProfit(int[] prices) {
@@ -79,7 +79,50 @@
         }
 ```
 
+### 方法2:空间压缩DP
 
+> **去掉一维**
+
+```java
+int tmp = f_i_0;
+f_i_0 = Math.max(f_i_0, f_i_1 + prices[i]);
+f_i_1 = Math.max(f_i_1, tmp - prices[i]);
+```
+
+          - `f_i_0` 是昨天无股票`f_i_0` 或者是昨天持有股票，今天卖出了`sell`,卖出相当于盈利为`f_i_1+prices(i)`
+            - 这时为 `f_i_0 = max(f_i_0, f_i_1 + prices[i])`
+                    - `f_i_1`是昨天持有股票`f_i_1`,或者是昨天无股票状态，今天买入了股票`buy`，买入相当于负债，但是需要提前记录下`tmp =f_i_0`,因为上面的转移方程已经改变了`f_i_0`的值
+            - 这时为`f_i_1 = max(f_i_1, tmp - prices[i])`
+
+```java
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) return 0;
+        int n = prices.length;
+        int f_i_0 = 0, f_i_1 = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int tmp = f_i_0;
+            f_i_0 = Math.max(f_i_0, f_i_1 + prices[i]);
+            f_i_1 = Math.max(f_i_1, tmp - prices[i]);
+        }
+        return f_i_0;
+    }
+```
+
+- 另外一种写法
+
+```java
+          public int maxProfit(int[] prices) {
+                int n = prices.length;
+                int[] f = new int[2];
+                f[0] = 0;
+                f[1] = -prices[0];
+                for (int i = 1; i < n; i++) {
+                    f[0] = Math.max(f[0], f[1] + prices[i]);
+                    f[1] = Math.max(f[1], f[0] - prices[i]);
+                }
+                return f[0];
+            }
+```
 
 ## [188. 买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
