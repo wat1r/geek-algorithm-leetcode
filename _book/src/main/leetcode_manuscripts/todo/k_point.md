@@ -1,5 +1,0 @@
-CodeServer
-
-CodeRunner
-
-CLion
