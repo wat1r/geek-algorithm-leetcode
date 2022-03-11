@@ -23,7 +23,7 @@
         public int maxProfit(int[] prices) {
             int n = prices.length;
             //f[i][0]表示第i天手里没有股票获得的最大利润
-            //f[i][0]表示第i天手里有股票获得的最大利润
+            //f[i][1]表示第i天手里有股票获得的最大利润
             int[][] f = new int[n][2];
             f[0][0] = 0;
             f[0][1] = -prices[0];
@@ -34,6 +34,26 @@
             return f[n - 1][0];
         }
 ```
+
+### 方法2:空间压缩DP
+
+- 由于值依赖前一天的收益情况（有无股票的状态）,$f$只需要来回滚动即可，去掉一维
+
+```java
+        public int maxProfit(int[] prices) {
+            int n = prices.length;
+            int[] f = new int[2];
+            f[0] = 0;//无股票状态
+            f[1] = -prices[0];//有股票状态
+            for (int i = 1; i < n; i++) {
+                f[0] = Math.max(f[0], f[1] + prices[i]);
+                f[1] = Math.max(f[1], -prices[i]);
+            }
+            return f[0];
+        }
+```
+
+
 
 ## [122. 买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
@@ -61,7 +81,7 @@
 
 
 
-### [188. 买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
+## [188. 买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
 ### 方法1:朴素版DP
 

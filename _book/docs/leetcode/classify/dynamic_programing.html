@@ -316,7 +316,7 @@
 <pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
             <span class="hljs-keyword">int</span> n = prices.length;
             <span class="hljs-comment">//f[i][0]&#x8868;&#x793A;&#x7B2C;i&#x5929;&#x624B;&#x91CC;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x5229;&#x6DA6;</span>
-            <span class="hljs-comment">//f[i][0]&#x8868;&#x793A;&#x7B2C;i&#x5929;&#x624B;&#x91CC;&#x6709;&#x80A1;&#x7968;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x5229;&#x6DA6;</span>
+            <span class="hljs-comment">//f[i][1]&#x8868;&#x793A;&#x7B2C;i&#x5929;&#x624B;&#x91CC;&#x6709;&#x80A1;&#x7968;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x5229;&#x6DA6;</span>
             <span class="hljs-keyword">int</span>[][] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n][<span class="hljs-number">2</span>];
             f[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
             f[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = -prices[<span class="hljs-number">0</span>];
@@ -325,6 +325,22 @@
                 f[i][<span class="hljs-number">1</span>] = Math.max(f[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>], prices[i]);
             }
             <span class="hljs-keyword">return</span> f[n - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x7A7A;&#x95F4;&#x538B;&#x7F29;dp">&#x65B9;&#x6CD5;2:&#x7A7A;&#x95F4;&#x538B;&#x7F29;DP</h3>
+<ul>
+<li>&#x7531;&#x4E8E;&#x503C;&#x4F9D;&#x8D56;&#x524D;&#x4E00;&#x5929;&#x7684;&#x6536;&#x76CA;&#x60C5;&#x51B5;&#xFF08;&#x6709;&#x65E0;&#x80A1;&#x7968;&#x7684;&#x72B6;&#x6001;&#xFF09;,$f$&#x53EA;&#x9700;&#x8981;&#x6765;&#x56DE;&#x6EDA;&#x52A8;&#x5373;&#x53EF;&#xFF0C;&#x53BB;&#x6389;&#x4E00;&#x7EF4;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+            <span class="hljs-keyword">int</span> n = prices.length;
+            <span class="hljs-keyword">int</span>[] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">2</span>];
+            f[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x65E0;&#x80A1;&#x7968;&#x72B6;&#x6001;</span>
+            f[<span class="hljs-number">1</span>] = -prices[<span class="hljs-number">0</span>];<span class="hljs-comment">//&#x6709;&#x80A1;&#x7968;&#x72B6;&#x6001;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+                f[<span class="hljs-number">0</span>] = Math.max(f[<span class="hljs-number">0</span>], f[<span class="hljs-number">1</span>] + prices[i]);
+                f[<span class="hljs-number">1</span>] = Math.max(f[<span class="hljs-number">1</span>], -prices[i]);
+            }
+            <span class="hljs-keyword">return</span> f[<span class="hljs-number">0</span>];
         }
 </code></pre>
 <h2 id="122-&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;-ii"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank">122. &#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A; II</a></h2>
@@ -347,7 +363,7 @@
             <span class="hljs-keyword">return</span> f[n - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];
         }
 </code></pre>
-<h3 id="188-&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;-iv"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/" target="_blank">188. &#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A; IV</a></h3>
+<h2 id="188-&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;-iv"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/" target="_blank">188. &#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A; IV</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x6734;&#x7D20;&#x7248;dp">&#x65B9;&#x6CD5;1:&#x6734;&#x7D20;&#x7248;DP</h3>
 <ul>
 <li>&#x6700;&#x591A;&#x6709;K&#x7B14;&#x4EA4;&#x6613;&#x7684;&#x9650;&#x5236;</li>
@@ -455,7 +471,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.2.4","depth":2,"next":{"title":"位运算","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},"previous":{"title":"图论","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-03-11T13:18:29.251Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-11T13:19:07.837Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.2.4","depth":2,"next":{"title":"位运算","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},"previous":{"title":"图论","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-03-11T13:33:19.914Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-11T13:33:36.456Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

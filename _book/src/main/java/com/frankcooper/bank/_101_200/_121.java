@@ -136,4 +136,19 @@ public class _121 {
 
         }
     }
+
+
+    static class _2nd_3 {
+        public int maxProfit(int[] prices) {
+            int n = prices.length;
+            int[] f = new int[2];
+            f[0] = 0;//无股票状态
+            f[1] = -prices[0];//有股票状态
+            for (int i = 1; i < n; i++) {
+                f[0] = Math.max(f[0], f[1] + prices[i]);
+                f[1] = Math.max(f[1], -prices[i]);
+            }
+            return f[0];
+        }
+    }
 }
