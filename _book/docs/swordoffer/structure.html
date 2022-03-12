@@ -60,8 +60,6 @@
     <link rel="next" href="dynamic_programing.html" />
     
     
-    <link rel="prev" href="swordoffer.html" />
-    
 
     </head>
     <body>
@@ -199,14 +197,14 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="swordoffer.html">
+        <li class="chapter " data-level="1.3" >
             
-                <a href="swordoffer.html">
+                <span>
             
                     
                     剑指Offer
             
-                </a>
+                </span>
             
 
             
@@ -374,6 +372,24 @@
             <span class="hljs-keyword">return</span> head.next;
     }
 </code></pre>
+<h2 id="jz18-&#x5220;&#x9664;&#x94FE;&#x8868;&#x7684;&#x8282;&#x70B9;"><strong>JZ18</strong> <strong>&#x5220;&#x9664;&#x94FE;&#x8868;&#x7684;&#x8282;&#x70B9;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_18_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">deleteNode</span><span class="hljs-params">(ListNode head, <span class="hljs-keyword">int</span> val)</span> </span>{
+            ListNode dummy = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+            dummy.next = head;
+            ListNode prev = dummy, cur = head;
+            <span class="hljs-comment">//&#x904D;&#x5386;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x548C;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x524D;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+            <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (cur.val == val) <span class="hljs-keyword">break</span>;
+                prev = prev.next;
+                cur = cur.next;
+            }
+            <span class="hljs-comment">//&#x5220;&#x9664;cur&#x8282;&#x70B9;</span>
+            prev.next = prev.next.next;
+            <span class="hljs-keyword">return</span> dummy.next;
+        }
+</code></pre>
 <h2 id="jz23-&#x94FE;&#x8868;&#x4E2D;&#x73AF;&#x7684;&#x5165;&#x53E3;&#x7ED3;&#x70B9;"><strong>JZ23</strong> <strong>&#x94FE;&#x8868;&#x4E2D;&#x73AF;&#x7684;&#x5165;&#x53E3;&#x7ED3;&#x70B9;</strong></h2>
 <p><img src="../../imgs/swordoffer/JZ_23_title.png" alt=""></p>
 <h3 id="&#x65B9;&#x6CD5;1&#x5FEB;&#x6162;&#x6307;&#x9488;">&#x65B9;&#x6CD5;1:&#x5FEB;&#x6162;&#x6307;&#x9488;</h3>
@@ -447,6 +463,103 @@
             <span class="hljs-keyword">return</span> res;
         }
 </code></pre>
+<h2 id="jz82-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;&#x4E00;"><strong>JZ82</strong> <strong>&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;(&#x4E00;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_82_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">return</span> dfs(root, sum);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+            <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5F00;&#x59CB;&#x6BD4;&#x8F83;val&#x662F;&#x5426;&#x76F8;&#x7B49;</span>
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span> &amp;&amp; root.val == sum) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">boolean</span> res = <span class="hljs-keyword">false</span>;
+            <span class="hljs-comment">//&#x53EA;&#x8981;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x6709;&#x4E00;&#x4E2A;&#x662F;true&#x5373;&#x53EF;</span>
+            <span class="hljs-keyword">if</span> (root.left != <span class="hljs-keyword">null</span>) res = res || dfs(root.left, sum - root.val);
+            <span class="hljs-keyword">if</span> (root.right != <span class="hljs-keyword">null</span>) res = res || dfs(root.right, sum - root.val);
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2:&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x8282;&#x70B9;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x6BD4;&#x8F83;&#x5269;&#x4E0B;&#x7684;sum&#x503C;&#x662F;&#x5426;&#x76F8;&#x7B49;</span>
+    <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root.val == sum;
+    <span class="hljs-comment">//&#x5DE6;&#x53F3;&#x4E24;&#x68F5;&#x5B50;&#x6811;&#x53EA;&#x8981;&#x4E00;&#x4E2A;&#x7B26;&#x5408;&#x5373;&#x53EF;</span>
+    <span class="hljs-keyword">return</span> hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3bfs">&#x65B9;&#x6CD5;3:BFS</h3>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasPathSum4th</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        LinkedList&lt;TreeNode&gt; nodeQueue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+        LinkedList&lt;Integer&gt; numQueue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+        nodeQueue.offer(root);
+        numQueue.offer(root.val);
+        <span class="hljs-keyword">while</span> (!nodeQueue.isEmpty()) {
+            TreeNode curNode = nodeQueue.pop();
+            Integer curNum = numQueue.pop();
+            <span class="hljs-keyword">if</span> (curNode.left == <span class="hljs-keyword">null</span> &amp;&amp; curNode.right == <span class="hljs-keyword">null</span> &amp;&amp; curNum == sum) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">if</span> (curNode.left != <span class="hljs-keyword">null</span>) {
+                nodeQueue.offer(curNode.left);
+                numQueue.offer(curNum + curNode.left.val);
+            }
+            <span class="hljs-keyword">if</span> (curNode.right != <span class="hljs-keyword">null</span>) {
+                nodeQueue.offer(curNode.right);
+                numQueue.offer(curNum + curNode.right.val);
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+</code></pre>
+<h2 id="jz34-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;&#x4E8C;"><strong>JZ34</strong> <strong>&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;(&#x4E8C;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_34_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x56DE;&#x6EAF;-&#x9012;&#x51CF;">&#x65B9;&#x6CD5;1:&#x56DE;&#x6EAF;-&#x9012;&#x51CF;</h3>
+<pre><code class="lang-java">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+        <span class="hljs-keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root, <span class="hljs-keyword">int</span> targetSum) {
+            dfs(root, targetSum, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum, ArrayList&lt;Integer&gt; sub)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">return</span>;
+            }
+            sub.add(root.val);
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span> &amp;&amp; sum == root.val) res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+            dfs(root.left, sum - root.val, sub);
+            dfs(root.right, sum - root.val, sub);
+            sub.remove(sub.size() - <span class="hljs-number">1</span>);
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x56DE;&#x6EAF;-&#x7D2F;&#x52A0;">&#x65B9;&#x6CD5;2:&#x56DE;&#x6EAF;-&#x7D2F;&#x52A0;</h3>
+<pre><code class="lang-java">   ArrayList&lt;ArrayList&lt;Integer&gt;&gt;  res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+        <span class="hljs-keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root, <span class="hljs-keyword">int</span> sum) {
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+            dfs(root,sum,<span class="hljs-number">0</span>,<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum, <span class="hljs-keyword">int</span> total, ArrayList&lt;Integer&gt; sub)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span>;
+            sub.add(root.val);
+            total += root.val;
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (sum == total) {
+                    res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+                }
+                <span class="hljs-comment">//&#x8FD9;&#x4E00;&#x6B65;&#x662F;&#x4E3A;&#x4E86;&#x79FB;&#x9664;&#x8FD9;&#x4E2A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x503C;&#xFF0C;&#x4E0D;&#x7BA1;&#x8FD9;&#x4E2A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x662F;&#x5426;&#x6EE1;&#x8DB3;&#x6761;&#x4EF6;</span>
+                sub.remove(sub.size() - <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span>;
+            }
+            dfs(root.left, sum, total, sub);
+            dfs(root.right, sum, total, sub);
+            sub.remove(sub.size() - <span class="hljs-number">1</span>);
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -474,12 +587,8 @@
 
             
                 
-                <a href="swordoffer.html" class="navigation navigation-prev " aria-label="Previous page: 剑指Offer">
-                    <i class="fa fa-angle-left"></i>
-                </a>
                 
-                
-                <a href="dynamic_programing.html" class="navigation navigation-next " aria-label="Next page: 动态规划">
+                <a href="dynamic_programing.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 动态规划">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -490,7 +599,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.3.1","depth":2,"next":{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]},"previous":{"title":"剑指Offer","level":"1.3","depth":1,"path":"docs/swordoffer/swordoffer.md","ref":"docs/swordoffer/swordoffer.md","articles":[{"title":"数据结构","level":"1.3.1","depth":2,"path":"docs/swordoffer/structure.md","ref":"docs/swordoffer/structure.md","articles":[]},{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/structure.md","mtime":"2022-03-12T02:37:19.820Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-12T03:02:41.093Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.3.1","depth":2,"next":{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]},"previous":{"title":"剑指Offer","level":"1.3","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.3.1","depth":2,"path":"docs/swordoffer/structure.md","ref":"docs/swordoffer/structure.md","articles":[]},{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/structure.md","mtime":"2022-03-12T11:17:54.960Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-12T11:30:36.564Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>

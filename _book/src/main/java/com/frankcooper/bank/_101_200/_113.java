@@ -1,5 +1,6 @@
 package com.frankcooper.bank._101_200;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
 import java.util.ArrayList;
@@ -60,5 +61,43 @@ public class _113 {
         subList.remove(subList.size() - 1);
     }
 
+
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            TreeNode root = TreeNodeIOUtils.transform("[5,4,8,11,null,13,4,7,2,null,null,5,1]");
+            int targetSum = 22;
+            handler.pathSum(root,targetSum);
+        }
+
+
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> pathSum(TreeNode root, int sum) {
+            if (root == null) return res;
+            dfs(root, sum, 0, new ArrayList<>());
+            return res;
+        }
+
+        private void dfs(TreeNode root, int sum, int total, List<Integer> sub) {
+            if (root == null) return;
+            System.out.printf("%d->%d\n", root.val, total);
+            sub.add(root.val);
+            total += root.val;
+            if (root.left == null && root.right == null) {
+                if (sum == total) {
+                    res.add(new ArrayList<>(sub));
+                }
+                //这一步是为了移除这个叶子节点的值，不管这个叶子节点是否满足条件
+                sub.remove(sub.size() - 1);
+                return;
+            }
+            dfs(root.left, sum, total, sub);
+            dfs(root.right, sum, total, sub);
+            sub.remove(sub.size() - 1);
+        }
+
+    }
 
 }

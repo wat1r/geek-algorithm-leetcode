@@ -124,4 +124,14 @@ public class _112 {
             return false;
         }
     }
+
+    static class _3rd {
+        public boolean hasPathSum(TreeNode root, int sum) {
+            if (root == null) return false;
+            //当前的节点是叶子节点，比较剩下的sum值是否相等
+            if (root.left == null && root.right == null) return root.val == sum;
+            //左右两棵子树只要一个符合即可
+            return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+        }
+    }
 }

@@ -104,6 +104,29 @@
     }
 ```
 
+## **JZ18** **删除链表的节点**
+
+![](/imgs/swordoffer/JZ_18_title.png)
+
+### 方法1:迭代
+
+```java
+        public ListNode deleteNode(ListNode head, int val) {
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode prev = dummy, cur = head;
+            //遍历获取当前节点和当前节点的前一个节点
+            while (cur != null) {
+                if (cur.val == val) break;
+                prev = prev.next;
+                cur = cur.next;
+            }
+            //删除cur节点
+            prev.next = prev.next.next;
+            return dummy.next;
+        }
+```
+
 
 
 
@@ -178,6 +201,8 @@
 
 
 
+
+
 ## 树
 
 ## JZ77 按之字形顺序打印二叉树
@@ -207,4 +232,140 @@
             return res;
         }
 ```
+
+
+
+
+
+## **JZ82** **二叉树中和为某一值的路径(一)**
+
+![](/imgs/swordoffer/JZ_82_title.png)
+
+### 方法1:DFS
+
+```java
+        public boolean hasPathSum(TreeNode root, int sum) {
+            if (root == null) return false;
+            return dfs(root, sum);
+        }
+
+        private boolean dfs(TreeNode root, int sum) {
+            //当前节点是叶子节点，开始比较val是否相等
+            if (root.left == null && root.right == null && root.val == sum) return true;
+            boolean res = false;
+            //只要左右子树有一个是true即可
+            if (root.left != null) res = res || dfs(root.left, sum - root.val);
+            if (root.right != null) res = res || dfs(root.right, sum - root.val);
+            return res;
+        }
+```
+
+### 方法2:递归
+
+```java
+public boolean hasPathSum(TreeNode root, int sum) {
+    if (root == null) return false;
+    //当前的节点是叶子节点，比较剩下的sum值是否相等
+    if (root.left == null && root.right == null) return root.val == sum;
+    //左右两棵子树只要一个符合即可
+    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+}
+```
+
+### 方法3:BFS
+
+```java
+ public boolean hasPathSum4th(TreeNode root, int sum) {
+        if (root == null) return false;
+        LinkedList<TreeNode> nodeQueue = new LinkedList<>();
+        LinkedList<Integer> numQueue = new LinkedList<>();
+        nodeQueue.offer(root);
+        numQueue.offer(root.val);
+        while (!nodeQueue.isEmpty()) {
+            TreeNode curNode = nodeQueue.pop();
+            Integer curNum = numQueue.pop();
+            if (curNode.left == null && curNode.right == null && curNum == sum) return true;
+            if (curNode.left != null) {
+                nodeQueue.offer(curNode.left);
+                numQueue.offer(curNum + curNode.left.val);
+            }
+            if (curNode.right != null) {
+                nodeQueue.offer(curNode.right);
+                numQueue.offer(curNum + curNode.right.val);
+            }
+        }
+        return false;
+    }
+```
+
+
+
+
+
+
+
+
+
+## **JZ34** **二叉树中和为某一值的路径(二)**
+
+
+
+![](/imgs/swordoffer/JZ_34_title.png)
+
+### 方法1:回溯-递减
+
+```java
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+
+        public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int targetSum) {
+            dfs(root, targetSum, new ArrayList<>());
+            return res;
+        }
+
+        private void dfs(TreeNode root, int sum, ArrayList<Integer> sub) {
+            if (root == null) {
+                return;
+            }
+            sub.add(root.val);
+            if (root.left == null && root.right == null && sum == root.val) res.add(new ArrayList<>(sub));
+            dfs(root.left, sum - root.val, sub);
+            dfs(root.right, sum - root.val, sub);
+            sub.remove(sub.size() - 1);
+        }
+```
+
+### 方法2:回溯-累加
+
+```java
+   ArrayList<ArrayList<Integer>>  res = new ArrayList<>();
+
+        public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int sum) {
+            if (root == null) return res;
+            dfs(root,sum,0,new ArrayList<>());
+            return res;
+        }
+
+        private void dfs(TreeNode root, int sum, int total, ArrayList<Integer> sub) {
+            if (root == null) return;
+            sub.add(root.val);
+            total += root.val;
+            if (root.left == null && root.right == null) {
+                if (sum == total) {
+                    res.add(new ArrayList<>(sub));
+                }
+                //这一步是为了移除这个叶子节点的值，不管这个叶子节点是否满足条件
+                sub.remove(sub.size() - 1);
+                return;
+            }
+            dfs(root.left, sum, total, sub);
+            dfs(root.right, sum, total, sub);
+            sub.remove(sub.size() - 1);
+        }
+```
+
+
+
+
+
+
 
