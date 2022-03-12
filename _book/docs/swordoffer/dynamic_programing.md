@@ -32,7 +32,7 @@
 
 ![](/imgs/swordoffer/JZ_85_title.png)
 
-### 方法1：朴素版DP
+### 方法1:朴素版DP
 
 ```java
         public int[] FindGreatestSumOfSubArray(int[] arr) {
@@ -102,6 +102,31 @@
                 res[i - resl] = arr[i];
             }
             return res;
+        }
+```
+
+
+
+
+
+## **JZ63** **买卖股票的最好时机(一)**
+
+![](/imgs/swordoffer/JZ_63_title.png)
+
+### 方法2:空间压缩DP
+
+```java
+        //空间压缩DP
+        public int maxProfit(int[] prices) {
+            if (prices == null || prices.length == 0) return 0;
+            //f_0是当天手里无股票， f_1是当天手里有股票
+            int f_0 = 0, f_1 = -prices[0];
+            int n = prices.length;
+            for (int i = 0; i < n; i++) {
+                f_0 = Math.max(f_0, f_1 + prices[i]);
+                f_1 = Math.max(f_1, -prices[i]);
+            }
+            return f_0;
         }
 ```
 

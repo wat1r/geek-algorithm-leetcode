@@ -104,6 +104,51 @@
     }
 ```
 
+
+
+
+
+
+
+## **JZ23** **链表中环的入口结点**
+
+![](/imgs/swordoffer/JZ_23_title.png)
+
+### 方法1
+
+```java
+        public ListNode EntryNodeOfLoop(ListNode pHead) {
+            ListNode slow = pHead, fast = pHead;
+            boolean f = false;//标志位
+            while (fast.next != null && fast.next.next != null) {
+                //f的标志位要是true的时候，并且slow==fast
+                //初始时，slow和fast是相等的，如果没有标志位会提前退出
+                if (slow == fast && f) break;
+                slow = slow.next;
+                fast = fast.next.next;
+                f = true;//设置标志位
+            }
+            //如果slow和fast不是同一个节点 或者 slow和fast相同，但是是初始时的slow = pHead, fast = pHead
+            if (slow != fast || !f) return null;
+            slow = pHead;//slow回到起点，slow和fast步调一致，第一个相遇的点就是环形链表入口
+            while (slow != fast) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return slow;
+        }
+```
+
+
+
+
+
+
+
+
+
+
+
 ## 树
 
 ## JZ77 按之字形顺序打印二叉树
