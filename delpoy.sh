@@ -1,7 +1,7 @@
  #!/bin/sh
  
 echo "=========git pull======="
-git pull
+git   pull
 
 echo "=========gitbook build=======" 
 gitbook  build
