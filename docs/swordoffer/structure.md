@@ -365,7 +365,75 @@ public boolean hasPathSum(TreeNode root, int sum) {
 
 
 
+## **JZ68** **二叉搜索树的最近公共祖先**
 
+![](/imgs/swordoffer/JZ_68_title.png)
+
+```java
+        public int lowestCommonAncestor(TreeNode root, int o1, int o2) {
+            TreeNode res = helper(root, o1, o2);
+            return res.val;
+        }
+
+        public TreeNode helper(TreeNode root, int p, int q) {
+            if (root == null || root.val == p || root.val == q) return root;
+            TreeNode left = helper(root.left, p, q);
+            TreeNode right = helper(root.right, p, q);
+            if (left != null && right != null) return root;
+            if (left != null) return left;
+            if (right != null) return right;
+            return null;
+        }
+```
+
+
+
+
+
+
+
+## **JZ86** **在二叉树中找到两个节点的最近公共祖先**
+
+![](/imgs/swordoffer/JZ_86_title.png)
+
+#### 思路：
+
+1.`left`和`right`都为空，说明`root`的左右子树中都不包含`p`和`q`节点，返回`null`即可
+
+2.`left`不为空，`right`为空，说明`p`和`q`不在右子树中（因为右子树为空了），这时，返回`left`，这里面有下面的两种情况：
+
+- `p`和`q`都在`left`即左子树上，而`root`节点恰好指向了`p`或者`q`
+- `p`和`q`都在`left`即左子树上，而`root`节点未指向了`p`或者`q`，指向的是最近公共祖先节点
+
+3.`right`不为空，`left`为空，说明`p`和`q`不在左子树中（因为左子树为空了），这时，返回`right`，这里面有下面的两种情况：
+
+- `p`和`q`都在`right`即右子树上，而`root`节点恰好指向了`p`或者`q`
+- `p`和`q`都在`right`即右子树上，而`root`节点未指向了`p`或者`q`，指向的是最近公共祖先节点
+
+4.`left`不为空，并且`right`不为空，说明`p`和`q`分布在`root`节点的左右子树的两侧，这时`root`为`p`和`q`的最近公共祖先节点，返回
+
+![](/imgs/swordoffer/JZ_86_1.png)
+
+![](/imgs/swordoffer/JZ_86_2.png)
+
+![](/imgs/swordoffer/JZ_86_3.png)
+
+```java
+        public int lowestCommonAncestor(TreeNode root, int o1, int o2) {
+            TreeNode res = helper(root, o1, o2);
+            return res.val;
+        }
+
+        public TreeNode helper(TreeNode root, int p, int q) {
+            if (root == null || root.val == p || root.val == q) return root;
+            TreeNode left = helper(root.left, p, q);
+            TreeNode right = helper(root.right, p, q);
+            if (left != null && right != null) return root;
+            if (left != null) return left;
+            if (right != null) return right;
+            return null;
+        }
+```
 
 
 

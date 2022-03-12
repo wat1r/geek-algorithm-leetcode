@@ -560,6 +560,56 @@
             sub.remove(sub.size() - <span class="hljs-number">1</span>);
         }
 </code></pre>
+<h2 id="jz68-&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;"><strong>JZ68</strong> <strong>&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_68_title.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowestCommonAncestor</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> o1, <span class="hljs-keyword">int</span> o2)</span> </span>{
+            TreeNode res = helper(root, o1, o2);
+            <span class="hljs-keyword">return</span> res.val;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">helper</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> q)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span> || root.val == p || root.val == q) <span class="hljs-keyword">return</span> root;
+            TreeNode left = helper(root.left, p, q);
+            TreeNode right = helper(root.right, p, q);
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span> &amp;&amp; right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root;
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> left;
+            <span class="hljs-keyword">if</span> (right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> right;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        }
+</code></pre>
+<h2 id="jz86-&#x5728;&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x627E;&#x5230;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;"><strong>JZ86</strong> <strong>&#x5728;&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x627E;&#x5230;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_86_title.png" alt=""></p>
+<h4 id="&#x601D;&#x8DEF;&#xFF1A;">&#x601D;&#x8DEF;&#xFF1A;</h4>
+<p>1.<code>left</code>&#x548C;<code>right</code>&#x90FD;&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>root</code>&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x4E2D;&#x90FD;&#x4E0D;&#x5305;&#x542B;<code>p</code>&#x548C;<code>q</code>&#x8282;&#x70B9;&#xFF0C;&#x8FD4;&#x56DE;<code>null</code>&#x5373;&#x53EF;</p>
+<p>2.<code>left</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;<code>right</code>&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>p</code>&#x548C;<code>q</code>&#x4E0D;&#x5728;&#x53F3;&#x5B50;&#x6811;&#x4E2D;&#xFF08;&#x56E0;&#x4E3A;&#x53F3;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;&#x4E86;&#xFF09;&#xFF0C;&#x8FD9;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;<code>left</code>&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x6709;&#x4E0B;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>left</code>&#x5373;&#x5DE6;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x6070;&#x597D;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code></li>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>left</code>&#x5373;&#x5DE6;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x672A;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code>&#xFF0C;&#x6307;&#x5411;&#x7684;&#x662F;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;&#x8282;&#x70B9;</li>
+</ul>
+<p>3.<code>right</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;<code>left</code>&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>p</code>&#x548C;<code>q</code>&#x4E0D;&#x5728;&#x5DE6;&#x5B50;&#x6811;&#x4E2D;&#xFF08;&#x56E0;&#x4E3A;&#x5DE6;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;&#x4E86;&#xFF09;&#xFF0C;&#x8FD9;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;<code>right</code>&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x6709;&#x4E0B;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>right</code>&#x5373;&#x53F3;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x6070;&#x597D;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code></li>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>right</code>&#x5373;&#x53F3;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x672A;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code>&#xFF0C;&#x6307;&#x5411;&#x7684;&#x662F;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;&#x8282;&#x70B9;</li>
+</ul>
+<p>4.<code>left</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x5E76;&#x4E14;<code>right</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>p</code>&#x548C;<code>q</code>&#x5206;&#x5E03;&#x5728;<code>root</code>&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x7684;&#x4E24;&#x4FA7;&#xFF0C;&#x8FD9;&#x65F6;<code>root</code>&#x4E3A;<code>p</code>&#x548C;<code>q</code>&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;&#x8282;&#x70B9;&#xFF0C;&#x8FD4;&#x56DE;</p>
+<p><img src="../../imgs/swordoffer/JZ_86_1.png" alt=""></p>
+<p><img src="../../imgs/swordoffer/JZ_86_2.png" alt=""></p>
+<p><img src="../../imgs/swordoffer/JZ_86_3.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowestCommonAncestor</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> o1, <span class="hljs-keyword">int</span> o2)</span> </span>{
+            TreeNode res = helper(root, o1, o2);
+            <span class="hljs-keyword">return</span> res.val;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">helper</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> q)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span> || root.val == p || root.val == q) <span class="hljs-keyword">return</span> root;
+            TreeNode left = helper(root.left, p, q);
+            TreeNode right = helper(root.right, p, q);
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span> &amp;&amp; right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root;
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> left;
+            <span class="hljs-keyword">if</span> (right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> right;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -599,7 +649,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.3.1","depth":2,"next":{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]},"previous":{"title":"剑指Offer","level":"1.3","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.3.1","depth":2,"path":"docs/swordoffer/structure.md","ref":"docs/swordoffer/structure.md","articles":[]},{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/structure.md","mtime":"2022-03-12T11:17:54.960Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-12T11:32:15.025Z"},"basePath":"../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.3.1","depth":2,"next":{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]},"previous":{"title":"剑指Offer","level":"1.3","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.3.1","depth":2,"path":"docs/swordoffer/structure.md","ref":"docs/swordoffer/structure.md","articles":[]},{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/structure.md","mtime":"2022-03-12T12:18:30.907Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-12T12:18:56.921Z"},"basePath":"../..","book":{"language":""}});
         });
     </script>
 </div>
