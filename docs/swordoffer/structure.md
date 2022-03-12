@@ -365,6 +365,41 @@ public boolean hasPathSum(TreeNode root, int sum) {
 
 
 
+## **JZ84** **二叉树中和为某一值的路径(三)**
+
+![](/imgs/swordoffer/JZ_84_title.png)
+
+```java
+    
+        Map<Integer, Integer> map = new HashMap<>();
+
+    public int FindPath(TreeNode root, int sum) {
+        map.put(0, 1);
+        return helper(root, sum, 0);
+    }
+
+    private int helper(TreeNode root, int sum, int pathSum) {
+        int res = 0;
+        if (root == null) return res;
+        pathSum += root.val;//路径和加上当前节点的值
+        //路径和-目标sum的值 的节点，这个节点是多少个，在此基础上累加
+        res += map.getOrDefault(pathSum - sum, 0);
+        //将从根节点到当前节点，有多少的路径和等于pathSum存入map
+        map.put(pathSum, map.getOrDefault(pathSum, 0) + 1);
+        //探索左右子树
+        res += helper(root.left, sum, pathSum) + helper(root.right, sum, pathSum);
+        //回溯过程需要将map的数量-1
+        map.put(pathSum, map.get(pathSum) - 1);
+        return res;
+    }
+```
+
+
+
+
+
+
+
 ## **JZ68** **二叉搜索树的最近公共祖先**
 
 ![](/imgs/swordoffer/JZ_68_title.png)

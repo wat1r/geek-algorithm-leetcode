@@ -45,21 +45,16 @@ public class _111 {
     }
 
 
+    static class _3rd {
+        public int minDepth(TreeNode root) {
+            if (root == null) return 0;
+            if (root.left == null && root.right == null) return 1;
+            int res = Integer.MAX_VALUE;
+            if (root.left != null) res = Math.min(res, minDepth(root.left));
+            if (root.right != null) res = Math.min(res, minDepth(root.right));
+            return res + 1;
+        }
+    }
 
-//
-//    public static int minDepth3rd(TreeNode root) {
-//        if (root == null) return 0;
-//        Stack<Pair<TreeNode, Integer>> stack = new Stack<>();
-//        stack.add(new Pair<TreeNode, Integer>(root, 1));
-//        int depth = Integer.MAX_VALUE;
-//        while (!stack.isEmpty()) {
-//            Pair<TreeNode, Integer> pair = stack.pop();
-//            TreeNode Node = pair.getKey();
-//            if (Node.left == null && Node.right == null)
-//                depth = Math.min(depth, pair.getValue());
-//            if (Node.right != null) stack.add(new Pair<TreeNode, Integer>(Node.right, pair.getValue() + 1));
-//            if (Node.left != null) stack.add(new Pair<TreeNode, Integer>(Node.left, pair.getValue() + 1));
-//        }
-//        return depth;
-//    }
+
 }

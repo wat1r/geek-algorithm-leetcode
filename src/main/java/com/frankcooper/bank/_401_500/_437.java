@@ -74,38 +74,6 @@ public class _437 {
     }
 
 
-//    Map<Integer, Integer> map = new HashMap<>();
-//
-//    public int pathSum(TreeNode root, int sum) {
-//        map.put(0, 1);
-//        return helper(root, sum, 0);
-//    }
-//
-//    int helper(TreeNode root, int sum, int pathSum) {
-//        int res = 0;
-//        if (root == null) return 0;
-//        pathSum += root.val;
-//        res += map.getOrDefault(pathSum - sum, 0);
-//        map.put(pathSum, map.getOrDefault(pathSum, 0) + 1);
-//        res = helper(root.left, sum, pathSum) + helper(root.right, sum, pathSum) + res;
-//        map.put(pathSum, map.get(pathSum) - 1);
-//        return res;
-//    }
-
-
-//    public int pathSum(TreeNode root, int sum) {
-//        if (root == null) return 0;
-//        return helper(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
-//    }
-//
-//    private int helper(TreeNode root, int sum) {
-//        if (root == null) return 0;
-//        int res = 0;
-//        if (root.val == sum) res++;
-//        res += helper(root.left, sum - root.val);
-//        res += helper(root.right, sum - root.val);
-//        return res;
-//    }
 
 
 }
