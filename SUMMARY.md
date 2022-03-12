@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* [LeetCode](docs/leetcode/bank/leetcode_bank.md)
+* LeetCode
   * [数据结构](/docs/leetcode/classify/structure.md)
   * [搜索](/docs/leetcode/classify/search.md)
   * [图论](/docs/leetcode/classify/graph.md)
