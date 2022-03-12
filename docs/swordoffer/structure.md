@@ -114,7 +114,9 @@
 
 ![](/imgs/swordoffer/JZ_23_title.png)
 
-### 方法1
+### 方法1:快慢指针
+
+![](/imgs/swordoffer/JZ_23_1.png)
 
 ```java
         public ListNode EntryNodeOfLoop(ListNode pHead) {
@@ -137,6 +139,33 @@
             }
             return slow;
         }
+```
+
+也可以有如下的解法：
+
+![](/imgs/swordoffer/JZ_23_2.png)
+
+```java
+        public ListNode EntryNodeOfLoop(ListNode pHead) {
+            if (pHead == null || pHead.next == null) return null;
+            //开始时 slow和fast错开一个位置
+            ListNode slow = pHead, fast = pHead.next;
+            while (fast.next != null && fast.next.next != null) {
+                if (slow == fast) break;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            //如果这时候不是第一次相遇，而fast已经到链表的末尾了，说明没有环
+            if (slow != fast) return null;
+            //头节点开始，且
+            ListNode cur = pHead;
+            while (cur != slow.next) {
+                cur = cur.next;
+                slow = slow.next;
+            }
+            return cur;
+        }
+    }
 ```
 
 
