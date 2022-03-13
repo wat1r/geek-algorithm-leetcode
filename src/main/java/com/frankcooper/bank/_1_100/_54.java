@@ -16,6 +16,7 @@ public class _54 {
 
 
     int R, C;
+    //右 下 左 上
     int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
     public List<Integer> spiralOrder(int[][] matrix) {
@@ -25,10 +26,11 @@ public class _54 {
         List<Integer> res = new ArrayList<>();
         for (int i = 0; i < R * C; i++) {
             res.add(matrix[r][c]);
-            matrix[r][c] = -101;
+            matrix[r][c] = -101;//标记已经访问的点
             int nr = r + dirs[d][0], nc = c + dirs[d][1];
+            //出边界或者遇到已经访问过点，翻转方向
             if (!inArea(nr, nc) || matrix[nr][nc] == -101) {
-                d = (d + 1) % 4;
+                d = (d + 1) % 4;//翻转方向，灵魂
                 nr = r + dirs[d][0];
                 nc = c + dirs[d][1];
             }

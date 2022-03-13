@@ -432,4 +432,42 @@ public class RepeateOne {
         }
     }
 
+    static class _1st_7 {
+
+        public static void main(String[] args) {
+            _1st_7 handler = new _1st_7();
+            int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+            handler.spiralOrder(matrix);
+        }
+
+
+        //方向 右 下 左 上
+        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+
+        public List<Integer> spiralOrder(int[][] matrix) {
+            int R = matrix.length, C = matrix[0].length;
+            int r = 0, c = 0;//起始的位置
+            int d = 0;//控制方向
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i < R * C; i++) {
+                res.add(matrix[r][c]);
+                matrix[r][c] = -102;//标记这个点已经走过了
+                int nr = r + dirs[d][0], nc = c + dirs[d][1];//下一个点
+                if (!(nr >= 0 && nr < R && nc >= 0 && nc < C) || matrix[nr][nc] == -102) {
+                    d = (d + 1) % 4;
+                    nr = r + dirs[d][0];
+                    nc = c + dirs[d][1];
+                }
+                r = nr;
+                c = nc;
+            }
+            return res;
+        }
+
+
+    }
+
+
+
 }
