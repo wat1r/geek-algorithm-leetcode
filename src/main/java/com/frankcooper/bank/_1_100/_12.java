@@ -9,7 +9,8 @@ public class _12 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-
+            int num = 58;
+            handler.intToRoman(num);
         }
 
 

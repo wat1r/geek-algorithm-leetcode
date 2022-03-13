@@ -489,3 +489,138 @@ private boolean isPalindrome(String s, int start, int end) {
     return true;
 }
 ```
+
+
+
+## [12. 整数转罗马数字](https://leetcode-cn.com/problems/integer-to-roman/)
+
+### 方法1
+
+```java
+public String intToRoman(int num) {
+    int[] arabic_nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};//关键的罗马数字节点
+    String[] romans = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};//对应的罗马数字
+    int i = 0;
+    StringBuilder res = new StringBuilder();
+    while (i < arabic_nums.length) {
+        while (num >= arabic_nums[i]) {//从大到小遍历，贪心判断当前的值是否可以再被缩减
+            num -= arabic_nums[i];
+            res.append(romans[i]);
+        }
+        i++;
+    }
+    return res.toString();
+}
+```
+
+### 方法2
+
+```java
+public String intToRoman(int num) {
+    String[][] dict = {//准备 关键节点的 硬编码的罗马数字 ，0 位置为""
+            // 1~9
+            {
+                    "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"
+            },
+            // 10~90
+            {
+                    "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"
+            },
+            // 100~900
+            {
+                    "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"
+            },
+            // 1000~3000
+            {
+                    "", "M", "MM", "MMM"
+            }
+    };
+    StringBuilder res = new StringBuilder();
+    int i = 0;
+    while (num > 0) {
+        int last = num % 10;//每次拿到num的最后面的数，找到后添加
+        res.insert(0, dict[i][last]);
+        num /= 10;//移除最末位
+        i++;
+    }
+    return res.toString();
+}
+```
+
+## [273. 整数转换英文表示](https://leetcode-cn.com/problems/integer-to-english-words/)
+
+```java
+private final String[] THOUSAND = {"", "Thousand", "Million", "Billion"};
+private final String[] LESS_THAN_TWENTY = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+private final String[] HUNDRED = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+public String numberToWords(int num) {
+    if (num == 0) return "Zero";
+    StringBuilder res = new StringBuilder();
+    int index = 0;
+    while (num > 0) {
+        if (num % 1000 != 0) {
+            StringBuilder sb = new StringBuilder();
+            helper(num % 1000, sb);
+            res.insert(0, sb.append(THOUSAND[index]).append(" "));
+        }
+        index++;
+        num /= 1000;
+    }
+    return res.toString().trim();
+}
+
+
+private void helper(int num, StringBuilder sb) {
+    if (num == 0) return;
+    if (num < 20) sb.append(LESS_THAN_TWENTY[num]).append(" ");
+    else if (num < 100) {
+        sb.append(HUNDRED[num / 10]).append(" ");
+        helper(num % 10, sb);
+    } else {
+        sb.append(LESS_THAN_TWENTY[num / 100]).append(" Hundred").append(" ");
+        helper(num % 100, sb);
+    }
+}
+```
+
+
+
+
+
+## [面试题 16.08. 整数的英语表示](https://leetcode-cn.com/problems/english-int-lcci/)
+
+```java
+private final String[] THOUSAND = {"", "Thousand", "Million", "Billion"};
+private final String[] LESS_THAN_TWENTY = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+private final String[] HUNDRED = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+public String numberToWords(int num) {
+    if (num == 0) return "Zero";
+    StringBuilder res = new StringBuilder();
+    int index = 0;
+    while (num > 0) {
+        if (num % 1000 != 0) {
+            StringBuilder sb = new StringBuilder();
+            helper(num % 1000, sb);
+            res.insert(0, sb.append(THOUSAND[index]).append(" "));
+        }
+        index++;
+        num /= 1000;
+    }
+    return res.toString().trim();
+}
+
+
+private void helper(int num, StringBuilder sb) {
+    if (num == 0) return;
+    if (num < 20) sb.append(LESS_THAN_TWENTY[num]).append(" ");
+    else if (num < 100) {
+        sb.append(HUNDRED[num / 10]).append(" ");
+        helper(num % 10, sb);
+    } else {
+        sb.append(LESS_THAN_TWENTY[num / 100]).append(" Hundred").append(" ");
+        helper(num % 100, sb);
+    }
+}
+```
