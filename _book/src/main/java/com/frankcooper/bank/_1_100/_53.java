@@ -54,4 +54,20 @@ public class _53 {
         }
 
     }
+
+    static class _3rd {
+        public int maxSubArray(int[] nums) {
+            int n = nums.length;
+            int[] f = new int[n];
+            f[0] = nums[0];
+            int res = f[0];
+            for (int i = 1; i < n; i++) {
+                f[i] = Math.max(f[i-1]+nums[i],nums[i]);
+                res = Math.max(res, f[i]);
+            }
+            return res;
+        }
+    }
+
+
 }

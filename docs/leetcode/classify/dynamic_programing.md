@@ -354,3 +354,41 @@ public int maxProfit(int[] prices) {
 
 
 
+## [53. 最大子数组和](https://leetcode-cn.com/problems/maximum-subarray/)
+
+### 方法1:DP
+
+```java
+public int maxSubArray(int[] nums) {
+    int n = nums.length;
+    //f[i] 表：以 nums[i] 结尾的连续子数组的最大和
+    int[] f = new int[n];
+    f[0] = nums[0];
+    int res = f[0];
+    for (int i = 1; i < n; i++) {
+        if (f[i - 1] > 0) {
+            f[i] = f[i - 1] + nums[i];
+        } else {
+            f[i] = nums[i];
+        }
+        res = Math.max(res, f[i]);
+    }
+    return res;
+}
+```
+
+- 也可以不判断，硬比较
+
+```java
+public int maxSubArray(int[] nums) {
+    int n = nums.length;
+    int[] f = new int[n];
+    f[0] = nums[0];
+    int res = f[0];
+    for (int i = 1; i < n; i++) {
+        f[i] = Math.max(f[i-1]+nums[i],nums[i]);
+        res = Math.max(res, f[i]);
+    }
+    return res;
+}
+```

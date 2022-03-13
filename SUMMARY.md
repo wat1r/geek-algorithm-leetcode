@@ -4,6 +4,8 @@
 * LeetCode
   * [数据结构](/docs/leetcode/classify/structure.md)
   * [数组](/docs/leetcode/classify/array.md)
+  * [二分](/docs/leetcode/classify/binary_search.md)
+  * [结构设计](/docs/leetcode/classify/structure_design.md)
   * [双指针](/docs/leetcode/classify/two_pointers.md)
   * [搜索](/docs/leetcode/classify/search.md)
   * [图论](/docs/leetcode/classify/graph.md)
