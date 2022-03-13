@@ -379,3 +379,113 @@ public boolean wordBreak(String s, List<String> wordDict) {
         }
 ```
 
+
+
+## [131. 分割回文串](https://leetcode-cn.com/problems/palindrome-partitioning/)
+
+### 方法1:DFS
+
+```java
+List<List<String>> res = new ArrayList<>();
+
+public List<List<String>> partition(String s) {
+    dfs(s, 0, new ArrayList<>());
+    return res;
+}
+
+
+private void dfs(String s, int idx, List<String> sub) {
+    if (idx == s.length()) {
+        res.add(new ArrayList<>(sub));
+        return;
+    }
+    for (int i = idx; i < s.length(); i++) {
+        if (isPalindrome(s, idx, i)) {
+            sub.add(s.substring(idx, i + 1));
+            dfs(s, i + 1, sub);
+            sub.remove(sub.size() - 1);
+        }
+    }
+}
+
+private boolean isPalindrome(String s, int l, int r) {
+    while (l < r) if (s.charAt(l++) != s.charAt(r--)) return false;
+    return true;
+}
+```
+
+### 方法2:DP预处理+DFS
+
+```java
+        List<List<String>> res = new ArrayList<>();
+
+        public List<List<String>> partition(String s) {
+            if (s == null || s.length() == 0) return res;
+            int n = s.length();
+            boolean[][] f = new boolean[n][n];
+            for (int j = 0; j < n; j++) {
+                f[j][j] = true;
+                for (int i = 0; i < j; i++) {
+                    if (s.charAt(j) == s.charAt(i) && (j - i <= 2 || f[i + 1][j - 1])) f[i][j] = true;
+                }
+            }
+            dfs(s, 0, new ArrayList<String>(), f);
+            return res;
+        }
+
+        private void dfs(String s, int idx, List<String> sub, boolean[][] f) {
+            if (idx >= s.length()) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int i = idx; i < s.length(); i++) {
+                System.out.printf("idx:%d,i:%d\n", idx, i);
+                if (f[idx][i]) {
+                    sub.add(s.substring(idx, i + 1));
+                    dfs(s, i + 1, sub, f);
+                    sub.remove(sub.size() - 1);
+                }
+            }
+        }
+```
+
+### 方法3:记忆化DFS
+
+```java
+public List<List<String>> partition(String s) {
+    return partition(s, new HashMap<>());
+}
+
+private List<List<String>> partition(String s, Map<String, List<List<String>>> memory) {
+    if (memory.containsKey(s)) return memory.get(s);
+
+    List<List<String>> result = new ArrayList<>();
+
+    if (s.isEmpty()) result.add(Collections.emptyList());
+
+    for (int i = 0; i < s.length(); i++) {
+        if (isPalindrome(s, 0, i)) {
+            String left = s.substring(0, i + 1);
+            for (List<String> right : partition(s.substring(i + 1), memory)) {
+                List<String> subResult = new ArrayList<>();
+                subResult.add(left);
+                subResult.addAll(right);
+                result.add(subResult);
+            }
+        }
+    }
+
+    memory.put(s, result);
+
+    return memory.get(s);
+}
+
+private boolean isPalindrome(String s, int start, int end) {
+    while (start <= end) {
+        if (s.charAt(start) != s.charAt(end)) return false;
+        start++;
+        end--;
+    }
+    return true;
+}
+```

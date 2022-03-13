@@ -119,11 +119,9 @@ public class _131 {
         private boolean isPalindrome(String s, int start, int end) {
             while (start <= end) {
                 if (s.charAt(start) != s.charAt(end)) return false;
-
                 start++;
                 end--;
             }
-
             return true;
         }
     }
@@ -187,7 +185,6 @@ public class _131 {
                     if (s.charAt(j) == s.charAt(i) && (j - i <= 2 || f[i + 1][j - 1])) f[i][j] = true;
                 }
             }
-
             dfs(s, 0, new ArrayList<String>(), f);
             return res;
         }
@@ -205,7 +202,6 @@ public class _131 {
                     sub.remove(sub.size() - 1);
                 }
             }
-
         }
     }
 
@@ -243,6 +239,36 @@ public class _131 {
             return true;
         }
 
+    }
+
+
+    static class _7th {
+        List<List<String>> res = new ArrayList<>();
+
+        public List<List<String>> partition(String s) {
+            dfs(s, 0, new ArrayList<>());
+            return res;
+        }
+
+
+        private void dfs(String s, int idx, List<String> sub) {
+            if (idx == s.length()) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+            for (int i = idx; i < s.length(); i++) {
+                if (isPalindrome(s, idx, i)) {
+                    sub.add(s.substring(idx, i + 1));
+                    dfs(s, i + 1, sub);
+                    sub.remove(sub.size() - 1);
+                }
+            }
+        }
+
+        private boolean isPalindrome(String s, int l, int r) {
+            while (l < r) if (s.charAt(l++) != s.charAt(r--)) return false;
+            return true;
+        }
     }
 
 
