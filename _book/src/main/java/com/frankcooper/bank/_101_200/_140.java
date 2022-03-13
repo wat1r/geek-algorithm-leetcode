@@ -2,8 +2,6 @@ package com.frankcooper.bank._101_200;
 
 import java.util.*;
 
-import org.junit.Assert;
-
 public class _140 {
 
     static class _1st {
@@ -163,5 +161,44 @@ public class _140 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+
+        List<String> res = new ArrayList<>();
+        Set<String> wordSet;
+
+        public List<String> wordBreak(String s, List<String> wordDict) {
+            wordSet = new HashSet<>(wordDict);
+            dfs(s, 0, new StringBuilder());
+            return res;
+        }
+
+        private void dfs(String s, int idx, StringBuilder cur) {
+            int n = s.length();
+            //出口函数
+            if (idx == n) {
+                res.add(cur.toString());
+                return;
+            }
+            for (int i = idx; i < n; i++) {
+                //取头不取尾
+                String can = s.substring(idx, i + 1);
+                if (wordSet.contains(can)) {
+                    //存cur要追加单词的前的位置
+                    int j = cur.length();
+                    //如果是第一个单词，不用加空格
+                    if (j == 0) {
+                        cur.append(can);
+                    } else {
+                        cur.append(" ").append(can);
+                    }
+                    //从i+1开始
+                    dfs(s, i + 1, cur);
+                    //移除j之后的添加单词，回溯
+                    cur.delete(j, cur.length());
+                }
+            }
+        }
+
+
     }
 }
