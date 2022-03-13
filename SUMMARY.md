@@ -8,6 +8,7 @@
   * [动态规划](/docs/leetcode/classify/dynamic_programing.md)
   * [位运算](/docs/leetcode/classify/bit.md)
   * [数学](/docs/leetcode/classify/math.md)
-* 剑指Offer
+  * [剑指Offer(leetcode)](/docs/leetcode/swordoffer/swordoffer.md)
+* 剑指Offer(nowcoder)
   * [数据结构](/docs/swordoffer/structure.md)
   * [动态规划](/docs/swordoffer/dynamic_programing.md)
