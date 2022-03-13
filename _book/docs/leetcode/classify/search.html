@@ -316,7 +316,7 @@
 </code></pre>
 <h2 id="139-&#x5355;&#x8BCD;&#x62C6;&#x5206;"><a href="https://leetcode-cn.com/problems/word-break/" target="_blank">139. &#x5355;&#x8BCD;&#x62C6;&#x5206;</a></h2>
 <p><img src="../../../imgs/leetcode/classify/image-20220313105908048.png" alt=""></p>
-<h3 id="&#x65B9;&#x6CD5;1&#x8BB0;&#x5FC6;&#x5316;dfs">&#x65B9;&#x6CD5;1:&#x8BB0;&#x5FC6;&#x5316;DFS</h3>
+<h3 id="&#x65B9;&#x6CD5;1&#x8BB0;&#x5FC6;&#x5316;dfs&#x4F7F;&#x7528;map">&#x65B9;&#x6CD5;1:&#x8BB0;&#x5FC6;&#x5316;DFS(&#x4F7F;&#x7528;map)</h3>
 <pre><code class="lang-java">Map&lt;Integer, Boolean&gt; cache = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
 List&lt;String&gt; wordDict;
 
@@ -357,6 +357,111 @@ List&lt;String&gt; wordDict;
     cache.put(i, <span class="hljs-keyword">false</span>);
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
 }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x8BB0;&#x5FC6;&#x5316;dfs&#x4F7F;&#x7528;set">&#x65B9;&#x6CD5;2:&#x8BB0;&#x5FC6;&#x5316;DFS(&#x4F7F;&#x7528;set)</h3>
+<ul>
+<li>&#x53EF;&#x4EE5;&#x5728;&#x8BB0;&#x5FC6;&#x5316;&#x4E0A;&#x505A;&#x5F88;&#x591A;&#x624B;&#x811A;&#xFF0C;&#x4E0A;&#x9762;&#x7684;map&#x662F;&#x5B58;&#x50A8;&#x7684;&#x7D22;&#x5F15;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;false&#x4E5F;&#x53EF;&#x4EE5;&#x662F;true&#xFF0C;&#x672C;&#x65B9;&#x6CD5;&#x7684;set&#x6307;&#x7684;&#x662F;&#x90A3;&#x4E9B;&#x8FD4;&#x56DE;false&#x7684;&#x7ED3;&#x679C;</li>
+</ul>
+<pre><code class="lang-java">        List&lt;String&gt; wordDict;
+        <span class="hljs-comment">//&#x5B58;&#x5B57;&#x7B26;s&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;&#xFF0C;&#x8FD9;&#x4E9B;&#x7D22;&#x5F15;&#x4F8B;&#x5982;idx, [idx,s.length)&#x8FD9;&#x4E2A;&#x8303;&#x56F4;&#x5185;&#x7684;&#x5355;&#x8BCD;&#x90FD;&#x4E0D;&#x80FD;&#x7531;wordDict&#x7684;&#x5355;&#x8BCD;&#x7EC4;&#x6210;</span>
+        Set&lt;Integer&gt; set = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">wordBreak</span><span class="hljs-params">(String s, List&lt;String&gt; wordDict)</span> </span>{
+            <span class="hljs-keyword">this</span>.wordDict = wordDict;
+            <span class="hljs-keyword">return</span> dfs(s, <span class="hljs-number">0</span>);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dfs</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> i)</span> </span>{
+            <span class="hljs-keyword">if</span> (set.contains(i)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">if</span> (i == s.length()) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt;= s.length(); j++) {
+                String candidate = s.substring(i, j);
+                <span class="hljs-keyword">if</span> (!wordDict.contains(candidate)) <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">if</span> (dfs(s, j)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">else</span> set.add(j);
+            }
+            set.add(i);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#x8BB0;&#x5FC6;&#x5316;dfs&#x4F7F;&#x7528;array">&#x65B9;&#x6CD5;3:&#x8BB0;&#x5FC6;&#x5316;DFS(&#x4F7F;&#x7528;array)</h3>
+<ul>
+<li>&#x7C7B;&#x4F3C;&#x65B9;&#x6CD5;1&#xFF0C;&#x91C7;&#x7528;Boolean[]&#x7684;&#x65B9;&#x5F0F;</li>
+</ul>
+<pre><code class="lang-java">        Boolean[] cache;
+        List&lt;String&gt; wordDict;
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">wordBreak</span><span class="hljs-params">(String s, List&lt;String&gt; wordDict)</span> </span>{
+            cache = <span class="hljs-keyword">new</span> Boolean[s.length() + <span class="hljs-number">1</span>];<span class="hljs-comment">//&#x591A;&#x653E;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;</span>
+            <span class="hljs-keyword">this</span>.wordDict = wordDict;
+            <span class="hljs-keyword">return</span> dfs(s, <span class="hljs-number">0</span>);
+        }
+
+        <span class="hljs-comment">/**
+         * &#x4E0B;&#x6807;&#x7D22;&#x5F15;&#x4ECE;i&#x5F00;&#x59CB;&#x5230;len(s)&#x7ED3;&#x675F;&#xFF0C;&#x80FD;&#x5426;&#x7531;wordDict&#x5B57;&#x5178;&#x5F62;&#x6210;&#x8FD9;&#x4E2A;&#x5355;&#x8BCD;
+         *
+         * <span class="hljs-doctag">@param</span> s
+         * <span class="hljs-doctag">@param</span> i
+         * <span class="hljs-doctag">@return</span>
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dfs</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> i)</span> </span>{
+            <span class="hljs-keyword">if</span> (i == s.length()) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">if</span> (cache[i] != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> cache[i];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt;= s.length(); j++) {
+                <span class="hljs-comment">//[i,j)&#x662F;&#x53D6;&#x5934;&#x4E0D;&#x53D6;&#x5C3E;&#xFF0C;&#x5982;leetcode&#x53D6;[0,4)&#x53D6;&#x7684;&#x662F;leet</span>
+                String candidate = s.substring(i, j);
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8FD9;&#x4E2A;&#x5019;&#x9009;&#x5355;&#x8BCD;&#x6CA1;&#x6709;&#x51FA;&#x73B0;&#x5728;wordDict&#x91CC;</span>
+                <span class="hljs-keyword">if</span> (!wordDict.contains(candidate)) <span class="hljs-keyword">continue</span>;
+                <span class="hljs-comment">//&#x4ECE;j&#x8FD9;&#x4E2A;&#x7D22;&#x5F15;&#x51FA;&#x53D1;&#xFF0C;&#x7EE7;&#x7EED;&#x627E;&#xFF0C;&#x5982;&#x679C;&#x627E;&#x5230;&#x4E86;&#xFF0C;&#x5219;&#x5C06;j&#x7684;&#x7D22;&#x5F15;&#x7ED3;&#x679C;&#x5B58;&#x5230;cache&#x8FD4;&#x56DE; true</span>
+                <span class="hljs-comment">//&#x4ECE;j&#x8FD9;&#x4E2A;&#x7D22;&#x5F15;&#x51FA;&#x53D1;&#xFF0C;&#x7EE7;&#x7EED;&#x627E;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x5230;&#x4E86;&#xFF0C;&#x5219;&#x5C06;j&#x7684;&#x7D22;&#x5F15;&#x7ED3;&#x679C;&#x5B58;&#x5230;cache[false] &#x8FD9;&#x65F6;&#x5019;&#x4E0D;&#x9700;&#x8981;&#x8FD4;&#x56DE; &#x5F53;&#x524D;&#x6CA1;&#x627E;&#x5230;&#x8FD8;&#x53EF;&#x4EE5;&#x627E;&#x5176;&#x4ED6;&#x7684;&#x7D22;&#x5F15;&#x5F00;&#x59CB;&#x7684;</span>
+                <span class="hljs-keyword">if</span> (dfs(s, j)) {
+                    <span class="hljs-keyword">return</span> cache[j] = <span class="hljs-keyword">true</span>;
+                } <span class="hljs-keyword">else</span> {
+                    cache[j] = <span class="hljs-keyword">false</span>;
+                }
+            }
+            <span class="hljs-keyword">return</span> cache[i] = <span class="hljs-keyword">false</span>;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;4&#x8BB0;&#x5FC6;&#x5316;bfs">&#x65B9;&#x6CD5;4:&#x8BB0;&#x5FC6;&#x5316;BFS</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">wordBreak</span><span class="hljs-params">(String s, List&lt;String&gt; wordDict)</span> </span>{
+    <span class="hljs-comment">//&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x5904;&#x7406;&#x5230;&#x7684;&#x7D22;&#x5F15;</span>
+    Queue&lt;Integer&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    <span class="hljs-comment">//&#x5F53;&#x524D;&#x7D22;&#x5F15;idx [idx,s.length())&#x4E0D;&#x80FD;&#x7531;wordDict&#x91CC;&#x7684;&#x5355;&#x8BCD;&#x5F62;&#x6210;</span>
+    Set&lt;Integer&gt; vis = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+    q.offer(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+        <span class="hljs-keyword">int</span> i = q.poll();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt;= s.length(); j++) {
+            <span class="hljs-keyword">if</span> (vis.contains(j)) <span class="hljs-keyword">continue</span>;
+            String can = s.substring(i, j);
+            <span class="hljs-keyword">if</span> (!wordDict.contains(can)) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-keyword">if</span> (j == s.length()) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            q.offer(j);
+            vis.add(j);
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;5dp">&#x65B9;&#x6CD5;5:DP</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">wordBreak</span><span class="hljs-params">(String s, List&lt;String&gt; wordDict)</span> </span>{
+            <span class="hljs-keyword">int</span> n = s.length();
+            <span class="hljs-comment">//f[i]&#x8868;&#x793A;&#x4EE5;s[i-1]&#x7ED3;&#x5C3E;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x80FD;&#x5426;&#x62C6;&#x5206;&#x6210;wordDict</span>
+            <span class="hljs-keyword">boolean</span>[] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[n + <span class="hljs-number">1</span>];
+            f[<span class="hljs-number">0</span>] = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+                    String can = s.substring(j, i);
+<span class="hljs-comment">//                    System.out.println(can);</span>
+                    <span class="hljs-keyword">if</span> (f[j] &amp;&amp; wordDict.contains(can)) {
+                        f[i] = <span class="hljs-keyword">true</span>;
+                        <span class="hljs-keyword">break</span>;
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> f[n];
+        }
 </code></pre>
 
                                 
@@ -401,7 +506,7 @@ List&lt;String&gt; wordDict;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.2.2","depth":2,"next":{"title":"图论","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-13T03:02:22.961Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-13T04:26:42.142Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.2.2","depth":2,"next":{"title":"图论","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-13T05:02:16.172Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-13T05:02:43.922Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
