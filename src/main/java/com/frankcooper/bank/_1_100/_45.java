@@ -42,9 +42,12 @@ public class _45 {
         public int jump(int[] nums) {
             int N = nums.length, INF = Integer.MAX_VALUE / 2;
             int[] f = new int[N];
+            //初始化
             f[0] = 0;
             for (int i = 1; i < N; i++) {
-                f[i] = INF;
+                f[i] = INF;//初始化一个最大值
+                //从j跳到i，如果j 加上 j能跳的步数 nums[j] 比i位置还要远
+                //min{f[i],j跳步的位置这个位置之前花了f[j]+这一步}
                 for (int j = 0; j < i; j++) {
                     if (j + nums[j] >= i) f[i] = Math.min(f[i], f[j] + 1);
                 }
