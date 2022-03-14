@@ -1,0 +1,549 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>动态规划 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="structure.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    LeetCode
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../leetcode/classify/structure.html">
+            
+                <a href="../leetcode/classify/structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../leetcode/classify/array.html">
+            
+                <a href="../leetcode/classify/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../leetcode/classify/string.html">
+            
+                <a href="../leetcode/classify/string.html">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../leetcode/classify/binary_search.html">
+            
+                <a href="../leetcode/classify/binary_search.html">
+            
+                    
+                    二分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../leetcode/classify/structure_design.html">
+            
+                <a href="../leetcode/classify/structure_design.html">
+            
+                    
+                    结构设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../leetcode/classify/two_pointers.html">
+            
+                <a href="../leetcode/classify/two_pointers.html">
+            
+                    
+                    双指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../leetcode/classify/search.html">
+            
+                <a href="../leetcode/classify/search.html">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../leetcode/classify/graph.html">
+            
+                <a href="../leetcode/classify/graph.html">
+            
+                    
+                    图论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../leetcode/classify/dynamic_programing.html">
+            
+                <a href="../leetcode/classify/dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../leetcode/classify/bit.html">
+            
+                <a href="../leetcode/classify/bit.html">
+            
+                    
+                    位运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../leetcode/classify/math.html">
+            
+                <a href="../leetcode/classify/math.html">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../leetcode/swordoffer/swordoffer.html">
+            
+                <a href="../leetcode/swordoffer/swordoffer.html">
+            
+                    
+                    剑指Offer(leetcode)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    剑指Offer(nowcoder)
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="structure.html">
+            
+                <a href="structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.2" data-path="dynamic_programing.html">
+            
+                <a href="dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >动态规划</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="02&#x7B97;&#x6CD5;">02.&#x7B97;&#x6CD5;</h1>
+<h2 id="&#x52A8;&#x6001;&#x89C4;&#x5212;">&#x52A8;&#x6001;&#x89C4;&#x5212;</h2>
+<h2 id="jz42&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5927;&#x548C;">JZ42&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5927;&#x548C;</h2>
+<p><img src="../../imgs/swordoffer/JZ_42_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x52A8;&#x6001;&#x89C4;&#x5212;">&#x65B9;&#x6CD5;1.&#x52A8;&#x6001;&#x89C4;&#x5212;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">FindGreatestSumOfSubArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] array)</span> </span>{
+            <span class="hljs-keyword">if</span> (array == <span class="hljs-keyword">null</span> || array.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> n = array.length;
+            <span class="hljs-comment">//f[i]&#x8868;&#x793A;&#x4EE5;array[i-1]&#x8FD9;&#x4E2A;&#x6570;&#x4E3A;&#x7ED3;&#x5C3E;&#x7684;&#xFF0C;&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5927;&#x548C;</span>
+            <span class="hljs-keyword">int</span>[] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">int</span> res = -<span class="hljs-number">101</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8FD9;&#x4E2A;&#x6570;array[i-1]&#x548C;&#x524D;&#x4E00;&#x4E2A;&#x6570;&#x7684;&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x6700;&#x5927;&#x7684;&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#xFF1A;[...i-2,i-1]</span>
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8FD9;&#x4E2A;&#x6570;array[i-1]&#x81EA;&#x5DF1;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x5B50;&#x6570;&#x7EC4;[i-1]</span>
+                <span class="hljs-comment">//&#x4E24;&#x8005;&#x53D6;&#x6700;&#x5927;&#x503C;&#xFF0C;&#x4E0D;&#x65AD;&#x66F4;&#x65B0;&#x5168;&#x5C40;&#x53D8;&#x91CF;</span>
+                f[i] = Math.max(f[i - <span class="hljs-number">1</span>] + array[i - <span class="hljs-number">1</span>], array[i - <span class="hljs-number">1</span>]);
+                res = Math.max(res, f[i]);
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h2 id="jz85-&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5927;&#x548C;&#x4E8C;"><strong>JZ85</strong> <strong>&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5927;&#x548C;(&#x4E8C;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_85_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x6734;&#x7D20;&#x7248;dp">&#x65B9;&#x6CD5;1:&#x6734;&#x7D20;&#x7248;DP</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] FindGreatestSumOfSubArray(<span class="hljs-keyword">int</span>[] arr) {
+            <span class="hljs-keyword">if</span> (arr == <span class="hljs-keyword">null</span> || arr.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{};
+            <span class="hljs-keyword">int</span> n = arr.length;
+            <span class="hljs-comment">//f[i]&#x8868;&#x793A;&#x4EE5;arr[i]&#x8FD9;&#x4E2A;&#x6570;&#x4E3A;&#x7ED3;&#x5C3E;&#x7684;&#xFF0C;&#x8FDE;&#x7EED;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5927;&#x548C;</span>
+            <span class="hljs-keyword">int</span>[] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            f[<span class="hljs-number">0</span>] = arr[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">int</span> maxSum = f[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;</span>
+            <span class="hljs-keyword">int</span> resl = <span class="hljs-number">0</span>, resr = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x7ED3;&#x679C;&#x96C6;&#x6ED1;&#x7A97;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+                r++;<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;&#x7684;&#x53F3;&#x533A;&#x95F4;</span>
+                <span class="hljs-comment">//&#x66F4;&#x65B0;&#x8FD9;&#x4E2A;f[i]&#x7684;&#x503C;</span>
+                f[i] = Math.max(f[i - <span class="hljs-number">1</span>] + arr[i], arr[i]);
+                <span class="hljs-comment">//&#x5982;&#x679C;&#x533A;&#x95F4;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x91CD;&#x65B0;&#x79FB;&#x52A8;&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;</span>
+                <span class="hljs-keyword">if</span> (f[i - <span class="hljs-number">1</span>] + arr[i] &lt; arr[i]) {<span class="hljs-comment">//&#x91CD;&#x65B0;</span>
+                    l = r;
+                }
+                <span class="hljs-comment">//maxSum&#x9047;&#x5230;&#x66F4;&#x5927;&#x7684;&#xFF0C;&#x66F4;&#x65B0;resl resr&#x533A;&#x95F4;</span>
+                <span class="hljs-comment">//&#x5982;&#x679C;maxSum&#x76F8;&#x540C;&#xFF0C;&#x66F4;&#x65B0;&#x4E00;&#x4E2A;&#x6700;&#x957F;&#x7684;resl resr&#x533A;&#x95F4;</span>
+                <span class="hljs-keyword">if</span> (f[i] &gt; maxSum || (f[i] == maxSum &amp;&amp; (resr - resl + <span class="hljs-number">1</span>) &lt; (r - l + <span class="hljs-number">1</span>))) {
+                    maxSum = f[i];
+                    resl = l;
+                    resr = r;
+                }
+            }
+            <span class="hljs-comment">//&#x7EC4;&#x88C5;&#x7ED3;&#x679C;</span>
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[resr - resl + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = resl; i &lt;= resr; i++) {
+                res[i - resl] = arr[i];
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x7A7A;&#x95F4;&#x538B;&#x7F29;dp">&#x65B9;&#x6CD5;2&#xFF1A;&#x7A7A;&#x95F4;&#x538B;&#x7F29;DP</h3>
+<pre><code class="lang-java">   <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] FindGreatestSumOfSubArray(<span class="hljs-keyword">int</span>[] arr) {
+            <span class="hljs-keyword">if</span> (arr == <span class="hljs-keyword">null</span> || arr.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{};
+            <span class="hljs-keyword">int</span> n = arr.length;
+            <span class="hljs-keyword">int</span> prev = arr[<span class="hljs-number">0</span>], cur = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> maxSum = prev;
+            <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;</span>
+            <span class="hljs-keyword">int</span> resl = <span class="hljs-number">0</span>, resr = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x7ED3;&#x679C;&#x96C6;&#x6ED1;&#x7A97;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+                r++;<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;&#x7684;&#x53F3;&#x533A;&#x95F4;</span>
+                <span class="hljs-comment">//&#x66F4;&#x65B0;&#x8FD9;&#x4E2A;f[i]&#x7684;&#x503C;</span>
+                cur = Math.max(prev + arr[i], arr[i]);
+                <span class="hljs-comment">//&#x5982;&#x679C;&#x533A;&#x95F4;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x91CD;&#x65B0;&#x79FB;&#x52A8;&#x5F53;&#x524D;&#x7684;&#x6ED1;&#x7A97;</span>
+                <span class="hljs-keyword">if</span> (prev + arr[i] &lt; arr[i]) {<span class="hljs-comment">//&#x91CD;&#x65B0;</span>
+                    l = r;
+                }
+                <span class="hljs-comment">//maxSum&#x9047;&#x5230;&#x66F4;&#x5927;&#x7684;&#xFF0C;&#x66F4;&#x65B0;resl resr&#x533A;&#x95F4;</span>
+                <span class="hljs-comment">//&#x5982;&#x679C;maxSum&#x76F8;&#x540C;&#xFF0C;&#x66F4;&#x65B0;&#x4E00;&#x4E2A;&#x6700;&#x957F;&#x7684;resl resr&#x533A;&#x95F4;</span>
+                <span class="hljs-keyword">if</span> (cur &gt; maxSum || (cur == maxSum &amp;&amp; (resr - resl + <span class="hljs-number">1</span>) &lt; (r - l + <span class="hljs-number">1</span>))) {
+                    maxSum = cur;
+                    resl = l;
+                    resr = r;
+                }
+                prev = cur;
+            }
+            <span class="hljs-comment">//&#x7EC4;&#x88C5;&#x7ED3;&#x679C;</span>
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[resr - resl + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = resl; i &lt;= resr; i++) {
+                res[i - resl] = arr[i];
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h2 id="jz63-&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x597D;&#x65F6;&#x673A;&#x4E00;"><strong>JZ63</strong> <strong>&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x597D;&#x65F6;&#x673A;(&#x4E00;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_63_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;2&#x7A7A;&#x95F4;&#x538B;&#x7F29;dp">&#x65B9;&#x6CD5;2:&#x7A7A;&#x95F4;&#x538B;&#x7F29;DP</h3>
+<pre><code class="lang-java">        <span class="hljs-comment">//&#x7A7A;&#x95F4;&#x538B;&#x7F29;DP</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+            <span class="hljs-keyword">if</span> (prices == <span class="hljs-keyword">null</span> || prices.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            <span class="hljs-comment">//f_0&#x662F;&#x5F53;&#x5929;&#x624B;&#x91CC;&#x65E0;&#x80A1;&#x7968;&#xFF0C; f_1&#x662F;&#x5F53;&#x5929;&#x624B;&#x91CC;&#x6709;&#x80A1;&#x7968;</span>
+            <span class="hljs-keyword">int</span> f_0 = <span class="hljs-number">0</span>, f_1 = -prices[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">int</span> n = prices.length;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                f_0 = Math.max(f_0, f_1 + prices[i]);
+                f_1 = Math.max(f_1, -prices[i]);
+            }
+            <span class="hljs-keyword">return</span> f_0;
+        }
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="structure.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 数据结构">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.3.2","depth":2,"previous":{"title":"数据结构","level":"1.3.1","depth":2,"path":"docs/swordoffer/structure.md","ref":"docs/swordoffer/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/dynamic_programing.md","mtime":"2022-03-12T03:29:15.639Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-14T00:16:11.769Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
