@@ -21,6 +21,8 @@ public class _47 {
         public static void main(String[] args) {
             _1st handler = new _1st();
             int[] nums = new int[]{1, 1, 1, 2};
+            nums = new int[]{3, 3, 0, 3};
+            nums = new int[]{1, 1, 2};
             handler.permuteUnique(nums);
         }
 
@@ -43,7 +45,8 @@ public class _47 {
             }
             for (int i = 0; i < nums.length; i++) {
                 if (vis[i]) continue;
-                if (i > 0 && nums[i - 1] == nums[i] && !vis[i - 1]) continue;
+                //!vis[i-1] 防止{0,3,3,3}这种排列
+                if (i > 0 && nums[i - 1] == nums[i] && vis[i - 1]) continue;
                 vis[i] = true;
                 sub.add(nums[i]);
                 dfs(sub, nums, vis);

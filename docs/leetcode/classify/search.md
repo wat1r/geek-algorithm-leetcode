@@ -33,6 +33,49 @@
 
 
 
+## [47. 全排列 II](https://leetcode-cn.com/problems/permutations-ii/)
+
+### 方法1:DFS
+
+![](/imgs/leetcode/classify/image-20220314222903235.png)
+
+```java
+List<List<Integer>> res = new ArrayList<>();
+
+public List<List<Integer>> permuteUnique(int[] nums) {
+    if (nums == null || nums.length == 0) return res;
+    Arrays.sort(nums);
+    dfs(new ArrayList<>(), nums, new boolean[nums.length]);
+    return res;
+}
+
+private void dfs(List<Integer> sub, int[] nums, boolean[] vis) {
+    if (sub.size() == nums.length) {
+        sub.forEach(System.out::print);
+        System.out.println();
+        res.add(new ArrayList<>(sub));
+        return;
+    }
+    for (int i = 0; i < nums.length; i++) {
+        if (vis[i]) continue;
+        //!vis[i-1] 防止{0,3,3,3}这种排列
+        if (i > 0 && nums[i - 1] == nums[i] && !vis[i - 1]) continue;
+        vis[i] = true;
+        sub.add(nums[i]);
+        dfs(sub, nums, vis);
+        sub.remove(sub.size() - 1);
+        vis[i] = false;
+
+    }
+}
+```
+
+
+
+
+
+
+
 ## [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)
 
 ![](/imgs/leetcode/classify/image-20220313105908048.png)

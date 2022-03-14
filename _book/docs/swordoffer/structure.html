@@ -1,0 +1,791 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>数据结构 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="dynamic_programing.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    LeetCode
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../leetcode/classify/structure.html">
+            
+                <a href="../leetcode/classify/structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../leetcode/classify/array.html">
+            
+                <a href="../leetcode/classify/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../leetcode/classify/string.html">
+            
+                <a href="../leetcode/classify/string.html">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../leetcode/classify/binary_search.html">
+            
+                <a href="../leetcode/classify/binary_search.html">
+            
+                    
+                    二分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../leetcode/classify/structure_design.html">
+            
+                <a href="../leetcode/classify/structure_design.html">
+            
+                    
+                    结构设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../leetcode/classify/two_pointers.html">
+            
+                <a href="../leetcode/classify/two_pointers.html">
+            
+                    
+                    双指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../leetcode/classify/search.html">
+            
+                <a href="../leetcode/classify/search.html">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../leetcode/classify/graph.html">
+            
+                <a href="../leetcode/classify/graph.html">
+            
+                    
+                    图论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../leetcode/classify/dynamic_programing.html">
+            
+                <a href="../leetcode/classify/dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../leetcode/classify/bit.html">
+            
+                <a href="../leetcode/classify/bit.html">
+            
+                    
+                    位运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../leetcode/classify/math.html">
+            
+                <a href="../leetcode/classify/math.html">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../leetcode/swordoffer/swordoffer.html">
+            
+                <a href="../leetcode/swordoffer/swordoffer.html">
+            
+                    
+                    剑指Offer(leetcode)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    剑指Offer(nowcoder)
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.1" data-path="structure.html">
+            
+                <a href="structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="dynamic_programing.html">
+            
+                <a href="dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >数据结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="01&#x6570;&#x636E;&#x7ED3;&#x6784;">01.&#x6570;&#x636E;&#x7ED3;&#x6784;</h1>
+<h2 id="&#x94FE;&#x8868;">&#x94FE;&#x8868;</h2>
+<h2 id="jz6-&#x4ECE;&#x5C3E;&#x5230;&#x5934;&#x6253;&#x5370;&#x94FE;&#x8868;">JZ6 &#x4ECE;&#x5C3E;&#x5230;&#x5934;&#x6253;&#x5370;&#x94FE;&#x8868;</h2>
+<p><img src="../../imgs/swordoffer/JZ_6_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x904D;&#x5386;">&#x65B9;&#x6CD5;1.&#x904D;&#x5386;</h3>
+<h4 id="&#x5206;&#x6790;">&#x5206;&#x6790;</h4>
+<ul>
+<li>&#x7B80;&#x5355;&#x7684;&#x904D;&#x5386;&#xFF0C;&#x6536;&#x96C6;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x7684;<code>val</code>&#xFF0C;&#x7136;&#x540E;&#x5BF9;&#x7ED3;&#x679C;&#x7FFB;&#x8F6C;&#xFF0C;&#x8FD4;&#x56DE;</li>
+</ul>
+<h4 id="&#x4EE3;&#x7801;">&#x4EE3;&#x7801;</h4>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> ArrayList&lt;Integer&gt; <span class="hljs-title">printListFromTailToHead</span><span class="hljs-params">(ListNode node)</span> </span>{
+            ArrayList&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x53EA;&#x8981;&#x4E0D;&#x662F;null&#xFF0C;&#x5C31;&#x4E00;&#x76F4;&#x5728;&#x5FAA;&#x73AF;&#x91CC;&#x7ED5;</span>
+            <span class="hljs-keyword">while</span> (node != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-comment">//&#x6DFB;&#x52A0;&#x7ED3;&#x679C;</span>
+                res.add(node.val);
+                <span class="hljs-comment">//&#x904D;&#x5386;&#x5B8C;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x540E;&#xFF0C;&#x5C06;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x6ED1;&#x52A8;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+                node = node.next;
+            }
+            <span class="hljs-comment">//&#x7FFB;&#x8F6C;&#x7ED3;&#x679C;</span>
+            Collections.reverse(res);
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2.&#x9012;&#x5F52;</h3>
+<h4 id="&#x5206;&#x6790;">&#x5206;&#x6790;</h4>
+<ul>
+<li>&#x91C7;&#x7528;&#x9012;&#x5F52;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0D;&#x65AD;&#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x5F53;&#x5230;&#x8FBE;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x6307;&#x5411;<code>null</code>&#x65F6;&#xFF0C;&#x5F00;&#x59CB;&#x8FD4;&#x56DE;</li>
+<li>&#x51FA;&#x53E3;&#x6761;&#x4EF6;&#xFF1A;&#x5F53;&#x8282;&#x70B9;&#x662F;<code>null</code>&#x7684;&#x65F6;&#x5019;</li>
+</ul>
+<p><img src="../../imgs/swordoffer/image-20220307191100466.png" alt="image-20220307191100466"></p>
+<h4 id="&#x4EE3;&#x7801;">&#x4EE3;&#x7801;</h4>
+<pre><code class="lang-java">  ArrayList&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> ArrayList&lt;Integer&gt; <span class="hljs-title">printListFromTailToHead</span><span class="hljs-params">(ListNode node)</span> </span>{
+            dfs(node);
+            <span class="hljs-keyword">return</span> res;
+        }
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(ListNode node)</span> </span>{
+            <span class="hljs-keyword">if</span> (node == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span>;
+            <span class="hljs-comment">//&#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x5C42;</span>
+            dfs(node.next);
+            <span class="hljs-comment">//&#x6536;&#x96C6;&#x8282;&#x70B9;</span>
+            res.add(node.val);
+        }
+</code></pre>
+<h2 id="jz25-&#x5408;&#x5E76;&#x4E24;&#x4E2A;&#x6392;&#x5E8F;&#x7684;&#x94FE;&#x8868;"><strong>JZ25</strong> <strong>&#x5408;&#x5E76;&#x4E24;&#x4E2A;&#x6392;&#x5E8F;&#x7684;&#x94FE;&#x8868;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_25_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">Merge</span><span class="hljs-params">(ListNode list1,ListNode list2)</span> </span>{
+         <span class="hljs-keyword">if</span> (list1 == <span class="hljs-keyword">null</span> || list2 == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> list1 == <span class="hljs-keyword">null</span> ? list2 : list1;
+            <span class="hljs-keyword">if</span> (list1.val &gt; list2.val) {
+                list2.next = Merge(list1, list2.next);
+                <span class="hljs-keyword">return</span> list2;
+            } <span class="hljs-keyword">else</span> {
+                list1.next = Merge(list1.next, list2);
+                <span class="hljs-keyword">return</span> list1;
+            }
+    }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;2&#xFF1A;&#x8FED;&#x4EE3;</h3>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">Merge</span><span class="hljs-params">(ListNode l1,ListNode l2)</span> </span>{
+             <span class="hljs-keyword">if</span> (l1 == <span class="hljs-keyword">null</span> || l2 == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">return</span> l1 == <span class="hljs-keyword">null</span> ? l2 : l1;
+            }
+            ListNode head = <span class="hljs-keyword">new</span> ListNode(<span class="hljs-number">0</span>);
+            ListNode node = head;
+            <span class="hljs-keyword">while</span> (l1 != <span class="hljs-keyword">null</span> &amp;&amp; l2 != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (l1.val &lt; l2.val) {
+                    node.next = l1;
+                    l1 = l1.next;
+                } <span class="hljs-keyword">else</span> {
+                    node.next = l2;
+                    l2 = l2.next;
+                }
+                node = node.next;
+            }
+            <span class="hljs-keyword">if</span> (l1 != <span class="hljs-keyword">null</span>) {
+                node.next = l1;
+            } <span class="hljs-keyword">else</span> {
+                node.next = l2;
+            }
+            <span class="hljs-keyword">return</span> head.next;
+    }
+</code></pre>
+<h2 id="jz18-&#x5220;&#x9664;&#x94FE;&#x8868;&#x7684;&#x8282;&#x70B9;"><strong>JZ18</strong> <strong>&#x5220;&#x9664;&#x94FE;&#x8868;&#x7684;&#x8282;&#x70B9;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_18_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">deleteNode</span><span class="hljs-params">(ListNode head, <span class="hljs-keyword">int</span> val)</span> </span>{
+            ListNode dummy = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+            dummy.next = head;
+            ListNode prev = dummy, cur = head;
+            <span class="hljs-comment">//&#x904D;&#x5386;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x548C;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x524D;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+            <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (cur.val == val) <span class="hljs-keyword">break</span>;
+                prev = prev.next;
+                cur = cur.next;
+            }
+            <span class="hljs-comment">//&#x5220;&#x9664;cur&#x8282;&#x70B9;</span>
+            prev.next = prev.next.next;
+            <span class="hljs-keyword">return</span> dummy.next;
+        }
+</code></pre>
+<h2 id="jz23-&#x94FE;&#x8868;&#x4E2D;&#x73AF;&#x7684;&#x5165;&#x53E3;&#x7ED3;&#x70B9;"><strong>JZ23</strong> <strong>&#x94FE;&#x8868;&#x4E2D;&#x73AF;&#x7684;&#x5165;&#x53E3;&#x7ED3;&#x70B9;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_23_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x5FEB;&#x6162;&#x6307;&#x9488;">&#x65B9;&#x6CD5;1:&#x5FEB;&#x6162;&#x6307;&#x9488;</h3>
+<p><img src="../../imgs/swordoffer/JZ_23_1.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">EntryNodeOfLoop</span><span class="hljs-params">(ListNode pHead)</span> </span>{
+            ListNode slow = pHead, fast = pHead;
+            <span class="hljs-keyword">boolean</span> f = <span class="hljs-keyword">false</span>;<span class="hljs-comment">//&#x6807;&#x5FD7;&#x4F4D;</span>
+            <span class="hljs-keyword">while</span> (fast.next != <span class="hljs-keyword">null</span> &amp;&amp; fast.next.next != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-comment">//f&#x7684;&#x6807;&#x5FD7;&#x4F4D;&#x8981;&#x662F;true&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5E76;&#x4E14;slow==fast</span>
+                <span class="hljs-comment">//&#x521D;&#x59CB;&#x65F6;&#xFF0C;slow&#x548C;fast&#x662F;&#x76F8;&#x7B49;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6807;&#x5FD7;&#x4F4D;&#x4F1A;&#x63D0;&#x524D;&#x9000;&#x51FA;</span>
+                <span class="hljs-keyword">if</span> (slow == fast &amp;&amp; f) <span class="hljs-keyword">break</span>;
+                slow = slow.next;
+                fast = fast.next.next;
+                f = <span class="hljs-keyword">true</span>;<span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x6807;&#x5FD7;&#x4F4D;</span>
+            }
+            <span class="hljs-comment">//&#x5982;&#x679C;slow&#x548C;fast&#x4E0D;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x8282;&#x70B9; &#x6216;&#x8005; slow&#x548C;fast&#x76F8;&#x540C;&#xFF0C;&#x4F46;&#x662F;&#x662F;&#x521D;&#x59CB;&#x65F6;&#x7684;slow = pHead, fast = pHead</span>
+            <span class="hljs-keyword">if</span> (slow != fast || !f) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            slow = pHead;<span class="hljs-comment">//slow&#x56DE;&#x5230;&#x8D77;&#x70B9;&#xFF0C;slow&#x548C;fast&#x6B65;&#x8C03;&#x4E00;&#x81F4;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x76F8;&#x9047;&#x7684;&#x70B9;&#x5C31;&#x662F;&#x73AF;&#x5F62;&#x94FE;&#x8868;&#x5165;&#x53E3;</span>
+            <span class="hljs-keyword">while</span> (slow != fast) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            <span class="hljs-keyword">return</span> slow;
+        }
+</code></pre>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x6709;&#x5982;&#x4E0B;&#x7684;&#x89E3;&#x6CD5;&#xFF1A;</p>
+<p><img src="../../imgs/swordoffer/JZ_23_2.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">EntryNodeOfLoop</span><span class="hljs-params">(ListNode pHead)</span> </span>{
+            <span class="hljs-keyword">if</span> (pHead == <span class="hljs-keyword">null</span> || pHead.next == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            <span class="hljs-comment">//&#x5F00;&#x59CB;&#x65F6; slow&#x548C;fast&#x9519;&#x5F00;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;</span>
+            ListNode slow = pHead, fast = pHead.next;
+            <span class="hljs-keyword">while</span> (fast.next != <span class="hljs-keyword">null</span> &amp;&amp; fast.next.next != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (slow == fast) <span class="hljs-keyword">break</span>;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            <span class="hljs-comment">//&#x5982;&#x679C;&#x8FD9;&#x65F6;&#x5019;&#x4E0D;&#x662F;&#x7B2C;&#x4E00;&#x6B21;&#x76F8;&#x9047;&#xFF0C;&#x800C;fast&#x5DF2;&#x7ECF;&#x5230;&#x94FE;&#x8868;&#x7684;&#x672B;&#x5C3E;&#x4E86;&#xFF0C;&#x8BF4;&#x660E;&#x6CA1;&#x6709;&#x73AF;</span>
+            <span class="hljs-keyword">if</span> (slow != fast) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            <span class="hljs-comment">//&#x5934;&#x8282;&#x70B9;&#x5F00;&#x59CB;&#xFF0C;&#x4E14;</span>
+            ListNode cur = pHead;
+            <span class="hljs-keyword">while</span> (cur != slow.next) {
+                cur = cur.next;
+                slow = slow.next;
+            }
+            <span class="hljs-keyword">return</span> cur;
+        }
+    }
+</code></pre>
+<h2 id="&#x6811;">&#x6811;</h2>
+<h2 id="jz77-&#x6309;&#x4E4B;&#x5B57;&#x5F62;&#x987A;&#x5E8F;&#x6253;&#x5370;&#x4E8C;&#x53C9;&#x6811;">JZ77 &#x6309;&#x4E4B;&#x5B57;&#x5F62;&#x987A;&#x5E8F;&#x6253;&#x5370;&#x4E8C;&#x53C9;&#x6811;</h2>
+<h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1.</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; Print(TreeNode pRoot) {
+            ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">if</span> (pRoot == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+            Queue&lt;TreeNode&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+            q.offer(pRoot);
+            <span class="hljs-keyword">int</span> level = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+                <span class="hljs-keyword">int</span> size = q.size();
+                ArrayList&lt;Integer&gt; sub = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+                    TreeNode cur = q.poll();
+                    <span class="hljs-keyword">if</span> (level % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) sub.add(cur.val);
+                    <span class="hljs-keyword">else</span> sub.add(<span class="hljs-number">0</span>, cur.val);
+                    <span class="hljs-keyword">if</span> (cur.left != <span class="hljs-keyword">null</span>) q.offer(cur.left);
+                    <span class="hljs-keyword">if</span> (cur.right != <span class="hljs-keyword">null</span>) q.offer(cur.right);
+                }
+                res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+                level++;
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h2 id="jz82-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;&#x4E00;"><strong>JZ82</strong> <strong>&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;(&#x4E00;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_82_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">return</span> dfs(root, sum);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+            <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5F00;&#x59CB;&#x6BD4;&#x8F83;val&#x662F;&#x5426;&#x76F8;&#x7B49;</span>
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span> &amp;&amp; root.val == sum) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">boolean</span> res = <span class="hljs-keyword">false</span>;
+            <span class="hljs-comment">//&#x53EA;&#x8981;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x6709;&#x4E00;&#x4E2A;&#x662F;true&#x5373;&#x53EF;</span>
+            <span class="hljs-keyword">if</span> (root.left != <span class="hljs-keyword">null</span>) res = res || dfs(root.left, sum - root.val);
+            <span class="hljs-keyword">if</span> (root.right != <span class="hljs-keyword">null</span>) res = res || dfs(root.right, sum - root.val);
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2:&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasPathSum</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x8282;&#x70B9;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x6BD4;&#x8F83;&#x5269;&#x4E0B;&#x7684;sum&#x503C;&#x662F;&#x5426;&#x76F8;&#x7B49;</span>
+    <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root.val == sum;
+    <span class="hljs-comment">//&#x5DE6;&#x53F3;&#x4E24;&#x68F5;&#x5B50;&#x6811;&#x53EA;&#x8981;&#x4E00;&#x4E2A;&#x7B26;&#x5408;&#x5373;&#x53EF;</span>
+    <span class="hljs-keyword">return</span> hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3bfs">&#x65B9;&#x6CD5;3:BFS</h3>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasPathSum4th</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        LinkedList&lt;TreeNode&gt; nodeQueue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+        LinkedList&lt;Integer&gt; numQueue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+        nodeQueue.offer(root);
+        numQueue.offer(root.val);
+        <span class="hljs-keyword">while</span> (!nodeQueue.isEmpty()) {
+            TreeNode curNode = nodeQueue.pop();
+            Integer curNum = numQueue.pop();
+            <span class="hljs-keyword">if</span> (curNode.left == <span class="hljs-keyword">null</span> &amp;&amp; curNode.right == <span class="hljs-keyword">null</span> &amp;&amp; curNum == sum) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">if</span> (curNode.left != <span class="hljs-keyword">null</span>) {
+                nodeQueue.offer(curNode.left);
+                numQueue.offer(curNum + curNode.left.val);
+            }
+            <span class="hljs-keyword">if</span> (curNode.right != <span class="hljs-keyword">null</span>) {
+                nodeQueue.offer(curNode.right);
+                numQueue.offer(curNum + curNode.right.val);
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+</code></pre>
+<h2 id="jz34-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;&#x4E8C;"><strong>JZ34</strong> <strong>&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;(&#x4E8C;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_34_title.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#x56DE;&#x6EAF;-&#x9012;&#x51CF;">&#x65B9;&#x6CD5;1:&#x56DE;&#x6EAF;-&#x9012;&#x51CF;</h3>
+<pre><code class="lang-java">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+        <span class="hljs-keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root, <span class="hljs-keyword">int</span> targetSum) {
+            dfs(root, targetSum, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum, ArrayList&lt;Integer&gt; sub)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">return</span>;
+            }
+            sub.add(root.val);
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span> &amp;&amp; sum == root.val) res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+            dfs(root.left, sum - root.val, sub);
+            dfs(root.right, sum - root.val, sub);
+            sub.remove(sub.size() - <span class="hljs-number">1</span>);
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x56DE;&#x6EAF;-&#x7D2F;&#x52A0;">&#x65B9;&#x6CD5;2:&#x56DE;&#x6EAF;-&#x7D2F;&#x52A0;</h3>
+<pre><code class="lang-java">   ArrayList&lt;ArrayList&lt;Integer&gt;&gt;  res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+        <span class="hljs-keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root, <span class="hljs-keyword">int</span> sum) {
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+            dfs(root,sum,<span class="hljs-number">0</span>,<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum, <span class="hljs-keyword">int</span> total, ArrayList&lt;Integer&gt; sub)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span>;
+            sub.add(root.val);
+            total += root.val;
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (sum == total) {
+                    res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+                }
+                <span class="hljs-comment">//&#x8FD9;&#x4E00;&#x6B65;&#x662F;&#x4E3A;&#x4E86;&#x79FB;&#x9664;&#x8FD9;&#x4E2A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x503C;&#xFF0C;&#x4E0D;&#x7BA1;&#x8FD9;&#x4E2A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x662F;&#x5426;&#x6EE1;&#x8DB3;&#x6761;&#x4EF6;</span>
+                sub.remove(sub.size() - <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span>;
+            }
+            dfs(root.left, sum, total, sub);
+            dfs(root.right, sum, total, sub);
+            sub.remove(sub.size() - <span class="hljs-number">1</span>);
+        }
+</code></pre>
+<h2 id="jz84-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;&#x4E09;"><strong>JZ84</strong> <strong>&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x548C;&#x4E3A;&#x67D0;&#x4E00;&#x503C;&#x7684;&#x8DEF;&#x5F84;(&#x4E09;)</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_84_title.png" alt=""></p>
+<pre><code class="lang-java">
+        Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">FindPath</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum)</span> </span>{
+        map.put(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">return</span> helper(root, sum, <span class="hljs-number">0</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">helper</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> sum, <span class="hljs-keyword">int</span> pathSum)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+        pathSum += root.val;<span class="hljs-comment">//&#x8DEF;&#x5F84;&#x548C;&#x52A0;&#x4E0A;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x503C;</span>
+        <span class="hljs-comment">//&#x8DEF;&#x5F84;&#x548C;-&#x76EE;&#x6807;sum&#x7684;&#x503C; &#x7684;&#x8282;&#x70B9;&#xFF0C;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x662F;&#x591A;&#x5C11;&#x4E2A;&#xFF0C;&#x5728;&#x6B64;&#x57FA;&#x7840;&#x4E0A;&#x7D2F;&#x52A0;</span>
+        res += map.getOrDefault(pathSum - sum, <span class="hljs-number">0</span>);
+        <span class="hljs-comment">//&#x5C06;&#x4ECE;&#x6839;&#x8282;&#x70B9;&#x5230;&#x5F53;&#x524D;&#x8282;&#x70B9;&#xFF0C;&#x6709;&#x591A;&#x5C11;&#x7684;&#x8DEF;&#x5F84;&#x548C;&#x7B49;&#x4E8E;pathSum&#x5B58;&#x5165;map</span>
+        map.put(pathSum, map.getOrDefault(pathSum, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+        <span class="hljs-comment">//&#x63A2;&#x7D22;&#x5DE6;&#x53F3;&#x5B50;&#x6811;</span>
+        res += helper(root.left, sum, pathSum) + helper(root.right, sum, pathSum);
+        <span class="hljs-comment">//&#x56DE;&#x6EAF;&#x8FC7;&#x7A0B;&#x9700;&#x8981;&#x5C06;map&#x7684;&#x6570;&#x91CF;-1</span>
+        map.put(pathSum, map.get(pathSum) - <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">return</span> res;
+    }
+</code></pre>
+<h2 id="jz68-&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;"><strong>JZ68</strong> <strong>&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_68_title.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowestCommonAncestor</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> o1, <span class="hljs-keyword">int</span> o2)</span> </span>{
+            TreeNode res = helper(root, o1, o2);
+            <span class="hljs-keyword">return</span> res.val;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">helper</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> q)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span> || root.val == p || root.val == q) <span class="hljs-keyword">return</span> root;
+            TreeNode left = helper(root.left, p, q);
+            TreeNode right = helper(root.right, p, q);
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span> &amp;&amp; right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root;
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> left;
+            <span class="hljs-keyword">if</span> (right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> right;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        }
+</code></pre>
+<h2 id="jz86-&#x5728;&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x627E;&#x5230;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;"><strong>JZ86</strong> <strong>&#x5728;&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x627E;&#x5230;&#x4E24;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;</strong></h2>
+<p><img src="../../imgs/swordoffer/JZ_86_title.png" alt=""></p>
+<h4 id="&#x601D;&#x8DEF;&#xFF1A;">&#x601D;&#x8DEF;&#xFF1A;</h4>
+<p>1.<code>left</code>&#x548C;<code>right</code>&#x90FD;&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>root</code>&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x4E2D;&#x90FD;&#x4E0D;&#x5305;&#x542B;<code>p</code>&#x548C;<code>q</code>&#x8282;&#x70B9;&#xFF0C;&#x8FD4;&#x56DE;<code>null</code>&#x5373;&#x53EF;</p>
+<p>2.<code>left</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;<code>right</code>&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>p</code>&#x548C;<code>q</code>&#x4E0D;&#x5728;&#x53F3;&#x5B50;&#x6811;&#x4E2D;&#xFF08;&#x56E0;&#x4E3A;&#x53F3;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;&#x4E86;&#xFF09;&#xFF0C;&#x8FD9;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;<code>left</code>&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x6709;&#x4E0B;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>left</code>&#x5373;&#x5DE6;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x6070;&#x597D;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code></li>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>left</code>&#x5373;&#x5DE6;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x672A;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code>&#xFF0C;&#x6307;&#x5411;&#x7684;&#x662F;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;&#x8282;&#x70B9;</li>
+</ul>
+<p>3.<code>right</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;<code>left</code>&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>p</code>&#x548C;<code>q</code>&#x4E0D;&#x5728;&#x5DE6;&#x5B50;&#x6811;&#x4E2D;&#xFF08;&#x56E0;&#x4E3A;&#x5DE6;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;&#x4E86;&#xFF09;&#xFF0C;&#x8FD9;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;<code>right</code>&#xFF0C;&#x8FD9;&#x91CC;&#x9762;&#x6709;&#x4E0B;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>right</code>&#x5373;&#x53F3;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x6070;&#x597D;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code></li>
+<li><code>p</code>&#x548C;<code>q</code>&#x90FD;&#x5728;<code>right</code>&#x5373;&#x53F3;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x800C;<code>root</code>&#x8282;&#x70B9;&#x672A;&#x6307;&#x5411;&#x4E86;<code>p</code>&#x6216;&#x8005;<code>q</code>&#xFF0C;&#x6307;&#x5411;&#x7684;&#x662F;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;&#x8282;&#x70B9;</li>
+</ul>
+<p>4.<code>left</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x5E76;&#x4E14;<code>right</code>&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x8BF4;&#x660E;<code>p</code>&#x548C;<code>q</code>&#x5206;&#x5E03;&#x5728;<code>root</code>&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x7684;&#x4E24;&#x4FA7;&#xFF0C;&#x8FD9;&#x65F6;<code>root</code>&#x4E3A;<code>p</code>&#x548C;<code>q</code>&#x7684;&#x6700;&#x8FD1;&#x516C;&#x5171;&#x7956;&#x5148;&#x8282;&#x70B9;&#xFF0C;&#x8FD4;&#x56DE;</p>
+<p><img src="../../imgs/swordoffer/JZ_86_1.png" alt=""></p>
+<p><img src="../../imgs/swordoffer/JZ_86_2.png" alt=""></p>
+<p><img src="../../imgs/swordoffer/JZ_86_3.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowestCommonAncestor</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> o1, <span class="hljs-keyword">int</span> o2)</span> </span>{
+            TreeNode res = helper(root, o1, o2);
+            <span class="hljs-keyword">return</span> res.val;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">helper</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> q)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span> || root.val == p || root.val == q) <span class="hljs-keyword">return</span> root;
+            TreeNode left = helper(root.left, p, q);
+            TreeNode right = helper(root.right, p, q);
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span> &amp;&amp; right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root;
+            <span class="hljs-keyword">if</span> (left != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> left;
+            <span class="hljs-keyword">if</span> (right != <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> right;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        }
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="dynamic_programing.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 动态规划">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.3.1","depth":2,"next":{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]},"previous":{"title":"剑指Offer(nowcoder)","level":"1.3","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.3.1","depth":2,"path":"docs/swordoffer/structure.md","ref":"docs/swordoffer/structure.md","articles":[]},{"title":"动态规划","level":"1.3.2","depth":2,"path":"docs/swordoffer/dynamic_programing.md","ref":"docs/swordoffer/dynamic_programing.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/swordoffer/structure.md","mtime":"2022-03-12T13:17:16.810Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-14T14:31:15.162Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
