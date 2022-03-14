@@ -392,3 +392,93 @@ public int maxSubArray(int[] nums) {
     return res;
 }
 ```
+
+## [55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
+
+### 方法1:记忆化递归
+
+```java
+        //memo[i]表示从索引为i的位置，能否跳跃到最后一个下标
+        Boolean[] memo ;
+        int n ;
+
+        public boolean canJump(int[] nums) {
+            n = nums.length;
+            memo = new Boolean[n];//初始化
+            return helper(nums,0);
+        }
+
+        private boolean helper(int[] nums ,int idx ){
+            //出口，索引idx到达最后一个下标的位置或者超过了最后一个下标
+            if(idx >=n-1) return true;
+            //记忆化剪枝
+            if(memo[idx]!=null) return memo[idx];
+            //step表示可以跳跃的步数 [1,nums[idx]]这个区间范围内
+            for(int step=1;step<=nums[idx];step++){
+                if(helper(nums,idx+step)){//如果可以跳跃，idx+step是为true
+                    return  memo[idx+step] = true;
+                }
+            }
+            //不能跳跃，idx为false
+            return memo[idx] =false;
+        }
+```
+
+### 方法2:记忆化递归
+
+- 用`Index`的`enum`来记录某个坐标是否可以到达最末尾的位置，有三类值：
+   - `GOOD`:可以跳到末尾位置
+    - `BAD`:不可以跳到末尾位置
+    - `UNKNOWN`:不知道是否可以跳到末尾位置
+- 一开始的时候都是`UNKNOWN`状态，最末尾的位置是`GOOD`状态，因为可以由自己跳到自己的位置
+- 出口时判断，是否是`GOOD`状态，计算`memo`,返回`true`的时候记录`GOOD`状态，返回`false`时记录`BAD`状态
+
+```java
+    Index[] memo;
+
+    public boolean canJump2nd(int[] nums) {
+        memo = new Index[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            memo[i] = Index.UNKNOWN;
+        }
+        memo[nums.length - 1] = Index.GOOD;
+        return helper(nums, 0);
+    }
+
+    private boolean helper(int[] nums, int pos) {
+        if (memo[pos] != Index.UNKNOWN) return memo[pos] == Index.GOOD;
+        int furtherPos = Math.min(pos + nums[pos], nums.length - 1);
+        for (int i = pos + 1; i <= furtherPos; i++) {
+            if (helper2nd(nums, i)) {
+                memo[pos] = Index.GOOD;
+                return true;
+            }
+        }
+        memo[pos] = Index.BAD;
+        return false;
+    }
+
+
+    enum Index {
+        GOOD, BAD, UNKNOWN
+    }
+```
+
+### 方法3:贪心
+
+```java
+public boolean canJump4th(int[] nums) {
+    int n = nums.length;
+    //最后一个位置
+    int lastPos = n - 1;
+    //倒数第二个位置开始
+    for (int i = n - 2; i >= 0; i--) {
+        //如果当前的位置能跳跃到上一个位置lastPos，更新上一个位置lastPos
+        if (i + nums[i] >= lastPos) {
+            lastPos = i;
+        }
+    }
+    //是否到开头了
+    return lastPos == 0;
+}
+```

@@ -105,12 +105,16 @@ public class _55 {
      */
     public boolean canJump4th(int[] nums) {
         int n = nums.length;
+        //最后一个位置
         int lastPos = n - 1;
+        //倒数第二个位置开始
         for (int i = n - 2; i >= 0; i--) {
+            //如果当前的位置能跳跃到上一个位置lastPos，更新上一个位置lastPos
             if (i + nums[i] >= lastPos) {
                 lastPos = i;
             }
         }
+        //是否到开头了
         return lastPos == 0;
     }
 
@@ -196,6 +200,34 @@ public class _55 {
                 }
             }
             return false;
+        }
+    }
+
+
+    static class _5th{
+        //memo[i]表示从索引为i的位置，能否跳跃到最后一个下标
+        Boolean[] memo ;
+        int n ;
+
+        public boolean canJump(int[] nums) {
+            n = nums.length;
+            memo = new Boolean[n];//初始化
+            return helper(nums,0);
+        }
+
+        private boolean helper(int[] nums ,int idx ){
+            //出口，索引idx到达最后一个下标的位置或者超过了最后一个下标
+            if(idx >=n-1) return true;
+            //记忆化剪枝
+            if(memo[idx]!=null) return memo[idx];
+            //step表示可以跳跃的步数 [1,nums[idx]]这个区间范围内
+            for(int step=1;step<=nums[idx];step++){
+                if(helper(nums,idx+step)){//如果可以跳跃，idx+step是为true
+                    return  memo[idx+step] = true;
+                }
+            }
+            //不能跳跃，idx为false
+            return memo[idx] =false;
         }
     }
 
