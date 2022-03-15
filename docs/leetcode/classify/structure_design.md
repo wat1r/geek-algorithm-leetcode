@@ -12,7 +12,7 @@
 
 - 其中`data`的存数据的，`help`辅助栈用来存最小值，在`push`操作时，`help`如果栈顶元素大于待`push`的元素，将待`push`的元素塞进`help`中，如果不是，则重复塞一次`help`的栈顶元素，注意`help`为空的时候特殊处理下
 
-![image-20210901194728655](/Users/frankcooper/Library/Application Support/typora-user-images/image-20210901194728655.png)
+![](/imgs/leetcode/classify/image-20210901194728655.png)
 
 - 准备两个栈，data和help，做push操作时，需要保持help栈顶的元素始终最小，data的数据正常推入，help栈顶维持最小，在执行getMin方法的时候，返回help的栈顶元素
 
