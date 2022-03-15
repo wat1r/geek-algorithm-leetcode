@@ -1,6 +1,9 @@
 package com.frankcooper.bank._101_200;
 
+import com.frankcooper.struct.ListNode;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class _138 {
 
@@ -27,27 +30,52 @@ public class _138 {
             return map.get(head);
         }
 
-        class Node {
-            public int val;
-            public Node next;
-            public Node random;
 
-            public Node() {
-            }
+    }
 
-            public Node(int _val, Node _next, Node _random) {
-                val = _val;
-                next = _next;
-                random = _random;
-            }
+    static class Node {
+        public int val;
+        public Node next;
+        public Node random;
+
+        public Node() {
         }
 
+        public Node(int _val, Node _next, Node _random) {
+            val = _val;
+            next = _next;
+            random = _random;
+        }
 
+        public Node(int val) {
+            this.val = val;
+        }
     }
 
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+        }
+
+        Map<Node, Node> map = new HashMap<>();
+
+        public Node copyRandomList(Node head) {
+            if (head == null) return null;
+            return dfs(head);
+        }
+
+
+        private Node dfs(Node cur) {
+            if (cur == null) return null;
+            if (map.containsKey(cur)) return map.get(cur);
+            //复制一个节点
+            Node mirror = new Node(cur.val);
+            //记忆化
+            map.put(cur, mirror);
+            //next 和 random 指针处理
+            mirror.next = dfs(cur.next);
+            mirror.random = dfs(cur.random);
+            return mirror;
         }
     }
 

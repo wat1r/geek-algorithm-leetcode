@@ -10,7 +10,7 @@
 
 ## [138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
 
-### 方法1:两次机遍历+哈希表
+### 方法1:两次遍历+哈希表
 
 ```java
    public Node copyRandomList(Node head) {
@@ -27,6 +27,31 @@
                 cur = cur.next;
             }
             return map.get(head);
+        }
+```
+
+### 方法2：记忆化递归
+
+```java
+        Map<Node, Node> map = new HashMap<>();
+
+        public Node copyRandomList(Node head) {
+            if (head == null) return null;
+            return dfs(head);
+        }
+
+
+        private Node dfs(Node cur) {
+            if (cur == null) return null;
+            if (map.containsKey(cur)) return map.get(cur);
+            //复制一个节点
+            Node mirror = new Node(cur.val);
+            //记忆化
+            map.put(cur, mirror);
+            //next 和 random 指针处理
+            mirror.next = dfs(cur.next);
+            mirror.random = dfs(cur.random);
+            return mirror;
         }
 ```
 
