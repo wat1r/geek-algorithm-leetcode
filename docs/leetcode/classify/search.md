@@ -1,5 +1,98 @@
 # 搜索
 
+## [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)
+
+### 方法1:回溯
+
+```java
+List<List<Integer>> res = new ArrayList<>();
+
+
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    Arrays.sort(candidates);
+    dfs(candidates, target, 0, new ArrayList<>());
+    return res;
+}
+
+
+private void dfs(int[] nums, int target, int idx, List<Integer> sub) {
+    if (target < 0) return;
+    if (target == 0) {
+        res.add(new ArrayList<>(sub));
+        return;
+    }
+
+    for (int i = idx; i < nums.length; i++) {
+        sub.add(nums[i]);
+        dfs(nums, target - nums[i], i, sub);
+        sub.remove(sub.size() - 1);
+    }
+}
+```
+
+
+
+### 方法2:回溯（累加）
+
+```java
+
+     List<List<Integer>> res = new ArrayList<>();
+        int target;
+
+        public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            Arrays.sort(candidates);
+            this.target = target;
+            dfs(candidates, 0, 0, new ArrayList<>());
+            return res;
+        }
+
+
+        private void dfs(int[] nums, int sum, int idx, List<Integer> sub) {
+            if (sum > this.target) return;
+            if (sum == this.target) {
+                res.add(new ArrayList<>(sub));
+                return;
+            }
+
+            for (int i = idx; i < nums.length; i++) {
+                sub.add(nums[i]);
+                dfs(nums, sum + nums[i], i, sub);
+                sub.remove(sub.size() - 1);
+            }
+        }
+```
+
+
+
+## [40. 组合总和 II](https://leetcode-cn.com/problems/combination-sum-ii/)
+
+### 方法1:回溯（递减）
+
+```java
+List<List<Integer>> res = new ArrayList<>();
+
+public List<List<Integer>> combinationSum2(int[] nums, int t) {
+    Arrays.sort(nums);//sort
+    dfs(nums, 0, t, new ArrayList<>());
+    return res;
+}
+
+private void dfs(int[] nums, int idx, int t, List<Integer> sub) {
+    if (t < 0) return;
+    if (t == 0) {
+        res.add(new ArrayList<>(sub));
+        return;
+    }
+
+    for (int i = idx; i < nums.length; i++) {
+        if (i > idx && nums[i - 1] == nums[i]) continue;//skip duplicate candidate
+        sub.add(nums[i]);
+        dfs(nums, i + 1, t - nums[i], sub);
+        sub.remove(sub.size() - 1);
+    }
+}
+```
+
 
 
 ## [46. 全排列](https://leetcode-cn.com/problems/permutations/)

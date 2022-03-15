@@ -368,6 +368,84 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x641C;&#x7D22;">&#x641C;&#x7D22;</h1>
+<h2 id="39-&#x7EC4;&#x5408;&#x603B;&#x548C;"><a href="https://leetcode-cn.com/problems/combination-sum/" target="_blank">39. &#x7EC4;&#x5408;&#x603B;&#x548C;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x56DE;&#x6EAF;">&#x65B9;&#x6CD5;1:&#x56DE;&#x6EAF;</h3>
+<pre><code class="lang-java">List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+
+<span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="hljs-keyword">int</span>[] candidates, <span class="hljs-keyword">int</span> target) {
+    Arrays.sort(candidates);
+    dfs(candidates, target, <span class="hljs-number">0</span>, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+    <span class="hljs-keyword">return</span> res;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target, <span class="hljs-keyword">int</span> idx, List&lt;Integer&gt; sub)</span> </span>{
+    <span class="hljs-keyword">if</span> (target &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (target == <span class="hljs-number">0</span>) {
+        res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = idx; i &lt; nums.length; i++) {
+        sub.add(nums[i]);
+        dfs(nums, target - nums[i], i, sub);
+        sub.remove(sub.size() - <span class="hljs-number">1</span>);
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x56DE;&#x6EAF;&#xFF08;&#x7D2F;&#x52A0;&#xFF09;">&#x65B9;&#x6CD5;2:&#x56DE;&#x6EAF;&#xFF08;&#x7D2F;&#x52A0;&#xFF09;</h3>
+<pre><code class="lang-java">
+     List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">int</span> target;
+
+        <span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="hljs-keyword">int</span>[] candidates, <span class="hljs-keyword">int</span> target) {
+            Arrays.sort(candidates);
+            <span class="hljs-keyword">this</span>.target = target;
+            dfs(candidates, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+            <span class="hljs-keyword">return</span> res;
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> sum, <span class="hljs-keyword">int</span> idx, List&lt;Integer&gt; sub)</span> </span>{
+            <span class="hljs-keyword">if</span> (sum &gt; <span class="hljs-keyword">this</span>.target) <span class="hljs-keyword">return</span>;
+            <span class="hljs-keyword">if</span> (sum == <span class="hljs-keyword">this</span>.target) {
+                res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+                <span class="hljs-keyword">return</span>;
+            }
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = idx; i &lt; nums.length; i++) {
+                sub.add(nums[i]);
+                dfs(nums, sum + nums[i], i, sub);
+                sub.remove(sub.size() - <span class="hljs-number">1</span>);
+            }
+        }
+</code></pre>
+<h2 id="40-&#x7EC4;&#x5408;&#x603B;&#x548C;-ii"><a href="https://leetcode-cn.com/problems/combination-sum-ii/" target="_blank">40. &#x7EC4;&#x5408;&#x603B;&#x548C; II</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x56DE;&#x6EAF;&#xFF08;&#x9012;&#x51CF;&#xFF09;">&#x65B9;&#x6CD5;1:&#x56DE;&#x6EAF;&#xFF08;&#x9012;&#x51CF;&#xFF09;</h3>
+<pre><code class="lang-java">List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+<span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum2(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> t) {
+    Arrays.sort(nums);<span class="hljs-comment">//sort</span>
+    dfs(nums, <span class="hljs-number">0</span>, t, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> idx, <span class="hljs-keyword">int</span> t, List&lt;Integer&gt; sub)</span> </span>{
+    <span class="hljs-keyword">if</span> (t &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (t == <span class="hljs-number">0</span>) {
+        res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = idx; i &lt; nums.length; i++) {
+        <span class="hljs-keyword">if</span> (i &gt; idx &amp;&amp; nums[i - <span class="hljs-number">1</span>] == nums[i]) <span class="hljs-keyword">continue</span>;<span class="hljs-comment">//skip duplicate candidate</span>
+        sub.add(nums[i]);
+        dfs(nums, i + <span class="hljs-number">1</span>, t - nums[i], sub);
+        sub.remove(sub.size() - <span class="hljs-number">1</span>);
+    }
+}
+</code></pre>
 <h2 id="46-&#x5168;&#x6392;&#x5217;"><a href="https://leetcode-cn.com/problems/permutations/" target="_blank">46. &#x5168;&#x6392;&#x5217;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#xFF1A;dfs">&#x65B9;&#x6CD5;1&#xFF1A;dfs</h3>
 <pre><code class="lang-java">   List&lt;List&lt;Integer&gt;&gt; resList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
@@ -1068,7 +1146,7 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.2.7","depth":2,"next":{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-15T00:46:06.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-15T01:09:30.249Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.2.7","depth":2,"next":{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-15T02:33:43.905Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-15T02:33:51.978Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

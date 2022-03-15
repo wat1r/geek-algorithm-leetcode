@@ -15,15 +15,14 @@ public class _78 {
 
     static class _1st {
         /**
-         *  打印顺序
-         *  123
+         * 打印顺序
+         * 123
          * 12
          * 13
          * 1
          * 23
          * 2
          * 3
-         *
          */
         List<List<Integer>> res = new ArrayList<>();
 
@@ -53,7 +52,7 @@ public class _78 {
 
         /**
          * 打印顺序
-         *
+         * <p>
          * 1
          * 12
          * 123
@@ -80,6 +79,28 @@ public class _78 {
                 sub.forEach(System.out::print);
                 System.out.println();
                 dfs(sub, nums, i + 1);
+                sub.remove(sub.size() - 1);
+            }
+        }
+    }
+
+
+    static class _2nd_1 {
+        List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> subsets(int[] nums) {
+            res.add(new ArrayList<>());
+            dfs(nums, new ArrayList<>(), 0);
+            return res;
+
+        }
+
+
+        private void dfs(int[] nums, List<Integer> sub, int idx) {
+            for (int i = idx; i < nums.length; i++) {
+                sub.add(nums[i]);
+                res.add(new ArrayList<>(sub));
+                dfs(nums, sub, i + 1);
                 sub.remove(sub.size() - 1);
             }
         }
