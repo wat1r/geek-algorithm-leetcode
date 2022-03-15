@@ -4,6 +4,192 @@
 
 
 
+
+
+
+
+## [232. 用栈实现队列](https://leetcode-cn.com/problems/implement-queue-using-stacks/)
+
+- 栈：先进后出`FILO`
+- 队列：先进先出`FIFO`
+- 准备两个栈，一个数据栈`data`,一个辅助栈`help`
+  - `push`时，只需要向`help`栈中推
+  - `pop`时，只要去`data`的栈顶元素，即`data.pop()`,但是`data`栈没有元素了需要怎样?将`help`栈的元素不断往`data`栈推，推完为止，如果`data`,`help`栈均无元素，报错
+  - `peek`时，与`pop`的过程一样，只是在返回的时候，`data.peek()`
+  - `empty`，当`data`,`help`均为空时，返回`true`
+
+```java
+ class MyQueue {
+        Stack<Integer> data;
+        Stack<Integer> help;
+ 
+        public MyQueue() {
+            data = new Stack<>();
+            help = new Stack<>();
+        }
+
+        public void push(int x) {
+            help.push(x);
+        }
+
+        public int pop() {
+            if (data.isEmpty() && help.isEmpty()) throw new RuntimeException("empty queue");
+            if (data.isEmpty()) {
+                while (!help.isEmpty()) data.push(help.pop());
+            }
+            return data.pop();
+        }
+
+        public int peek() {
+            if (data.isEmpty() && help.isEmpty()) throw new RuntimeException("empty queue");
+            if (data.isEmpty()) {
+                while (!help.isEmpty()) data.push(help.pop());
+            }
+            return data.peek();
+        }
+
+        public boolean empty() {
+            return data.isEmpty() && help.isEmpty();
+        }
+    }
+```
+
+
+
+## [225. 用队列实现栈](https://leetcode-cn.com/problems/implement-stack-using-queues/)
+
+### 方法1:两个队列
+
+- 队列是先进先出，栈是先进后出，在`top()`方法中，为了避免，数据拷贝，有一个`swap()`的动作，`data`与`help`的存储顺序是一样的
+- 因为`data`队列的元素始终存在，判断栈是否为空的时候，只需要关注`size(data)==0`
+- `top()`与`pop()`方法只是在弹出`data`的最后一个元素的时候是否要继续放回`help`队列
+
+```java
+ class MyStack {
+        private Queue<Integer> data;
+        private Queue<Integer> help;
+
+        /**
+         * Initialize your data structure here.
+         */
+        public MyStack() {
+            data = new LinkedList<>();
+            help = new LinkedList<>();
+        }
+
+        /**
+         * Push element x onto stack.
+         */
+        public void push(int x) {
+            data.add(x);
+        }
+
+        /**
+         * Removes the element on top of the stack and returns that element.
+         */
+        public int pop() {
+            if (data.isEmpty()) throw new RuntimeException("stack empty");
+            while (data.size() != 1) help.add(data.poll());
+            int res = data.poll();
+            swap();
+            return res;
+        }
+
+        /**
+         * Get the top element.
+         */
+        public int top() {
+            if (data.isEmpty()) throw new RuntimeException("stack empty");
+            while (data.size() != 1) help.add(data.poll());
+            int res = data.poll();
+            help.add(res);
+            swap();
+            return res;
+        }
+
+
+        private void swap() {
+            Queue tmp = help;
+            help = data;
+            data = tmp;
+        }
+
+        /**
+         * Returns whether the stack is empty.
+         */
+        public boolean empty() {
+            return data.size() == 0;
+        }
+    }
+```
+
+### 方法2:一个队列
+
+- `shift()`方法是为`top()` 与`pop()`方法准备的，做一件事：就是弹出队头到倒数第`2`个队尾元素的，将其送到队列的尾部，在执行`top()` 与`pop()`，弹出`queue`的队头元素，如果是`top()`，继续保留这个元素，`pop()`时扔掉
+
+```java
+class MyStack {
+
+    private Queue<Integer> queue;
+
+    /**
+     * Initialize your data structure here.
+     */
+    public MyStack() {
+        queue = new LinkedList<>();
+    }
+
+    /**
+     * Push element x onto stack.
+     */
+    public void push(int x) {
+        queue.offer(x);
+    }
+
+    /**
+     * Removes the element on top of the stack and returns that element.
+     */
+    public int pop() {
+        shift();
+        int res = queue.poll();
+        return res;
+    }
+
+    /**
+     * Get the top element.
+     */
+    public int top() {
+        shift();
+        int res = queue.poll();
+        queue.offer(res);
+        return res;
+    }
+
+
+    public void shift() {
+        int size = queue.size();
+        for (int i = 0; i < size - 1; i++) {
+            queue.offer(queue.poll());
+        }
+
+    }
+
+
+    /**
+     * Returns whether the stack is empty.
+     */
+    public boolean empty() {
+        return queue.isEmpty();
+    }
+}
+```
+
+
+
+
+
+
+
 ## [155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
 
 ### 方法1：辅助栈[浪费空间]
