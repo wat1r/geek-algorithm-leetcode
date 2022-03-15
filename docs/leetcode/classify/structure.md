@@ -4,6 +4,38 @@
 
 ## 链表
 
+
+
+
+
+## [138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
+
+### 方法1:两次机遍历+哈希表
+
+```java
+   public Node copyRandomList(Node head) {
+            HashMap<Node, Node> map = new HashMap<>();
+            Node cur = head;
+            while (cur != null) {
+                map.put(cur, new Node(cur.val, cur.next, cur.random));
+                cur = cur.next;
+            }
+            cur = head;
+            while (cur != null) {
+                map.get(cur).next = map.get(cur.next);
+                map.get(cur).random = map.get(cur.random);
+                cur = cur.next;
+            }
+            return map.get(head);
+        }
+```
+
+
+
+
+
+
+
 ## [141. 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)
 
 ### 方法1:快慢指针
