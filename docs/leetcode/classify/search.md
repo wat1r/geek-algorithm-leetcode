@@ -709,3 +709,44 @@ private void helper(int num, StringBuilder sb) {
     }
 }
 ```
+
+## [2044. 统计按位或能得到最大值的子集数目](https://leetcode-cn.com/problems/count-number-of-maximum-bitwise-or-subsets/)
+
+### 方法1:DFS枚举所有子集统计
+
+```java
+//k:子集或后的值，v:该值出现的次数
+Map<Integer, Integer> map = new HashMap<>();
+
+public int countMaxOrSubsets(int[] nums) {
+    int maxx = -1;
+    subsets(nums);
+    for (List<Integer> sub : res) {
+        int t = 0;
+        for (int x : sub) t |= x;//是或「|」 不是异或 「^」
+        maxx = Math.max(maxx, t);
+        map.put(t, map.getOrDefault(t, 0) + 1);
+    }
+    return map.get(maxx);
+}
+
+
+List<List<Integer>> res = new ArrayList<>();
+//枚举所有子集
+public List<List<Integer>> subsets(int[] nums) {
+    if (nums == null || nums.length == 0) return res;
+    dfs(new ArrayList<>(), nums, 0);
+    return res;
+}
+
+private void dfs(List<Integer> sub, int[] nums, int idx) {
+    if (idx == nums.length) {
+        res.add(new ArrayList<>(sub));
+        return;
+    }
+    sub.add(nums[idx]);
+    dfs(sub, nums, idx + 1);
+    sub.remove(sub.size() - 1);
+    dfs(sub, nums, idx + 1);
+}
+```

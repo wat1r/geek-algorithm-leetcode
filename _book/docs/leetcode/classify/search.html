@@ -988,6 +988,43 @@ List&lt;String&gt; wordDict;
     }
 }
 </code></pre>
+<h2 id="2044-&#x7EDF;&#x8BA1;&#x6309;&#x4F4D;&#x6216;&#x80FD;&#x5F97;&#x5230;&#x6700;&#x5927;&#x503C;&#x7684;&#x5B50;&#x96C6;&#x6570;&#x76EE;"><a href="https://leetcode-cn.com/problems/count-number-of-maximum-bitwise-or-subsets/" target="_blank">2044. &#x7EDF;&#x8BA1;&#x6309;&#x4F4D;&#x6216;&#x80FD;&#x5F97;&#x5230;&#x6700;&#x5927;&#x503C;&#x7684;&#x5B50;&#x96C6;&#x6570;&#x76EE;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1dfs&#x679A;&#x4E3E;&#x6240;&#x6709;&#x5B50;&#x96C6;&#x7EDF;&#x8BA1;">&#x65B9;&#x6CD5;1:DFS&#x679A;&#x4E3E;&#x6240;&#x6709;&#x5B50;&#x96C6;&#x7EDF;&#x8BA1;</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//k:&#x5B50;&#x96C6;&#x6216;&#x540E;&#x7684;&#x503C;&#xFF0C;v:&#x8BE5;&#x503C;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">countMaxOrSubsets</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+    <span class="hljs-keyword">int</span> maxx = -<span class="hljs-number">1</span>;
+    subsets(nums);
+    <span class="hljs-keyword">for</span> (List&lt;Integer&gt; sub : res) {
+        <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : sub) t |= x;<span class="hljs-comment">//&#x662F;&#x6216;&#x300C;|&#x300D; &#x4E0D;&#x662F;&#x5F02;&#x6216; &#x300C;^&#x300D;</span>
+        maxx = Math.max(maxx, t);
+        map.put(t, map.getOrDefault(t, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">return</span> map.get(maxx);
+}
+
+
+List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+<span class="hljs-comment">//&#x679A;&#x4E3E;&#x6240;&#x6709;&#x5B50;&#x96C6;</span>
+<span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; subsets(<span class="hljs-keyword">int</span>[] nums) {
+    <span class="hljs-keyword">if</span> (nums == <span class="hljs-keyword">null</span> || nums.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;
+    dfs(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(), nums, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(List&lt;Integer&gt; sub, <span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> idx)</span> </span>{
+    <span class="hljs-keyword">if</span> (idx == nums.length) {
+        res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+        <span class="hljs-keyword">return</span>;
+    }
+    sub.add(nums[idx]);
+    dfs(sub, nums, idx + <span class="hljs-number">1</span>);
+    sub.remove(sub.size() - <span class="hljs-number">1</span>);
+    dfs(sub, nums, idx + <span class="hljs-number">1</span>);
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1031,7 +1068,7 @@ List&lt;String&gt; wordDict;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.2.7","depth":2,"next":{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-14T14:30:45.094Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-14T14:31:15.162Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.2.7","depth":2,"next":{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-15T00:46:06.383Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-15T00:46:17.668Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
