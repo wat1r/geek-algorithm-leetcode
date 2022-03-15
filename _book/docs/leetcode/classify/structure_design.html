@@ -368,7 +368,104 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x7ED3;&#x6784;&#x8BBE;&#x8BA1;">&#x7ED3;&#x6784;&#x8BBE;&#x8BA1;</h1>
-<p>&gt;</p>
+<h2 id="155-&#x6700;&#x5C0F;&#x6808;"><a href="https://leetcode-cn.com/problems/min-stack/" target="_blank">155. &#x6700;&#x5C0F;&#x6808;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x8F85;&#x52A9;&#x6808;&#x6D6A;&#x8D39;&#x7A7A;&#x95F4;">&#x65B9;&#x6CD5;1&#xFF1A;&#x8F85;&#x52A9;&#x6808;[&#x6D6A;&#x8D39;&#x7A7A;&#x95F4;]</h3>
+<ul>
+<li><p>&#x57FA;&#x7840;&#x7248;&#x8F85;&#x52A9;&#x6808;&#xFF0C;&#x51C6;&#x5907;&#x4E00;&#x4E2A;<code>data</code>, &#x6570;&#x636E;&#x6808;&#xFF0C;&#x51C6;&#x5907;&#x4E00;&#x4E2A;<code>help</code> &#x8F85;&#x52A9;&#x6808;</p>
+</li>
+<li><p>&#x5176;&#x4E2D;<code>data</code>&#x7684;&#x5B58;&#x6570;&#x636E;&#x7684;&#xFF0C;<code>help</code>&#x8F85;&#x52A9;&#x6808;&#x7528;&#x6765;&#x5B58;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x5728;<code>push</code>&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;<code>help</code>&#x5982;&#x679C;&#x6808;&#x9876;&#x5143;&#x7D20;&#x5927;&#x4E8E;&#x5F85;<code>push</code>&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x5C06;&#x5F85;<code>push</code>&#x7684;&#x5143;&#x7D20;&#x585E;&#x8FDB;<code>help</code>&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x662F;&#xFF0C;&#x5219;&#x91CD;&#x590D;&#x585E;&#x4E00;&#x6B21;<code>help</code>&#x7684;&#x6808;&#x9876;&#x5143;&#x7D20;&#xFF0C;&#x6CE8;&#x610F;<code>help</code>&#x4E3A;&#x7A7A;&#x7684;&#x65F6;&#x5019;&#x7279;&#x6B8A;&#x5904;&#x7406;&#x4E0B;</p>
+</li>
+</ul>
+<p><img src="../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20210901194728655.png" alt="image-20210901194728655"></p>
+<ul>
+<li>&#x51C6;&#x5907;&#x4E24;&#x4E2A;&#x6808;&#xFF0C;data&#x548C;help&#xFF0C;&#x505A;push&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x4FDD;&#x6301;help&#x6808;&#x9876;&#x7684;&#x5143;&#x7D20;&#x59CB;&#x7EC8;&#x6700;&#x5C0F;&#xFF0C;data&#x7684;&#x6570;&#x636E;&#x6B63;&#x5E38;&#x63A8;&#x5165;&#xFF0C;help&#x6808;&#x9876;&#x7EF4;&#x6301;&#x6700;&#x5C0F;&#xFF0C;&#x5728;&#x6267;&#x884C;getMin&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD4;&#x56DE;help&#x7684;&#x6808;&#x9876;&#x5143;&#x7D20;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MinStack</span> </span>{
+        <span class="hljs-keyword">private</span> Stack&lt;Integer&gt; data;
+        <span class="hljs-keyword">private</span> Stack&lt;Integer&gt; help;
+
+        <span class="hljs-comment">/**
+         * initialize your data structure here.
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MinStack</span><span class="hljs-params">()</span> </span>{
+            data = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+            help = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+            data.push(x);
+            <span class="hljs-keyword">if</span> (help.isEmpty()) help.push(x);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (help.peek() &lt; x) help.push(help.peek());
+            <span class="hljs-keyword">else</span> help.push(x);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pop</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">if</span> (data.isEmpty()) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;stack empty&quot;</span>);
+            data.pop();
+            help.pop();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">top</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">if</span> (data.isEmpty()) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;stack empty&quot;</span>);
+            <span class="hljs-keyword">return</span> data.peek();
+
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getMin</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">if</span> (data.isEmpty()) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;stack empty&quot;</span>);
+            <span class="hljs-keyword">return</span> help.peek();
+        }
+    }
+</code></pre>
+<h4 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x8F85;&#x52A9;&#x6808;&#x4E0D;&#x6D6A;&#x8D39;&#x7A7A;&#x95F4;">&#x65B9;&#x6CD5;2&#xFF1A;&#x8F85;&#x52A9;&#x6808;[&#x4E0D;&#x6D6A;&#x8D39;&#x7A7A;&#x95F4;]</h4>
+<ul>
+<li>&#x5347;&#x7EA7;&#x7248;&#x672C;&#x8F85;&#x52A9;&#x6808;&#xFF0C;&#x5F53;<code>push</code> &#x8FDB;&#x53BB;&#x7684;&#x65F6;&#x5019;&#xFF0C;<ul>
+<li>&#x5F53;<code>help</code>&#x7684;&#x6808;&#x9876;&#x5143;&#x7D20;&#x6BD4;&#x65B0;&#x6765;&#x7684;&#x5143;&#x7D20;&#x5C0F;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x4FDD;&#x6301;<code>help</code>&#x4E0D;&#x53D8;</li>
+<li>&#x5F53;<code>help</code>&#x7684;&#x6808;&#x9876;&#x5143;&#x7D20;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x65B0;&#x6765;&#x7684;&#x5143;&#x7D20;&#x65F6;&#xFF0C;<code>help</code>&#x540C;&#x6B65;&#x8981;&#x63A8;&#x4E00;&#x4EFD;&#x65B0;&#x7684;&#x5143;&#x7D20;&#x8FDB;&#x6765;</li>
+<li>&#x5F53;<code>help</code>&#x5143;&#x7D20;&#x4E3A;&#x7A7A;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E5F;&#x9700;&#x8981;&#x5F80;&#x91CC;&#x63A8;</li>
+</ul>
+</li>
+<li><code>pop</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>pop</code>&#x7684;&#x5143;&#x7D20;&#x662F;&#x5426;&#x548C;<code>help</code> &#x7684;&#x5143;&#x7D20;&#x6709;&#x91CD;&#x53E0;&#xFF0C;&#x6709;&#x5C31;&#x5C06;<code>help</code>&#x7684;&#x5143;&#x7D20;<code>pop</code>&#x51FA;&#x53BB;&#xFF0C;&#x6CA1;&#x6709;&#x5C31;&#x7EF4;&#x6301;&#x4E0D;&#x52A8;&#xFF0C;<code>data</code>&#x6808;&#x6B63;&#x5E38;<code>pop</code></li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MinStack</span> </span>{
+    Stack&lt;Integer&gt; data;
+    Stack&lt;Integer&gt; help;
+
+    <span class="hljs-comment">/**
+     * initialize your data structure here.
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MinStack</span><span class="hljs-params">()</span> </span>{
+        data = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+        help = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        <span class="hljs-keyword">if</span> (help.isEmpty() || help.peek() &gt;= x) {
+            help.push(x);
+        }
+        data.push(x);
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pop</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (data.isEmpty()) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;The stack is empty&quot;</span>);
+        <span class="hljs-keyword">int</span> pop = data.pop();
+        <span class="hljs-keyword">if</span> (pop == help.peek()) {
+            help.pop();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">top</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (data.isEmpty()) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;The stack is empty&quot;</span>);
+        <span class="hljs-keyword">return</span> data.peek();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getMin</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (help.isEmpty()) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;The stack is empty&quot;</span>);
+        <span class="hljs-keyword">return</span> help.peek();
+    }
+}
+</code></pre>
 <h2 id="307-&#x533A;&#x57DF;&#x548C;&#x68C0;&#x7D22;---&#x6570;&#x7EC4;&#x53EF;&#x4FEE;&#x6539;"><a href="https://leetcode-cn.com/problems/range-sum-query-mutable/" target="_blank">307. &#x533A;&#x57DF;&#x548C;&#x68C0;&#x7D22; - &#x6570;&#x7EC4;&#x53EF;&#x4FEE;&#x6539;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x4E8C;&#x5206;">&#x65B9;&#x6CD5;1:&#x4E8C;&#x5206;</h3>
 <pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NumArray</span> </span>{
@@ -488,7 +585,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.5","depth":2,"next":{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-13T23:58:42.739Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-15T02:42:44.168Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.5","depth":2,"next":{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-15T03:00:34.043Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-15T03:02:28.688Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
