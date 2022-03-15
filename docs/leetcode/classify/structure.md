@@ -4,6 +4,58 @@
 
 ## 链表
 
+## [141. 环形链表](https://leetcode-cn.com/problems/linked-list-cycle/)
+
+### 方法1:快慢指针
+
+```java
+    public boolean hasCycle(ListNode head) {
+        if(head == null || head.next ==null) return false;
+        ListNode slow = head ,fast =head.next;
+        while(fast.next!=null && fast.next.next!=null){
+          	//如果已经相等，说明已经相遇
+            if(slow == fast) return true;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
+```
+
+
+
+## [142. 环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/)
+
+### 方法1:双指针
+
+```java
+public ListNode detectCycle(ListNode head) {
+    if (head == null || head.next == null) return null;
+    ListNode slow = head, fast = head.next;
+    //第一次相遇点
+    while (fast.next != null && fast.next.next != null) {
+        if (slow == fast) break;
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    if (slow != fast) return null;
+    //回到起始点
+    ListNode cur = head;
+    //第二次相遇
+    while (cur != slow.next) {
+        cur = cur.next;
+        slow = slow.next;
+    }
+    return cur;
+}
+```
+
+
+
+
+
+
+
 
 
 
