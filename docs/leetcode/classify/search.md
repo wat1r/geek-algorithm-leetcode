@@ -165,6 +165,66 @@ private void dfs(List<Integer> sub, int[] nums, boolean[] vis) {
 
 
 
+## [78. 子集](https://leetcode-cn.com/problems/subsets/)
+
+### 方法1:回溯
+
+```java
+List<List<Integer>> res = new ArrayList<>();
+
+        public List<List<Integer>> subsets(int[] nums) {
+            res.add(new ArrayList<>());
+            dfs(nums, new ArrayList<>(), 0);
+            return res;
+
+        }
+
+
+        private void dfs(int[] nums, List<Integer> sub, int idx) {
+            for (int i = idx; i < nums.length; i++) {
+                sub.add(nums[i]);
+                res.add(new ArrayList<>(sub));
+                dfs(nums, sub, i + 1);
+                sub.remove(sub.size() - 1);
+            }
+        }
+```
+
+
+
+## [90. 子集 II](https://leetcode-cn.com/problems/subsets-ii/)
+
+### 方法1:回溯
+
+```java
+
+        List<List<Integer>> res = new ArrayList<>();
+
+
+        public List<List<Integer>> subsetsWithDup(int[] nums) {
+            if (nums == null || nums.length == 0) return res;
+            Arrays.sort(nums);
+            res.add(new ArrayList<>());
+            dfs(new ArrayList<>(), nums, 0);
+            return res;
+        }
+
+
+        private void dfs(List<Integer> sub, int[] nums, int idx) {
+            for (int i = idx; i < nums.length; i++) {
+                if (i > idx && nums[i - 1] == nums[i]) continue;
+                sub.add(nums[i]);
+                res.add(new ArrayList<>(sub));
+                sub.forEach(System.out::print);
+                System.out.println();
+                dfs(sub, nums, i + 1);
+                sub.remove(sub.size() - 1);
+            }
+        }
+```
+
+
+
 
 
 
