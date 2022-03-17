@@ -6,7 +6,7 @@
 
 ## [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
 
-![](/imgs/leetcode/image-20220317195629005.png)
+![](/imgs/leetcode/classify/image-20220317195629005.png)
 
 > 只要是对的人，就算开始错过了，最终还是会再次相遇在一起的
 
