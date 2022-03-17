@@ -77,6 +77,54 @@ public class _720 {
         }
 
 
+        class TrieNode {
+            public TrieNode[] next = new TrieNode[26];
+            int idx = 0;
+        }
+
+        TrieNode root = new TrieNode();
+        String[] words;
+
+        public void insert(String word, int idx) {
+            TrieNode cur = root;
+            for (char c : word.toCharArray()) {
+                if (cur.next[c - 'a'] == null) cur.next[c - 'a'] = new TrieNode();
+                cur = cur.next[c - 'a'];
+            }
+            cur.idx = idx;
+        }
+
+
+        public String longestWord(String[] words) {
+            if (words == null || words.length == 0) return null;
+            int idx = 0;
+            this.words = words;
+            for (String w : words) insert(w, ++idx);
+            return helper();
+        }
+
+        private String helper() {
+            String res = "";
+            Stack<TrieNode> stk = new Stack<>();
+            stk.push(root);
+            while (!stk.isEmpty()) {
+                TrieNode cur = stk.pop();
+                if (cur.idx > 0 || cur == root) {
+                    if (cur != root) {
+                        String word = words[cur.idx - 1];
+                        if (word.length() > res.length() || (word.length() == res.length() && word.compareTo(res) < 0)) {
+                            res = word;
+                        }
+                    }
+                    for (TrieNode node : cur.next) {
+                        if (node != null) stk.push(node);
+                    }
+                }
+            }
+            return res;
+        }
+
+
     }
 
 
