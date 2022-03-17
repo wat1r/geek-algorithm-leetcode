@@ -6,6 +6,51 @@
 
 
 
+## [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+### 方法1
+
+```java
+//            [1,1,2]  ->[1,2]
+//[0,0,1,1,1,2,2,3,3,4] -> [0,1,2,3,4]
+//[1] -> [1]
+```
+
+```java
+public int removeDuplicates(int[] nums) {
+    if (nums == null || nums.length == 1) return nums.length;
+    int i = 0, j = 1;
+    for (; i < nums.length && j < nums.length; ) {
+        while (j < nums.length && nums[i] == nums[j]) {
+            j++;
+        }
+        i++;
+        if (j < nums.length) nums[i] = nums[j];
+    }
+    return i;
+}
+```
+
+
+
+### 方法2
+
+```java
+public int removeDuplicates(int[] nums) {
+    if (nums == null || nums.length == 0) return 0;
+    int i = 0, j = 1;
+    while (j < nums.length) {
+        if (nums[i] == nums[j]) j++;
+        else {
+            int t = nums[++i];
+            nums[i] = nums[j];
+            nums[j++] = t;
+        }
+    }
+    return i + 1;
+}
+```
+
 
 
 ## [18. 四数之和](https://leetcode-cn.com/problems/4sum/)
