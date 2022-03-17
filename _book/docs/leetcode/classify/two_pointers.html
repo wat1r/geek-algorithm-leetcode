@@ -403,6 +403,37 @@
     <span class="hljs-keyword">return</span> i + <span class="hljs-number">1</span>;
 }
 </code></pre>
+<h2 id="15-&#x4E09;&#x6570;&#x4E4B;&#x548C;"><a href="https://leetcode-cn.com/problems/3sum/" target="_blank">15. &#x4E09;&#x6570;&#x4E4B;&#x548C;</a></h2>
+<pre><code class="lang-java"><span class="hljs-comment">/*
+ *[-1,0,1,2,-1,-4]
+ *[[-1,-1,2],[-1,0,1]]
+ * @param nums
+ * @return
+ */</span>
+<span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; threeSum(<span class="hljs-keyword">int</span>[] nums) {
+    List&lt;List&lt;Integer&gt;&gt; results = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">if</span> (nums == <span class="hljs-keyword">null</span> || nums.length &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> results;
+    Arrays.sort(nums);
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (nums[i] &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; nums[i] == nums[i - <span class="hljs-number">1</span>]) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-keyword">int</span> l = i + <span class="hljs-number">1</span>, r = n - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (l &lt; r) {
+            <span class="hljs-keyword">int</span> sum = nums[i] + nums[l] + nums[r];
+            <span class="hljs-keyword">if</span> (sum == <span class="hljs-number">0</span>) {
+                results.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                <span class="hljs-keyword">while</span> (l &lt; r &amp;&amp; nums[l + <span class="hljs-number">1</span>] == nums[l]) l++;
+                <span class="hljs-keyword">while</span> (l &lt; r &amp;&amp; nums[r - <span class="hljs-number">1</span>] == nums[r]) r--;
+                l++;
+                r--;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sum &lt; <span class="hljs-number">0</span>) l++;
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sum &gt; <span class="hljs-number">0</span>) r--;
+        }
+    }
+    <span class="hljs-keyword">return</span> results;
+}
+</code></pre>
 <h2 id="18-&#x56DB;&#x6570;&#x4E4B;&#x548C;"><a href="https://leetcode-cn.com/problems/4sum/" target="_blank">18. &#x56DB;&#x6570;&#x4E4B;&#x548C;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; fourSum(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target) {
     List&lt;List&lt;Integer&gt;&gt; results = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
@@ -544,7 +575,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"双指针","level":"1.2.6","depth":2,"next":{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"previous":{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/two_pointers.md","mtime":"2022-03-17T13:58:05.966Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-17T14:14:13.736Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"双指针","level":"1.2.6","depth":2,"next":{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"previous":{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/two_pointers.md","mtime":"2022-03-17T14:19:42.473Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-17T14:19:53.967Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

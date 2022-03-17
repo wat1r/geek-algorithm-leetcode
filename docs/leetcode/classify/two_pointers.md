@@ -53,6 +53,42 @@ public int removeDuplicates(int[] nums) {
 
 
 
+## [15. 三数之和](https://leetcode-cn.com/problems/3sum/)
+
+```java
+/*
+ *[-1,0,1,2,-1,-4]
+ *[[-1,-1,2],[-1,0,1]]
+ * @param nums
+ * @return
+ */
+public List<List<Integer>> threeSum(int[] nums) {
+    List<List<Integer>> results = new ArrayList<>();
+    if (nums == null || nums.length < 3) return results;
+    Arrays.sort(nums);
+    int n = nums.length;
+    for (int i = 0; i < n; i++) {
+        if (nums[i] > 0) break;
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        int l = i + 1, r = n - 1;
+        while (l < r) {
+            int sum = nums[i] + nums[l] + nums[r];
+            if (sum == 0) {
+                results.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                while (l < r && nums[l + 1] == nums[l]) l++;
+                while (l < r && nums[r - 1] == nums[r]) r--;
+                l++;
+                r--;
+            } else if (sum < 0) l++;
+            else if (sum > 0) r--;
+        }
+    }
+    return results;
+}
+```
+
+
+
 ## [18. 四数之和](https://leetcode-cn.com/problems/4sum/)
 
 ```java
