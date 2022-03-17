@@ -443,6 +443,33 @@
     <span class="hljs-keyword">return</span> nums[r];
 }
 </code></pre>
+<h2 id="162-&#x5BFB;&#x627E;&#x5CF0;&#x503C;"><a href="https://leetcode-cn.com/problems/find-peak-element/" target="_blank">162. &#x5BFB;&#x627E;&#x5CF0;&#x503C;</a></h2>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findPeakElement</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+        <span class="hljs-keyword">int</span> n = nums.length , l = <span class="hljs-number">0</span>, r= n-<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span>(l&lt;r){
+            <span class="hljs-keyword">int</span> mid = l +(r-l)/<span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span>(nums[mid]&lt;nums[mid+<span class="hljs-number">1</span>]){
+                l= mid+<span class="hljs-number">1</span>;
+            }<span class="hljs-keyword">else</span>{
+                r= mid;
+            }
+        }
+        <span class="hljs-keyword">return</span> l; 
+    }
+</code></pre>
+<h2 id="704-&#x4E8C;&#x5206;&#x67E5;&#x627E;"><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank">704. &#x4E8C;&#x5206;&#x67E5;&#x627E;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.length, l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">while</span> (l &lt; r) {
+        <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">int</span> t = nums[mid];
+        <span class="hljs-keyword">if</span> (t == target) <span class="hljs-keyword">return</span> mid;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (t &gt; target) r = mid - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span> l = mid + <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> nums[l] == target ? l : -<span class="hljs-number">1</span>;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -486,7 +513,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.4","depth":2,"next":{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-03-13T23:58:42.738Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-17T12:07:32.739Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.4","depth":2,"next":{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-03-17T13:34:26.122Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-17T13:34:51.392Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
