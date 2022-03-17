@@ -45,6 +45,15 @@ public class _160 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            ListNode lA = headA, lB = headB;
+            while (lA != lB) {
+                lA = (lA == null) ? headB : lA.next;
+                lB = (lB == null) ? headA : lB.next;
+            }
+            return lA;
+        }
     }
 
     static class _4th {

@@ -4,7 +4,22 @@
 
 ## 链表
 
+## [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
 
+![](/imgs/leetcode/image-20220317195629005.png)
+
+> 只要是对的人，就算开始错过了，最终还是会再次相遇在一起的
+
+```java
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    ListNode lA = headA, lB = headB;
+    while (lA != lB) {
+        lA = (lA == null) ? headB : lA.next;
+        lB = (lB == null) ? headA : lB.next;
+    }
+    return lA;
+}
+```
 
 
 

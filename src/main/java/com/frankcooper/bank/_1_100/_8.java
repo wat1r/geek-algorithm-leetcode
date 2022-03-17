@@ -48,7 +48,7 @@ public class _8 {
             Assert.assertEquals(-42, handler.myAtoi("    -42"));
             Assert.assertEquals(2147483647, handler.myAtoi("2147483649"));
             Assert.assertEquals(-2147483648, handler.myAtoi("   -2147483649  "));
-
+            Assert.assertEquals(0, handler.myAtoi("+-42"));
         }
 
 

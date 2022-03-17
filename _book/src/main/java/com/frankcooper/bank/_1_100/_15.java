@@ -1,5 +1,7 @@
 package com.frankcooper.bank._1_100;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +17,10 @@ public class _15 {
     public static void main(String[] args) {
         handler.threeSum(new int[]{1, 0, 1, 2, -1, -4});
 
-
+        //[-1,0,1,2,-1,-4]
+        //[[-1,-1,2],[-1,0,1]]
+//
+//        Assert.e
         System.out.println("dnd");
 
     }
@@ -28,7 +33,8 @@ public class _15 {
         int n = nums.length;
         for (int i = 0; i < n; i++) {
             if (nums[i] > 0) break;
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] == nums[i + 1]) continue;
+//            if (i > 0 && nums[i] == nums[i - 1]) continue;
             int l = i + 1, r = n - 1;
             while (l < r) {
                 int sum = nums[i] + nums[l] + nums[r];
