@@ -379,3 +379,49 @@ class NumArray {
 
 ### 方法2:线段树
 
+
+
+
+
+
+
+## [2043. 简易银行系统](https://leetcode-cn.com/problems/simple-bank-system/)
+
+### 方法1:模拟
+
+```java
+class Bank {
+
+    long[] balance;
+    int capacity;
+
+    public Bank(long[] balance) {
+        this.balance = new long[balance.length + 1];
+        this.capacity = balance.length + 1;
+        for (int i = 0; i < balance.length; i++) {
+            this.balance[i + 1] = balance[i];
+        }
+    }
+
+    public boolean transfer(int account1, int account2, long money) {
+        if (account1 > capacity || account2 > capacity) return false;
+        if (this.balance[account1] < money) return false;
+        this.balance[account1] -= money;
+        this.balance[account2] += money;
+        return true;
+    }
+
+    public boolean deposit(int account, long money) {
+        if (account > capacity) return false;
+        this.balance[account] += money;
+        return true;
+    }
+
+    public boolean withdraw(int account, long money) {
+        if (account > capacity) return false;
+        if (this.balance[account] < money) return false;
+        this.balance[account] -= money;
+        return true;
+    }
+}
+```
