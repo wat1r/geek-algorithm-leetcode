@@ -134,6 +134,35 @@ public ListNode detectCycle(ListNode head) {
 
 ## 树
 
+
+
+## [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
+
+![image-20220318201515791](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220318201515791.png)
+
+```java
+        TreeNode prev = null;
+
+        public boolean isValidBST(TreeNode root) {
+            if (root == null) return true;
+            if (!isValidBST(root.left)) {
+                return false;
+            }
+            if (prev != null && prev.val >= root.val) return false;
+            prev = root;
+            if (!isValidBST(root.right)) {
+                return false;
+            }
+            return true;
+        }
+```
+
+
+
+
+
+
+
 ## [111. 二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/)
 
 ```java

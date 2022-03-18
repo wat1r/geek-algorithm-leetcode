@@ -1,5 +1,6 @@
 package com.frankcooper.bank._1_100;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
 public class _98 {
@@ -41,6 +42,16 @@ public class _98 {
 
     //中序遍历记录前一个节点的值，比较前一个节点和当前节点
     static class _2nd {
+
+
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            TreeNode root = TreeNodeIOUtils.transform("[5,1,4,null,null,3,6]");
+            handler.isValidBST(root);
+
+        }
+
+
         TreeNode prev = null;
 
         public boolean isValidBST(TreeNode root) {
@@ -76,4 +87,6 @@ public class _98 {
 
         }
     }
+
+
 }
