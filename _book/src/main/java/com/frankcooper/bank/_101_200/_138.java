@@ -84,6 +84,36 @@ public class _138 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+
+        public Node copyRandomList(Node head) {
+            Node cur = head;
+            while (cur != null) {
+                Node mirror = new Node(cur.val);
+                mirror.next = cur.next;
+                cur.next = mirror;
+                cur = cur.next.next;
+            }
+            cur = head;
+            while (cur != null) {
+                if (cur.random != null) {
+                    cur.next.random = cur.random.next;
+                }
+                cur = cur.next.next;
+            }
+            Node dummy = new Node(-1);
+            Node p = dummy;
+            cur = head;
+            while (cur != null) {
+                Node mirror = cur.next;
+                p.next = mirror;
+                p = p.next;
+                cur.next = mirror.next;
+                cur = cur.next;
+            }
+            return dummy.next;
+
+        }
     }
 
     static class _4th {

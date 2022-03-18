@@ -47,6 +47,11 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 ### 方法2：记忆化递归
 
+- 1.从`head`节点开始`dfs`遍历整个链表
+- 2.创建一个和当前节点`cur`相同的节点`mirror`，并建立映射
+- 3.递归调用当前节点`cur`的`next`节点和`random`节点，进行复制，让`mirror`节点的`next`和`random`指针分别指向这个复制的节点
+- 4.返回复制的`mirror`节点
+
 ```java
         Map<Node, Node> map = new HashMap<>();
 
@@ -72,7 +77,48 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 
 
+### 方法3:连接-恢复
 
+![](/imgs/leetcode/classify/image-20220318215940345.png)
+
+![](/imgs/leetcode/classify/image-20220318215955302.png)
+
+
+
+- 1.遍历整个链表，复制当前节点`cur`的节点`mirror`，将二者连接起来
+- 2.遍历整个链表，处理`random`指针
+- 3.定义一哑结点，然后让原来的`cur`节点指向的`mirror`节点断开，恢复到原来的状态
+
+```java
+public Node copyRandomList(Node head) {
+    Node cur = head;
+    while (cur != null) {
+        Node mirror = new Node(cur.val);
+        mirror.next = cur.next;
+        cur.next = mirror;
+        cur = cur.next.next;
+    }
+    cur = head;
+    while (cur != null) {
+        if (cur.random != null) {
+            cur.next.random = cur.random.next;
+        }
+        cur = cur.next.next;
+    }
+    Node dummy = new Node(-1);
+    Node p = dummy;
+    cur = head;
+    while (cur != null) {
+        Node mirror = cur.next;
+        p.next = mirror;
+        p = p.next;
+        cur.next = mirror.next;
+        cur = cur.next;
+    }
+    return dummy.next;
+
+}
+```
 
 
 
