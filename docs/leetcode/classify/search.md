@@ -93,6 +93,35 @@ private void dfs(int[] nums, int idx, int t, List<Integer> sub) {
 }
 ```
 
+### 方法2:回溯（累加）
+
+```java
+List<List<Integer>> res = new ArrayList<>();
+int t;
+
+public List<List<Integer>> combinationSum2(int[] nums, int t) {
+    Arrays.sort(nums);//sort
+    this.t = t;
+    dfs(nums, 0, 0, new ArrayList<>());
+    return res;
+}
+
+private void dfs(int[] nums, int idx, int sum, List<Integer> sub) {
+    if (sum > t) return;
+    if (sum == t) {
+        res.add(new ArrayList<>(sub));
+        return;
+    }
+
+    for (int i = idx; i < nums.length; i++) {
+        if (i > idx && nums[i - 1] == nums[i]) continue;//skip duplicate candidate
+        sub.add(nums[i]);
+        dfs(nums, i + 1, sum + nums[i], sub);
+        sub.remove(sub.size() - 1);
+    }
+}
+```
+
 
 
 ## [46. 全排列](https://leetcode-cn.com/problems/permutations/)
