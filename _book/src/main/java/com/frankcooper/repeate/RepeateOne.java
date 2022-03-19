@@ -468,6 +468,34 @@ public class RepeateOne {
 
     }
 
+    static class _1st_8 {
+
+        public static void main(String[] args) {
+            _1st_8 handler = new _1st_8();
+            TreeNode root = TreeNodeIOUtils.transform("[1,2,3,4]");
+            System.out.println(handler.preorderTraversal(root));
+        }
+
+        public String preorderTraversal(TreeNode root) {
+            StringBuilder res = new StringBuilder();
+            Stack<TreeNode> stk = new Stack<>();
+            TreeNode cur = root;
+            while (cur != null || !stk.isEmpty()) {
+                if (cur != null) {
+                    if (cur != root) res.append("(");
+                    res.append(cur.val);
+                    stk.push(cur);
+                    cur = cur.left;
+                } else {
+                    TreeNode tmp = stk.pop();
+                    cur = tmp.right;
+                    if (cur != root) res.append(")");
+
+                }
+            }
+            return res.toString();
+        }
+    }
 
 
 }

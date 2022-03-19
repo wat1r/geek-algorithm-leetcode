@@ -697,6 +697,66 @@
             res.add(root.val);
         }
 </code></pre>
+<h2 id="606-&#x6839;&#x636E;&#x4E8C;&#x53C9;&#x6811;&#x521B;&#x5EFA;&#x5B57;&#x7B26;&#x4E32;"><a href="https://leetcode-cn.com/problems/construct-string-from-binary-tree/" target="_blank">606. &#x6839;&#x636E;&#x4E8C;&#x53C9;&#x6811;&#x521B;&#x5EFA;&#x5B57;&#x7B26;&#x4E32;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;-&#x6807;&#x8BC6;&#x8282;&#x70B9;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;-&#x6807;&#x8BC6;&#x8282;&#x70B9;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">tree2str</span><span class="hljs-params">(TreeNode t)</span> </span>{
+    <span class="hljs-comment">//&#x6807;&#x8BC6;&#x8282;&#x70B9;</span>
+    TreeNode end = <span class="hljs-keyword">new</span> TreeNode(-<span class="hljs-number">1</span>);
+    StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+    Deque&lt;TreeNode&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    stk.push(t);
+    <span class="hljs-keyword">while</span> (!stk.isEmpty()) {
+        TreeNode node = stk.pop();
+        <span class="hljs-keyword">if</span> (node == end) {<span class="hljs-comment">//&#x5F53;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x662F;&#x6807;&#x8BC6;&#x8282;&#x70B9;&#xFF0C;&#x5F00;&#x59CB;&#x6DFB;&#x52A0;&#x53F3;&#x62EC;&#x53F7;</span>
+            sb.append(<span class="hljs-string">&apos;)&apos;</span>);
+            <span class="hljs-keyword">continue</span>;
+        }
+        sb.append(<span class="hljs-string">&apos;(&apos;</span>).append(node.val);
+        stk.push(end);
+        <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x7684;&#x5DE6;&#x8282;&#x70B9;&#x7A7A;&#xFF0C;&#x53F3;&#x8282;&#x70B9;&#x975E;&#x7A7A;&#xFF0C;&#x5DE6;&#x8282;&#x70B9;&#x52A0;&quot;()&quot;</span>
+        <span class="hljs-keyword">if</span> (node.left == <span class="hljs-keyword">null</span> &amp;&amp; node.right != <span class="hljs-keyword">null</span>) sb.append(<span class="hljs-string">&quot;()&quot;</span>);
+        <span class="hljs-comment">//&#x5DE6;&#x8282;&#x70B9;&#x5148;&#x51FA;&#x6808;&#xFF0C;&#x5165;&#x7684;&#x65F6;&#x5019;&#x5148;&#x5165;&#x53F3;&#x8282;&#x70B9;&#xFF0C;&#x540E;&#x5165;&#x5DE6;&#x8282;&#x70B9;</span>
+        <span class="hljs-keyword">if</span> (node.right != <span class="hljs-keyword">null</span>) stk.push(node.right);
+        <span class="hljs-keyword">if</span> (node.left != <span class="hljs-keyword">null</span>) stk.push(node.left);
+    }
+    <span class="hljs-comment">//&#x53BB;&#x6389;&#x9996;&#x4F4D;</span>
+    <span class="hljs-keyword">return</span> sb.substring(<span class="hljs-number">1</span>, sb.length() - <span class="hljs-number">1</span>);
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x8FED;&#x4EE3;-set">&#x65B9;&#x6CD5;2:&#x8FED;&#x4EE3;-Set</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">tree2str</span><span class="hljs-params">(TreeNode t)</span> </span>{
+            StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+            Deque&lt;TreeNode&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            stk.push(t);
+            <span class="hljs-comment">//&#x4F7F;&#x7528;set&#x6765;&#x6807;&#x8BC6;&#x662F;&#x5426;&#x8BBF;&#x95EE;&#x8FC7;&#xFF0C;&#x63A7;&#x5236;&quot;)&quot;&#x8FB9;&#x754C;</span>
+            Set&lt;TreeNode&gt; vis = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+            <span class="hljs-keyword">while</span> (!stk.isEmpty()) {
+                TreeNode node = stk.pop();
+                <span class="hljs-keyword">if</span> (vis.contains(node)) {
+                    sb.append(<span class="hljs-string">&apos;)&apos;</span>);
+                    <span class="hljs-keyword">continue</span>;
+                }
+                sb.append(<span class="hljs-string">&apos;(&apos;</span>).append(node.val);
+                stk.push(node);
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x7684;&#x5DE6;&#x8282;&#x70B9;&#x7A7A;&#xFF0C;&#x53F3;&#x8282;&#x70B9;&#x975E;&#x7A7A;&#xFF0C;&#x5DE6;&#x8282;&#x70B9;&#x52A0;&quot;()&quot;</span>
+                <span class="hljs-keyword">if</span> (node.left == <span class="hljs-keyword">null</span> &amp;&amp; node.right != <span class="hljs-keyword">null</span>) sb.append(<span class="hljs-string">&quot;()&quot;</span>);
+                <span class="hljs-comment">//&#x5DE6;&#x8282;&#x70B9;&#x5148;&#x51FA;&#x6808;&#xFF0C;&#x5165;&#x7684;&#x65F6;&#x5019;&#x5148;&#x5165;&#x53F3;&#x8282;&#x70B9;&#xFF0C;&#x540E;&#x5165;&#x5DE6;&#x8282;&#x70B9;</span>
+                <span class="hljs-keyword">if</span> (node.right != <span class="hljs-keyword">null</span>) stk.push(node.right);
+                <span class="hljs-keyword">if</span> (node.left != <span class="hljs-keyword">null</span>) stk.push(node.left);
+                vis.add(node);
+            }
+            <span class="hljs-comment">//&#x53BB;&#x6389;&#x9996;&#x4F4D;</span>
+            <span class="hljs-keyword">return</span> sb.substring(<span class="hljs-number">1</span>, sb.length() - <span class="hljs-number">1</span>);
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#x9012;&#x5F52;">&#x65B9;&#x6CD5;3:&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">tree2str</span><span class="hljs-params">(TreeNode t)</span> </span>{
+            <span class="hljs-keyword">if</span> (t == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x4E3A;&#x7A7A;&#xFF0C;&#x8FD4;&#x56DE;&quot;&quot;</span>
+            <span class="hljs-keyword">if</span> (t.left == <span class="hljs-keyword">null</span> &amp;&amp; t.right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> t.val + <span class="hljs-string">&quot;&quot;</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x6CA1;&#x6709;&#x5DE6;&#x53F3;&#x5B69;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5373;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A;&#x503C;</span>
+            <span class="hljs-keyword">if</span> (t.right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> t.val + <span class="hljs-string">&quot;(&quot;</span> + tree2str(t.left) + <span class="hljs-string">&quot;)&quot;</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x53EA;&#x6709;&#x5DE6;&#x5B69;&#x5B50;&#xFF0C;&#x6CA1;&#x6709;&#x53F3;&#x5B69;&#x5B50;&#xFF0C;&#x7ED9;&#x5DE6;&#x5B69;&#x5B50;&#x52A0;&#x4E0A;&quot;()&quot;,&#x53F3;&#x5B69;&#x5B50;&#x4E0D;&#x52A0;</span>
+            <span class="hljs-keyword">return</span> t.val + <span class="hljs-string">&quot;(&quot;</span> + tree2str(t.left) + <span class="hljs-string">&quot;)&quot;</span> + <span class="hljs-string">&quot;(&quot;</span> + tree2str(t.right) + <span class="hljs-string">&quot;)&quot;</span>;<span class="hljs-comment">//&#x5DE6;&#x5B69;&#x5B50;&#x6709;&#x6216;&#x8005;&#x6CA1;&#x6709;&#x90FD;&#x52A0; &quot;()&quot; || &quot;(leftChild)&quot;</span>
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -736,7 +796,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.1","depth":2,"next":{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"LeetCode","level":"1.2","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"位运算","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.2.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-19T11:36:32.133Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-19T11:36:42.425Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.1","depth":2,"next":{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"LeetCode","level":"1.2","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"位运算","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.2.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-19T12:30:59.817Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-19T13:49:54.884Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

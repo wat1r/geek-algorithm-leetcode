@@ -430,5 +430,77 @@ public List<Integer> postorderTraversal(TreeNode root) {
 
 
 
+## [606. 根据二叉树创建字符串](https://leetcode-cn.com/problems/construct-string-from-binary-tree/)
+
+### 方法1:迭代-标识节点
+
+```java
+public String tree2str(TreeNode t) {
+    //标识节点
+    TreeNode end = new TreeNode(-1);
+    StringBuilder sb = new StringBuilder();
+    Deque<TreeNode> stk = new ArrayDeque<>();
+    stk.push(t);
+    while (!stk.isEmpty()) {
+        TreeNode node = stk.pop();
+        if (node == end) {//当当前节点是标识节点，开始添加右括号
+            sb.append(')');
+            continue;
+        }
+        sb.append('(').append(node.val);
+        stk.push(end);
+        //当前节点的的左节点空，右节点非空，左节点加"()"
+        if (node.left == null && node.right != null) sb.append("()");
+        //左节点先出栈，入的时候先入右节点，后入左节点
+        if (node.right != null) stk.push(node.right);
+        if (node.left != null) stk.push(node.left);
+    }
+    //去掉首位
+    return sb.substring(1, sb.length() - 1);
+}
+```
+
+### 方法2:迭代-Set
+
+```java
+        public String tree2str(TreeNode t) {
+            StringBuilder sb = new StringBuilder();
+            Deque<TreeNode> stk = new ArrayDeque<>();
+            stk.push(t);
+            //使用set来标识是否访问过，控制")"边界
+            Set<TreeNode> vis = new HashSet<>();
+            while (!stk.isEmpty()) {
+                TreeNode node = stk.pop();
+                if (vis.contains(node)) {
+                    sb.append(')');
+                    continue;
+                }
+                sb.append('(').append(node.val);
+                stk.push(node);
+                //当前节点的的左节点空，右节点非空，左节点加"()"
+                if (node.left == null && node.right != null) sb.append("()");
+                //左节点先出栈，入的时候先入右节点，后入左节点
+                if (node.right != null) stk.push(node.right);
+                if (node.left != null) stk.push(node.left);
+                vis.add(node);
+            }
+            //去掉首位
+            return sb.substring(1, sb.length() - 1);
+        }
+```
+
+### 方法3:递归
+
+```java
+        public String tree2str(TreeNode t) {
+            if (t == null) return "";//当前节点为空，返回""
+            if (t.left == null && t.right == null) return t.val + "";//当前节点没有左右孩子节点，即叶子节点，返回这个值
+            if (t.right == null) return t.val + "(" + tree2str(t.left) + ")";//当前节点只有左孩子，没有右孩子，给左孩子加上"()",右孩子不加
+            return t.val + "(" + tree2str(t.left) + ")" + "(" + tree2str(t.right) + ")";//左孩子有或者没有都加 "()" || "(leftChild)"
+        }
+```
+
+
+
 
 
