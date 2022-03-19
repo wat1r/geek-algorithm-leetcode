@@ -3,7 +3,9 @@ package com.frankcooper.bank._101_200;
 import com.frankcooper.struct.TreeNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by FrankCooper
@@ -101,6 +103,27 @@ public class _144 {
             if (root != null) res.add(root.val);
             if (root.left != null) dfs(root.left);
             if (root.right != null) dfs(root.right);
+        }
+    }
+
+
+    static class _3rd {
+        List<Integer> res = new ArrayList<>();
+
+        public List<Integer> preorderTraversal(TreeNode root) {
+            Stack<TreeNode> stk = new Stack<>();
+            TreeNode cur = root;
+            while (cur != null || !stk.isEmpty()) {
+                if (cur != null) {
+                    res.add(cur.val);
+                    stk.push(cur);
+                    cur = cur.left;
+                } else {
+                    TreeNode tmp = stk.pop();
+                    cur = tmp.right;
+                }
+            }
+            return res;
         }
     }
 

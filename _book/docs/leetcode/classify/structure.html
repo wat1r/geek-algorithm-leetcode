@@ -404,7 +404,7 @@
 <li>1.&#x4ECE;<code>head</code>&#x8282;&#x70B9;&#x5F00;&#x59CB;<code>dfs</code>&#x904D;&#x5386;&#x6574;&#x4E2A;&#x94FE;&#x8868;</li>
 <li>2.&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x548C;&#x5F53;&#x524D;&#x8282;&#x70B9;<code>cur</code>&#x76F8;&#x540C;&#x7684;&#x8282;&#x70B9;<code>mirror</code>&#xFF0C;&#x5E76;&#x5EFA;&#x7ACB;&#x6620;&#x5C04;</li>
 <li>3.&#x9012;&#x5F52;&#x8C03;&#x7528;&#x5F53;&#x524D;&#x8282;&#x70B9;<code>cur</code>&#x7684;<code>next</code>&#x8282;&#x70B9;&#x548C;<code>random</code>&#x8282;&#x70B9;&#xFF0C;&#x8FDB;&#x884C;&#x590D;&#x5236;&#xFF0C;&#x8BA9;<code>mirror</code>&#x8282;&#x70B9;&#x7684;<code>next</code>&#x548C;<code>random</code>&#x6307;&#x9488;&#x5206;&#x522B;&#x6307;&#x5411;&#x8FD9;&#x4E2A;&#x590D;&#x5236;&#x7684;&#x8282;&#x70B9;</li>
-<li>4.&#x8FD4;&#x56DE;&#x590D;&#x5236;&#x7684;<code>mirror</code>&#x8282;&#x70B9;</li>
+<li>4&#x8FD4;&#x56DE;&#x590D;&#x5236;&#x7684;<code>mirror</code>&#x8282;&#x70B9;</li>
 </ul>
 <pre><code class="lang-java">        Map&lt;Node, Node&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
 
@@ -431,7 +431,6 @@
 <p><img src="../../../imgs/leetcode/classify/image-20220318215940345.png" alt=""></p>
 <p><img src="../../../imgs/leetcode/classify/image-20220318215955302.png" alt=""></p>
 <ul>
-<li>1.&#x904D;&#x5386;&#x6574;&#x4E2A;&#x94FE;&#x8868;&#xFF0C;&#x590D;&#x5236;&#x5F53;&#x524D;&#x8282;&#x70B9;<code>cur</code>&#x7684;&#x8282;&#x70B9;<code>mirror</code>&#xFF0C;&#x5C06;&#x4E8C;&#x8005;&#x8FDE;&#x63A5;&#x8D77;&#x6765;</li>
 <li>2.&#x904D;&#x5386;&#x6574;&#x4E2A;&#x94FE;&#x8868;&#xFF0C;&#x5904;&#x7406;<code>random</code>&#x6307;&#x9488;</li>
 <li>3.&#x5B9A;&#x4E49;&#x4E00;&#x54D1;&#x7ED3;&#x70B9;&#xFF0C;&#x7136;&#x540E;&#x8BA9;&#x539F;&#x6765;&#x7684;<code>cur</code>&#x8282;&#x70B9;&#x6307;&#x5411;&#x7684;<code>mirror</code>&#x8282;&#x70B9;&#x65AD;&#x5F00;&#xFF0C;&#x6062;&#x590D;&#x5230;&#x539F;&#x6765;&#x7684;&#x72B6;&#x6001;</li>
 </ul>
@@ -566,6 +565,82 @@
             <span class="hljs-keyword">return</span> res + <span class="hljs-number">1</span>;
         }
 </code></pre>
+<h2 id="144-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/" target="_blank">144. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;</h3>
+<ul>
+<li>1.&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;<code>cur</code>&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x5176;&#x5165;&#x6808;</li>
+<li>2.&#x5BF9;<code>cur</code>&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x5B50;&#x6811;&#x91CD;&#x590D;&#x6B65;&#x9AA4;1&#xFF0C;&#x76F4;&#x5230;&#x5DE6;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;</li>
+<li>3.&#x5F39;&#x51FA;&#x6808;&#x5185;&#x4FDD;&#x5B58;&#x5230;&#x5DE6;&#x5B50;&#x6811;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5F00;&#x59CB;&#x904D;&#x5386;&#x53F3;&#x5B50;&#x6811;&#xFF0C;&#x91CD;&#x590D;&#x6B65;&#x9AA4;1</li>
+<li>4.&#x904D;&#x5386;&#x5B8C;&#x6574;&#x4E2A;&#x4E8C;&#x53C9;&#x6811;&#xFF0C;&#x7ED3;&#x675F;</li>
+</ul>
+<pre><code class="lang-java">List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    Stack&lt;TreeNode&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    TreeNode cur = root;
+    <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span> || !stk.isEmpty()) {
+        <span class="hljs-keyword">if</span> (cur != <span class="hljs-keyword">null</span>) {
+            res.add(cur.val);
+            stk.push(cur);
+            cur = cur.left;
+        } <span class="hljs-keyword">else</span> {
+            TreeNode tmp = stk.pop();
+            cur = tmp.right;
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="145-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x540E;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/" target="_blank">145. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x540E;&#x5E8F;&#x904D;&#x5386;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;&#x6CD5;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;&#x6CD5;</h3>
+<ul>
+<li><p>&#x524D;&#x5E8F;&#x904D;&#x5386;&#x548C;&#x540E;&#x5E8F;&#x904D;&#x5386;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#xFF1A;</p>
+<ul>
+<li><p>&#x524D;&#x5E8F;&#x904D;&#x5386;&#x987A;&#x5E8F;&#x4E3A;&#xFF1A;&#x6839; -&gt; &#x5DE6; -&gt; &#x53F3;</p>
+</li>
+<li><p>&#x540E;&#x5E8F;&#x904D;&#x5386;&#x987A;&#x5E8F;&#x4E3A;&#xFF1A;&#x5DE6; -&gt; &#x53F3; -&gt; &#x6839;</p>
+</li>
+</ul>
+</li>
+<li><p>&#x5982;&#x679C;1&#xFF1A; &#x6211;&#x4EEC;&#x5C06;&#x524D;&#x5E8F;&#x904D;&#x5386;&#x4E2D;&#x8282;&#x70B9;&#x63D2;&#x5165;&#x7ED3;&#x679C;&#x94FE;&#x8868;&#x5C3E;&#x90E8;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x4FEE;&#x6539;&#x4E3A;&#x5C06;&#x8282;&#x70B9;&#x63D2;&#x5165;&#x7ED3;&#x679C;&#x94FE;&#x8868;&#x7684;&#x5934;&#x90E8;</p>
+<ul>
+<li>&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x94FE;&#x8868;&#x5C31;&#x53D8;&#x4E3A;&#x4E86;&#xFF1A;&#x53F3; -&gt; &#x5DE6; -&gt; &#x6839;</li>
+</ul>
+</li>
+<li><p>&#x5982;&#x679C;2&#xFF1A; &#x6211;&#x4EEC;&#x5C06;&#x904D;&#x5386;&#x7684;&#x987A;&#x5E8F;&#x7531;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x4FEE;&#x6539;&#x4E3A;&#x4ECE;&#x53F3;&#x5230;&#x5DE6;&#xFF0C;&#x914D;&#x5408;&#x5982;&#x679C;1</p>
+<ul>
+<li>&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x94FE;&#x8868;&#x5C31;&#x53D8;&#x4E3A;&#x4E86;&#xFF1A;&#x5DE6; -&gt; &#x53F3; -&gt; &#x6839;</li>
+</ul>
+</li>
+<li><p>&#x8FD9;&#x521A;&#x597D;&#x662F;&#x540E;&#x5E8F;&#x904D;&#x5386;&#x7684;&#x987A;&#x5E8F;</p>
+</li>
+<li><p>&#x57FA;&#x4E8E;&#x8FD9;&#x4E24;&#x4E2A;&#x601D;&#x8DEF;&#xFF0C;&#x6211;&#x4EEC;&#x60F3;&#x4E00;&#x4E0B;&#x5982;&#x4F55;&#x5904;&#x7406;&#xFF1A;</p>
+<ul>
+<li><p>&#x4FEE;&#x6539;&#x524D;&#x5E8F;&#x904D;&#x5386;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x8282;&#x70B9;&#x5199;&#x5165;&#x7ED3;&#x679C;&#x94FE;&#x8868;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5C06;&#x63D2;&#x5165;&#x961F;&#x5C3E;&#x4FEE;&#x6539;&#x4E3A;&#x63D2;&#x5165;&#x961F;&#x9996;</p>
+</li>
+<li><p>&#x4FEE;&#x6539;&#x524D;&#x5E8F;&#x904D;&#x5386;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x6BCF;&#x6B21;&#x5148;&#x67E5;&#x770B;&#x5DE6;&#x8282;&#x70B9;&#x518D;&#x67E5;&#x770B;&#x53F3;&#x8282;&#x70B9;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x53D8;&#x4E3A;&#x5148;&#x67E5;&#x770B;&#x53F3;&#x8282;&#x70B9;&#x518D;&#x67E5;&#x770B;&#x5DE6;&#x8282;&#x70B9;</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>&#x94FE;&#x63A5;&#x6765;&#x81EA;&#xFF1A;<a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/solution/die-dai-jie-fa-shi-jian-fu-za-du-onkong-jian-fu-za/" target="_blank">&#x8FD9;&#x91CC;</a></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">postorderTraversal</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    Stack&lt;TreeNode&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    TreeNode cur = root;
+    <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span> || !stk.isEmpty()) {
+        <span class="hljs-keyword">if</span> (cur != <span class="hljs-keyword">null</span>) {
+            res.add(<span class="hljs-number">0</span>, cur.val);
+            stk.push(cur);
+            cur = cur.right;
+        } <span class="hljs-keyword">else</span> {
+            TreeNode tmp = stk.pop();
+            cur = tmp.left;
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
 <h2 id="589-n-&#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/" target="_blank">589. N &#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;</a></h2>
 <pre><code class="lang-java">    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
     <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">preorder</span><span class="hljs-params">(Node root)</span> </span>{
@@ -642,7 +717,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.1","depth":2,"next":{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"LeetCode","level":"1.2","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"位运算","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.2.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-18T14:05:21.756Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-18T14:05:43.315Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.1","depth":2,"next":{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"LeetCode","level":"1.2","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"位运算","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.2.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-19T11:27:10.998Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-19T11:29:39.168Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

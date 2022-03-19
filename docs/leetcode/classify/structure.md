@@ -50,7 +50,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 - 1.从`head`节点开始`dfs`遍历整个链表
 - 2.创建一个和当前节点`cur`相同的节点`mirror`，并建立映射
 - 3.递归调用当前节点`cur`的`next`节点和`random`节点，进行复制，让`mirror`节点的`next`和`random`指针分别指向这个复制的节点
-- 4.返回复制的`mirror`节点
+- 4返回复制的`mirror`节点
 
 ```java
         Map<Node, Node> map = new HashMap<>();
@@ -85,7 +85,6 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 
 
-- 1.遍历整个链表，复制当前节点`cur`的节点`mirror`，将二者连接起来
 - 2.遍历整个链表，处理`random`指针
 - 3.定义一哑结点，然后让原来的`cur`节点指向的`mirror`节点断开，恢复到原来的状态
 
@@ -260,6 +259,88 @@ public ListNode detectCycle(ListNode head) {
             if (root.right != null) res = Math.min(res, helper(root.right, depth + 1));
             return res + 1;
         }
+```
+
+
+
+
+
+## [144. 二叉树的前序遍历](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/)
+
+### 方法1:迭代
+
+- 1.定义一个`cur`节点，将其入栈
+- 2.对`cur`节点的左子树重复步骤1，直到左子树为空
+- 3.弹出栈内保存到左子树的节点，开始遍历右子树，重复步骤1
+- 4.遍历完整个二叉树，结束
+
+```java
+List<Integer> res = new ArrayList<>();
+
+public List<Integer> preorderTraversal(TreeNode root) {
+    Stack<TreeNode> stk = new Stack<>();
+    TreeNode cur = root;
+    while (cur != null || !stk.isEmpty()) {
+        if (cur != null) {
+            res.add(cur.val);
+            stk.push(cur);
+            cur = cur.left;
+        } else {
+            TreeNode tmp = stk.pop();
+            cur = tmp.right;
+        }
+    }
+    return res;
+}
+```
+
+
+
+
+
+## [145. 二叉树的后序遍历](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/)
+
+### 方法1:迭代法
+
+- 前序遍历和后序遍历之间的关系：
+
+  - 前序遍历顺序为：根 -> 左 -> 右
+
+  - 后序遍历顺序为：左 -> 右 -> 根
+
+- 如果1： 我们将前序遍历中节点插入结果链表尾部的逻辑，修改为将节点插入结果链表的头部
+  - 那么结果链表就变为了：右 -> 左 -> 根
+
+- 如果2： 我们将遍历的顺序由从左到右修改为从右到左，配合如果1
+  - 那么结果链表就变为了：左 -> 右 -> 根
+
+- 这刚好是后序遍历的顺序
+
+- 基于这两个思路，我们想一下如何处理：
+
+  - 修改前序遍历代码中，节点写入结果链表的代码，将插入队尾修改为插入队首
+
+  - 修改前序遍历代码中，每次先查看左节点再查看右节点的逻辑，变为先查看右节点再查看左节点
+
+链接来自：[这里](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/solution/die-dai-jie-fa-shi-jian-fu-za-du-onkong-jian-fu-za/)
+
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    Stack<TreeNode> stk = new Stack<>();
+    TreeNode cur = root;
+    while (cur != null || !stk.isEmpty()) {
+        if (cur != null) {
+            res.add(0, cur.val);
+            stk.push(cur);
+            cur = cur.right;
+        } else {
+            TreeNode tmp = stk.pop();
+            cur = tmp.left;
+        }
+    }
+    return res;
+}
 ```
 
 
