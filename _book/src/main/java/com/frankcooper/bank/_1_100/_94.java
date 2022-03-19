@@ -4,6 +4,7 @@ import com.frankcooper.struct.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by FrankCooper
@@ -69,4 +70,28 @@ public class _94 {
         }
         return predecessor;
     }
+
+
+    static class _3rd {
+
+
+        public List<Integer> inorderTraversal(TreeNode root) {
+            List<Integer> res = new ArrayList<>();
+            Stack<TreeNode> stk = new Stack<>();
+            TreeNode cur = root;
+            while (cur != null || !stk.isEmpty()) {
+                if (cur != null) {
+
+                    stk.push(cur);
+                    cur = cur.left;
+                } else {
+                    cur = stk.pop();
+                    res.add(cur.val);
+                    cur = cur.right;
+                }
+            }
+            return res;
+        }
+    }
+
 }

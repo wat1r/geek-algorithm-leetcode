@@ -296,6 +296,34 @@ public List<Integer> preorderTraversal(TreeNode root) {
 
 
 
+## [94. 二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
+
+```java
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    Stack<TreeNode> stk = new Stack<>();
+    TreeNode cur = root;
+    while (cur != null || !stk.isEmpty()) {
+        if (cur != null) {
+
+            stk.push(cur);
+            cur = cur.left;
+        } else {
+            cur = stk.pop();
+            res.add(cur.val);
+            cur = cur.right;
+        }
+    }
+    return res;
+}
+```
+
+
+
+
+
+
+
 
 
 ## [145. 二叉树的后序遍历](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/)
