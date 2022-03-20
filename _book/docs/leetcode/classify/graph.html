@@ -368,6 +368,53 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x56FE;&#x8BBA;">&#x56FE;&#x8BBA;</h1>
+<h2 id="2039-&#x7F51;&#x7EDC;&#x7A7A;&#x95F2;&#x7684;&#x65F6;&#x523B;"><a href="https://leetcode-cn.com/problems/the-time-when-the-network-becomes-idle/" target="_blank">2039. &#x7F51;&#x7EDC;&#x7A7A;&#x95F2;&#x7684;&#x65F6;&#x523B;</a></h2>
+<p><img src="../../../imgs/leetcode/classify/image-20220320105254556.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> V = <span class="hljs-number">100_005</span>;<span class="hljs-comment">//&#x9876;&#x70B9;&#x6570;&#x91CF;</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> E = V * <span class="hljs-number">2</span>;<span class="hljs-comment">//&#x8FB9;&#x7684;&#x6570;&#x91CF;</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] head = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[V];<span class="hljs-comment">//&#x5934;&#x8282;&#x70B9;&#x6570;&#x7EC4;</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] edge = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[E];<span class="hljs-comment">//&#x6309;&#x8F93;&#x5165;&#x987A;&#x5E8F;&#x5B58;&#x50A8;&#x6BCF;&#x6761;&#x8FB9;&#x6307;&#x5411;&#x7684;&#x8282;&#x70B9;</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] next = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[E];<span class="hljs-comment">//&#x8BB0;&#x5F55;&#x90BB;&#x63A5;&#x8868;&#x4E2D;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+<span class="hljs-keyword">int</span> idx = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x8BB0;&#x5F55;&#x8FB9;&#x7684;&#x5E8F;&#x53F7;,&#x8FB9;&#x7684;&#x5E8F;&#x53F7;&#x4ECE;0&#x5F00;&#x59CB; &#x4E0D;&#x80FD;&#x4F7F;&#x7528;static</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> INF = Integer.MAX_VALUE / <span class="hljs-number">2</span>;
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[V];
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    edge[idx] = v;<span class="hljs-comment">// &#x7B2C;idx&#x8FB9;&#x6307;&#x5411;v</span>
+    next[idx] = head[u];<span class="hljs-comment">//&#x91C7;&#x7528;&#x5934;&#x63D2;&#x6CD5; &#x7B2C;idx&#x8FB9;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x65F6;&#x523B;&#x7684;&#x5934;&#x8282;&#x70B9;</span>
+    head[u] = idx; <span class="hljs-comment">// &#x5F53;&#x524D;&#x94FE;&#x8868;&#x5934;&#x8282;&#x70B9;&#x66F4;&#x65B0;&#xFF0C;&#x6307;&#x5411;&#x7B2C;idx&#x8FB9;</span>
+    idx++;<span class="hljs-comment">// idx++ &#x66F4;&#x65B0;&#x8FB9;&#x5E8F;&#x53F7;</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">networkBecomesIdle</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] edges, <span class="hljs-keyword">int</span>[] patience)</span> </span>{
+    Arrays.fill(head, -<span class="hljs-number">1</span>);
+    Arrays.fill(dist, INF);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] e : edges) {
+        addEdge(e[<span class="hljs-number">0</span>], e[<span class="hljs-number">1</span>]);
+        addEdge(e[<span class="hljs-number">1</span>], e[<span class="hljs-number">0</span>]);
+    }
+    Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    deque.addLast(<span class="hljs-number">0</span>);
+    dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (!deque.isEmpty()) {
+        <span class="hljs-keyword">int</span> u = deque.pollFirst();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = head[u]; i != -<span class="hljs-number">1</span>; i = next[i]) {
+            <span class="hljs-keyword">int</span> v = edge[i];
+            <span class="hljs-keyword">if</span> (dist[v] != INF) <span class="hljs-keyword">continue</span>;
+            dist[v] = dist[u] + <span class="hljs-number">1</span>;
+            deque.addLast(v);
+        }
+    }
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; patience.length; i++) {
+        <span class="hljs-keyword">int</span> d = dist[i] * <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">int</span> t = patience[i];
+        <span class="hljs-keyword">int</span> cur = d &lt;= t ? d : (d - <span class="hljs-number">1</span>) / t * t + d;
+        <span class="hljs-keyword">if</span> (cur &gt; res) res = cur;
+    }
+    <span class="hljs-keyword">return</span> res + <span class="hljs-number">1</span>;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -411,7 +458,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.2.8","depth":2,"next":{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-03-13T09:08:00.213Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-19T13:49:54.884Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.2.8","depth":2,"next":{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-03-20T02:54:32.009Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-20T02:54:53.352Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
