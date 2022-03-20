@@ -1,5 +1,6 @@
 package com.frankcooper.bank._1_100;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.struct.ListNode;
 
 public class _82 {
@@ -62,15 +63,26 @@ public class _82 {
 
 
     static class _4th {
+
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            ListNode head = ListNodeIOUtils.transform("[1,2,3,3,4,4,5]");
+            handler.deleteDuplicates(head);
+        }
+
         public ListNode deleteDuplicates(ListNode head) {
+            //哑结点
             ListNode dummy = new ListNode(-1);
             dummy.next = head;
+            //prev 和 cur节点
             ListNode prev = dummy, cur;
-            while (prev.next != null) {
-                cur = prev.next;
+            while (prev.next != null) {//prev的next指针不为空
+                cur = prev.next;//每一轮的cur是prev的后一个
+                //当cur的后之后的cur相同跳过之后的
                 while (cur.next != null && cur.val == cur.next.val) {
                     cur = cur.next;
                 }
+                //需要判断链接状态，如果是相同的说明上一步没有重复的，不同的话，说明有重复的
                 if (prev.next != cur) {
                     prev.next = cur.next;
                 } else {

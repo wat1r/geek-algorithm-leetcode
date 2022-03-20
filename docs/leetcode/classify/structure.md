@@ -69,6 +69,55 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
+## [82. 删除排序链表中的重复元素 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
+
+### 方法1:迭代
+
+![](imgs/leetcode/classify/image-20220320205817117.png)
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+    //哑结点
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    //prev 和 cur节点
+    ListNode prev = dummy, cur;
+    while (prev.next != null) {//prev的next指针不为空
+        cur = prev.next;//每一轮的cur是prev的后一个
+        //当cur的后之后的cur相同跳过之后的
+        while (cur.next != null && cur.val == cur.next.val) {
+            cur = cur.next;
+        }
+        //需要判断链接状态，如果是相同的说明上一步没有重复的，不同的话，说明有重复的
+        if (prev.next != cur) {
+            prev.next = cur.next;
+        } else {
+            prev = prev.next;
+        }
+    }
+    return dummy.next;
+}
+```
+
+### 方法2:递归
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+    if (head == null || head.next == null) return head;
+    if (head.val == head.next.val) {
+        while (head.next != null && head.val == head.next.val) {
+            head = head.next;
+        }
+        return deleteDuplicates(head.next);
+    } else {
+        head.next = deleteDuplicates(head.next);
+        return head;
+    }
+}
+```
+
+
+
 
 
 ## [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)

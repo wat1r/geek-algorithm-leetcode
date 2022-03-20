@@ -416,6 +416,45 @@
     <span class="hljs-keyword">return</span> head;
 }
 </code></pre>
+<h2 id="82-&#x5220;&#x9664;&#x6392;&#x5E8F;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x91CD;&#x590D;&#x5143;&#x7D20;-ii"><a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/" target="_blank">82. &#x5220;&#x9664;&#x6392;&#x5E8F;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x91CD;&#x590D;&#x5143;&#x7D20; II</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;</h3>
+<p><img src="imgs/leetcode/classify/image-20220320205817117.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">deleteDuplicates</span><span class="hljs-params">(ListNode head)</span> </span>{
+    <span class="hljs-comment">//&#x54D1;&#x7ED3;&#x70B9;</span>
+    ListNode dummy = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+    dummy.next = head;
+    <span class="hljs-comment">//prev &#x548C; cur&#x8282;&#x70B9;</span>
+    ListNode prev = dummy, cur;
+    <span class="hljs-keyword">while</span> (prev.next != <span class="hljs-keyword">null</span>) {<span class="hljs-comment">//prev&#x7684;next&#x6307;&#x9488;&#x4E0D;&#x4E3A;&#x7A7A;</span>
+        cur = prev.next;<span class="hljs-comment">//&#x6BCF;&#x4E00;&#x8F6E;&#x7684;cur&#x662F;prev&#x7684;&#x540E;&#x4E00;&#x4E2A;</span>
+        <span class="hljs-comment">//&#x5F53;cur&#x7684;&#x540E;&#x4E4B;&#x540E;&#x7684;cur&#x76F8;&#x540C;&#x8DF3;&#x8FC7;&#x4E4B;&#x540E;&#x7684;</span>
+        <span class="hljs-keyword">while</span> (cur.next != <span class="hljs-keyword">null</span> &amp;&amp; cur.val == cur.next.val) {
+            cur = cur.next;
+        }
+        <span class="hljs-comment">//&#x9700;&#x8981;&#x5224;&#x65AD;&#x94FE;&#x63A5;&#x72B6;&#x6001;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x76F8;&#x540C;&#x7684;&#x8BF4;&#x660E;&#x4E0A;&#x4E00;&#x6B65;&#x6CA1;&#x6709;&#x91CD;&#x590D;&#x7684;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x8BDD;&#xFF0C;&#x8BF4;&#x660E;&#x6709;&#x91CD;&#x590D;&#x7684;</span>
+        <span class="hljs-keyword">if</span> (prev.next != cur) {
+            prev.next = cur.next;
+        } <span class="hljs-keyword">else</span> {
+            prev = prev.next;
+        }
+    }
+    <span class="hljs-keyword">return</span> dummy.next;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2:&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">deleteDuplicates</span><span class="hljs-params">(ListNode head)</span> </span>{
+    <span class="hljs-keyword">if</span> (head == <span class="hljs-keyword">null</span> || head.next == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> head;
+    <span class="hljs-keyword">if</span> (head.val == head.next.val) {
+        <span class="hljs-keyword">while</span> (head.next != <span class="hljs-keyword">null</span> &amp;&amp; head.val == head.next.val) {
+            head = head.next;
+        }
+        <span class="hljs-keyword">return</span> deleteDuplicates(head.next);
+    } <span class="hljs-keyword">else</span> {
+        head.next = deleteDuplicates(head.next);
+        <span class="hljs-keyword">return</span> head;
+    }
+}
+</code></pre>
 <h2 id="160-&#x76F8;&#x4EA4;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/" target="_blank">160. &#x76F8;&#x4EA4;&#x94FE;&#x8868;</a></h2>
 <p><img src="../../../imgs/leetcode/classify/image-20220317195629005.png" alt=""></p>
 <blockquote>
@@ -845,7 +884,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.1","depth":2,"next":{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"LeetCode","level":"1.2","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"位运算","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.2.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-20T12:36:14.653Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-20T12:36:26.313Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.1","depth":2,"next":{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"LeetCode","level":"1.2","depth":1,"ref":"","articles":[{"title":"数据结构","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"数组","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"字符串","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"搜索","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"位运算","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.2.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-20T13:01:55.608Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-20T13:02:33.675Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
