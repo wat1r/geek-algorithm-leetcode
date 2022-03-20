@@ -4,6 +4,73 @@
 
 ## 链表
 
+
+
+
+
+## [83. 删除排序链表中的重复元素](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/)
+
+### 方法1:迭代
+
+![](/imgs/leetcode/classify/image-20220320181617507.png)
+
+```java
+        public ListNode deleteDuplicates(ListNode head) {
+            if (head == null) return null;
+            ListNode cur = head;
+            while (cur.next != null) {
+              //当前节点与下个节点的值如果相同，则跳下个节点
+                if (cur.val == cur.next.val) {
+                    cur.next = cur.next.next;
+                } else {
+                    cur = cur.next;
+                }
+            }
+            return head;
+        }
+```
+
+### 方法2:递归
+
+#### 出口条件
+
+- 当`head`节点和`head.next`节点为`null`的时候，开始返回`head`节点
+
+#### 逻辑
+
+- 1.`head`的`next`指针指向递归的结果
+- 2.`head`的值和`head.next`的值是否相同，相同则返回`head.next`不同则返回`head`本身
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+    if (head == null || head.next == null) return head;
+    head.next = deleteDuplicates(head.next);
+    return head.val == head.next.val ? head.next : head;
+}
+```
+
+### 方法3:双指针
+
+![](/imgs/leetcode/classify/image-20220320203150956.png)
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode cur = head, nxt = head.next;
+    while (nxt != null) {
+        if (cur.val != nxt.val) {
+            cur = cur.next;
+        } else {
+            cur.next = nxt.next;
+        }
+        nxt = nxt.next;
+    }
+    return head;
+}
+```
+
+
+
 ## [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
 
 ![](/imgs/leetcode/classify/image-20220317195629005.png)

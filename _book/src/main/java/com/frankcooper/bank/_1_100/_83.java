@@ -52,4 +52,31 @@ public class _83 {
             return head;
         }
     }
+
+    static class _4th {
+
+
+        public ListNode deleteDuplicates(ListNode head) {
+            if (head == null || head.next == null) return head;
+            head.next = deleteDuplicates(head.next);
+            return head.val == head.next.val ? head.next : head;
+        }
+    }
+
+    static class _5th {
+        public ListNode deleteDuplicates(ListNode head) {
+            if (head == null || head.next == null) return head;
+            ListNode cur = head, nxt = head.next;
+            while (nxt != null) {
+                if (cur.val != nxt.val) {
+                    cur = cur.next;
+                } else {
+                    cur.next = nxt.next;
+                }
+                nxt = nxt.next;
+            }
+            return head;
+        }
+    }
+
 }
