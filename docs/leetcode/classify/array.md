@@ -36,6 +36,47 @@ public List<Integer> spiralOrder(int[][] matrix) {
 }
 ```
 
+## [217. 存在重复元素](https://leetcode-cn.com/problems/contains-duplicate/)
+
+### 方法1:Set
+
+```java
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for(int x : nums){
+            if(set.contains(x)) return true;
+            set.add(x);
+        }
+        return false;
+    }
+```
+
+### 方法2:lambda
+
+```java
+public boolean containsDuplicate(int[] nums) {
+    Set<Integer> seen = new HashSet<>();
+    return Arrays.stream(nums).anyMatch(num -> !seen.add(num));
+}
+```
+
+### 方法3:排序
+
+```java
+public boolean containsDuplicate(int[] nums) {
+    Set<Integer> seen = new HashSet<>();
+    return Arrays.stream(nums).anyMatch(num -> !seen.add(num));
+}
+```
+
+
+
+
+
+
+
+
+
 ## [599. 两个列表的最小索引总和](https://leetcode-cn.com/problems/minimum-index-sum-of-two-lists/)
 
 ```java
