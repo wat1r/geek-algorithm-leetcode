@@ -737,6 +737,159 @@
 }
 </code></pre>
 <h3 id="&#x65B9;&#x6CD5;2&#x7EBF;&#x6BB5;&#x6811;">&#x65B9;&#x6CD5;2:&#x7EBF;&#x6BB5;&#x6811;</h3>
+<h2 id="146-lru-&#x7F13;&#x5B58;"><a href="https://leetcode-cn.com/problems/lru-cache/" target="_blank">146. LRU &#x7F13;&#x5B58;</a></h2>
+<p>&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x53CC;&#x7AEF;&#x94FE;&#x8868;&#xFF0C;$DoubleLinkedNode$</p>
+<blockquote>
+<p> &#x8FD9;&#x4E2A;&#x53CC;&#x7AEF;&#x94FE;&#x8868;&#x6709;&#x4E0B;&#x9762;&#x7684;&#x51E0;&#x4E2A;&#x5C5E;&#x6027;</p>
+</blockquote>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DoubleLinkedNode</span> </span>{
+            <span class="hljs-keyword">int</span> key, value;<span class="hljs-comment">//k,v</span>
+            DoubleLinkedNode pre, next;<span class="hljs-comment">//&#x524D;&#x9A71;&#x63A5;&#x8282;&#x70B9;&#xFF0C;&#x540E;&#x7EE7;&#x8282;&#x70B9;</span>
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DoubleLinkedNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, <span class="hljs-keyword">int</span> value)</span> </span>{
+                <span class="hljs-keyword">this</span>.key = key;
+                <span class="hljs-keyword">this</span>.value = value;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DoubleLinkedNode</span><span class="hljs-params">()</span> </span>{
+            }
+        }
+</code></pre>
+<blockquote>
+<p>&#x5C06;&#x65B0;&#x52A0;&#x5165;&#x7684;&#x8282;&#x70B9;&#x63D2;&#x5165;&#x5230;&#x53CC;&#x7AEF;&#x94FE;&#x8868;&#x7684;&#x5934;&#x90E8;&#x4F4D;&#x7F6E;$addFirst(node)$</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/595178f5084777224efe8b2963abcdde.png" alt="image-20200904085250881.png"></p>
+<pre><code class="lang-java">        <span class="hljs-comment">/**
+         * &#x5C06;&#x8282;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x53CC;&#x5411;&#x94FE;&#x8868;&#x7684;&#x5F00;&#x5934;&#x7684;&#x4F4D;&#x7F6E;
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFirst</span><span class="hljs-params">(DoubleLinkedNode node)</span> </span>{
+            node.pre = head;<span class="hljs-comment">//1.&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x524D;&#x9A71;&#x7ED3;&#x70B9;&#x6307;&#x5411;head&#x8282;&#x70B9;</span>
+            node.next = head.next;<span class="hljs-comment">//2.&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x540E;&#x7EE7;&#x8282;&#x70B9;&#x6307;&#x5411;head&#x7684;&#x540E;&#x7EE7;&#x8282;&#x70B9;</span>
+
+            head.next.pre = node;<span class="hljs-comment">//3.head&#x8282;&#x70B9;&#x7684;&#x540E;&#x7EE7;&#x8282;&#x70B9;&#x7684;&#x524D;&#x9A71;&#x7ED3;&#x70B9;&#x6307;&#x5411;&#x5F53;&#x524D;&#x8282;&#x70B9;</span>
+            head.next = node;<span class="hljs-comment">//4.head&#x7684;&#x540E;&#x7EE7;&#x8282;&#x70B9;&#x6307;&#x5411;&#x5F53;&#x524D;&#x8282;&#x70B9;</span>
+        }
+</code></pre>
+<blockquote>
+<p>&#x79FB;&#x9664;&#x4E00;&#x4E2A;&#x8282;&#x70B9;$removeNode(node)$</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/eb1d65b49848509f04e1768eddc0112a.png" alt="image-20200904090539191.png"></p>
+<pre><code class="lang-java">        <span class="hljs-comment">/**
+         * &#x79FB;&#x9664;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;&#x8282;&#x70B9;
+         *
+         * <span class="hljs-doctag">@param</span> node
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeNode</span><span class="hljs-params">(DoubleLinkedNode node)</span> </span>{
+            DoubleLinkedNode next = node.next;
+            DoubleLinkedNode pre = node.pre;
+            pre.next = next;
+            next.pre = pre;
+        }
+</code></pre>
+<blockquote>
+<p>&#x5F39;&#x51FA;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x6700;&#x540E;&#x7684;&#x8282;&#x70B9;$popLast$</p>
+</blockquote>
+<pre><code class="lang-java">        <span class="hljs-comment">/**
+         * &#x5F39;&#x51FA;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#x5E76;&#x5C06;&#x6539;&#x8282;&#x70B9;&#x8FD4;&#x56DE;
+         *
+         * <span class="hljs-doctag">@return</span>
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> DoubleLinkedNode <span class="hljs-title">popLast</span><span class="hljs-params">()</span> </span>{
+            DoubleLinkedNode last = tail.pre;
+            removeNode(last);
+            <span class="hljs-keyword">return</span> last;
+        }
+</code></pre>
+<blockquote>
+<p>&#x5C06;&#x4E00;&#x4E2A;&#x5DF2;&#x7ECF;&#x5728;&#x94FE;&#x8868;&#x4E2D;&#x5B58;&#x5728;&#x7684;&#x8282;&#x70B9;&#x79FB;&#x52A8;&#x5230;&#x94FE;&#x8868;&#x7684;&#x5F00;&#x5934;$moveToHead(node)$</p>
+</blockquote>
+<ul>
+<li>&#x5148;&#x79FB;&#x9664;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x79FB;&#x9664;&#xFF0C;&#x518D;&#x5C06;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x6DFB;&#x52A0;&#x5230;&#x94FE;&#x8868;&#x7684;&#x5F00;&#x5934;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-comment">/**
+         * &#x5C06;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x79FB;&#x52A8;&#x5230;&#x6700;&#x5934;&#x90E8;&#x4F4D;&#x7F6E;
+         *
+         * <span class="hljs-doctag">@param</span> node
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">moveToHead</span><span class="hljs-params">(DoubleLinkedNode node)</span> </span>{
+            removeNode(node);
+            addFirst(node);
+        }
+</code></pre>
+<blockquote>
+<p>&#x4E0B;&#x9762;&#x5F00;&#x59CB;$LRU$</p>
+</blockquote>
+<h4 id="&#x601D;&#x8DEF;">&#x601D;&#x8DEF;</h4>
+<blockquote>
+<p>&#x521D;&#x59CB;&#x5316;</p>
+</blockquote>
+<ul>
+<li>&#x6CE8;&#x610F;$head$&#x8282;&#x70B9;&#x548C;$tail$&#x8282;&#x70B9;&#x9700;&#x8981;$new$&#x51FA;&#x6765;</li>
+</ul>
+<blockquote>
+<p>$get(key)$</p>
+</blockquote>
+<ul>
+<li>&#x5982;&#x679C;$cache$&#x4E2D;&#x4E0D;&#x5B58;&#x5728;$key$,&#x8FD4;&#x56DE;-1</li>
+<li>&#x5982;&#x679C;$cache$&#x4E2D;&#x5B58;&#x5728;&#xFF0C;&#x53D6;&#x51FA;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x8282;&#x70B9;$moveToHead$&#xFF0C;&#x8FD4;&#x56DE;&#x8282;&#x70B9;&#x7684;&#x503C;</li>
+</ul>
+<blockquote>
+<p>$put(k,v)$</p>
+</blockquote>
+<ul>
+<li>&#x53D6;&#x51FA;&#x8282;&#x70B9;&#xFF0C;&#x5206;&#x8282;&#x70B9;&#x5B58;&#x5728;&#x4E0E;&#x5426;&#x8BA8;&#x8BBA;&#xFF1A;<ul>
+<li>&#x8282;&#x70B9;&#x4E0D;&#x5B58;&#x5728;&#xFF1A;&#x65B0;&#x521B;&#x5EFA;&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x8BE5;&#x8282;&#x70B9;&#x63D2;&#x5165;&#x5230;&#x94FE;&#x8868;&#x7684;&#x5934;&#x90E8;&#xFF0C;&#x5E76;&#x5C06;&#x5176;$put$&#x8FDB;$cache$&#x4E2D;<ul>
+<li>&#x505A;&#x4E00;&#x4E2A;&#x989D;&#x5916;&#x7684;&#x5224;&#x65AD;&#xFF1A;&#x5982;&#x679C;&#x5F53;&#x524D;&#x7684;$cache$&#x7684;&#x5927;&#x5C0F;&#x5927;&#x4E8E;$capacity$&#xFF0C;&#x9700;&#x8981;&#x79FB;&#x9664;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x94FE;&#x8868;&#x548C;$cache$&#x90FD;&#x8981;&#x505A;&#x79FB;&#x9664;&#x64CD;&#x4F5C;</li>
+</ul>
+</li>
+<li>&#x8282;&#x70B9;&#x5B58;&#x5728;:&#x8FD4;&#x56DE;&#x8282;&#x70B9;&#x7684;&#x503C;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x79FB;&#x52A8;&#x5230;&#x94FE;&#x8868;&#x5934;&#x90E8;</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-java">    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LRUCache</span> </span>{
+        DoubleLinkedNode head, tail;<span class="hljs-comment">//Node&#x7684;&#x6536;&#x5C3E;&#x8282;&#x70B9;</span>
+        <span class="hljs-keyword">int</span> capacity;<span class="hljs-comment">//&#x5BB9;&#x91CF;</span>
+        Map&lt;Integer, DoubleLinkedNode&gt; cache;<span class="hljs-comment">//&lt;k,v&gt; k&#x662F;key&#xFF0C;v&#x662F;key&#x751F;&#x6210;&#x7684;node</span>
+
+        <span class="hljs-comment">/**
+         * &#x521D;&#x59CB;&#x5316;
+         *
+         * <span class="hljs-doctag">@param</span> capacity
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LRUCache</span><span class="hljs-params">(<span class="hljs-keyword">int</span> capacity)</span> </span>{
+            <span class="hljs-keyword">this</span>.capacity = capacity;
+            <span class="hljs-keyword">this</span>.cache = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">this</span>.head = <span class="hljs-keyword">new</span> DoubleLinkedNode();
+            <span class="hljs-keyword">this</span>.tail = <span class="hljs-keyword">new</span> DoubleLinkedNode();
+            <span class="hljs-keyword">this</span>.head.next = tail;
+            <span class="hljs-keyword">this</span>.tail.pre = head;
+
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+            <span class="hljs-keyword">if</span> (!cache.containsKey(key)) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+            DoubleLinkedNode node = cache.get(key);
+            moveToHead(node);
+            <span class="hljs-keyword">return</span> node.value;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, <span class="hljs-keyword">int</span> value)</span> </span>{
+            DoubleLinkedNode node = cache.get(key);
+            <span class="hljs-keyword">if</span> (node == <span class="hljs-keyword">null</span>) {
+                node = <span class="hljs-keyword">new</span> DoubleLinkedNode(key, value);
+                addFirst(node);
+                cache.put(key, node);
+                <span class="hljs-keyword">if</span> (cache.size() &gt; capacity) {
+                    DoubleLinkedNode last = popLast();
+                    cache.remove(last.key);
+                }
+            } <span class="hljs-keyword">else</span> {
+                node.value = value;
+                moveToHead(node);
+            }
+        }
+    }
+</code></pre>
 <h2 id="2043-&#x7B80;&#x6613;&#x94F6;&#x884C;&#x7CFB;&#x7EDF;"><a href="https://leetcode-cn.com/problems/simple-bank-system/" target="_blank">2043. &#x7B80;&#x6613;&#x94F6;&#x884C;&#x7CFB;&#x7EDF;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x6A21;&#x62DF;">&#x65B9;&#x6CD5;1:&#x6A21;&#x62DF;</h3>
 <pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bank</span> </span>{
@@ -817,7 +970,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.6","depth":2,"next":{"title":"双指针","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-18T01:06:37.694Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-21T13:53:48.977Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.6","depth":2,"next":{"title":"双指针","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-21T14:11:54.189Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-21T14:12:05.562Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
