@@ -3,6 +3,8 @@
 * [Introduction](README.md)
 
 * LeetCode
+  
+  * [基础与技巧](/docs/leetcode/classify/basic_skill.md)
   * [数据结构](/docs/leetcode/classify/structure.md)
   * [数组](/docs/leetcode/classify/array.md)
   * [字符串](/docs/leetcode/classify/string.md)

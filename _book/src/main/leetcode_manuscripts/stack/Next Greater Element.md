@@ -247,7 +247,7 @@ Deque的实现：
 
 - 一般场景
   - LinkedList 大小可变的**链表**双端队列，允许元素为 null
-  - ArrayDeque 大下可变的**数组**双端队列，不允许 null
+  - ArrayDeque 大小可变的**数组**双端队列，不允许 null
 - 并发场景
   - LinkedBlockingDeque 如果队列为空时，获取操作将会阻塞，知道有元素添加
 

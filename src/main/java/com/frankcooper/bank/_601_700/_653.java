@@ -30,6 +30,40 @@ public class _653 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public boolean findTarget(TreeNode root, int k) {
+            Deque<TreeNode> lq = new ArrayDeque<>();
+            Deque<TreeNode> rq = new ArrayDeque<>();
+            TreeNode t = root;
+            while (t != null) {
+                lq.addLast(t);
+                t = t.left;
+            }
+            t = root;
+            while (t != null) {
+                rq.addLast(t);
+                t = t.right;
+            }
+            TreeNode ln = lq.peekLast();
+            TreeNode rn = rq.peekLast();
+            while (ln.val < rn.val) {
+                int sum = ln.val + rn.val;
+                if (sum == k) return true;
+                if (sum < k) ln = getNext(lq, true);
+                else rn = getNext(rq, false);
+            }
+            return false;
+        }
+
+        public TreeNode getNext(Deque<TreeNode> q, boolean f) {
+            TreeNode t = f ? q.pollLast().right : q.pollLast().left;
+            while (t != null) {
+                q.addLast(t);
+                t = f ? t.left : t.right;
+            }
+            return q.peekLast();
+        }
+
     }
 
 
