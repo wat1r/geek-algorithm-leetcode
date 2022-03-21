@@ -771,7 +771,7 @@
         }
 </code></pre>
 <blockquote>
-<p>&#x79FB;&#x9664;&#x4E00;&#x4E2A;&#x8282;&#x70B9;$removeNode(node)$</p>
+<p>&#x79FB;&#x9664;&#x4E00;&#x4E2A;&#x8282;&#x70B9;<code>removeNode(node)</code></p>
 </blockquote>
 <p><img src="https://img-blog.csdnimg.cn/img_convert/eb1d65b49848509f04e1768eddc0112a.png" alt="image-20200904090539191.png"></p>
 <pre><code class="lang-java">        <span class="hljs-comment">/**
@@ -787,7 +787,7 @@
         }
 </code></pre>
 <blockquote>
-<p>&#x5F39;&#x51FA;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x6700;&#x540E;&#x7684;&#x8282;&#x70B9;$popLast$</p>
+<p>&#x5F39;&#x51FA;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x6700;&#x540E;&#x7684;&#x8282;&#x70B9;<code>popLast</code></p>
 </blockquote>
 <pre><code class="lang-java">        <span class="hljs-comment">/**
          * &#x5F39;&#x51FA;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#x5E76;&#x5C06;&#x6539;&#x8282;&#x70B9;&#x8FD4;&#x56DE;
@@ -817,29 +817,29 @@
         }
 </code></pre>
 <blockquote>
-<p>&#x4E0B;&#x9762;&#x5F00;&#x59CB;$LRU$</p>
+<p>&#x4E0B;&#x9762;&#x5F00;&#x59CB;<code>LRU</code></p>
 </blockquote>
 <h4 id="&#x601D;&#x8DEF;">&#x601D;&#x8DEF;</h4>
 <blockquote>
 <p>&#x521D;&#x59CB;&#x5316;</p>
 </blockquote>
 <ul>
-<li>&#x6CE8;&#x610F;$head$&#x8282;&#x70B9;&#x548C;$tail$&#x8282;&#x70B9;&#x9700;&#x8981;$new$&#x51FA;&#x6765;</li>
+<li>&#x6CE8;&#x610F;<code>head</code>&#x8282;&#x70B9;&#x548C;<code>tail</code>&#x8282;&#x70B9;&#x9700;&#x8981;<code>new</code>&#x51FA;&#x6765;</li>
 </ul>
 <blockquote>
-<p>$get(key)$</p>
+<p><code>get(key)</code></p>
 </blockquote>
 <ul>
-<li>&#x5982;&#x679C;$cache$&#x4E2D;&#x4E0D;&#x5B58;&#x5728;$key$,&#x8FD4;&#x56DE;-1</li>
-<li>&#x5982;&#x679C;$cache$&#x4E2D;&#x5B58;&#x5728;&#xFF0C;&#x53D6;&#x51FA;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x8282;&#x70B9;$moveToHead$&#xFF0C;&#x8FD4;&#x56DE;&#x8282;&#x70B9;&#x7684;&#x503C;</li>
+<li>&#x5982;&#x679C;<code>cache</code>&#x4E2D;&#x4E0D;&#x5B58;&#x5728;<code>key</code>,&#x8FD4;&#x56DE;-1</li>
+<li>&#x5982;&#x679C;<code>cache</code>&#x4E2D;&#x5B58;&#x5728;&#xFF0C;&#x53D6;&#x51FA;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x8282;&#x70B9;<code>moveToHead</code>&#xFF0C;&#x8FD4;&#x56DE;&#x8282;&#x70B9;&#x7684;&#x503C;</li>
 </ul>
 <blockquote>
-<p>$put(k,v)$</p>
+<p><code>put(k,v)</code></p>
 </blockquote>
 <ul>
 <li>&#x53D6;&#x51FA;&#x8282;&#x70B9;&#xFF0C;&#x5206;&#x8282;&#x70B9;&#x5B58;&#x5728;&#x4E0E;&#x5426;&#x8BA8;&#x8BBA;&#xFF1A;<ul>
-<li>&#x8282;&#x70B9;&#x4E0D;&#x5B58;&#x5728;&#xFF1A;&#x65B0;&#x521B;&#x5EFA;&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x8BE5;&#x8282;&#x70B9;&#x63D2;&#x5165;&#x5230;&#x94FE;&#x8868;&#x7684;&#x5934;&#x90E8;&#xFF0C;&#x5E76;&#x5C06;&#x5176;$put$&#x8FDB;$cache$&#x4E2D;<ul>
-<li>&#x505A;&#x4E00;&#x4E2A;&#x989D;&#x5916;&#x7684;&#x5224;&#x65AD;&#xFF1A;&#x5982;&#x679C;&#x5F53;&#x524D;&#x7684;$cache$&#x7684;&#x5927;&#x5C0F;&#x5927;&#x4E8E;$capacity$&#xFF0C;&#x9700;&#x8981;&#x79FB;&#x9664;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x94FE;&#x8868;&#x548C;$cache$&#x90FD;&#x8981;&#x505A;&#x79FB;&#x9664;&#x64CD;&#x4F5C;</li>
+<li>&#x8282;&#x70B9;&#x4E0D;&#x5B58;&#x5728;&#xFF1A;&#x65B0;&#x521B;&#x5EFA;&#x8282;&#x70B9;&#xFF0C;&#x5C06;&#x8BE5;&#x8282;&#x70B9;&#x63D2;&#x5165;&#x5230;&#x94FE;&#x8868;&#x7684;&#x5934;&#x90E8;&#xFF0C;&#x5E76;&#x5C06;&#x5176;<code>put</code>&#x8FDB;<code>cache</code>&#x4E2D;<ul>
+<li>&#x505A;&#x4E00;&#x4E2A;&#x989D;&#x5916;&#x7684;&#x5224;&#x65AD;&#xFF1A;&#x5982;&#x679C;&#x5F53;&#x524D;&#x7684;<code>cache</code>&#x7684;&#x5927;&#x5C0F;&#x5927;&#x4E8E;<code>capacity</code>&#xFF0C;&#x9700;&#x8981;&#x79FB;&#x9664;&#x6700;&#x672B;&#x5C3E;&#x7684;&#x8282;&#x70B9;&#xFF0C;&#x94FE;&#x8868;&#x548C;$cache$&#x90FD;&#x8981;&#x505A;&#x79FB;&#x9664;&#x64CD;&#x4F5C;</li>
 </ul>
 </li>
 <li>&#x8282;&#x70B9;&#x5B58;&#x5728;:&#x8FD4;&#x56DE;&#x8282;&#x70B9;&#x7684;&#x503C;&#xFF0C;&#x5C06;&#x8282;&#x70B9;&#x79FB;&#x52A8;&#x5230;&#x94FE;&#x8868;&#x5934;&#x90E8;</li>
@@ -970,7 +970,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.6","depth":2,"next":{"title":"双指针","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-21T14:11:54.189Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-21T14:12:05.562Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.6","depth":2,"next":{"title":"双指针","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-21T14:14:49.338Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-21T14:15:10.440Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

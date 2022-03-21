@@ -422,7 +422,7 @@ class NumArray {
 
 ```
 
-> 移除一个节点$removeNode(node)$
+> 移除一个节点`removeNode(node)`
 
 ![image-20200904090539191.png](https://img-blog.csdnimg.cn/img_convert/eb1d65b49848509f04e1768eddc0112a.png)
 
@@ -441,7 +441,7 @@ class NumArray {
         }
 ```
 
-> 弹出最末尾的节点，并返回最后的节点$popLast$
+> 弹出最末尾的节点，并返回最后的节点`popLast`
 
 ```java
         /**
@@ -472,24 +472,24 @@ class NumArray {
         }
 ```
 
-> 下面开始$LRU$
+> 下面开始`LRU`
 
 #### 思路
 
 > 初始化
 
-- 注意$head$节点和$tail$节点需要$new$出来
+- 注意`head`节点和`tail`节点需要`new`出来
 
-> $get(key)$
+> `get(key)`
 
-- 如果$cache$中不存在$key$,返回-1
-- 如果$cache$中存在，取出这个节点，将节点$moveToHead$，返回节点的值
+- 如果`cache`中不存在`key`,返回-1
+- 如果`cache`中存在，取出这个节点，将节点`moveToHead`，返回节点的值
 
-> $put(k,v)$
+> `put(k,v)`
 
 - 取出节点，分节点存在与否讨论：
-  - 节点不存在：新创建节点，将该节点插入到链表的头部，并将其$put$进$cache$中
-    - 做一个额外的判断：如果当前的$cache$的大小大于$capacity$，需要移除最末尾的节点，链表和$cache$都要做移除操作
+  - 节点不存在：新创建节点，将该节点插入到链表的头部，并将其`put`进`cache`中
+    - 做一个额外的判断：如果当前的`cache`的大小大于`capacity`，需要移除最末尾的节点，链表和$cache$都要做移除操作
   - 节点存在:返回节点的值，将节点移动到链表头部
 
 ```java
