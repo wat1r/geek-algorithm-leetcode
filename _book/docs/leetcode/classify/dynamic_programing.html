@@ -409,7 +409,8 @@
                                 <h1 id="&#x52A8;&#x6001;&#x89C4;&#x5212;">&#x52A8;&#x6001;&#x89C4;&#x5212;</h1>
 <blockquote>
 </blockquote>
-<h4 id="&#x65B9;&#x6CD5;1&#x66B4;&#x529B;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1:&#x66B4;&#x529B;&#x9012;&#x5F52;</h4>
+<h2 id="5-&#x6700;&#x957F;&#x56DE;&#x6587;&#x5B50;&#x4E32;"><a href="https://leetcode-cn.com/problems/longest-palindromic-substring/" target="_blank">5. &#x6700;&#x957F;&#x56DE;&#x6587;&#x5B50;&#x4E32;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x66B4;&#x529B;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1:&#x66B4;&#x529B;&#x9012;&#x5F52;</h3>
 <ul>
 <li><p><code>helper(String s, int start, int end)</code></p>
 <ul>
@@ -447,7 +448,7 @@
             <span class="hljs-keyword">return</span> ans;
         }
 </code></pre>
-<h4 id="&#x65B9;&#x6CD5;2&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;top-down">&#x65B9;&#x6CD5;2:&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;(Top-down)</h4>
+<h3 id="&#x65B9;&#x6CD5;2&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;top-down">&#x65B9;&#x6CD5;2:&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;(Top-down)</h3>
 <blockquote>
 <p>&#x8131;&#x80CE;&#x4E0E;&#x65B9;&#x6CD5;1&#xFF0C;&#x6DFB;&#x52A0;&#x8BB0;&#x5FC6;&#x5316;</p>
 </blockquote>
@@ -478,7 +479,7 @@
     <span class="hljs-keyword">return</span> memo[start][end] = ans;
 }
 </code></pre>
-<h4 id="&#x65B9;&#x6CD5;3&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x586B;&#x8868;&#x9012;&#x5F52;bottom-up">&#x65B9;&#x6CD5;3:&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x586B;&#x8868;&#x9012;&#x5F52;(Bottom-up)</h4>
+<h3 id="&#x65B9;&#x6CD5;3&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x586B;&#x8868;&#x9012;&#x5F52;bottom-up">&#x65B9;&#x6CD5;3:&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x586B;&#x8868;&#x9012;&#x5F52;(Bottom-up)</h3>
 <ul>
 <li>&#x5176;&#x4E2D;<code>f[i][j]</code>&#x8868;&#x793A;<code>s</code>&#x4E2D;&#xFF0C;&#x4ECE;<code>i</code>&#x5230;<code>j</code>&#x662F;&#x5426;&#x6709;&#x56DE;&#x6587;&#x5B50;&#x4E32;</li>
 <li><p><code>k</code>&#x4E3A;&#x904D;&#x5386;&#x7684;&#x5B57;&#x7B26;&#x957F;&#x5EA6;&#xFF0C;&#x53EF;&#x4EE5;&#x4E3A;<code>n</code></p>
@@ -560,7 +561,7 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
-<h4 id="&#x65B9;&#x6CD5;4&#x4E2D;&#x5FC3;&#x6269;&#x5C55;&#x6CD5;">&#x65B9;&#x6CD5;4:&#x4E2D;&#x5FC3;&#x6269;&#x5C55;&#x6CD5;</h4>
+<h3 id="&#x65B9;&#x6CD5;4&#x4E2D;&#x5FC3;&#x6269;&#x5C55;&#x6CD5;">&#x65B9;&#x6CD5;4:&#x4E2D;&#x5FC3;&#x6269;&#x5C55;&#x6CD5;</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">longestPalindrome</span><span class="hljs-params">(String s)</span> </span>{
     <span class="hljs-keyword">if</span> (s == <span class="hljs-keyword">null</span> || s.length() == <span class="hljs-number">0</span>) {
         <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;
@@ -599,7 +600,7 @@
     <span class="hljs-keyword">return</span> end - start - <span class="hljs-number">1</span>;
 }
 </code></pre>
-<h4 id="&#x65B9;&#x6CD5;5manacher&#x7B97;&#x6CD5;">&#x65B9;&#x6CD5;5:Manacher&#x7B97;&#x6CD5;</h4>
+<h3 id="&#x65B9;&#x6CD5;5manacher&#x7B97;&#x6CD5;">&#x65B9;&#x6CD5;5:Manacher&#x7B97;&#x6CD5;</h3>
 <blockquote>
 <p>&#x672C;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x6587;&#x7AE0;&#x7740;&#x91CD;&#x8BB2;&#x52A8;&#x6001;&#x89C4;&#x5212;&#xFF0C;&#x6D89;&#x53CA;&#x9A6C;&#x62C9;&#x8F66;&#x7B97;&#x6CD5;&#x7684;&#x5185;&#x5BB9;&#x4E0D;&#x8BE6;&#x7EC6;&#x5C55;&#x5F00;&#xFF0C;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x53D6;&#x81EA;weiwei&#x5927;&#x4F6C;&#x7684;<a href="https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/" target="_blank">&#x9898;&#x89E3;</a></p>
 </blockquote>
@@ -1280,7 +1281,7 @@ Integer[] memo;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x4
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.2.11","depth":2,"next":{"title":"博弈问题","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},"previous":{"title":"图论","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-03-22T01:38:44.945Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T01:38:58.786Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.2.11","depth":2,"next":{"title":"博弈问题","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},"previous":{"title":"图论","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-03-22T01:44:24.047Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T01:44:33.633Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

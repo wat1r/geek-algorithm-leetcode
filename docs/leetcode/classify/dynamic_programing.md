@@ -4,7 +4,9 @@
 
 
 
-#### 方法1:暴力递归
+## [5. 最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+
+### 方法1:暴力递归
 
 - `helper(String s, int start, int end)`
   - 表示`s`从`start`到`end`位置，是否有回文子串
@@ -39,7 +41,7 @@
         }
 ```
 
-#### 方法2:自顶向下记忆化递归(Top-down)
+### 方法2:自顶向下记忆化递归(Top-down)
 
 > 脱胎与方法1，添加记忆化
 
@@ -72,7 +74,7 @@ private boolean helper(String s, int start, int end) {
 }
 ```
 
-#### 方法3:自底向上填表递归(Bottom-up)
+### 方法3:自底向上填表递归(Bottom-up)
 
 - 其中`f[i][j]`表示`s`中，从`i`到`j`是否有回文子串
 - `k`为遍历的字符长度，可以为`n`
@@ -160,7 +162,7 @@ public String longestPalindrome(String s) {
 
 
 
-#### 方法4:中心扩展法
+### 方法4:中心扩展法
 
 ```java
 public String longestPalindrome(String s) {
@@ -202,7 +204,7 @@ private int expandBySeed(String s, int start, int end) {
 }
 ```
 
-#### 方法5:Manacher算法
+### 方法5:Manacher算法
 
 > 本动态规划的文章着重讲动态规划，涉及马拉车算法的内容不详细展开，下面的代码取自weiwei大佬的[题解](https://leetcode-cn.com/problems/longest-palindromic-substring/solution/zhong-xin-kuo-san-dong-tai-gui-hua-by-liweiwei1419/)
 
