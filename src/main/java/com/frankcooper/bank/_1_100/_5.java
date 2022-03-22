@@ -218,4 +218,28 @@ public class _5 {
     }
 
 
+    static class _8th {
+        public String longestPalindrome(String s) {
+            int n = s.length();
+            //f[j][i] 表示 s[j...i]这个区间的子串是否是回文，true是回文 false不是回文
+            boolean[][] f = new boolean[n][n];
+            int maxx = 0;//最长的回文子串的长度
+            String res = "";//结果
+            for (int i = 0; i < n; i++) {//枚举右区间
+                for (int j = 0; j <= i; j++) {//枚举左区间，界限是右区间
+                    //s[i] == s[j]时，且去掉头尾的字符串是回文子串，当前s[j...i]也是回文子串
+                    if (s.charAt(i) == s.charAt(j) && (i - j <= 2 || f[j + 1][i - 1])) {
+                        f[j][i] = true;
+                    }
+                    //更新长度s[0..2]长度是3 2-0+1=3
+                    if (f[j][i] && maxx < i - j + 1) {
+                        maxx = i - j + 1;
+                        res = s.substring(j, i + 1);
+                    }
+                }
+            }
+            return res;
+        }
+    }
+
 }
