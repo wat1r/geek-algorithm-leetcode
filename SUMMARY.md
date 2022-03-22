@@ -11,6 +11,7 @@
   * [二分](/docs/leetcode/classify/binary_search.md)
   * [结构设计](/docs/leetcode/classify/structure_design.md)
   * [双指针](/docs/leetcode/classify/two_pointers.md)
+  * [滑动窗口](/docs/leetcode/classify/sliding_window.md)
   * [单调栈](/docs/leetcode/classify/monotonic_stack.md)
   
   * [搜索](/docs/leetcode/classify/search.md)
@@ -26,3 +27,4 @@
   * [动态规划](/docs/swordoffer/dynamic_programing.md)
 
   
+
