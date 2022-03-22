@@ -13,6 +13,9 @@ public class _239 {
             _1st handler = new _1st();
             int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
             int k = 3;
+            //下面是测试 (i - k) == deque.peekFirst()
+//            nums = new int[]{1, -1};
+//            k = 1;
             handler.maxSlidingWindow(nums, k);
         }
 
