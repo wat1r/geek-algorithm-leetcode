@@ -385,7 +385,7 @@ class NumArray {
 
 ## [146. LRU 缓存](https://leetcode-cn.com/problems/lru-cache/)
 
-需要一个哈希双端链表，$DoubleLinkedNode$
+需要一个哈希双端链表，`DoubleLinkedNode`
 
 >  这个双端链表有下面的几个属性
 
@@ -404,7 +404,7 @@ class NumArray {
         }
 ```
 
-> 将新加入的节点插入到双端链表的头部位置$addFirst(node)$
+> 将新加入的节点插入到双端链表的头部位置`addFirst(node)`
 
 ![image-20200904085250881.png](https://img-blog.csdnimg.cn/img_convert/595178f5084777224efe8b2963abcdde.png)
 
@@ -456,7 +456,7 @@ class NumArray {
         }
 ```
 
-> 将一个已经在链表中存在的节点移动到链表的开头$moveToHead(node)$
+> 将一个已经在链表中存在的节点移动到链表的开头`moveToHead(node)`
 
 - 先移除这个节点移除，再将这个节点添加到链表的开头
 

@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>图论 · GitBook</title>
+        <title>博弈问题 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="dynamic_programing.html" />
+    <link rel="next" href="bit.html" />
     
     
-    <link rel="prev" href="search.html" />
+    <link rel="prev" href="dynamic_programing.html" />
     
 
     </head>
@@ -233,7 +233,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.10" data-path="graph.html">
+        <li class="chapter " data-level="1.2.10" data-path="graph.html">
             
                 <a href="graph.html">
             
@@ -259,7 +259,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.12" data-path="game_problem.html">
+        <li class="chapter active" data-level="1.2.12" data-path="game_problem.html">
             
                 <a href="game_problem.html">
             
@@ -391,7 +391,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >图论</a>
+        <a href="../../.." >博弈问题</a>
     </h1>
 </div>
 
@@ -406,52 +406,25 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x56FE;&#x8BBA;">&#x56FE;&#x8BBA;</h1>
-<h2 id="2039-&#x7F51;&#x7EDC;&#x7A7A;&#x95F2;&#x7684;&#x65F6;&#x523B;"><a href="https://leetcode-cn.com/problems/the-time-when-the-network-becomes-idle/" target="_blank">2039. &#x7F51;&#x7EDC;&#x7A7A;&#x95F2;&#x7684;&#x65F6;&#x523B;</a></h2>
-<p><img src="../../../imgs/leetcode/classify/image-20220320105254556.png" alt=""></p>
-<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> V = <span class="hljs-number">100_005</span>;<span class="hljs-comment">//&#x9876;&#x70B9;&#x6570;&#x91CF;</span>
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> E = V * <span class="hljs-number">2</span>;<span class="hljs-comment">//&#x8FB9;&#x7684;&#x6570;&#x91CF;</span>
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] head = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[V];<span class="hljs-comment">//&#x5934;&#x8282;&#x70B9;&#x6570;&#x7EC4;</span>
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] edge = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[E];<span class="hljs-comment">//&#x6309;&#x8F93;&#x5165;&#x987A;&#x5E8F;&#x5B58;&#x50A8;&#x6BCF;&#x6761;&#x8FB9;&#x6307;&#x5411;&#x7684;&#x8282;&#x70B9;</span>
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] next = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[E];<span class="hljs-comment">//&#x8BB0;&#x5F55;&#x90BB;&#x63A5;&#x8868;&#x4E2D;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
-<span class="hljs-keyword">int</span> idx = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x8BB0;&#x5F55;&#x8FB9;&#x7684;&#x5E8F;&#x53F7;,&#x8FB9;&#x7684;&#x5E8F;&#x53F7;&#x4ECE;0&#x5F00;&#x59CB; &#x4E0D;&#x80FD;&#x4F7F;&#x7528;static</span>
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> INF = Integer.MAX_VALUE / <span class="hljs-number">2</span>;
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[V];
-
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
-    edge[idx] = v;<span class="hljs-comment">// &#x7B2C;idx&#x8FB9;&#x6307;&#x5411;v</span>
-    next[idx] = head[u];<span class="hljs-comment">//&#x91C7;&#x7528;&#x5934;&#x63D2;&#x6CD5; &#x7B2C;idx&#x8FB9;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x65F6;&#x523B;&#x7684;&#x5934;&#x8282;&#x70B9;</span>
-    head[u] = idx; <span class="hljs-comment">// &#x5F53;&#x524D;&#x94FE;&#x8868;&#x5934;&#x8282;&#x70B9;&#x66F4;&#x65B0;&#xFF0C;&#x6307;&#x5411;&#x7B2C;idx&#x8FB9;</span>
-    idx++;<span class="hljs-comment">// idx++ &#x66F4;&#x65B0;&#x8FB9;&#x5E8F;&#x53F7;</span>
-}
-
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">networkBecomesIdle</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] edges, <span class="hljs-keyword">int</span>[] patience)</span> </span>{
-    Arrays.fill(head, -<span class="hljs-number">1</span>);
-    Arrays.fill(dist, INF);
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] e : edges) {
-        addEdge(e[<span class="hljs-number">0</span>], e[<span class="hljs-number">1</span>]);
-        addEdge(e[<span class="hljs-number">1</span>], e[<span class="hljs-number">0</span>]);
-    }
-    Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
-    deque.addLast(<span class="hljs-number">0</span>);
-    dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">while</span> (!deque.isEmpty()) {
-        <span class="hljs-keyword">int</span> u = deque.pollFirst();
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = head[u]; i != -<span class="hljs-number">1</span>; i = next[i]) {
-            <span class="hljs-keyword">int</span> v = edge[i];
-            <span class="hljs-keyword">if</span> (dist[v] != INF) <span class="hljs-keyword">continue</span>;
-            dist[v] = dist[u] + <span class="hljs-number">1</span>;
-            deque.addLast(v);
+                                <h2 id="&#x535A;&#x5F08;&#x95EE;&#x9898;">&#x535A;&#x5F08;&#x95EE;&#x9898;</h2>
+<blockquote>
+</blockquote>
+<h2 id="2038-&#x5982;&#x679C;&#x76F8;&#x90BB;&#x4E24;&#x4E2A;&#x989C;&#x8272;&#x5747;&#x76F8;&#x540C;&#x5219;&#x5220;&#x9664;&#x5F53;&#x524D;&#x989C;&#x8272;"><a href="https://leetcode-cn.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/" target="_blank">2038. &#x5982;&#x679C;&#x76F8;&#x90BB;&#x4E24;&#x4E2A;&#x989C;&#x8272;&#x5747;&#x76F8;&#x540C;&#x5219;&#x5220;&#x9664;&#x5F53;&#x524D;&#x989C;&#x8272;</a></h2>
+<p><img src="../../../imgs/leetcode/classify/image-20220322080710354.png" alt=""></p>
+<ul>
+<li>1.Alice&#x548C;Bob&#x5747;&#x4E0D;&#x53EF;&#x4EE5;&#x5728;&#x4E24;&#x6BB5;&#x62FF;&#x8D70;A&#x6216;&#x8005;B&#xFF0C;&#x9700;&#x8981;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5728;&#x5B57;&#x7B26;&#x4E32;&#x4E2D;&#x51FA;&#x73B0;&#x4E86;&#x8FDE;&#x7EED;&#x7684;AAA&#x6216;&#x8005;BBB&#x8FD9;&#x6837;&#x7684;&#x5B57;&#x7B26;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x62FF;&#x8D70;&#x4E00;&#x4E2A;A&#x6216;&#x8005;B&#xFF0C;&#x5206;&#x522B;&#x7EDF;&#x8BA1;&#x62FF;&#x8D70;&#x7684;&#x6B21;&#x6570;&#x5206;&#x522B;&#x8BB0;&#x4E3A;a&#x548C;b&#xFF0C;&#x8FD4;&#x56DE;a&gt;b&#x5373;&#x53EF;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">winnerOfGame</span><span class="hljs-params">(String colors)</span> </span>{
+    <span class="hljs-keyword">int</span> n = colors.length();
+    <span class="hljs-keyword">char</span>[] ch = colors.toCharArray();
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n - <span class="hljs-number">1</span>; i++) {
+        <span class="hljs-keyword">if</span> (ch[i] == ch[i - <span class="hljs-number">1</span>] &amp;&amp; ch[i] == ch[i + <span class="hljs-number">1</span>]) {
+            <span class="hljs-keyword">if</span> (ch[i] == <span class="hljs-string">&apos;A&apos;</span>) a++;
+            <span class="hljs-keyword">if</span> (ch[i] == <span class="hljs-string">&apos;B&apos;</span>) b++;
         }
     }
-    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; patience.length; i++) {
-        <span class="hljs-keyword">int</span> d = dist[i] * <span class="hljs-number">2</span>;
-        <span class="hljs-keyword">int</span> t = patience[i];
-        <span class="hljs-keyword">int</span> cur = d &lt;= t ? d : (d - <span class="hljs-number">1</span>) / t * t + d;
-        <span class="hljs-keyword">if</span> (cur &gt; res) res = cur;
-    }
-    <span class="hljs-keyword">return</span> res + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> a &gt; b;
 }
 </code></pre>
 
@@ -481,12 +454,12 @@
 
             
                 
-                <a href="search.html" class="navigation navigation-prev " aria-label="Previous page: 搜索">
+                <a href="dynamic_programing.html" class="navigation navigation-prev " aria-label="Previous page: 动态规划">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="dynamic_programing.html" class="navigation navigation-next " aria-label="Next page: 动态规划">
+                <a href="bit.html" class="navigation navigation-next " aria-label="Next page: 位运算">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -497,7 +470,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.2.10","depth":2,"next":{"title":"动态规划","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-03-20T02:54:32.009Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T00:11:01.659Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"博弈问题","level":"1.2.12","depth":2,"next":{"title":"位运算","level":"1.2.13","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},"previous":{"title":"动态规划","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/game_problem.md","mtime":"2022-03-22T00:10:03.611Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T00:11:01.659Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
