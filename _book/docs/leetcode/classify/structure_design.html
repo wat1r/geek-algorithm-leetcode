@@ -453,6 +453,69 @@
         }
     }
 </code></pre>
+<h2 id="&#x5251;&#x6307;-offer-09-&#x7528;&#x4E24;&#x4E2A;&#x6808;&#x5B9E;&#x73B0;&#x961F;&#x5217;"><a href="https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/" target="_blank">&#x5251;&#x6307; Offer 09. &#x7528;&#x4E24;&#x4E2A;&#x6808;&#x5B9E;&#x73B0;&#x961F;&#x5217;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1stack">&#x65B9;&#x6CD5;1:Stack</h3>
+<ul>
+<li>&#x53C2;&#x8003;&#x300C;232. &#x7528;&#x6808;&#x5B9E;&#x73B0;&#x961F;&#x5217;&#x300D;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CQueue</span> </span>{
+
+    Stack&lt;Integer&gt; data;
+    Stack&lt;Integer&gt; help;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CQueue</span><span class="hljs-params">()</span> </span>{
+        data = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+        help =<span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">appendTail</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+        help.push(value);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">deleteHead</span><span class="hljs-params">()</span> </span>{
+          <span class="hljs-comment">//&#x4E24;&#x4E2A;&#x6808;&#x7684;&#x6570;&#x636E;&#x90FD;&#x4E3A;&#x7A7A;&#xFF0C;&#x8FD4;&#x56DE;-1</span>
+        <span class="hljs-keyword">if</span>(data.isEmpty() &amp;&amp; help.isEmpty()) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+          <span class="hljs-comment">//data&#x7684;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x4E86;&#x4ECE;help&#x4E2D;&#x62FF;</span>
+        <span class="hljs-keyword">if</span>(data.isEmpty()){
+            <span class="hljs-keyword">while</span>(!help.isEmpty()) data.push(help.pop());
+        }
+          <span class="hljs-comment">//&#x5F39;&#x51FA;data&#x7684;&#x6808;&#x9876;&#x5143;&#x7D20;</span>
+        <span class="hljs-keyword">return</span> data.pop();
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2deque">&#x65B9;&#x6CD5;2:Deque</h3>
+<ul>
+<li>&#x6CE8;&#x91CA;&#x7684;&#x4EE3;&#x7801;&#x5199;&#x6CD5;&#x662F;&#x7B49;&#x4EF7;&#x7684;&#xFF0C;&#x8BE6;&#x7EC6;&#x53C2;&#x8003;<a href="basic_skill.html#Deque&#x7684;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;">&#x57FA;&#x7840;&#x4E0E;&#x6280;&#x5DE7;</a></li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CQueue</span> </span>{
+
+            Deque&lt;Integer&gt; data;
+            Deque&lt;Integer&gt; help;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CQueue</span><span class="hljs-params">()</span> </span>{
+                data = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+                help = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">appendTail</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+                help.addFirst(value);
+<span class="hljs-comment">//                help.push(value);</span>
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">deleteHead</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">if</span> (data.isEmpty() &amp;&amp; help.isEmpty()) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (data.isEmpty()) {
+                    <span class="hljs-keyword">while</span> (!help.isEmpty()) {
+<span class="hljs-comment">//                        data.addFirst(help.pollFirst());</span>
+                        data.push(help.pop());
+                    }
+                }
+<span class="hljs-comment">//                return data.pollFirst();</span>
+                <span class="hljs-keyword">return</span> data.pop();
+            }
+        }
+</code></pre>
 <h2 id="225-&#x7528;&#x961F;&#x5217;&#x5B9E;&#x73B0;&#x6808;"><a href="https://leetcode-cn.com/problems/implement-stack-using-queues/" target="_blank">225. &#x7528;&#x961F;&#x5217;&#x5B9E;&#x73B0;&#x6808;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x4E24;&#x4E2A;&#x961F;&#x5217;">&#x65B9;&#x6CD5;1:&#x4E24;&#x4E2A;&#x961F;&#x5217;</h3>
 <ul>
@@ -983,7 +1046,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.6","depth":2,"next":{"title":"双指针","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-21T23:32:23.812Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T00:11:01.659Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"结构设计","level":"1.2.6","depth":2,"next":{"title":"双指针","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"previous":{"title":"二分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure_design.md","mtime":"2022-03-22T00:28:39.654Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T00:28:57.364Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

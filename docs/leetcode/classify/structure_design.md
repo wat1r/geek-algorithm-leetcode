@@ -56,6 +56,78 @@
 
 
 
+## [剑指 Offer 09. 用两个栈实现队列](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/)
+
+### 方法1:Stack
+
+- 参考「232. 用栈实现队列」
+
+```java
+class CQueue {
+
+    Stack<Integer> data;
+    Stack<Integer> help;
+
+    public CQueue() {
+        data = new Stack<>();
+        help =new Stack<>();
+    }
+    
+    public void appendTail(int value) {
+        help.push(value);
+    }
+    
+    public int deleteHead() {
+      	//两个栈的数据都为空，返回-1
+        if(data.isEmpty() && help.isEmpty()) return -1;
+      	//data的数据没有了从help中拿
+        if(data.isEmpty()){
+            while(!help.isEmpty()) data.push(help.pop());
+        }
+      	//弹出data的栈顶元素
+        return data.pop();
+    }
+}
+```
+
+### 方法2:Deque
+
+- 注释的代码写法是等价的，详细参考[基础与技巧](/docs/leetcode/classify/basic_skill.md#Deque的主要使用方式)
+
+```java
+        class CQueue {
+
+            Deque<Integer> data;
+            Deque<Integer> help;
+
+            public CQueue() {
+                data = new ArrayDeque<>();
+                help = new ArrayDeque<>();
+            }
+
+            public void appendTail(int value) {
+                help.addFirst(value);
+//                help.push(value);
+            }
+
+            public int deleteHead() {
+                if (data.isEmpty() && help.isEmpty()) return -1;
+                if (data.isEmpty()) {
+                    while (!help.isEmpty()) {
+//                        data.addFirst(help.pollFirst());
+                        data.push(help.pop());
+                    }
+                }
+//                return data.pollFirst();
+                return data.pop();
+            }
+        }
+```
+
+
+
+
+
 ## [225. 用队列实现栈](https://leetcode-cn.com/problems/implement-stack-using-queues/)
 
 ### 方法1:两个队列
