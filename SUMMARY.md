@@ -29,5 +29,5 @@
 
 * 专栏
 
-  * [专栏- 数据结构](/docs/articles/data_structures/articles_data_structures.md)
+  * [图解翻转矩阵问题](/docs/articles/data_structures/matrix/图解翻转矩阵问题.md)
 
