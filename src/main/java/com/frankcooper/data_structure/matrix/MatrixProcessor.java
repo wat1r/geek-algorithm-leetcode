@@ -274,4 +274,20 @@ public class MatrixProcessor {
             }
         }
     }
+
+    static class _48_1 {
+        public void rotate(int[][] matrix) {
+            //考虑每一个环
+            int R = matrix.length, C = matrix[0].length;
+            for (int x = 0; x < R / 2; x++) {
+                for (int y = x; y < R - x - 1; y++) {
+                    int t = matrix[x][y];
+                    matrix[x][y] = matrix[R - 1 - y][x];
+                    matrix[R - 1 - y][x] = matrix[R - 1 - x][C - 1 - y];
+                    matrix[R - 1 - x][C - 1 - y] = matrix[y][C - 1 - x];
+                    matrix[y][C - 1 - x] = t;
+                }
+            }
+        }
+    }
 }
