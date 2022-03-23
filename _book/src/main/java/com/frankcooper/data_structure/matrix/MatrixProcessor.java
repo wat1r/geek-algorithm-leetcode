@@ -88,4 +88,57 @@ public class MatrixProcessor {
             }
         }
     }
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            int[][] matrix = {{1, 2, 3, 4},
+                    {5, 6, 7, 8},
+                    {9, 10, 11, 12},
+                    {13, 14, 15, 16}};
+            handler.display(matrix);
+            handler.rotate(matrix);
+            handler.display(matrix);
+        }
+
+
+        private void rotate(int[][] matrix) {
+            transpose(matrix);
+            reverseColumns(matrix);
+        }
+
+
+        //按矩阵的的列翻转
+        private void reverseColumns(int[][] matrix) {
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0, k = matrix[0].length - 1; j < k; j++, k--) {
+                    int t = matrix[j][i];//[j,i] <-> [k,i]
+                    matrix[j][i] = matrix[k][i];
+                    matrix[k][i] = t;
+                }
+            }
+        }
+
+
+        //转置
+        private void transpose(int[][] matrix) {
+            for (int r = 0; r < matrix.length; r++) {
+                for (int c = r; c < matrix[0].length; c++) {
+                    int t = matrix[c][r];
+                    matrix[c][r] = matrix[r][c];
+                    matrix[r][c] = t;
+                }
+            }
+        }
+
+
+        private void display(int[][] matrix) {
+            for (int r = 0; r < matrix.length; r++) {
+                for (int c = 0; c < matrix[0].length; c++) {
+                    System.out.printf("%d\t", matrix[r][c]);
+                }
+                System.out.print("\n");
+            }
+        }
+    }
 }

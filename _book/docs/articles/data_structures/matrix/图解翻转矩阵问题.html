@@ -638,7 +638,7 @@ Output:
             System.out.print(<span class="hljs-string">&quot;\n&quot;</span>);
         }
     }
-}
+}f
 </code></pre>
 <h3 id="&#x8F93;&#x51FA;">&#x8F93;&#x51FA;</h3>
 <pre><code class="lang-java"><span class="hljs-number">1</span>     <span class="hljs-number">2</span>    <span class="hljs-number">3</span>     <span class="hljs-number">4</span>    
@@ -650,6 +650,119 @@ Output:
 <span class="hljs-number">3</span>    <span class="hljs-number">7</span>    <span class="hljs-number">11</span> <span class="hljs-number">15</span>    
 <span class="hljs-number">2</span>    <span class="hljs-number">6</span>    <span class="hljs-number">10</span> <span class="hljs-number">14</span>    
 <span class="hljs-number">1</span>    <span class="hljs-number">5</span>    <span class="hljs-number">9</span>     <span class="hljs-number">13</span>
+</code></pre>
+<h3 id="&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;">&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;</h3>
+<ul>
+<li><strong>&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;</strong>&#xFF1A;O(n*n) &#x5176;&#x4E2D;n&#x662F;&#x77E9;&#x9635;&#x7684;&#x957F;&#x5EA6;</li>
+<li><strong>&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;</strong>: O(1)&#xFF0C;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x5230;&#x989D;&#x5916;&#x7684;&#x7A7A;&#x95F4;&#xFF0C;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;</li>
+</ul>
+<p>&#x4E0D;&#x8FC7;&#x8FD8;&#x6709;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x601D;&#x8DEF;&#xFF1A;</p>
+<ul>
+<li>1.&#x7FFB;&#x8F6C;&#x6BCF;&#x4E00;&#x884C;</li>
+<li>2.&#x6267;&#x884C;&#x8F6C;&#x7F6E;</li>
+</ul>
+<h2 id="2&#x518D;&#x8BBA;&#x5982;&#x4F55;&#x539F;&#x5730;&#x5C06;&#x77E9;&#x9635;&#x65CB;&#x8F6C;90&#x5EA6;">2.&#x518D;&#x8BBA;&#x5982;&#x4F55;&#x539F;&#x5730;&#x5C06;&#x77E9;&#x9635;&#x65CB;&#x8F6C;90&#x5EA6;</h2>
+<blockquote>
+<p><strong>&#x4E0A;&#x9762;&#x5DF2;&#x7ECF;&#x8BA8;&#x8BBA;&#x4E86;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x539F;&#x5730;&#x7684;&#x77E9;&#x9635;&#x7FFB;&#x8F6C;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x518D;&#x7ED9;&#x51FA;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x601D;&#x8DEF;</strong></p>
+</blockquote>
+<p><img src="../../../../imgs/articles/data_structures/matrix/image-20220323184257210.png" alt=""></p>
+<p>&#x4E3B;&#x8981;&#x7684;&#x601D;&#x8DEF;&#x662F;&#xFF1A;&#x5C06;&#x77E9;&#x9635;&#x7684;&#x8F6C;&#x7F6E;&#xFF0C;&#x7136;&#x540E;&#x53CD;&#x8F6C;&#x8F6C;&#x7F6E;&#x77E9;&#x9635;&#x7684;&#x5217;&#x3002;</p>
+<h3 id="&#x7B97;&#x6CD5;">&#x7B97;&#x6CD5;</h3>
+<ul>
+<li>1.&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x7ED9;&#x5B9A;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6709;&#x4E24;&#x4E2A;&#x4EFB;&#x52A1;&#x3002; &#x7B2C;&#x4E00;&#x4E2A;&#x662F;&#x627E;&#x5230;&#x8F6C;&#x7F6E;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x662F;&#x5728;&#x4E0D;&#x4F7F;&#x7528;&#x989D;&#x5916;&#x7A7A;&#x95F4;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x53CD;&#x8F6C;&#x5217;&#x3002;</li>
+<li>2.&#x77E9;&#x9635;&#x7684;&#x8F6C;&#x7F6E;&#x662F;&#x5F53;&#x77E9;&#x9635;&#x7FFB;&#x8F6C;&#x5176;&#x5BF9;&#x89D2;&#x7EBF;&#x65F6;&#xFF0C;&#x5373;&#x5143;&#x7D20;&#x7684;&#x884C;&#x7D22;&#x5F15;&#x53D8;&#x4E3A;&#x5217;&#x7D22;&#x5F15;&#xFF0C;&#x53CD;&#x4E4B;&#x4EA6;&#x7136;&#x3002; &#x56E0;&#x6B64;&#xFF0C;&#x8981;&#x627E;&#x5230;&#x8F6C;&#x7F6E;&#xFF0C;&#x5C06;&#x4F4D;&#x7F6E; (i, j) &#x5904;&#x7684;&#x5143;&#x7D20;&#x4E0E; (j, i) &#x4E92;&#x6362;&#x3002;&#x6267;&#x884C;&#x4E24;&#x4E2A;&#x5FAA;&#x73AF;&#xFF0C;&#x5916;&#x5FAA;&#x73AF;&#x4ECE; 0 &#x5230;&#x884C;&#x6570;&#xFF0C;&#x5185;&#x5FAA;&#x73AF;&#x4ECE; 0 &#x5230;&#x5916;&#x5FAA;&#x73AF;&#x7684;&#x7D22;&#x5F15;&#x3002;</li>
+<li>3.&#x8981;&#x53CD;&#x8F6C;&#x8F6C;&#x7F6E;&#x77E9;&#x9635;&#x7684;&#x5217;&#xFF0C;&#x8BF7;&#x8FD0;&#x884C;&#x4E24;&#x4E2A;&#x5D4C;&#x5957;&#x5FAA;&#x73AF;&#xFF0C;&#x5916;&#x5FAA;&#x73AF;&#x4ECE; 0 &#x5230;&#x5217;&#x6570;&#xFF0C;&#x5185;&#x5FAA;&#x73AF;&#x4ECE; 0 &#x5230;&#x884C;&#x6570;/2&#xFF0C;&#x5C06; (i, j) &#x5904;&#x7684;&#x5143;&#x7D20;&#x4E0E; (i, row[count-1 -j])&#x5BF9;&#x8C03;&#xFF0C;&#x5176;&#x4E2D; i &#x548C; j &#x5206;&#x522B;&#x662F;&#x5185;&#x5FAA;&#x73AF;&#x548C;&#x5916;&#x5FAA;&#x73AF;&#x7684;&#x7D22;&#x5F15;&#x3002;</li>
+</ul>
+<h3 id="&#x4EE3;&#x7801;">&#x4EE3;&#x7801;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_3rd</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        _3rd handler = <span class="hljs-keyword">new</span> _3rd();
+        <span class="hljs-keyword">int</span>[][] matrix = {{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>},
+                {<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>},
+                {<span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>},
+                {<span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>}};
+        handler.display(matrix);
+        handler.rotate(matrix);
+        handler.display(matrix);
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+        transpose(matrix);
+        reverseColumns(matrix);
+    }
+
+
+    <span class="hljs-comment">//&#x6309;&#x77E9;&#x9635;&#x7684;&#x7684;&#x5217;&#x7FFB;&#x8F6C;</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reverseColumns</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; matrix.length; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>, k = matrix[<span class="hljs-number">0</span>].length - <span class="hljs-number">1</span>; j &lt; k; j++, k--) {
+                <span class="hljs-keyword">int</span> t = matrix[j][i];<span class="hljs-comment">//[j,i] &lt;-&gt; [k,i]</span>
+                matrix[j][i] = matrix[k][i];
+                matrix[k][i] = t;
+            }
+        }
+    }
+
+
+    <span class="hljs-comment">//&#x8F6C;&#x7F6E;</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">transpose</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; matrix.length; r++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = r; c &lt; matrix[<span class="hljs-number">0</span>].length; c++) {
+                <span class="hljs-keyword">int</span> t = matrix[c][r];
+                matrix[c][r] = matrix[r][c];
+                matrix[r][c] = t;
+            }
+        }
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; matrix.length; r++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; matrix[<span class="hljs-number">0</span>].length; c++) {
+                System.out.printf(<span class="hljs-string">&quot;%d\t&quot;</span>, matrix[r][c]);
+            }
+            System.out.print(<span class="hljs-string">&quot;\n&quot;</span>);
+        }
+    }
+}
+</code></pre>
+<h3 id="&#x8F93;&#x51FA;">&#x8F93;&#x51FA;</h3>
+<pre><code class="lang-java"><span class="hljs-number">1</span>    <span class="hljs-number">2</span>    <span class="hljs-number">3</span>    <span class="hljs-number">4</span>    
+<span class="hljs-number">5</span>    <span class="hljs-number">6</span>    <span class="hljs-number">7</span>    <span class="hljs-number">8</span>    
+<span class="hljs-number">9</span>    <span class="hljs-number">10</span>    <span class="hljs-number">11</span>    <span class="hljs-number">12</span>    
+<span class="hljs-number">13</span>    <span class="hljs-number">14</span>    <span class="hljs-number">15</span>    <span class="hljs-number">16</span>    
+-----------------
+<span class="hljs-number">4</span>    <span class="hljs-number">8</span>    <span class="hljs-number">12</span>    <span class="hljs-number">16</span>    
+<span class="hljs-number">3</span>    <span class="hljs-number">7</span>    <span class="hljs-number">11</span>    <span class="hljs-number">15</span>    
+<span class="hljs-number">2</span>    <span class="hljs-number">6</span>    <span class="hljs-number">10</span>    <span class="hljs-number">14</span>    
+<span class="hljs-number">1</span>    <span class="hljs-number">5</span>    <span class="hljs-number">9</span>    <span class="hljs-number">13</span>
+</code></pre>
+<h3 id="&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;">&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;</h3>
+<ul>
+<li><strong>&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;</strong>&#xFF1A;O(R*C) &#x5176;&#x4E2D;R&#x548C;C&#x662F;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;</li>
+<li><strong>&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;</strong>: O(1)&#xFF0C;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x5230;&#x989D;&#x5916;&#x7684;&#x7A7A;&#x95F4;</li>
+</ul>
+<h2 id="3&#x5982;&#x4F55;&#x539F;&#x5730;&#x5C06;&#x77E9;&#x9635;&#x65CB;&#x8F6C;180&#x5EA6;">3.&#x5982;&#x4F55;&#x539F;&#x5730;&#x5C06;&#x77E9;&#x9635;&#x65CB;&#x8F6C;180&#x5EA6;</h2>
+<blockquote>
+<p><strong>&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x90E8;&#x5206;&#x89E3;&#x51B3;&#x4E86;&#x5982;&#x4F55;&#x65CB;&#x8F6C;90&#x5EA6;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x90A3;&#x4E48;180&#x5EA6;&#x600E;&#x4E48;&#x5904;&#x7406;&#xFF1F;</strong></p>
+</blockquote>
+<p>&#x4F8B;&#x5B50;:</p>
+<pre><code class="lang-java">Input :  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>
+         <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>
+         <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>
+Output : <span class="hljs-number">9</span> <span class="hljs-number">8</span> <span class="hljs-number">7</span> 
+         <span class="hljs-number">6</span> <span class="hljs-number">5</span> <span class="hljs-number">4</span> 
+         <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span>
+
+Input :  <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> 
+         <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> 
+         <span class="hljs-number">9</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> 
+         <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> 
+Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">3</span> 
+         <span class="hljs-number">2</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">9</span> 
+         <span class="hljs-number">8</span> <span class="hljs-number">7</span> <span class="hljs-number">6</span> <span class="hljs-number">5</span> 
+         <span class="hljs-number">4</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span>
 </code></pre>
 
                                 
@@ -686,7 +799,7 @@ Output:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T09:05:43.243Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T09:34:13.442Z"},"basePath":"../../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T11:43:05.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T11:47:44.224Z"},"basePath":"../../../..","book":{"language":""}});
         });
     </script>
 </div>
