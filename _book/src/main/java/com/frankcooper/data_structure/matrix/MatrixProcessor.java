@@ -141,4 +141,26 @@ public class MatrixProcessor {
             }
         }
     }
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            int[][] matrix = {{1, 2, 3, 4},
+                    {5, 6, 7, 8},
+                    {9, 10, 11, 12},
+                    {13, 14, 15, 16}};
+            handler.rotateMatrix(matrix);
+        }
+
+
+        private void rotateMatrix(int[][] matrix) {
+            int N = matrix.length;
+            for (int i = N - 1; i >= 0; i--) {
+                for (int j = N - 1; j >= 0; j--) {
+                    System.out.printf("%d ", matrix[i][j]);
+                }
+                System.out.println();
+            }
+        }
+    }
 }
