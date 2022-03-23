@@ -110,7 +110,7 @@ public class MatrixProcessor {
 
         //按矩阵的的列翻转
         private void reverseColumns(int[][] matrix) {
-            for (int i = 0; i < matrix.length; i++) {
+            for (int i = 0; i < matrix[0].length; i++) {
                 for (int j = 0, k = matrix[0].length - 1; j < k; j++, k--) {
                     int t = matrix[j][i];//[j,i] <-> [k,i]
                     matrix[j][i] = matrix[k][i];
@@ -286,6 +286,36 @@ public class MatrixProcessor {
                     matrix[R - 1 - y][x] = matrix[R - 1 - x][C - 1 - y];
                     matrix[R - 1 - x][C - 1 - y] = matrix[y][C - 1 - x];
                     matrix[y][C - 1 - x] = t;
+                }
+            }
+        }
+    }
+
+    static class _48_2 {
+        public void rotate(int[][] matrix) {
+            transpose(matrix);
+            reverseColumns(matrix);
+        }
+
+        //按矩阵的的列翻转
+        private void reverseColumns(int[][] matrix) {
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0, k = matrix.length - 1; j < k; j++, k--) {
+                    int t = matrix[i][j];//[i,j] <-> [i,k]
+                    matrix[i][j] = matrix[i][k];
+                    matrix[i][k] = t;
+                }
+            }
+        }
+
+
+        //转置
+        private void transpose(int[][] matrix) {
+            for (int r = 0; r < matrix.length; r++) {
+                for (int c = r; c < matrix[0].length; c++) {
+                    int t = matrix[c][r];
+                    matrix[c][r] = matrix[r][c];
+                    matrix[r][c] = t;
                 }
             }
         }

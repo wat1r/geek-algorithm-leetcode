@@ -695,7 +695,7 @@ Output:
 
     <span class="hljs-comment">//&#x6309;&#x77E9;&#x9635;&#x7684;&#x7684;&#x5217;&#x7FFB;&#x8F6C;</span>
     <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reverseColumns</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; matrix.length; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; matrix[<span class="hljs-number">0</span>].length; i++) {
             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>, k = matrix[<span class="hljs-number">0</span>].length - <span class="hljs-number">1</span>; j &lt; k; j++, k--) {
                 <span class="hljs-keyword">int</span> t = matrix[j][i];<span class="hljs-comment">//[j,i] &lt;-&gt; [k,i]</span>
                 matrix[j][i] = matrix[k][i];
@@ -988,6 +988,36 @@ Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <
             }
         }
 </code></pre>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x53C2;&#x8003;<strong>2.&#x518D;&#x8BBA;&#x5982;&#x4F55;&#x539F;&#x5730;&#x5C06;&#x77E9;&#x9635;&#x65CB;&#x8F6C;90&#x5EA6;</strong>&#xFF0C;&#x5728;&#x505A;&#x7B2C;&#x4E8C;&#x6B65;&#x7FFB;&#x8F6C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C06;&#x884C;&#x7FFB;&#x8F6C;&#x53D8;&#x6210;&#x5217;&#x7FFB;&#x8F6C;</p>
+<p><img src="../../../../imgs/articles/data_structures/matrix/image-20220323220009595.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+    transpose(matrix);
+    reverseColumns(matrix);
+}
+
+<span class="hljs-comment">//&#x6309;&#x77E9;&#x9635;&#x7684;&#x7684;&#x5217;&#x7FFB;&#x8F6C; &#x7FFB;&#x8F6C;&#x7684;&#x662F;&#x7B2C;&#x4E00;&#x5217;&#x548C;&#x6700;&#x540E;&#x4E00;&#x5217; &#x7B2C;&#x4E8C;&#x5217;&#x548C;&#x5012;&#x6570;&#x7B2C;&#x4E8C;&#x5217; &#x5982;&#x6B64;...</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reverseColumns</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; matrix.length; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>, k = matrix.length - <span class="hljs-number">1</span>; j &lt; k; j++, k--) {
+            <span class="hljs-keyword">int</span> t = matrix[i][j];<span class="hljs-comment">//[i,j] &lt;-&gt; [i,k]</span>
+            matrix[i][j] = matrix[i][k];
+            matrix[i][k] = t;
+        }
+    }
+}
+
+
+<span class="hljs-comment">//&#x8F6C;&#x7F6E;</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">transpose</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; matrix.length; r++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = r; c &lt; matrix[<span class="hljs-number">0</span>].length; c++) {
+            <span class="hljs-keyword">int</span> t = matrix[c][r];
+            matrix[c][r] = matrix[r][c];
+            matrix[r][c] = t;
+        }
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1023,7 +1053,7 @@ Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T13:49:56.538Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T13:50:08.731Z"},"basePath":"../../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T14:06:50.797Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T14:07:05.378Z"},"basePath":"../../../..","book":{"language":""}});
         });
     </script>
 </div>
