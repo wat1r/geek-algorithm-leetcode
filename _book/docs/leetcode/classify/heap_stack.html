@@ -435,6 +435,68 @@
                                 <blockquote>
 </blockquote>
 <h2 id="20-&#x6709;&#x6548;&#x7684;&#x62EC;&#x53F7;"><a href="https://leetcode-cn.com/problems/valid-parentheses/" target="_blank">20. &#x6709;&#x6548;&#x7684;&#x62EC;&#x53F7;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1stack">&#x65B9;&#x6CD5;1:Stack</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isValid</span><span class="hljs-params">(String s)</span> </span>{
+    Map&lt;Character, Character&gt; dict = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    dict.put(<span class="hljs-string">&apos;]&apos;</span>, <span class="hljs-string">&apos;[&apos;</span>);
+    dict.put(<span class="hljs-string">&apos;)&apos;</span>, <span class="hljs-string">&apos;(&apos;</span>);
+    dict.put(<span class="hljs-string">&apos;}&apos;</span>, <span class="hljs-string">&apos;{&apos;</span>);
+    Stack&lt;Character&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;[&apos;</span> || c == <span class="hljs-string">&apos;(&apos;</span> || c == <span class="hljs-string">&apos;{&apos;</span>) stk.push(c);
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!stk.isEmpty() &amp;&amp; dict.containsKey(c) &amp;&amp; dict.get(c) == stk.peek()) stk.pop();
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+    <span class="hljs-keyword">return</span> stk.isEmpty();
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2deque">&#x65B9;&#x6CD5;2:Deque</h3>
+<ul>
+<li>&#x8BE6;&#x7EC6;&#x53C2;&#x8003;<a href="basic_skill.html#Deque&#x7684;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;">&#x57FA;&#x7840;&#x4E0E;&#x6280;&#x5DE7;</a></li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isValid</span><span class="hljs-params">(String s)</span> </span>{
+            Map&lt;Character, Character&gt; dict = <span class="hljs-keyword">new</span> HashMap&lt;Character, Character&gt;() {{
+                put(<span class="hljs-string">&apos;]&apos;</span>, <span class="hljs-string">&apos;[&apos;</span>);
+                put(<span class="hljs-string">&apos;)&apos;</span>, <span class="hljs-string">&apos;(&apos;</span>);
+                put(<span class="hljs-string">&apos;}&apos;</span>, <span class="hljs-string">&apos;{&apos;</span>);
+            }};
+            Deque&lt;Character&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+                <span class="hljs-comment">//&#x5DE6;&#x8FB9;&#x62EC;&#x53F7;&#x7EB7;&#x7EB7;&#x5165;&#x6808;</span>
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;[&apos;</span> || c == <span class="hljs-string">&apos;(&apos;</span> || c == <span class="hljs-string">&apos;{&apos;</span>) deque.addFirst(c);
+                <span class="hljs-comment">//&#x5982;&#x679C;&#x627E;&#x5230;&#x4E86;&#x53F3;&#x8FB9;&#x62EC;&#x53F7;&#xFF0C;&#x4E14;&#x7B26;&#x5408;&#x9898;&#x610F;&#x7684;&#x53F3;&#x8FB9;&#x62EC;&#x53F7;&#xFF0C;&#x627E;&#x5230;&#x6808;&#x9876;&#x7684;&#x5B57;&#x7B26;&#x770B;&#x770B;&#x662F;&#x5426;&#x4E0D;&#x662F;&#x6210;&#x5BF9;&#x7684;</span>
+                <span class="hljs-comment">//dict.containsKey(c) &#x53BB;&#x6389;&#x4E5F;&#x53EF;&#x4EE5;&#x8DD1;&#x8FC7;</span>
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!deque.isEmpty() &amp;&amp; dict.containsKey(c) &amp;&amp; dict.get(c) == deque.peekFirst()) {
+                    deque.pollFirst();
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+            <span class="hljs-comment">//&#x6CE8;&#x610F; s=&quot;[&quot; &#x8FD9;&#x4E2A;case&#xFF0C;&#x9700;&#x8981;&#x6700;&#x540E;&#x8FD4;&#x56DE;</span>
+            <span class="hljs-keyword">return</span> deque.isEmpty();
+        }
+</code></pre>
+<ul>
+<li>&#x7B49;&#x4EF7;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isValid</span><span class="hljs-params">(String s)</span> </span>{
+    Map&lt;Character, Character&gt; dict = <span class="hljs-keyword">new</span> HashMap&lt;Character, Character&gt;() {{
+        put(<span class="hljs-string">&apos;]&apos;</span>, <span class="hljs-string">&apos;[&apos;</span>);
+        put(<span class="hljs-string">&apos;)&apos;</span>, <span class="hljs-string">&apos;(&apos;</span>);
+        put(<span class="hljs-string">&apos;}&apos;</span>, <span class="hljs-string">&apos;{&apos;</span>);
+    }};
+    Deque&lt;Character&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+        <span class="hljs-comment">//&#x5DE6;&#x8FB9;&#x62EC;&#x53F7;&#x7EB7;&#x7EB7;&#x5165;&#x6808;</span>
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;[&apos;</span> || c == <span class="hljs-string">&apos;(&apos;</span> || c == <span class="hljs-string">&apos;{&apos;</span>) deque.push(c);
+            <span class="hljs-comment">//&#x5982;&#x679C;&#x627E;&#x5230;&#x4E86;&#x53F3;&#x8FB9;&#x62EC;&#x53F7;&#xFF0C;&#x4E14;&#x7B26;&#x5408;&#x9898;&#x610F;&#x7684;&#x53F3;&#x8FB9;&#x62EC;&#x53F7;&#xFF0C;&#x627E;&#x5230;&#x6808;&#x9876;&#x7684;&#x5B57;&#x7B26;&#x770B;&#x770B;&#x662F;&#x5426;&#x4E0D;&#x662F;&#x6210;&#x5BF9;&#x7684;</span>
+            <span class="hljs-comment">//dict.containsKey(c) &#x53BB;&#x6389;&#x4E5F;&#x53EF;&#x4EE5;&#x8DD1;&#x8FC7;</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!deque.isEmpty() &amp;&amp; dict.containsKey(c) &amp;&amp; dict.get(c) == deque.peek()) {
+            deque.poll();
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+    <span class="hljs-comment">//&#x6CE8;&#x610F; s=&quot;[&quot; &#x8FD9;&#x4E2A;case&#xFF0C;&#x9700;&#x8981;&#x6700;&#x540E;&#x8FD4;&#x56DE;</span>
+    <span class="hljs-keyword">return</span> deque.isEmpty();
+}
+</code></pre>
 
                                 
                                 </section>
@@ -478,7 +540,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-03-22T12:45:14.353Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-22T12:45:27.049Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-03-23T00:31:13.369Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T00:31:24.016Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

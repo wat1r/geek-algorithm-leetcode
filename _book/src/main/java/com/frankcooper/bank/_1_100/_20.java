@@ -1,9 +1,6 @@
 package com.frankcooper.bank._1_100;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Date 2020/8/14
@@ -39,6 +36,55 @@ public class _20 {
                 else return false;
             }
             return stk.isEmpty();
+        }
+    }
+
+    static class _1st_1 {
+        public static void main(String[] args) {
+
+        }
+
+        public boolean isValid(String s) {
+            Map<Character, Character> dict = new HashMap<Character, Character>() {{
+                put(']', '[');
+                put(')', '(');
+                put('}', '{');
+            }};
+            Deque<Character> deque = new ArrayDeque<>();
+            for (char c : s.toCharArray()) {
+                //左边括号纷纷入栈
+                if (c == '[' || c == '(' || c == '{') deque.addFirst(c);
+                    //如果找到了右边括号，且符合题意的右边括号，找到栈顶的字符看看是否不是成对的
+                    //dict.containsKey(c) 去掉也可以跑过
+                else if (!deque.isEmpty() && dict.containsKey(c) && dict.get(c) == deque.peekFirst()) {
+                    deque.pollFirst();
+                } else return false;
+            }
+            //注意 s="[" 这个case，需要最后返回
+            return deque.isEmpty();
+        }
+
+    }
+
+    static class _1st_2 {
+        public boolean isValid(String s) {
+            Map<Character, Character> dict = new HashMap<Character, Character>() {{
+                put(']', '[');
+                put(')', '(');
+                put('}', '{');
+            }};
+            Deque<Character> deque = new ArrayDeque<>();
+            for (char c : s.toCharArray()) {
+                //左边括号纷纷入栈
+                if (c == '[' || c == '(' || c == '{') deque.push(c);
+                    //如果找到了右边括号，且符合题意的右边括号，找到栈顶的字符看看是否不是成对的
+                    //dict.containsKey(c) 去掉也可以跑过
+                else if (!deque.isEmpty() && dict.containsKey(c) && dict.get(c) == deque.peek()) {
+                    deque.poll();
+                } else return false;
+            }
+            //注意 s="[" 这个case，需要最后返回
+            return deque.isEmpty();
         }
     }
 }
