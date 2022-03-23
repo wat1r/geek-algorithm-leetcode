@@ -347,9 +347,9 @@ public ListNode detectCycle(ListNode head) {
 
 ### 方法1:快慢指针+翻转
 
-![image-20220323085414473](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220323085414473.png)
+![i](/imgs/leetcode/classify/image-20220323085414473.png)
 
-![image-20220323085442753](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220323085442753.png)
+![](//imgs/leetcode/classify/image-20220323085442753.png)
 
 ```java
 public void reorderList(ListNode head) {
@@ -394,7 +394,7 @@ private ListNode reverse(ListNode head) {
 
 ### 方法2:头插法
 
-![image-20220323094247355](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220323094247355.png)
+![](/imgs/leetcode/classify/image-20220323094247355.png)
 
 
 
@@ -430,7 +430,7 @@ public void reorderList(ListNode head) {
 
 ## [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
 
-![image-20220318201515791](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220318201515791.png)
+![](/imgs/leetcode/classify/image-20220318201515791.png)
 
 ```java
         TreeNode prev = null;
