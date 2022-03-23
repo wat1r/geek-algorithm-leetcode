@@ -702,6 +702,75 @@
     <span class="hljs-keyword">return</span> cur;
 }
 </code></pre>
+<h2 id="143-&#x91CD;&#x6392;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/reorder-list/" target="_blank">143. &#x91CD;&#x6392;&#x94FE;&#x8868;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x5FEB;&#x6162;&#x6307;&#x9488;&#x7FFB;&#x8F6C;">&#x65B9;&#x6CD5;1:&#x5FEB;&#x6162;&#x6307;&#x9488;+&#x7FFB;&#x8F6C;</h3>
+<p><img src="../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20220323085414473.png" alt="image-20220323085414473"></p>
+<p><img src="../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20220323085442753.png" alt="image-20220323085442753"></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reorderList</span><span class="hljs-params">(ListNode head)</span> </span>{
+    <span class="hljs-keyword">if</span> (head == <span class="hljs-keyword">null</span> || head.next == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span>;
+    ListNode dummy = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+    dummy.next = head;
+    ListNode slow = head, fast = head;
+    <span class="hljs-comment">//&#x5FEB;&#x6162;&#x6307;&#x9488;&#x627E;&#x6574;&#x4E2A;&#x94FE;&#x8868;&#x7684;&#x4E2D;&#x70B9;&#xFF0C;&#x51C6;&#x5907;&#x5207;&#x5206;</span>
+    <span class="hljs-keyword">while</span> (fast.next != <span class="hljs-keyword">null</span> &amp;&amp; fast.next.next != <span class="hljs-keyword">null</span>) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode tmp = slow.next;
+    slow.next = <span class="hljs-keyword">null</span>;
+    <span class="hljs-comment">//&#x7FFB;&#x8F6C;&#x7B2C;&#x4E8C;&#x6BB5;&#x94FE;&#x8868;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x7B2C;&#x4E8C;&#x6BB5;&#x94FE;&#x8868;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+    ListNode second = reverse(tmp);
+    <span class="hljs-comment">//&#x524D;&#x4E00;&#x6BB5;&#x94FE;&#x8868;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+    ListNode first = dummy.next;
+    <span class="hljs-comment">//&#x4E32;&#x8054;&#x4E24;&#x6BB5;&#x94FE;&#x8868;</span>
+    <span class="hljs-keyword">while</span> (second != <span class="hljs-keyword">null</span>) {
+        ListNode l2 = second.next;
+        second.next = first.next;
+        first.next = second;
+        first = second.next;
+        second = l2;
+    }
+}
+
+
+<span class="hljs-comment">//&#x7FFB;&#x8F6C;&#x94FE;&#x8868;</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> ListNode <span class="hljs-title">reverse</span><span class="hljs-params">(ListNode head)</span> </span>{
+    ListNode cur = head, pre = <span class="hljs-keyword">null</span>, next;
+    <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span>) {
+        next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+    <span class="hljs-keyword">return</span> pre;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x5934;&#x63D2;&#x6CD5;">&#x65B9;&#x6CD5;2:&#x5934;&#x63D2;&#x6CD5;</h3>
+<p><img src="../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20220323094247355.png" alt="image-20220323094247355"></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reorderList</span><span class="hljs-params">(ListNode head)</span> </span>{
+    ListNode cur = head;
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x94FE;&#x8868;&#x7684;&#x6570;&#x91CF;</span>
+    <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span>) {
+        cnt++;
+        cur = cur.next;
+    }
+    <span class="hljs-comment">//&#x5934;&#x63D2;&#x7684;&#x6B21;&#x6570;&#xFF0C;&#x5076;&#x6570;&#x4E2A;&#x7684;&#x8BDD;-1</span>
+    <span class="hljs-keyword">int</span> times = (cnt % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>) ? cnt / <span class="hljs-number">2</span> : cnt / <span class="hljs-number">2</span> - <span class="hljs-number">1</span>;
+    cur = head;<span class="hljs-comment">//&#x91CD;&#x7F6E;cur&#x8282;&#x70B9;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; times; i++) {
+        ListNode t = head;<span class="hljs-comment">//&#x627E;&#x5230;&#x8981;&#x79FB;&#x52A8;&#x7684;&#x8282;&#x70B9;&#x524D;&#x9762;&#x7684;&#x90A3;&#x4E2A;&#x8282;&#x70B9;</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">2</span>; j &lt; cnt; j++) {
+            t = t.next;
+        }
+        <span class="hljs-comment">//&#x5934;&#x63D2;</span>
+        t.next.next = cur.next;
+        cur.next = t.next;
+        t.next = <span class="hljs-keyword">null</span>;
+        <span class="hljs-keyword">if</span> (cur.next != <span class="hljs-keyword">null</span>) cur = cur.next.next;
+    }
+
+}
+</code></pre>
 <h2 id="&#x6811;">&#x6811;</h2>
 <h2 id="98-&#x9A8C;&#x8BC1;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;"><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank">98. &#x9A8C;&#x8BC1;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;</a></h2>
 <p><img src="../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20220318201515791.png" alt="image-20220318201515791"></p>
@@ -1058,7 +1127,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-21T13:47:48.170Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T00:31:24.016Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-23T01:43:23.664Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T01:45:32.498Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

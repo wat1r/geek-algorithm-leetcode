@@ -343,13 +343,86 @@ public ListNode detectCycle(ListNode head) {
 
 
 
+## [143. 重排链表](https://leetcode-cn.com/problems/reorder-list/)
+
+### 方法1:快慢指针+翻转
+
+![image-20220323085414473](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220323085414473.png)
+
+![image-20220323085442753](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220323085442753.png)
+
+```java
+public void reorderList(ListNode head) {
+    if (head == null || head.next == null) return;
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode slow = head, fast = head;
+    //快慢指针找整个链表的中点，准备切分
+    while (fast.next != null && fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode tmp = slow.next;
+    slow.next = null;
+    //翻转第二段链表，并返回第二段链表的第一个节点
+    ListNode second = reverse(tmp);
+    //前一段链表的第一个节点
+    ListNode first = dummy.next;
+    //串联两段链表
+    while (second != null) {
+        ListNode l2 = second.next;
+        second.next = first.next;
+        first.next = second;
+        first = second.next;
+        second = l2;
+    }
+}
+
+
+//翻转链表
+private ListNode reverse(ListNode head) {
+    ListNode cur = head, pre = null, next;
+    while (cur != null) {
+        next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
+    }
+    return pre;
+}
+```
+
+### 方法2:头插法
+
+![image-20220323094247355](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220323094247355.png)
 
 
 
+```java
+public void reorderList(ListNode head) {
+    ListNode cur = head;
+    int cnt = 0;//链表的数量
+    while (cur != null) {
+        cnt++;
+        cur = cur.next;
+    }
+    //头插的次数，偶数个的话-1
+    int times = (cnt % 2 == 1) ? cnt / 2 : cnt / 2 - 1;
+    cur = head;//重置cur节点
+    for (int i = 0; i < times; i++) {
+        ListNode t = head;//找到要移动的节点前面的那个节点
+        for (int j = 2; j < cnt; j++) {
+            t = t.next;
+        }
+        //头插
+        t.next.next = cur.next;
+        cur.next = t.next;
+        t.next = null;
+        if (cur.next != null) cur = cur.next.next;
+    }
 
-
-
-
+}
+```
 
 ## 树
 
