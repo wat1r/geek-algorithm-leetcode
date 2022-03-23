@@ -1018,6 +1018,25 @@ Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <
     }
 }
 </code></pre>
+<h2 id="&#x9762;&#x8BD5;&#x9898;-0107-&#x65CB;&#x8F6C;&#x77E9;&#x9635;"><a href="https://leetcode-cn.com/problems/rotate-matrix-lcci/" target="_blank">&#x9762;&#x8BD5;&#x9898; 01.07. &#x65CB;&#x8F6C;&#x77E9;&#x9635;</a></h2>
+<blockquote>
+<p><strong>&#x8FD9;&#x4E00;&#x9898;&#x7B49;&#x540C;&#x4E8E;48&#x9898;</strong></p>
+</blockquote>
+<h2 id="867-&#x8F6C;&#x7F6E;&#x77E9;&#x9635;"><a href="https://leetcode-cn.com/problems/transpose-matrix/" target="_blank">867. &#x8F6C;&#x7F6E;&#x77E9;&#x9635;</a></h2>
+<blockquote>
+<p><strong>&#x8FD9;&#x4E00;&#x9898;&#x53EA;&#x9700;&#x8981;&#x7528;&#x5230;&#x8F6C;&#x7F6E;&#x7684;&#x90A3;&#x6BB5;&#x4EE3;&#x7801;&#x5373;&#x53EF;</strong>,&#x4F46;&#x662F;&#x8FD9;&#x4E00;&#x9898;m*n&#x7684;&#x77E9;&#x9635;&#xFF0C;m&#x548C;n&#x53EF;&#x80FD;&#x4E0D;&#x76F8;&#x540C;&#xFF0C;&#x6240;&#x4EE5;&#x7528;&#x5230;&#x989D;&#x5916;&#x7A7A;&#x95F4;&#xFF0C;&#x7B80;&#x5355;&#x6A21;&#x62DF;&#x5373;&#x53EF;</p>
+</blockquote>
+<pre><code class="lang-java">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[][] transpose(<span class="hljs-keyword">int</span>[][] matrix) {
+        <span class="hljs-keyword">int</span> R = matrix.length,C= matrix[<span class="hljs-number">0</span>].length;
+        <span class="hljs-keyword">int</span>[][] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[C][R];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span>;i&lt;R;i++){
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j =<span class="hljs-number">0</span>;j&lt;C;j++){
+                res[j][i] = matrix[i][j];
+            }
+        }
+        <span class="hljs-keyword">return</span> res;
+    }
+</code></pre>
 
                                 
                                 </section>
@@ -1053,7 +1072,7 @@ Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T14:06:50.797Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T14:07:05.378Z"},"basePath":"../../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T14:12:32.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T14:18:06.688Z"},"basePath":"../../../..","book":{"language":""}});
         });
     </script>
 </div>
