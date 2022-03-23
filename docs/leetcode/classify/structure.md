@@ -349,7 +349,7 @@ public ListNode detectCycle(ListNode head) {
 
 ![i](/imgs/leetcode/classify/image-20220323085414473.png)
 
-![](//imgs/leetcode/classify/image-20220323085442753.png)
+![](/imgs/leetcode/classify/image-20220323085442753.png)
 
 ```java
 public void reorderList(ListNode head) {
