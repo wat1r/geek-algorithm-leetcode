@@ -1,5 +1,6 @@
 package com.frankcooper.bank._201_300;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
 /*import java.util.*;
@@ -9,7 +10,8 @@ public class _226 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-
+            TreeNode root = TreeNodeIOUtils.transform("[4,2,7,1,3,6,9]");
+            handler.invertTree(root);
 
         }
 

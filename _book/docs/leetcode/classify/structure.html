@@ -804,6 +804,33 @@
 }
 </code></pre>
 <h2 id="&#x6811;">&#x6811;</h2>
+<h2 id="96-&#x4E0D;&#x540C;&#x7684;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;"><a href="https://leetcode-cn.com/problems/unique-binary-search-trees/" target="_blank">96. &#x4E0D;&#x540C;&#x7684;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">numTrees</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">return</span> dfs(n);
+}
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> || n == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n - <span class="hljs-number">1</span>; i++) {
+        cnt += dfs(i) * dfs(n - <span class="hljs-number">1</span> - i);
+    }
+    <span class="hljs-keyword">return</span> cnt;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2dp">&#x65B9;&#x6CD5;2:DP</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">numTrees</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">int</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+    dp[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j++) {
+            dp[i] += dp[j - <span class="hljs-number">1</span>] * dp[i - j];
+        }
+    }
+    <span class="hljs-keyword">return</span> dp[n];
+}
+</code></pre>
 <h2 id="98-&#x9A8C;&#x8BC1;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;"><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank">98. &#x9A8C;&#x8BC1;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;</a></h2>
 <p><img src="../../../imgs/leetcode/classify/image-20220318201515791.png" alt=""></p>
 <pre><code class="lang-java">        TreeNode prev = <span class="hljs-keyword">null</span>;
@@ -820,6 +847,64 @@
             }
             <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
         }
+</code></pre>
+<h2 id="101-&#x5BF9;&#x79F0;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/symmetric-tree/" target="_blank">101. &#x5BF9;&#x79F0;&#x4E8C;&#x53C9;&#x6811;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isSymmetric</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">return</span> helper(root.left, root.right);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">helper</span><span class="hljs-params">(TreeNode left, TreeNode right)</span> </span>{
+    <span class="hljs-keyword">if</span> (left == <span class="hljs-keyword">null</span> &amp;&amp; right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">if</span> (left == <span class="hljs-keyword">null</span> || right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">return</span> left.val == right.val &amp;&amp; helper(left.left, right.right) &amp;&amp; helper(left.right, right.left);
+}
+</code></pre>
+<h2 id="102-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x5C42;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank">102. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x5C42;&#x5E8F;&#x904D;&#x5386;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1bfs">&#x65B9;&#x6CD5;1:BFS</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+    Queue&lt;TreeNode&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    q.offer(root);
+    <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+        <span class="hljs-keyword">int</span> size = q.size();
+        List&lt;Integer&gt; sub = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i) {
+            TreeNode curr = q.poll();
+            sub.add(curr.val);
+            <span class="hljs-keyword">if</span> (curr.left != <span class="hljs-keyword">null</span>) q.offer(curr.left);
+            <span class="hljs-keyword">if</span> (curr.right != <span class="hljs-keyword">null</span>) q.offer(curr.right);
+        }
+        res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="104-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6700;&#x5927;&#x6DF1;&#x5EA6;"><a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" target="_blank">104. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6700;&#x5927;&#x6DF1;&#x5EA6;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">return</span> root == <span class="hljs-keyword">null</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span> + Math.max(maxDepth(root.left), maxDepth(root.right));
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2bfs">&#x65B9;&#x6CD5;2:BFS</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    Queue&lt;TreeNode&gt; queue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    queue.offer(root);
+    <span class="hljs-keyword">int</span> level = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (!queue.isEmpty()) {
+        <span class="hljs-keyword">int</span> size = queue.size();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+            TreeNode curr = queue.poll();
+            <span class="hljs-keyword">if</span> (curr.left != <span class="hljs-keyword">null</span>) queue.offer(curr.left);
+            <span class="hljs-keyword">if</span> (curr.right != <span class="hljs-keyword">null</span>) queue.offer(curr.right);
+        }
+        level++;
+    }
+    <span class="hljs-keyword">return</span> level;
+}
 </code></pre>
 <h2 id="111-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6700;&#x5C0F;&#x6DF1;&#x5EA6;"><a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/" target="_blank">111. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6700;&#x5C0F;&#x6DF1;&#x5EA6;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minDepth</span><span class="hljs-params">(TreeNode root)</span> </span>{
@@ -914,6 +999,22 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h2 id="124-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x8DEF;&#x5F84;&#x548C;"><a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/" target="_blank">124. &#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x8DEF;&#x5F84;&#x548C;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> res = Integer.MIN_VALUE;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxPathSum</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    dfs(root);
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> lval = Math.max(dfs(root.left), <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> rval = Math.max(dfs(root.right), <span class="hljs-number">0</span>);
+    res = Math.max(res, root.val + lval + rval);
+    <span class="hljs-keyword">return</span> root.val + Math.max(lval, rval);
+}
+</code></pre>
 <h2 id="145-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x540E;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/" target="_blank">145. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x540E;&#x5E8F;&#x904D;&#x5386;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;&#x6CD5;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;&#x6CD5;</h3>
 <ul>
@@ -963,6 +1064,17 @@
     }
     <span class="hljs-keyword">return</span> res;
 }
+</code></pre>
+<h2 id="226-&#x7FFB;&#x8F6C;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/invert-binary-tree/" target="_blank">226. &#x7FFB;&#x8F6C;&#x4E8C;&#x53C9;&#x6811;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">invertTree</span><span class="hljs-params">(TreeNode root)</span> </span>{
+        <span class="hljs-keyword">if</span>(root ==<span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        TreeNode l = invertTree(root.left);
+        TreeNode r = invertTree(root.right);
+        root.left = r;
+        root.right = l;
+        <span class="hljs-keyword">return</span> root;
+    }
 </code></pre>
 <h2 id="589-n-&#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/" target="_blank">589. N &#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;</a></h2>
 <pre><code class="lang-java">    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
@@ -1159,7 +1271,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-23T01:59:28.380Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-24T07:05:10.088Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-24T13:56:42.525Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-24T13:57:07.287Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

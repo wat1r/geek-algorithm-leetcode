@@ -304,6 +304,37 @@ public class Solution {
 
 
 
+## [32. 最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/)
+
+### 方法1:DP
+
+```java
+public int longestValidParentheses(String s) {
+    int N = s.length();
+    int[] f = new int[N];
+    int res = 0;
+    for (int i = 1; i < N; i++) {
+        if (s.charAt(i) == ')') {
+            if (s.charAt(i - 1) == '(') {
+                f[i] = 2;
+                if (i - 2 >= 0) f[i] = f[i - 2] + 2;
+            } else if (f[i - 1] > 0) {
+                if ((i - f[i - 1] - 1) >= 0 && s.charAt(i - f[i - 1] - 1) == '(') {
+                    f[i] = f[i - 1] + 2;
+                    if ((i - f[i - 1] - 2) >= 0) {
+                        f[i] = f[i] + f[i - f[i - 1] - 2];
+                    }
+                }
+            }
+        }
+        res = Math.max(res, f[i]);
+    }
+    return res;
+}
+```
+
+
+
 
 
 

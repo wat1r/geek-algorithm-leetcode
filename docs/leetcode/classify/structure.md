@@ -428,6 +428,44 @@ public void reorderList(ListNode head) {
 
 
 
+## [96. 不同的二叉搜索树](https://leetcode-cn.com/problems/unique-binary-search-trees/)
+
+### 方法1:DFS
+
+```java
+public int numTrees(int n) {
+    return dfs(n);
+}
+private int dfs(int n) {
+    if (n == 0 || n == 1) return 1;
+    int cnt = 0;
+    for (int i = 0; i <= n - 1; i++) {
+        cnt += dfs(i) * dfs(n - 1 - i);
+    }
+    return cnt;
+}
+```
+
+### 方法2:DP
+
+```java
+public int numTrees(int n) {
+    int[] dp = new int[n + 1];
+    dp[0] = 1;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            dp[i] += dp[j - 1] * dp[i - j];
+        }
+    }
+    return dp[n];
+}
+```
+
+
+
+
+
 ## [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
 
 ![](/imgs/leetcode/classify/image-20220318201515791.png)
@@ -450,6 +488,88 @@ public void reorderList(ListNode head) {
 ```
 
 
+
+## [101. 对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/)
+
+```java
+public boolean isSymmetric(TreeNode root) {
+    if (root == null) return false;
+    return helper(root.left, root.right);
+}
+
+
+public boolean helper(TreeNode left, TreeNode right) {
+    if (left == null && right == null) return true;
+    if (left == null || right == null) return false;
+    return left.val == right.val && helper(left.left, right.right) && helper(left.right, right.left);
+}
+```
+
+
+
+
+
+
+
+## [102. 二叉树的层序遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+
+### 方法1:BFS
+
+```java
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> res = new ArrayList<>();
+    if (root == null) return res;
+    Queue<TreeNode> q = new LinkedList<>();
+    q.offer(root);
+    while (!q.isEmpty()) {
+        int size = q.size();
+        List<Integer> sub = new ArrayList<>();
+        for (int i = 0; i < size; ++i) {
+            TreeNode curr = q.poll();
+            sub.add(curr.val);
+            if (curr.left != null) q.offer(curr.left);
+            if (curr.right != null) q.offer(curr.right);
+        }
+        res.add(new ArrayList<>(sub));
+    }
+    return res;
+}
+```
+
+
+
+
+
+## [104. 二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+
+### 方法1:DFS
+
+```java
+public int maxDepth(TreeNode root) {
+    return root == null ? 0 : 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+}
+```
+
+### 方法2:BFS
+
+```java
+public int maxDepth(TreeNode root) {
+    if (root == null) return 0;
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    int level = 0;
+    while (!queue.isEmpty()) {
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+            TreeNode curr = queue.poll();
+            if (curr.left != null) queue.offer(curr.left);
+            if (curr.right != null) queue.offer(curr.right);
+        }
+        level++;
+    }
+    return level;
+}
+```
 
 
 
@@ -567,6 +687,27 @@ public List<Integer> inorderTraversal(TreeNode root) {
 
 
 
+## [124. 二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+
+```java
+int res = Integer.MIN_VALUE;
+
+public int maxPathSum(TreeNode root) {
+    dfs(root);
+    return res;
+}
+
+public int dfs(TreeNode root) {
+    if (root == null) return 0;
+    int lval = Math.max(dfs(root.left), 0);
+    int rval = Math.max(dfs(root.right), 0);
+    res = Math.max(res, root.val + lval + rval);
+    return root.val + Math.max(lval, rval);
+}
+```
+
+
+
 
 
 
@@ -620,6 +761,25 @@ public List<Integer> postorderTraversal(TreeNode root) {
 
 
 
+## [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
+
+### 方法1:DFS
+
+```java
+    public TreeNode invertTree(TreeNode root) {
+        if(root ==null) return null;
+        TreeNode l = invertTree(root.left);
+        TreeNode r = invertTree(root.right);
+        root.left = r;
+        root.right = l;
+        return root;
+    }
+```
+
+
+
+
+
 
 
 ## [589. N 叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/)
@@ -641,6 +801,10 @@ public List<Integer> postorderTraversal(TreeNode root) {
         }
     }
 ```
+
+
+
+
 
 
 
