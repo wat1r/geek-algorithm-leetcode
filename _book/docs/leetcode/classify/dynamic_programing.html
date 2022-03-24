@@ -1296,6 +1296,87 @@ Integer[] memo;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x4
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
 }
 </code></pre>
+<h2 id="416-&#x5206;&#x5272;&#x7B49;&#x548C;&#x5B50;&#x96C6;"><a href="https://leetcode-cn.com/problems/partition-equal-subset-sum/" target="_blank">416. &#x5206;&#x5272;&#x7B49;&#x548C;&#x5B50;&#x96C6;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6734;&#x7D20;&#x7248;dp">&#x65B9;&#x6CD5;1&#xFF1A;&#x6734;&#x7D20;&#x7248;DP</h3>
+<ul>
+<li><p><code>dp[N][T+1]</code>,&#x5176;&#x4E2D;<code>N</code>&#x662F;&#x5B50;&#x96C6;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#xFF0C;<code>T</code>&#x662F;&#x76EE;&#x6807;&#x548C;&#xFF0C;&#x591A;&#x653E;&#x4E00;&#x4E2A;&#xFF0C;&#x4ECE;0&#x5F00;&#x59CB;&#x7684;</p>
+</li>
+<li><p><code>dp[i][j]</code>&#x8868;&#x793A;&#x5728;&#x5B50;&#x96C6;&#x6570;&#x7EC4;&#x7684;&#x533A;&#x95F4;&#x8303;&#x56F4;&#x5185;<code>[0...i]</code>&#x4E4B;&#x95F4;&#x9009;&#x62E9;&#x82E5;&#x5E72;&#x4E2A;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x7EC4;&#x6210;<code>j</code></p>
+<ul>
+<li>&#x5F53;<code>j=0</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>dp[i][0]</code>&#x4E3A;<code>true</code>&#xFF0C;&#x5F53;&#x4E0D;&#x9009;&#x4EFB;&#x4F55;&#x5B50;&#x96C6;&#x6570;&#x7EC4;&#x7684;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x5F62;&#x6210;&#x4E00;&#x76F4;&#x65B9;&#x6848;</li>
+<li>&#x5F53;<code>i=0</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;<code>dp[0][j]</code> &#x6307;&#x7684;&#x662F;&#x5F53;&#x9009;&#x7B2C;0&#x4E2A;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x80FD;&#x5426;&#x7B49;&#x4E8E;<code>j</code>&#xFF0C;&#x663E;&#x7136;&#x5728;<code>nums[0]=j</code>&#x7684;&#x65F6;&#x5019;&#x6EE1;&#x8DB3;&#x8FD9;&#x79CD;&#x6761;&#x4EF6;&#xFF0C;&#x5176;&#x4ED6;&#x90FD;&#x4E3A;<code>false</code></li>
+</ul>
+</li>
+<li>&#x4E00;&#x822C;&#x60C5;&#x51B5;&#xFF0C;<code>dp[i][j]</code>&#x5BF9;&#x4E8E;&#xFF0C;&#x7B2C;<code>i</code>&#x4E2A;&#x6570;&#xFF0C;&#x6709;&#x8FD9;&#x4E24;&#x79CD;&#x60C5;&#x51B5;:<ul>
+<li>&#x5F53;<code>j&gt;=nums[i]</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BF4;&#x660E;<code>j</code>&#x8FD8;&#x53EF;&#x4EE5;&#x62C6;&#x89E3;,&#x53EF;&#x4EE5;&#x9009;&#x6216;&#x8005;&#x4E0D;&#x9009;<code>i</code>&#x8FD9;&#x4E2A;&#x6570;&#xFF0C;&#x53EA;&#x8981;&#x6709;&#x4E00;&#x79CD;&#x65B9;&#x6848;&#x662F;<code>true</code>&#x5373;&#x53EF;<ul>
+<li>&#x4E0D;&#x9009;&#xFF1A;<code>dp[i][j]= dp[i-1][j]</code></li>
+<li>&#x9009;:<code>dp[i][j]=dp[i-1][j-nums[i]]</code></li>
+</ul>
+</li>
+<li>&#x5F53;<code>j&lt;nums[i]</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8BF4;&#x660E;<code>j</code>&#x4E0D;&#x53EF;&#x4EE5;&#x62C6;&#x89E3;&#xFF0C;&#x6211;&#x4EEC;&#x80AF;&#x5B9A;&#x9009;&#x4E0D;&#x5230;<code>i</code>&#x8FD9;&#x4E2A;&#x6570;&#x4E86;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>dp[i][j]=dp[i-1][j]</code> </li>
+</ul>
+</li>
+</ul>
+<p>&#x603B;&#x7ED3;&#x5C31;&#x662F;&#xFF1A;</p>
+<p><img src="../../../imgs/leetcode/classify/image-20220324150353538.png" alt=""></p>
+<ul>
+<li><code>dp[N-1][T]</code>&#x5373;&#x7B54;&#x6848;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">int</span> N = nums.length;
+            <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i : nums) sum += i;
+            <span class="hljs-keyword">if</span> (sum % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">int</span> T = sum / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">boolean</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[N][T + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) dp[i][<span class="hljs-number">0</span>] = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= T; j++) <span class="hljs-keyword">if</span> (j == nums[<span class="hljs-number">0</span>]) dp[<span class="hljs-number">0</span>][j] = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= T; j++) {
+                    dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];
+                    <span class="hljs-keyword">if</span> (j &gt;= nums[i]) dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] || dp[i - <span class="hljs-number">1</span>][j - nums[i]];
+                }
+            }
+<span class="hljs-comment">//            PrintUtils.printMatrix(dp);</span>
+            <span class="hljs-keyword">return</span> dp[N - <span class="hljs-number">1</span>][T];
+        }
+</code></pre>
+<blockquote>
+<p>&#x6253;&#x5370;</p>
+</blockquote>
+<pre><code class="lang-java">[<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">11</span>,<span class="hljs-number">5</span>]
+       <span class="hljs-number">0</span>    <span class="hljs-number">1</span>    <span class="hljs-number">2</span>    <span class="hljs-number">3</span>    <span class="hljs-number">4</span>    <span class="hljs-number">5</span>    <span class="hljs-number">6</span>    <span class="hljs-number">7</span>    <span class="hljs-number">8</span>    <span class="hljs-number">9</span>   <span class="hljs-number">10</span>   <span class="hljs-number">11</span>
+<span class="hljs-number">0</span>(<span class="hljs-number">1</span>)   T    T    F    F    F    F    F    F    F    F    F    F 
+<span class="hljs-number">1</span>(<span class="hljs-number">5</span>)   T    T    F    F    F    T    T    F    F    F    F    F 
+<span class="hljs-number">2</span>(<span class="hljs-number">11</span>)  T    T    F    F    F    T    T    F    F    F    F    T 
+<span class="hljs-number">3</span>(<span class="hljs-number">5</span>)   T    T    F    F    F    T    T    F    F    F    T    T
+</code></pre>
+<p><code>dp[3][11]</code>&#x5F80;&#x4E0A;&#x8D70;&#x5230;<code>dp[2][11]</code> &#x8FD9;&#x4E00;&#x884C;&#x7528;&#x6389;11 &#x5F97;&#x5230;11-11 =0 &#x7ED3;&#x675F;</p>
+<p><code>dp[3][11]</code>&#x5F80;&#x5DE6;&#x8D70;&#x5230;<code>dp[3][6]</code>,&#x8FD9;&#x4E00;&#x884C;&#x7528;&#x6389;5 &#x5F97;11-5 = 6 <code>dp[3][6]</code>&#x4E00;&#x76F4;&#x5F80;&#x4E0A;&#x8D70;&#x5230;<code>dp[1][6]</code>&#x51CF;&#x53BB;&#x8FD9;&#x4E00;&#x884C;&#x7684;5  &#x5F97;&#x5230; 6 -5 =1  &#x5230;<code>dp[1][1]</code> &#x4E00;&#x76F4;&#x5F80;&#x4E0A;&#x8D70;&#x5230;<code>dp[0][1]</code>  &#x51CF;&#x53BB;&#x8FD9;&#x4E00;&#x884C;&#x7684;1 1-1 =0 &#x7ED3;&#x675F;  5 5 1 &#x662F;&#x5F62;&#x6210;11&#x7684;&#x4E00;&#x4E2A;&#x7EC4;&#x5408;</p>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x7A7A;&#x95F4;&#x538B;&#x7F29;o1dp">&#x65B9;&#x6CD5;2&#xFF1A;&#x7A7A;&#x95F4;&#x538B;&#x7F29;O(1)DP</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canPartition</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">int</span> N = nums.length;
+            <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i : nums) sum += i;
+            <span class="hljs-keyword">if</span> (sum % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">int</span> T = sum / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">boolean</span>[] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[T + <span class="hljs-number">1</span>];
+            dp[<span class="hljs-number">0</span>] = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> num : nums) {
+<span class="hljs-comment">/*                for (int j = T; j &gt;= 0; j--) {
+                    if (j &gt;= num) dp[j] = dp[j] || dp[j - num];
+                }*/</span>
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = T; j &gt;= num; j--) {
+                    dp[j] = dp[j] || dp[j - num];
+                }
+
+            }
+<span class="hljs-comment">//            PrintUtils.printMatrix(dp);</span>
+            <span class="hljs-keyword">return</span> dp[T];
+        }
+</code></pre>
+<p>&#x5173;&#x4E8E;&#x5012;&#x5E8F;&#x7684;&#x904D;&#x5386;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x53C2;&#x8003;&#x8FD9;&#x7BC7;&#xFF1A;<a href="https://leetcode-cn.com/problems/coin-change/solution/bei-bao-wen-ti-zhi-01bei-bao-wen-ti-ke-pu-wen-ji-c/" target="_blank">&#x80CC;&#x5305;&#x95EE;&#x9898;&#x4E4B; 01 &#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF08;&#x79D1;&#x666E;&#x6587;&#xFF0C;&#x57FA;&#x7840;&#xFF0C;&#x80CC;&#x5305;&#x4E5D;&#x8BB2;&#xFF09;</a></p>
+<h3 id=""> </h3>
 
                                 
                                 </section>
@@ -1339,7 +1420,7 @@ Integer[] memo;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x4
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.2.13","depth":2,"next":{"title":"博弈问题","level":"1.2.14","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},"previous":{"title":"图论","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-03-22T01:44:24.047Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T14:18:06.688Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.2.13","depth":2,"next":{"title":"博弈问题","level":"1.2.14","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},"previous":{"title":"图论","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-03-24T07:05:01.036Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-24T07:05:10.088Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

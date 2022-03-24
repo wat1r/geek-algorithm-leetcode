@@ -911,3 +911,93 @@ public boolean canReach(int[] arr, int start) {
     return false;
 }
 ```
+
+
+
+
+
+## [416. 分割等和子集](https://leetcode-cn.com/problems/partition-equal-subset-sum/)
+
+### 方法1：朴素版DP
+
+- `dp[N][T+1]`,其中`N`是子集数组的大小，`T`是目标和，多放一个，从0开始的
+
+- `dp[i][j]`表示在子集数组的区间范围内`[0...i]`之间选择若干个数，可以组成`j`
+  - 当`j=0`的时候，`dp[i][0]`为`true`，当不选任何子集数组的数的时候，可以形成一直方案
+  - 当`i=0`的时候，`dp[0][j]` 指的是当选第0个数的时候，能否等于`j`，显然在`nums[0]=j`的时候满足这种条件，其他都为`false`
+- 一般情况，`dp[i][j]`对于，第`i`个数，有这两种情况:
+  - 当`j>=nums[i]`的时候，说明`j`还可以拆解,可以选或者不选`i`这个数，只要有一种方案是`true`即可
+    - 不选：`dp[i][j]= dp[i-1][j]`
+    - 选:`dp[i][j]=dp[i-1][j-nums[i]]`
+  - 当`j<nums[i]`的时候，说明`j`不可以拆解，我们肯定选不到`i`这个数了，也就是`dp[i][j]=dp[i-1][j]` 
+
+总结就是：
+
+![](/imgs/leetcode/classify/image-20220324150353538.png)
+
+- `dp[N-1][T]`即答案
+
+```java
+        public boolean canPartition(int[] nums) {
+            int N = nums.length;
+            int sum = 0;
+            for (int i : nums) sum += i;
+            if (sum % 2 == 1) return false;
+            int T = sum / 2;
+            boolean[][] dp = new boolean[N][T + 1];
+            for (int i = 0; i < N; i++) dp[i][0] = true;
+            for (int j = 0; j <= T; j++) if (j == nums[0]) dp[0][j] = true;
+            for (int i = 1; i < N; i++) {
+                for (int j = 1; j <= T; j++) {
+                    dp[i][j] = dp[i - 1][j];
+                    if (j >= nums[i]) dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
+                }
+            }
+//            PrintUtils.printMatrix(dp);
+            return dp[N - 1][T];
+        }
+```
+
+> 打印
+
+```java
+[1,5,11,5]
+	   0    1    2    3    4    5    6    7    8    9   10   11
+0(1)   T    T    F    F    F    F    F    F    F    F    F    F 
+1(5)   T    T    F    F    F    T    T    F    F    F    F    F 
+2(11)  T    T    F    F    F    T    T    F    F    F    F    T 
+3(5)   T    T    F    F    F    T    T    F    F    F    T    T 
+```
+
+`dp[3][11]`往上走到`dp[2][11]` 这一行用掉11 得到11-11 =0 结束
+
+`dp[3][11]`往左走到`dp[3][6]`,这一行用掉5 得11-5 = 6 `dp[3][6]`一直往上走到`dp[1][6]`减去这一行的5  得到 6 -5 =1  到`dp[1][1]` 一直往上走到`dp[0][1]`  减去这一行的1 1-1 =0 结束  5 5 1 是形成11的一个组合
+
+### 方法2：空间压缩O(1)DP
+
+```java
+        public boolean canPartition(int[] nums) {
+            int N = nums.length;
+            int sum = 0;
+            for (int i : nums) sum += i;
+            if (sum % 2 == 1) return false;
+            int T = sum / 2;
+            boolean[] dp = new boolean[T + 1];
+            dp[0] = true;
+            for (int num : nums) {
+/*                for (int j = T; j >= 0; j--) {
+                    if (j >= num) dp[j] = dp[j] || dp[j - num];
+                }*/
+                for (int j = T; j >= num; j--) {
+                    dp[j] = dp[j] || dp[j - num];
+                }
+
+            }
+//            PrintUtils.printMatrix(dp);
+            return dp[T];
+        }
+```
+
+关于倒序的遍历的问题：参考这篇：[背包问题之 01 背包问题（科普文，基础，背包九讲）](https://leetcode-cn.com/problems/coin-change/solution/bei-bao-wen-ti-zhi-01bei-bao-wen-ti-ke-pu-wen-ji-c/)
+
+### 

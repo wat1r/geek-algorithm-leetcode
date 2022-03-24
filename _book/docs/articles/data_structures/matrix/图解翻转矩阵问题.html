@@ -967,7 +967,38 @@ Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <
 <span class="hljs-number">10</span>    <span class="hljs-number">9</span>    <span class="hljs-number">8</span>    <span class="hljs-number">7</span>    <span class="hljs-number">6</span>    
 <span class="hljs-number">5</span>    <span class="hljs-number">4</span>    <span class="hljs-number">3</span>    <span class="hljs-number">2</span>    <span class="hljs-number">1</span>
 </code></pre>
-<p>&#x6709;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x8FD9;&#x4E9B;&#x94FA;&#x57AB;&#xFF0C;&#x53EF;&#x4EE5;&#x6765;&#x89E3;&#x51B3;&#x51E0;&#x9053;&#x9898;&#x76EE;&#xFF1A;</p>
+<h2 id="4&#x5C06;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E2A;&#x73AF;&#x9006;&#x65F6;&#x9488;&#x65CB;&#x8F6C;-k-&#x4E2A;&#x5143;&#x7D20;">4.&#x5C06;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E2A;&#x73AF;&#x9006;&#x65F6;&#x9488;&#x65CB;&#x8F6C; K &#x4E2A;&#x5143;&#x7D20;</h2>
+<blockquote>
+<p><strong>&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A; M*N &#x9636;&#x77E9;&#x9635;&#x548C;&#x4E00;&#x4E2A;&#x503C; K&#xFF0C;&#x5C06;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E2A;&#x73AF;&#x9006;&#x65F6;&#x9488;&#x65CB;&#x8F6C; K &#x4E2A;&#x5143;&#x7D20;&#x3002; &#x5982;&#x679C;&#x4EFB;&#x4F55;&#x73AF;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E; K&#xFF0C;&#x5219;&#x4E0D;&#x8981;&#x65CB;&#x8F6C;&#x5B83;&#x3002;</strong></p>
+</blockquote>
+<pre><code class="lang-java">Input : k = <span class="hljs-number">3</span>
+        mat[<span class="hljs-number">4</span>][<span class="hljs-number">4</span>] = {{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>},
+                    {<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>},
+                    {<span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>},
+                    {<span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>}}
+Output: <span class="hljs-number">4</span> <span class="hljs-number">8</span>  <span class="hljs-number">12</span> <span class="hljs-number">16</span>
+        <span class="hljs-number">3</span> <span class="hljs-number">10</span>  <span class="hljs-number">6</span> <span class="hljs-number">15</span>
+        <span class="hljs-number">2</span> <span class="hljs-number">11</span>  <span class="hljs-number">7</span> <span class="hljs-number">14</span>
+        <span class="hljs-number">1</span>  <span class="hljs-number">5</span>  <span class="hljs-number">9</span> <span class="hljs-number">13</span>
+
+Input : k = <span class="hljs-number">2</span>
+        mat[<span class="hljs-number">3</span>][<span class="hljs-number">4</span>] = {{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>},
+                    {<span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">5</span>},
+                    {<span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">7</span>, <span class="hljs-number">6</span>}}
+Output: <span class="hljs-number">3</span> <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>
+        <span class="hljs-number">2</span> <span class="hljs-number">11</span> <span class="hljs-number">12</span> <span class="hljs-number">7</span>
+        <span class="hljs-number">1</span> <span class="hljs-number">10</span>  <span class="hljs-number">9</span> <span class="hljs-number">8</span>
+</code></pre>
+<h3 id="&#x601D;&#x8DEF;">&#x601D;&#x8DEF;</h3>
+<p>&#x60F3;&#x6CD5;&#x662F;&#x4EE5;&#x87BA;&#x65CB;&#x5F62;&#x5F0F;&#x904D;&#x5386;&#x77E9;&#x9635;&#xFF0C; &#x8FD9;&#x662F;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x7B97;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li>1.&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A; M*N &#x7684;&#x8F85;&#x52A9;&#x6570;&#x7EC4; temp[]&#x3002;</li>
+<li>2.&#x4EE5;&#x87BA;&#x65CB;&#x5F62;&#x5F0F;&#x5F00;&#x59CB;&#x904D;&#x5386;&#x77E9;&#x9635;&#x5E76;&#x5C06;&#x5F53;&#x524D;&#x73AF;&#x7684;&#x5143;&#x7D20;&#x5B58;&#x50A8;&#x5728; temp[] &#x6570;&#x7EC4;&#x4E2D;&#x3002; &#x5728;&#x5C06;&#x5143;&#x7D20;&#x5B58;&#x50A8;&#x5728; temp &#x4E2D;&#x65F6;&#xFF0C;&#x8DDF;&#x8E2A;&#x5F53;&#x524D;&#x73AF;&#x7684;&#x5F00;&#x59CB;&#x548C;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>3.&#x5BF9;&#x4E8E;&#x5B58;&#x50A8;&#x5728; temp[] &#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x73AF;&#xFF0C;&#x65CB;&#x8F6C;&#x8BE5;&#x5B50;&#x6570;&#x7EC4; temp[]</li>
+<li>4.&#x5BF9;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E2A;&#x73AF;&#x91CD;&#x590D;&#x6B64;&#x8FC7;&#x7A0B;&#x3002;</li>
+<li>5.&#x5728;&#x6700;&#x540E;&#x4E00;&#x6B21;&#x904D;&#x5386;&#x77E9;&#x9635;&#x4E2D;&#x518D;&#x6B21;&#x87BA;&#x65CB;&#x5E76;&#x5C06; temp[] &#x6570;&#x7EC4;&#x7684;&#x5143;&#x7D20;&#x590D;&#x5236;&#x5230;&#x77E9;&#x9635;&#x3002;</li>
+</ul>
+<p><strong>&#x6709;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x8FD9;&#x4E9B;&#x94FA;&#x57AB;&#xFF0C;&#x53EF;&#x4EE5;&#x6765;&#x89E3;&#x51B3;&#x51E0;&#x9053;&#x9898;&#x76EE;&#xFF1A;</strong></p>
 <h2 id="48-&#x65CB;&#x8F6C;&#x56FE;&#x50CF;"><a href="https://leetcode-cn.com/problems/rotate-image/" target="_blank">48. &#x65CB;&#x8F6C;&#x56FE;&#x50CF;</a></h2>
 <ul>
 <li><strong>&#x9898;&#x76EE;&#x8981;&#x6C42;&#x7684;&#x662F;&#x539F;&#x5730;&#x65CB;&#x8F6C;&#xFF0C;&#x987A;&#x65F6;&#x9488;&#x65CB;&#x8F6C;</strong></li>
@@ -1072,7 +1103,7 @@ Output : <span class="hljs-number">6</span> <span class="hljs-number">5</span> <
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T14:12:32.677Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-23T14:18:06.688Z"},"basePath":"../../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"previous":{"title":"专栏","level":"1.4","depth":1,"ref":"","articles":[{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","mtime":"2022-03-23T14:37:41.751Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-24T07:05:10.088Z"},"basePath":"../../../..","book":{"language":""}});
         });
     </script>
 </div>
