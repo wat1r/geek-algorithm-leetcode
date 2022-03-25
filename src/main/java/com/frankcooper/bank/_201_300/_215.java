@@ -2,6 +2,7 @@ package com.frankcooper.bank._201_300;
 
 
 import java.util.PriorityQueue;
+import java.util.Random;
 
 //215. 数组中的第K个最大元素   Kth Largest Element in an Array
 public class _215 {
@@ -50,5 +51,52 @@ public class _215 {
             }
             return pq.peek();
         }
+    }
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+        }
+
+        public int findKthLargest(int[] nums, int k) {
+            int n = nums.length;
+            int target = n - k, l = 0, r = n - 1;
+            while (true) {
+                //找到partition的索引
+                int idx = partition(nums, l, r);
+                //如果找到，返回
+                if (idx == target) return nums[idx];
+                else if (idx > target) r = idx - 1;
+                else l = idx + 1;
+            }
+        }
+
+
+        public int partition(int[] nums, int l, int r) {
+            //随机化一个pivot
+            if (l < r) {
+                int rand = l + 1 + new Random().nextInt(r - l);
+                swap(nums, l, rand);
+            }
+            int pivot = nums[l];
+            int j = l;
+            for (int i = l + 1; i <= r; i++) {
+                //小于pivot的元素都移动到左侧
+                if (nums[i] < pivot) {
+                    j++;
+                    swap(nums, j, i);
+                }
+            }
+            //[l...j-1]的元素都小于 pivot， [j]=pivot [j+1...r]的元素>=pivot
+            swap(nums, j, l);
+            return j;
+        }
+
+        public void swap(int[] nums, int i, int j) {
+            int t = nums[i];
+            nums[i] = nums[j];
+            nums[j] = t;
+        }
+
     }
 }

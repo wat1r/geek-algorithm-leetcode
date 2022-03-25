@@ -509,6 +509,58 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h2 id="215-&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x7B2C;k&#x4E2A;&#x6700;&#x5927;&#x5143;&#x7D20;"><a href="https://leetcode-cn.com/problems/kth-largest-element-in-an-array/" target="_blank">215. &#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x7B2C;K&#x4E2A;&#x6700;&#x5927;&#x5143;&#x7D20;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x4F18;&#x5148;&#x961F;&#x5217;">&#x65B9;&#x6CD5;1:&#x4F18;&#x5148;&#x961F;&#x5217;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findKthLargest</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k)</span> </span>{
+    PriorityQueue&lt;Integer&gt; pq = <span class="hljs-keyword">new</span> PriorityQueue&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+        <span class="hljs-keyword">if</span> (i &lt; k || nums[i] &gt; pq.peek()) pq.offer(nums[i]);
+        <span class="hljs-keyword">if</span> (pq.size() &gt; k) pq.poll();
+    }
+    <span class="hljs-keyword">return</span> pq.peek();
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x5FEB;&#x6392;">&#x65B9;&#x6CD5;2:&#x5FEB;&#x6392;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findKthLargest</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k)</span> </span>{
+            <span class="hljs-keyword">int</span> n = nums.length;
+            <span class="hljs-keyword">int</span> target = n - k, l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+                <span class="hljs-comment">//&#x627E;&#x5230;partition&#x7684;&#x7D22;&#x5F15;</span>
+                <span class="hljs-keyword">int</span> idx = partition(nums, l, r);
+                <span class="hljs-comment">//&#x5982;&#x679C;&#x627E;&#x5230;&#xFF0C;&#x8FD4;&#x56DE;</span>
+                <span class="hljs-keyword">if</span> (idx == target) <span class="hljs-keyword">return</span> nums[idx];
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (idx &gt; target) r = idx - <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">else</span> l = idx + <span class="hljs-number">1</span>;
+            }
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+            <span class="hljs-comment">//&#x968F;&#x673A;&#x5316;&#x4E00;&#x4E2A;pivot</span>
+            <span class="hljs-keyword">if</span> (l &lt; r) {
+                <span class="hljs-keyword">int</span> rand = l + <span class="hljs-number">1</span> + <span class="hljs-keyword">new</span> Random().nextInt(r - l);
+                swap(nums, l, rand);
+            }
+            <span class="hljs-keyword">int</span> pivot = nums[l];
+            <span class="hljs-keyword">int</span> j = l;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l + <span class="hljs-number">1</span>; i &lt;= r; i++) {
+                <span class="hljs-comment">//&#x5C0F;&#x4E8E;pivot&#x7684;&#x5143;&#x7D20;&#x90FD;&#x79FB;&#x52A8;&#x5230;&#x5DE6;&#x4FA7;</span>
+                <span class="hljs-keyword">if</span> (nums[i] &lt; pivot) {
+                    j++;
+                    swap(nums, j, i);
+                }
+            }
+            <span class="hljs-comment">//[l...j-1]&#x7684;&#x5143;&#x7D20;&#x90FD;&#x5C0F;&#x4E8E; pivot&#xFF0C; [j]=pivot [j+1...r]&#x7684;&#x5143;&#x7D20;&gt;=pivot</span>
+            swap(nums, j, l);
+            <span class="hljs-keyword">return</span> j;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span> </span>{
+            <span class="hljs-keyword">int</span> t = nums[i];
+            nums[i] = nums[j];
+            nums[j] = t;
+        }
+</code></pre>
 <h2 id="217-&#x5B58;&#x5728;&#x91CD;&#x590D;&#x5143;&#x7D20;"><a href="https://leetcode-cn.com/problems/contains-duplicate/" target="_blank">217. &#x5B58;&#x5728;&#x91CD;&#x590D;&#x5143;&#x7D20;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1set">&#x65B9;&#x6CD5;1:Set</h3>
 <pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">containsDuplicate</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
@@ -605,7 +657,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数组","level":"1.2.4","depth":2,"next":{"title":"字符串","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/array.md","mtime":"2022-03-21T13:53:35.431Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-25T12:47:02.191Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数组","level":"1.2.4","depth":2,"next":{"title":"字符串","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/array.md","mtime":"2022-03-25T14:58:03.395Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-25T14:58:22.012Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

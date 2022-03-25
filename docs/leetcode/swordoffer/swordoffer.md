@@ -4,6 +4,35 @@
 
 
 
+
+
+## [剑指 Offer 40. 最小的k个数](https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/)
+
+### 方法1:优先队列
+
+```java
+public int[] getLeastNumbers(int[] arr, int k) {
+    PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+    for (int x : arr) {
+        pq.offer(x);
+        if (!pq.isEmpty() && (pq.size() > k)) {
+            pq.poll();
+        }
+    }
+    int[] res = new int[k];
+    for (int i = 0; i < k; i++) res[i] = pq.poll();
+    return res;
+}
+```
+
+### 方法2:排序
+
+[剑指 Offer 40. 最小的 k 个数（基于快速排序的数组划分，清晰图解）](https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/solution/jian-zhi-offer-40-zui-xiao-de-k-ge-shu-j-9yze/)
+
+
+
+
+
 ## [剑指 Offer 62. 圆圈中最后剩下的数字 LCOF](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
 
 ### 扩展
