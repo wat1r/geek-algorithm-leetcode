@@ -1,6 +1,6 @@
 # Summary
 
-* [Introduction](README.md)
+* [简介](README.md)
 
 * LeetCode
 
@@ -30,4 +30,5 @@
 * 专栏
 
   * [图解翻转矩阵问题](/docs/articles/data_structures/matrix/图解翻转矩阵问题.md)
+  * [二维矩阵的常见转换技巧](/docs/articles/data_structures/matrix/二维矩阵的常见转换技巧.md)
 

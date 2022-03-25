@@ -1,0 +1,648 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>二维矩阵的常见转换技巧 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="图解翻转矩阵问题.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../../">
+            
+                <a href="../../../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../../leetcode/classify/monotonic_stack.html">
+            
+                <a href="../../../leetcode/classify/monotonic_stack.html">
+            
+                    
+                    单调栈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../../leetcode/classify/basic_skill.html">
+            
+                <a href="../../../leetcode/classify/basic_skill.html">
+            
+                    
+                    基础与技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../../leetcode/classify/structure.html">
+            
+                <a href="../../../leetcode/classify/structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../../leetcode/classify/heap_stack.html">
+            
+                <a href="../../../leetcode/classify/heap_stack.html">
+            
+                    
+                    堆栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../../leetcode/classify/array.html">
+            
+                <a href="../../../leetcode/classify/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../../leetcode/classify/string.html">
+            
+                <a href="../../../leetcode/classify/string.html">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../../leetcode/classify/binary_search.html">
+            
+                <a href="../../../leetcode/classify/binary_search.html">
+            
+                    
+                    二分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../../../leetcode/classify/structure_design.html">
+            
+                <a href="../../../leetcode/classify/structure_design.html">
+            
+                    
+                    结构设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../../../leetcode/classify/two_pointers.html">
+            
+                <a href="../../../leetcode/classify/two_pointers.html">
+            
+                    
+                    双指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../../../leetcode/classify/sliding_window.html">
+            
+                <a href="../../../leetcode/classify/sliding_window.html">
+            
+                    
+                    滑动窗口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../../../leetcode/classify/monotonic_stack.html">
+            
+                <a href="../../../leetcode/classify/monotonic_stack.html">
+            
+                    
+                    单调栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../../../leetcode/classify/search.html">
+            
+                <a href="../../../leetcode/classify/search.html">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../../../leetcode/classify/graph.html">
+            
+                <a href="../../../leetcode/classify/graph.html">
+            
+                    
+                    图论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../../../leetcode/classify/dynamic_programing.html">
+            
+                <a href="../../../leetcode/classify/dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../../../leetcode/classify/game_problem.html">
+            
+                <a href="../../../leetcode/classify/game_problem.html">
+            
+                    
+                    博弈问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../../../leetcode/classify/bit.html">
+            
+                <a href="../../../leetcode/classify/bit.html">
+            
+                    
+                    位运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../../../leetcode/classify/math.html">
+            
+                <a href="../../../leetcode/classify/math.html">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../../../leetcode/swordoffer/swordoffer.html">
+            
+                <a href="../../../leetcode/swordoffer/swordoffer.html">
+            
+                    
+                    剑指Offer(leetcode)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    剑指Offer(nowcoder)
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../../swordoffer/structure.html">
+            
+                <a href="../../../swordoffer/structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../../swordoffer/dynamic_programing.html">
+            
+                <a href="../../../swordoffer/dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    专栏
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="图解翻转矩阵问题.html">
+            
+                <a href="图解翻转矩阵问题.html">
+            
+                    
+                    图解翻转矩阵问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.2" data-path="二维矩阵的常见转换技巧.html">
+            
+                <a href="二维矩阵的常见转换技巧.html">
+            
+                    
+                    二维矩阵的常见转换技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../../.." >二维矩阵的常见转换技巧</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x4E8C;&#x7EF4;&#x77E9;&#x9635;&#x7684;&#x5E38;&#x89C1;&#x8F6C;&#x6362;&#x6280;&#x5DE7;">&#x4E8C;&#x7EF4;&#x77E9;&#x9635;&#x7684;&#x5E38;&#x89C1;&#x8F6C;&#x6362;&#x6280;&#x5DE7;</h2>
+<h3 id="&#x6280;&#x5DE7;1&#xFF1A;&#x4E8C;&#x7EF4;&#x77E9;&#x9635;&#x6309;&#x7D22;&#x5F15;&#x62CD;&#x5E73;&#x5230;&#x4E00;&#x7EF4;&#x6570;&#x7EC4;">&#x6280;&#x5DE7;1&#xFF1A;&#x4E8C;&#x7EF4;&#x77E9;&#x9635;&#x6309;&#x7D22;&#x5F15;&#x62CD;&#x5E73;&#x5230;&#x4E00;&#x7EF4;&#x6570;&#x7EC4;</h3>
+<ul>
+<li>&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x4E8C;&#x7EF4;&#x77E9;&#x9635;&#x5BF9;&#x5E94;&#x7684;&#xFF0C;&#x6309;&#x7B2C;1&#x884C;&#x5230;&#x7B2C;m&#x884C;&#x4F9D;&#x6B21;&#x6392;&#x5217;&#x6240;&#x5F97;&#x5230;&#x7684;&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x7684;&#x5750;&#x6807;&#xFF0C;&#x53EF;&#x4EE5;&#x4E92;&#x76F8;&#x8F6C;&#x6362;</li>
+</ul>
+<pre><code class="lang-java">&#x5982;&#x7B2C;<span class="hljs-number">2</span>&#x884C;&#x7B2C;<span class="hljs-number">3</span>&#x5217;&#x7684;<span class="hljs-number">16</span>&#x8FD9;&#x4E2A;&#x6570;&#xFF0C;&#x5176;&#x77E9;&#x9635;&#x7684;&#x5750;&#x6807;&#x662F;(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>),&#x800C;&#x6620;&#x5C04;&#x5230;&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5176;&#x5BF9;&#x5E94;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;idx=<span class="hljs-number">6</span>
+idx=<span class="hljs-number">6</span>=i*n+j=<span class="hljs-number">1</span>*<span class="hljs-number">4</span>+<span class="hljs-number">2</span>=<span class="hljs-number">6</span>
+&#x800C;&#x5982;&#x4F55;&#x901A;&#x8FC7;idx=<span class="hljs-number">6</span>&#x53CD;&#x5411;&#x5F97;&#x5230;&#x77E9;&#x9635;&#x7684;&#x5750;&#x6807;&#x5462;&#xFF1F;
+i=idx/n=<span class="hljs-number">6</span>/<span class="hljs-number">4</span> =<span class="hljs-number">1</span>
+j=idx%n=<span class="hljs-number">6</span>%<span class="hljs-number">4</span> =<span class="hljs-number">2</span>
+&#x5F97;&#x5230;&#x77E9;&#x9635;&#x7684;&#x5750;&#x6807;&#x4E3A;(i,j) ==&gt;(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)
+</code></pre>
+<p><img src="../../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20220325204302335.png" alt="image-20220325204302335"></p>
+<h3 id="&#x6280;&#x5DE7;2&#xFF1A;&#x5C06;&#x77E9;&#x9635;&#x5F53;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x5316;&#x6210;&#x5341;&#x8FDB;&#x5236;">&#x6280;&#x5DE7;2&#xFF1A;&#x5C06;&#x77E9;&#x9635;&#x5F53;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x5316;&#x6210;&#x5341;&#x8FDB;&#x5236;</h3>
+<blockquote>
+<p>&#x80CC;&#x666F;&#x77E5;&#x8BC6;</p>
+</blockquote>
+<ul>
+<li><p>&#x5BF9;&#x4E8E;&#x5341;&#x8FDB;&#x5236;&#x6574;&#x6570; <code>x</code>&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;<code>x &amp; 1</code> &#x5F97;&#x5230; <code>x</code> &#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x7684;&#x6700;&#x4F4E;&#x4F4D;&#xFF0C;&#x5B83;&#x7B49;&#x4EF7;&#x4E8E;<code>x % 2</code> &#xFF1A;</p>
+<ul>
+<li><p>&#x4F8B;&#x5982;&#x5F53;<code>x = 3</code> &#x65F6;&#xFF0C;<code>x</code> &#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4E3A; <code>11</code>&#xFF0C;<code>x &amp; 1</code>&#x7684;&#x503C;&#x4E3A; <code>1</code>&#xFF1B;</p>
+</li>
+<li><p>&#x4F8B;&#x5982;&#x5F53; <code>x = 6</code> &#x65F6;&#xFF0C;<code>x</code> &#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4E3A; <code>110</code>&#xFF0C;<code>x &amp; 1</code> &#x7684;&#x503C;&#x4E3A;<code>0</code>&#x3002;</p>
+</li>
+</ul>
+</li>
+<li><p>&#x5BF9;&#x4E8E;&#x5341;&#x8FDB;&#x5236;&#x6574;&#x6570; <code>x</code>&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;<code>x &amp; (1 &lt;&lt; k)</code> &#x6765;&#x5224;&#x65AD; x &#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x7684;&#x7B2C; <code>k</code>&#x4F4D;&#xFF08;&#x6700;&#x4F4E;&#x4F4D;&#x4E3A;&#x7B2C;<code>0</code> &#x4F4D;&#xFF09;&#x662F;&#x5426;&#x4E3A; <code>1</code>&#x3002;&#x5982;&#x679C;&#x8BE5;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x503C;&#x5927;&#x4E8E;&#x96F6;&#xFF0C;&#x90A3;&#x4E48;&#x7B2C;<code>k</code> &#x4F4D;&#x4E3A; <code>1</code>&#xFF1A;</p>
+<ul>
+<li>&#x4F8B;&#x5982;&#x5F53; <code>x = 3</code> &#x65F6;&#xFF0C;<code>x</code> &#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4E3A; <code>11</code>&#xFF0C;<code>x &amp; (1 &lt;&lt; 1)</code> = <code>11 &amp; 10</code> =<code>10</code> &gt;<code>0</code>&#xFF0C;&#x8BF4;&#x660E;&#x7B2C; <code>1</code> &#x4F4D;&#x4E3A; <code>1</code>&#xFF1B;</li>
+<li>&#x4F8B;&#x5982;&#x5F53; <code>x = 5</code> &#x65F6;&#xFF0C;<code>x</code> &#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4E3A; <code>101</code>&#xFF0C;<code>x &amp; (1 &lt;&lt; 1)</code>= <code>101 &amp; 10</code> = <code>0</code>&#xFF0C;&#x8BF4;&#x660E;&#x7B2C; <code>1</code> &#x4F4D;&#x4E0D;&#x4E3A; <code>1</code>&#x3002;</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>&#x4E3E;&#x4F8B;</p>
+</blockquote>
+<p>&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#xFF1A;</p>
+<pre><code class="lang-java">[[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>],
+[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]]
+</code></pre>
+<p>&#x8BE5;&#x77E9;&#x9635;&#x5982;&#x679C;&#x6309;&#x6BCF;&#x884C;&#x4F9D;&#x6B21;&#x6392;&#x5F00;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x6210;&#x4E00;&#x7EF4;&#x77E9;&#x9635;</p>
+<pre><code class="lang-java">[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]
+</code></pre>
+<p>&#x5C06;&#x4E0A;&#x8FF0;&#x7684;&#x4E00;&#x7EF4;&#x77E9;&#x9635;&#x770B;&#x6210;&#x4E00;&#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x7684;&#x6570;&#x662F;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-number">001100011</span>
+</code></pre>
+<p>&#x5BF9;&#x5E94;&#x7684;&#x5341;&#x8FDB;&#x5236;&#x662F;<code>99</code></p>
+<blockquote>
+<p> &#x600E;&#x4E48;&#x8F6C;&#x5316;</p>
+</blockquote>
+<ul>
+<li>&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x8F6C;&#x5316;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x518D;&#x8F6C;&#x5316;&#x6210;&#x5341;&#x8FDB;&#x5236;&#x6570;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-comment">/**
+         * 
+         * <span class="hljs-doctag">@param</span> matrix &#x4E8C;&#x7EF4;&#x77E9;&#x9635;
+         * <span class="hljs-doctag">@param</span> R &#x77E9;&#x9635;&#x7684;&#x884C;&#x6570;
+         * <span class="hljs-doctag">@param</span> C &#x77E9;&#x9635;&#x7684;&#x5217;&#x6570;
+         * <span class="hljs-doctag">@return</span>
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">encode</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] matrix, <span class="hljs-keyword">int</span> R, <span class="hljs-keyword">int</span> C)</span> </span>{
+            <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; r++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; c++) {
+                    x = x * <span class="hljs-number">2</span> + matrix[r][c];
+                }
+            }
+            <span class="hljs-keyword">return</span> x;
+        }
+</code></pre>
+<ul>
+<li>&#x4E00;&#x4E2A;&#x5341;&#x8FDB;&#x5236;&#x7684;&#x6570;&#x5982;&#x4F55;&#x8F6C;&#x5316;&#x4E3A;&#x4E8C;&#x8FDB;&#x5236;&#x7684;&#x77E9;&#x9635;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-comment">/**
+         * <span class="hljs-doctag">@param</span> x &#x6E90;&#x6570;
+         * <span class="hljs-doctag">@param</span> R &#x77E9;&#x9635;&#x7684;&#x884C;&#x6570;
+         * <span class="hljs-doctag">@param</span> C &#x77E9;&#x9635;&#x7684;&#x5217;&#x6570;
+         * <span class="hljs-doctag">@return</span>
+         */</span>
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[][] decode(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> R, <span class="hljs-keyword">int</span> C) {
+            <span class="hljs-keyword">int</span>[][] matrix = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[R][C];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = R - <span class="hljs-number">1</span>; r &gt;= <span class="hljs-number">0</span>; r--) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = C - <span class="hljs-number">1</span>; c &gt;= <span class="hljs-number">0</span>; c--) {
+                    matrix[r][c] = x &amp; <span class="hljs-number">1</span>;
+                    x &gt;&gt;= <span class="hljs-number">1</span>;
+                }
+            }
+            <span class="hljs-keyword">return</span> matrix;
+        }
+</code></pre>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix/solution/zhuan-hua-wei-quan-ling-ju-zhen-de-zui-shao-fan-2/" target="_blank">&#x8F6C;&#x5316;&#x4E3A;&#x5168;&#x96F6;&#x77E9;&#x9635;&#x7684;&#x6700;&#x5C11;&#x53CD;&#x8F6C;&#x6B21;&#x6570;</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="图解翻转矩阵问题.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 图解翻转矩阵问题">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"二维矩阵的常见转换技巧","level":"1.4.2","depth":2,"previous":{"title":"图解翻转矩阵问题","level":"1.4.1","depth":2,"path":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","ref":"docs/articles/data_structures/matrix/图解翻转矩阵问题.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/articles/data_structures/matrix/二维矩阵的常见转换技巧.md","mtime":"2022-03-25T12:44:01.741Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-25T12:44:53.772Z"},"basePath":"../../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../../gitbook/gitbook.js"></script>
+    <script src="../../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
