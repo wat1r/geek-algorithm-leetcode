@@ -568,6 +568,53 @@
     <span class="hljs-keyword">return</span> deque.isEmpty();
 }
 </code></pre>
+<h2 id="682-&#x68D2;&#x7403;&#x6BD4;&#x8D5B;"><a href="https://leetcode-cn.com/problems/baseball-game/" target="_blank">682. &#x68D2;&#x7403;&#x6BD4;&#x8D5B;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x6808;">&#x65B9;&#x6CD5;1:&#x6808;</h3>
+<ul>
+<li>&#x4F7F;&#x7528;&#x6808;&#x7684;&#x65B9;&#x5F0F;&#x6C42;&#x89E3;&#xFF0C;Deque&#x7684;&#x4F7F;&#x7528;&#x6280;&#x5DE7;&#x53C2;&#x89C1;&#xFF1A;<a href="https://cnwangzhou.gitbook.io/algorithm/leetcode/basic_skill" target="_blank">Deque&#x7684;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</a></li>
+</ul>
+<p><img src="../../../imgs/leetcode/classify/image-20220326094856575.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calPoints</span><span class="hljs-params">(String[] ops)</span> </span>{
+    <span class="hljs-keyword">if</span> (ops == <span class="hljs-keyword">null</span> || ops.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+    Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">for</span> (String op : ops) {
+        <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;D&quot;</span>)) stk.push(stk.peek() * <span class="hljs-number">2</span>);
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;C&quot;</span>)) stk.poll();
+            <span class="hljs-comment">//&#x9047;&#x5230;+&#x53F7; &#x5F39;&#x51FA;&#x524D;&#x4E24;&#x6B21;</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;+&quot;</span>)) {
+            <span class="hljs-keyword">int</span> cur = stk.poll(), prev = stk.poll();
+            stk.push(prev);
+            stk.push(cur);
+            stk.push(prev + cur);
+        } <span class="hljs-keyword">else</span> {
+            stk.push(Integer.parseInt(op));
+        }
+    }
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (!stk.isEmpty()) res += stk.poll();
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x6570;&#x7EC4;">&#x65B9;&#x6CD5;2:&#x6570;&#x7EC4;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calPoints</span><span class="hljs-params">(String[] ops)</span> </span>{
+    <span class="hljs-keyword">if</span> (ops == <span class="hljs-keyword">null</span> || ops.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">1005</span>];
+    <span class="hljs-keyword">int</span> idx = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ops.length; i++, idx++) {
+        String op = ops[i];
+        <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;D&quot;</span>)) arr[idx] = arr[idx - <span class="hljs-number">1</span>] * <span class="hljs-number">2</span>;
+            <span class="hljs-comment">//&#x5F80;&#x524D;&#x8DF3;2&#x6B21;&#xFF0C;for&#x5FAA;&#x73AF;+1 &#x8FBE;&#x5230;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x4E00;&#x6B21;&#x7684;&#x76EE;&#x7684;</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;C&quot;</span>)) idx -= <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;+&quot;</span>)) arr[idx] = arr[idx - <span class="hljs-number">1</span>] + arr[idx - <span class="hljs-number">2</span>];
+        <span class="hljs-keyword">else</span> arr[idx] = Integer.parseInt(op);
+    }
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//&#x6700;&#x540E;&#x5982;&#x679C;&#x8BFB;&#x5230;&quot;C&quot;&#x7684;&#x65F6;&#x5019;&#xFF0C;idx&#x4F1A;&#x56DE;&#x9000;&#x7D22;&#x5F15;&#xFF0C;&#x4F46;arr&#x7684;&#x5143;&#x7D20;&#x5E76;&#x6CA1;&#x6709;&#x66F4;&#x65B0;</span>
+    <span class="hljs-comment">//&#x53C2;&#x8003;case:[36&quot;, &quot;28&quot;, &quot;70&quot;, &quot;65&quot;, &quot;C&quot;, &quot;+&quot;, &quot;33&quot;, &quot;-46&quot;, &quot;84&quot;, &quot;C&quot;]</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; idx; i++) res += arr[i];
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -611,7 +658,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-03-23T00:31:13.369Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-25T15:37:03.424Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-03-26T02:09:08.898Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-26T02:09:21.805Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

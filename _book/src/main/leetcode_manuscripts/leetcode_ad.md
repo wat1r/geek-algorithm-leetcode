@@ -111,7 +111,7 @@
 
 
 - **目录索引:[畅游面试中算法题集锦](https://blog.csdn.net/wat1r/article/details/115614680)**
-- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，拉群一起玩耍
+- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，进群一起交流~
 
 
 
@@ -121,4 +121,4 @@
 
 - 算法题解的链接地址： [gitbook](https://cnwangzhou.gitbook.io/algorithm/)
 
-- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，拉群一起玩耍
+- [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，进群一起交流~
