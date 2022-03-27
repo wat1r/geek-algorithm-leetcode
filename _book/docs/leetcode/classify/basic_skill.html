@@ -751,6 +751,104 @@ a
 <span class="hljs-number">3</span>
 []
 </code></pre>
+<h2 id="arraysbinarysearch">Arrays.BinarySearch</h2>
+<h3 id="binarysearchobject-a-object-key">binarySearch(Object[] a, Object key)</h3>
+<ul>
+<li><p>a: &#x8981;&#x641C;&#x7D22;&#x7684;&#x6570;&#x7EC4;</p>
+</li>
+<li><p>key&#xFF1A;&#x8981;&#x641C;&#x7D22;&#x7684;&#x503C;</p>
+</li>
+<li><p>&#x5982;&#x679C;key&#x5728;&#x6570;&#x7EC4;&#x4E2D;&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#x641C;&#x7D22;&#x503C;&#x7684;&#x7D22;&#x5F15;&#xFF1B;&#x5426;&#x5219;&#x8FD4;&#x56DE;-1&#x6216;&#x201C;-&#x201D;&#xFF08;&#x63D2;&#x5165;&#x70B9;&#xFF09;&#x3002;&#x63D2;&#x5165;&#x70B9;&#x662F;&#x7D22;&#x5F15;&#x952E;&#x5C06;&#x8981;&#x63D2;&#x5165;&#x6570;&#x7EC4;&#x7684;&#x90A3;&#x4E00;&#x70B9;&#xFF0C;&#x5373;&#x7B2C;&#x4E00;&#x4E2A;&#x5927;&#x4E8E;&#x8BE5;&#x952E;&#x7684;&#x5143;&#x7D20;&#x7684;&#x7D22;&#x5F15;&#x3002;</p>
+</li>
+</ul>
+<p>&#x8FD9;&#x91CC;&#x6D89;&#x53CA;&#x5230;&#x641C;&#x7D22;&#x503C;&#x7684;&#x51E0;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li>1.&#x641C;&#x7D22;&#x503C;&#x662F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#xFF0C;&#x4ECE;0&#x5F00;&#x59CB;&#x8BA1;&#x6570;&#xFF0C;&#x5F97;&#x641C;&#x7D22;&#x503C;&#x7684;&#x7D22;&#x5F15;&#x503C;</li>
+<li>2.&#x641C;&#x7D22;&#x503C;&#x4E0D;&#x662F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#xFF0C;&#x4E14;&#x5C0F;&#x4E8E;&#x6570;&#x7EC4;&#x5185;&#x5143;&#x7D20;&#xFF0C;&#x7D22;&#x5F15;&#x503C;&#x4E3A; &#x2013; 1</li>
+<li>3.&#x641C;&#x7D22;&#x503C;&#x4E0D;&#x662F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#xFF0C;&#x4E14;&#x5728;&#x6570;&#x7EC4;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x4ECE;1&#x5F00;&#x59CB;&#x8BA1;&#x6570;&#xFF0C;&#x5F97;&#x201C; - &#x63D2;&#x5165;&#x70B9;&#x7D22;&#x5F15;&#x503C;&#x201D;</li>
+<li>4.&#x641C;&#x7D22;&#x503C;&#x4E0D;&#x662F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#xFF0C;&#x4E14;&#x5927;&#x4E8E;&#x6570;&#x7EC4;&#x5185;&#x5143;&#x7D20;&#xFF0C;&#x7D22;&#x5F15;&#x503C;&#x4E3A; &#x2013; (length + 1)</li>
+</ul>
+<p><strong>&#x4E3E;&#x4F8B;</strong></p>
+<pre><code class="lang-java"><span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testArraysBinarySearch</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>};
+    Arrays.sort(arr);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">17</span>; i++) {
+        System.out.println(<span class="hljs-string">&quot;&#x6570;&#x5B57;&#x3010;&quot;</span> + i + <span class="hljs-string">&quot;&#x3011;&#xFF1A;&quot;</span> + Arrays.binarySearch(arr, i));
+    }
+}
+</code></pre>
+<p><strong>&#x8F93;&#x51FA;</strong></p>
+<pre><code class="lang-java">
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">0</span>&#x3011;&#xFF1A;-<span class="hljs-number">1</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">1</span>&#x3011;&#xFF1A;-<span class="hljs-number">1</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">2</span>&#x3011;&#xFF1A;-<span class="hljs-number">1</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">3</span>&#x3011;&#xFF1A;<span class="hljs-number">0</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">4</span>&#x3011;&#xFF1A;-<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">5</span>&#x3011;&#xFF1A;<span class="hljs-number">1</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">6</span>&#x3011;&#xFF1A;-<span class="hljs-number">3</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">7</span>&#x3011;&#xFF1A;<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">8</span>&#x3011;&#xFF1A;-<span class="hljs-number">4</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">9</span>&#x3011;&#xFF1A;<span class="hljs-number">3</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">10</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">11</span>&#x3011;&#xFF1A;<span class="hljs-number">4</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">12</span>&#x3011;&#xFF1A;-<span class="hljs-number">6</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">13</span>&#x3011;&#xFF1A;<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">14</span>&#x3011;&#xFF1A;-<span class="hljs-number">7</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">15</span>&#x3011;&#xFF1A;-<span class="hljs-number">7</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">16</span>&#x3011;&#xFF1A;-<span class="hljs-number">7</span>
+</code></pre>
+<h3 id="binarysearchobject-a-int-fromindex-int-toindex-object-key">binarySearch(Object[] a, int fromIndex, int toIndex, Object key)</h3>
+<ul>
+<li><p>a&#xFF1A;&#x8981;&#x641C;&#x7D22;&#x7684;&#x6570;&#x7EC4;</p>
+</li>
+<li><p>fromIndex&#xFF1A;&#x6307;&#x5B9A;&#x8303;&#x56F4;&#x7684;&#x5F00;&#x59CB;&#x5904;&#x7D22;&#x5F15;&#xFF08;&#x5305;&#x542B;&#xFF09;</p>
+</li>
+<li><p>toIndex&#xFF1A;&#x6307;&#x5B9A;&#x8303;&#x56F4;&#x7684;&#x7ED3;&#x675F;&#x5904;&#x7D22;&#x5F15;&#xFF08;&#x4E0D;&#x5305;&#x542B;&#xFF09;</p>
+</li>
+<li><p>key&#xFF1A;&#x8981;&#x641C;&#x7D22;&#x7684;&#x503C;</p>
+</li>
+<li><p>&#x5982;&#x679C;&#x8981;&#x641C;&#x7D22;&#x7684;&#x5143;&#x7D20;key&#x5728;&#x6307;&#x5B9A;&#x7684;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#x641C;&#x7D22;&#x503C;&#x7684;&#x7D22;&#x5F15;&#xFF1B;&#x5426;&#x5219;&#x8FD4;&#x56DE;-1&#x6216;&#x201C;-&#x201D;&#xFF08;&#x63D2;&#x5165;&#x70B9;&#xFF09;&#x3002;</p>
+</li>
+</ul>
+<p>&#x8FD9;&#x91CC;&#x6D89;&#x53CA;&#x5230;&#x641C;&#x7D22;&#x503C;&#x7684;&#x51E0;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li>1.&#x8BE5;&#x641C;&#x7D22;&#x952E;&#x5728;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x4E14;&#x662F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#xFF0C;&#x7531;0&#x5F00;&#x59CB;&#x8BA1;&#x6570;&#xFF0C;&#x5F97;&#x641C;&#x7D22;&#x503C;&#x7684;&#x7D22;&#x5F15;&#x503C;</li>
+<li>2.&#x8BE5;&#x641C;&#x7D22;&#x952E;&#x4E0D;&#x5728;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x4E14;&#x5C0F;&#x4E8E;&#x8303;&#x56F4;&#xFF08;&#x6570;&#x7EC4;&#xFF09;&#x5185;&#x5143;&#x7D20;&#xFF0C;&#x8FD4;&#x56DE;&#x2013;(fromIndex + 1)</li>
+<li><p>3.&#x8BE5;&#x641C;&#x7D22;&#x952E;&#x5728;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x4F46;&#x4E0D;&#x662F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#xFF0C;&#x7531;1&#x5F00;&#x59CB;&#x8BA1;&#x6570;&#xFF0C;&#x5F97;&#x201C; - &#x63D2;&#x5165;&#x70B9;&#x7D22;&#x5F15;&#x503C;&#x201D;</p>
+</li>
+<li><p>4.&#x8BE5;&#x641C;&#x7D22;&#x952E;&#x4E0D;&#x5728;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x4E14;&#x5927;&#x4E8E;&#x8303;&#x56F4;&#xFF08;&#x6570;&#x7EC4;&#xFF09;&#x5185;&#x5143;&#x7D20;&#xFF0C;&#x8FD4;&#x56DE; &#x2013;(toIndex + 1)</p>
+</li>
+</ul>
+<p><strong>&#x4E3E;&#x4F8B;</strong></p>
+<pre><code class="lang-java"><span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testArraysBinarySearchIndex</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">13</span>};
+    Arrays.sort(arr);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">17</span>; i++) {
+        System.out.println(<span class="hljs-string">&quot;&#x6570;&#x5B57;&#x3010;&quot;</span> + i + <span class="hljs-string">&quot;&#x3011;&#xFF1A;&quot;</span> + Arrays.binarySearch(arr, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, i));
+    }
+}
+</code></pre>
+<p><strong>&#x8F93;&#x51FA;</strong></p>
+<pre><code class="lang-java">&#x6570;&#x5B57;&#x3010;<span class="hljs-number">0</span>&#x3011;&#xFF1A;-<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">1</span>&#x3011;&#xFF1A;-<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">2</span>&#x3011;&#xFF1A;-<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">3</span>&#x3011;&#xFF1A;-<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">4</span>&#x3011;&#xFF1A;-<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">5</span>&#x3011;&#xFF1A;<span class="hljs-number">1</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">6</span>&#x3011;&#xFF1A;-<span class="hljs-number">3</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">7</span>&#x3011;&#xFF1A;<span class="hljs-number">2</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">8</span>&#x3011;&#xFF1A;-<span class="hljs-number">4</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">9</span>&#x3011;&#xFF1A;<span class="hljs-number">3</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">10</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">11</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">12</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">13</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">14</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">15</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+&#x6570;&#x5B57;&#x3010;<span class="hljs-number">16</span>&#x3011;&#xFF1A;-<span class="hljs-number">5</span>
+</code></pre>
 
                                 
                                 </section>
@@ -790,7 +888,7 @@ a
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"基础与技巧","level":"1.2.1","depth":2,"next":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"previous":{"title":"LeetCode-PART1","level":"1.2","depth":1,"ref":"","articles":[{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"滑动窗口","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},{"title":"单调栈","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/basic_skill.md","mtime":"2022-03-21T10:16:54.558Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-27T11:16:17.720Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"基础与技巧","level":"1.2.1","depth":2,"next":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},"previous":{"title":"LeetCode-PART1","level":"1.2","depth":1,"ref":"","articles":[{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/structure.md","ref":"docs/leetcode/classify/structure.md","articles":[]},{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},{"title":"双指针","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},{"title":"滑动窗口","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},{"title":"单调栈","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/basic_skill.md","mtime":"2022-03-27T13:59:48.144Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-27T14:08:23.225Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

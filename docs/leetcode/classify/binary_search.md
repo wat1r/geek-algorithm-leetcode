@@ -178,6 +178,85 @@ public int findMin(int[] nums) {
 
 
 
+## [475. 供暖器](https://leetcode-cn.com/problems/heaters/)
+
+### 方法1
+
+```java
+//这个case表示在1 2 3 4 位置都有热水器 但是只有1位置有房子，结果为0
+//[1]
+//[1,2,3,4]
+public int findRadius(int[] houses, int[] heaters) {
+    Arrays.sort(houses);
+    Arrays.sort(heaters);
+    int l = 0, r = (int) 1e9;
+    while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (check(houses, heaters, mid)) r = mid;
+        else l = mid + 1;
+    }
+    return l;
+}
+
+public boolean check(int[] houses, int[] heaters, int target) {
+    int n = houses.length, m = heaters.length;
+    for (int i = 0, j = 0; i < n; i++) {
+        while (j < m && houses[i] > heaters[j] + target) {
+            j++;
+        }
+        if (j < m && heaters[j] - target <= houses[i] && houses[i] <= heaters[j] + target) {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+```
+
+### 方法2
+
+```java
+public int findRadius(int[] houses, int[] heaters) {
+    Arrays.sort(heaters);
+    int m = houses.length, n = heaters.length;
+    int res = Integer.MIN_VALUE;
+    for (int house : houses) {
+        int idx = Arrays.binarySearch(heaters, house);
+        if (idx < 0) {
+            idx = ~idx;
+            int dist1 = idx - 1 >= 0 ? house - heaters[idx - 1] : Integer.MAX_VALUE;
+            int dist2 = idx < n ? heaters[idx] - house : Integer.MAX_VALUE;
+            res = Math.max(res, Math.min(dist1, dist2));
+        }
+    }
+    return res;
+}
+```
+
+
+
+### 方法3
+
+```java
+    public int findRadius(int[] houses, int[] heaters) {
+      Arrays.sort(houses);
+      Arrays.sort(heaters);
+      
+      int i = 0, res = 0;
+      for(int house: houses){
+        while(i + 1 < heaters.length && Math.abs(heaters[i] - house) >= Math.abs(heaters[i + 1] - house)){
+          i++;    
+        }
+        res = Math.max(res, Math.abs(heaters[i] - house));
+      }
+      return res;
+    }
+```
+
+
+
+
+
 
 
 ## [704. 二分查找](https://leetcode-cn.com/problems/binary-search/)
@@ -195,3 +274,4 @@ public int search(int[] nums, int target) {
     return nums[l] == target ? l : -1;
 }
 ```
+

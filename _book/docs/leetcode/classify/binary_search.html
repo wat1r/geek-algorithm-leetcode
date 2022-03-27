@@ -795,6 +795,69 @@
         <span class="hljs-keyword">return</span> l;
     }
 </code></pre>
+<h2 id="475-&#x4F9B;&#x6696;&#x5668;"><a href="https://leetcode-cn.com/problems/heaters/" target="_blank">475. &#x4F9B;&#x6696;&#x5668;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x8FD9;&#x4E2A;case&#x8868;&#x793A;&#x5728;1 2 3 4 &#x4F4D;&#x7F6E;&#x90FD;&#x6709;&#x70ED;&#x6C34;&#x5668; &#x4F46;&#x662F;&#x53EA;&#x6709;1&#x4F4D;&#x7F6E;&#x6709;&#x623F;&#x5B50;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;0</span>
+<span class="hljs-comment">//[1]</span>
+<span class="hljs-comment">//[1,2,3,4]</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findRadius</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] houses, <span class="hljs-keyword">int</span>[] heaters)</span> </span>{
+    Arrays.sort(houses);
+    Arrays.sort(heaters);
+    <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span>;
+    <span class="hljs-keyword">while</span> (l &lt; r) {
+        <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span> (check(houses, heaters, mid)) r = mid;
+        <span class="hljs-keyword">else</span> l = mid + <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> l;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] houses, <span class="hljs-keyword">int</span>[] heaters, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">int</span> n = houses.length, m = heaters.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">while</span> (j &lt; m &amp;&amp; houses[i] &gt; heaters[j] + target) {
+            j++;
+        }
+        <span class="hljs-keyword">if</span> (j &lt; m &amp;&amp; heaters[j] - target &lt;= houses[i] &amp;&amp; houses[i] &lt;= heaters[j] + target) {
+            <span class="hljs-keyword">continue</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2">&#x65B9;&#x6CD5;2</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findRadius</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] houses, <span class="hljs-keyword">int</span>[] heaters)</span> </span>{
+    Arrays.sort(heaters);
+    <span class="hljs-keyword">int</span> m = houses.length, n = heaters.length;
+    <span class="hljs-keyword">int</span> res = Integer.MIN_VALUE;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> house : houses) {
+        <span class="hljs-keyword">int</span> idx = Arrays.binarySearch(heaters, house);
+        <span class="hljs-keyword">if</span> (idx &lt; <span class="hljs-number">0</span>) {
+            idx = ~idx;
+            <span class="hljs-keyword">int</span> dist1 = idx - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span> ? house - heaters[idx - <span class="hljs-number">1</span>] : Integer.MAX_VALUE;
+            <span class="hljs-keyword">int</span> dist2 = idx &lt; n ? heaters[idx] - house : Integer.MAX_VALUE;
+            res = Math.max(res, Math.min(dist1, dist2));
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3">&#x65B9;&#x6CD5;3</h3>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findRadius</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] houses, <span class="hljs-keyword">int</span>[] heaters)</span> </span>{
+      Arrays.sort(houses);
+      Arrays.sort(heaters);
+
+      <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, res = <span class="hljs-number">0</span>;
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> house: houses){
+        <span class="hljs-keyword">while</span>(i + <span class="hljs-number">1</span> &lt; heaters.length &amp;&amp; Math.abs(heaters[i] - house) &gt;= Math.abs(heaters[i + <span class="hljs-number">1</span>] - house)){
+          i++;    
+        }
+        res = Math.max(res, Math.abs(heaters[i] - house));
+      }
+      <span class="hljs-keyword">return</span> res;
+    }
+</code></pre>
 <h2 id="704-&#x4E8C;&#x5206;&#x67E5;&#x627E;"><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank">704. &#x4E8C;&#x5206;&#x67E5;&#x627E;</a></h2>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target)</span> </span>{
     <span class="hljs-keyword">int</span> n = nums.length, l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>;
@@ -851,7 +914,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.8","depth":2,"next":{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-03-27T10:08:19.666Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-27T11:16:17.720Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.8","depth":2,"next":{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-03-27T14:08:09.758Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-27T14:08:23.225Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
