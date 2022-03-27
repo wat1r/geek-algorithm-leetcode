@@ -48,3 +48,5 @@
   - [重温经典之打家劫舍数题](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484946&idx=1&sn=85711584d097ebebeb2723d3e2d4b0de&chksm=e829a5b4df5e2ca23acb5569985a37066fb056bd0948397793f0c3f3cfbae6ca94ad81599c02#rd)
   - [【重温经典】接雨水 I](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484855&idx=1&sn=3818d5760f4512eca99cd82a3233eaa4&chksm=e829a611df5e2f0772fe8df1d285796eda32c14a55feec0d970644da8b34c8ec609bd0e74340#rd)
   - [【重温经典】Pow(x, n)](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484817&idx=1&sn=3761e4097ce812219f2be441248dca80&chksm=e829a637df5e2f21009df78c53c1c872ab85cc30cd06e8f87e1fab1007009cf1c3985bb273f1#rd)
+
+  - [【重温经典】LRU 缓存机制](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484736&idx=1&sn=ff5e6cf657c9ca73d3e36fbfe9a1c378&chksm=e829a6e6df5e2ff038c305f17fb53c97c0c1c9887ed99e4eced8cbc1843bb69b7ed5d9c3e377#rd)
