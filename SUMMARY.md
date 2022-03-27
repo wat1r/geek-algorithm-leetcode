@@ -42,5 +42,9 @@
   * [图解翻转矩阵问题](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484998&idx=1&sn=a9fbb88c41ef38182adf0e918c0b3159&chksm=e829a5e0df5e2cf639d027ce83077f7a4a3c24cac5ad4711067b0bdbb0d0d1326cb41b819c22#rd)
 
   - [你手里的股票还好吗？学完这套股票买卖，准备抄底吗~](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484963&idx=1&sn=cd8ab109b3b6473d0aafce63faa9c434&chksm=e829a585df5e2c93d060e24784f25a62124dac43a2e484312a73f5911186b5164a55ebbef5c8#rd)
-  - 重温经典
-    - [重温经典之打家劫舍数题](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484946&idx=1&sn=85711584d097ebebeb2723d3e2d4b0de&chksm=e829a5b4df5e2ca23acb5569985a37066fb056bd0948397793f0c3f3cfbae6ca94ad81599c02#rd)
+
+* 重温经典系列
+
+  - [重温经典之打家劫舍数题](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484946&idx=1&sn=85711584d097ebebeb2723d3e2d4b0de&chksm=e829a5b4df5e2ca23acb5569985a37066fb056bd0948397793f0c3f3cfbae6ca94ad81599c02#rd)
+  - [【重温经典】接雨水 I](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484855&idx=1&sn=3818d5760f4512eca99cd82a3233eaa4&chksm=e829a611df5e2f0772fe8df1d285796eda32c14a55feec0d970644da8b34c8ec609bd0e74340#rd)
+  - [【重温经典】Pow(x, n)](https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484817&idx=1&sn=3761e4097ce812219f2be441248dca80&chksm=e829a637df5e2f21009df78c53c1c872ab85cc30cd06e8f87e1fab1007009cf1c3985bb273f1#rd)
