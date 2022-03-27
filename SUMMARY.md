@@ -7,6 +7,7 @@
   * [数据结构](/docs/leetcode/classify/structure.md)
   * [堆栈](/docs/leetcode/classify/heap_stack.md)
   * [数组](/docs/leetcode/classify/array.md)
+  * [排序](/docs/leetcode/classify/sorting.md)
   * [模拟](/docs/leetcode/classify/simulation.md)
   * [字符串](/docs/leetcode/classify/string.md)
   * [二分](/docs/leetcode/classify/binary_search.md)
