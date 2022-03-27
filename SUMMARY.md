@@ -1,18 +1,20 @@
 # Summary
 
 * [简介](README.md)
-* LeetCode
+* LeetCode-PART1
 
   * [基础与技巧](/docs/leetcode/classify/basic_skill.md)
   * [数据结构](/docs/leetcode/classify/structure.md)
   * [堆栈](/docs/leetcode/classify/heap_stack.md)
   * [数组](/docs/leetcode/classify/array.md)
+  * [模拟](/docs/leetcode/classify/simulation.md)
   * [字符串](/docs/leetcode/classify/string.md)
   * [二分](/docs/leetcode/classify/binary_search.md)
   * [结构设计](/docs/leetcode/classify/structure_design.md)
   * [双指针](/docs/leetcode/classify/two_pointers.md)
   * [滑动窗口](/docs/leetcode/classify/sliding_window.md)
   * [单调栈](/docs/leetcode/classify/monotonic_stack.md)
+* LeetCode-PART2
   * [搜索](/docs/leetcode/classify/search.md)
   * [图论](/docs/leetcode/classify/graph.md)
   * [动态规划](/docs/leetcode/classify/dynamic_programing.md)
@@ -21,8 +23,6 @@
   * [数学](/docs/leetcode/classify/math.md)
   * [扫描线](/docs/leetcode/classify/sweep_line.md)
   * [剑指Offer(leetcode)](/docs/leetcode/swordoffer/swordoffer.md)
-* Test1
-  * [模拟](/docs/leetcode/classify/simulation.md)
 
 * 剑指Offer(nowcoder)
   * [数据结构](/docs/swordoffer/structure.md)
