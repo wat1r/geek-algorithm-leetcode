@@ -841,7 +841,28 @@
 }
 </code></pre>
 <h2 id="138-&#x590D;&#x5236;&#x5E26;&#x968F;&#x673A;&#x6307;&#x9488;&#x7684;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/copy-list-with-random-pointer/" target="_blank">138. &#x590D;&#x5236;&#x5E26;&#x968F;&#x673A;&#x6307;&#x9488;&#x7684;&#x94FE;&#x8868;</a></h2>
-<h3 id="&#x65B9;&#x6CD5;1&#x4E24;&#x6B21;&#x904D;&#x5386;&#x54C8;&#x5E0C;&#x8868;">&#x65B9;&#x6CD5;1:&#x4E24;&#x6B21;&#x904D;&#x5386;+&#x54C8;&#x5E0C;&#x8868;</h3>
+<h3 id="&#x65B9;&#x6CD5;1&#x4E00;&#x904D;&#x904D;&#x5386;&#x54C8;&#x5E0C;&#x8868;">&#x65B9;&#x6CD5;1.&#x4E00;&#x904D;&#x904D;&#x5386;+&#x54C8;&#x5E0C;&#x8868;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> Node <span class="hljs-title">copyRandomList</span><span class="hljs-params">(Node head)</span> </span>{
+    <span class="hljs-keyword">if</span> (head == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    HashMap&lt;Node, Node&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    Node newHead = <span class="hljs-keyword">new</span> Node(head.val);
+    map.put(head, newHead);
+    <span class="hljs-keyword">while</span> (head != <span class="hljs-keyword">null</span>) {
+        Node mirror = map.get(head);
+        <span class="hljs-keyword">if</span> (head.next != <span class="hljs-keyword">null</span>) {
+            map.putIfAbsent(head.next, <span class="hljs-keyword">new</span> Node(head.next.val));
+            mirror.next = map.get(head.next);
+        }
+        <span class="hljs-keyword">if</span> (head.random != <span class="hljs-keyword">null</span>) {
+            map.putIfAbsent(head.random, <span class="hljs-keyword">new</span> Node(head.random.val));
+            mirror.random = map.get(head.random);
+        }
+        head = head.next;
+    }
+    <span class="hljs-keyword">return</span> newHead;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x4E24;&#x6B21;&#x904D;&#x5386;&#x54C8;&#x5E0C;&#x8868;">&#x65B9;&#x6CD5;2:&#x4E24;&#x6B21;&#x904D;&#x5386;+&#x54C8;&#x5E0C;&#x8868;</h3>
 <pre><code class="lang-java">   <span class="hljs-function"><span class="hljs-keyword">public</span> Node <span class="hljs-title">copyRandomList</span><span class="hljs-params">(Node head)</span> </span>{
             HashMap&lt;Node, Node&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
             Node cur = head;
@@ -858,7 +879,7 @@
             <span class="hljs-keyword">return</span> map.get(head);
         }
 </code></pre>
-<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2&#xFF1A;&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;</h3>
+<h3 id="&#x65B9;&#x6CD5;3&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;3:&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;</h3>
 <ul>
 <li>1.&#x4ECE;<code>head</code>&#x8282;&#x70B9;&#x5F00;&#x59CB;<code>dfs</code>&#x904D;&#x5386;&#x6574;&#x4E2A;&#x94FE;&#x8868;</li>
 <li>2.&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x548C;&#x5F53;&#x524D;&#x8282;&#x70B9;<code>cur</code>&#x76F8;&#x540C;&#x7684;&#x8282;&#x70B9;<code>mirror</code>&#xFF0C;&#x5E76;&#x5EFA;&#x7ACB;&#x6620;&#x5C04;</li>
@@ -886,7 +907,7 @@
             <span class="hljs-keyword">return</span> mirror;
         }
 </code></pre>
-<h3 id="&#x65B9;&#x6CD5;3&#x8FDE;&#x63A5;-&#x6062;&#x590D;">&#x65B9;&#x6CD5;3:&#x8FDE;&#x63A5;-&#x6062;&#x590D;</h3>
+<h3 id="&#x65B9;&#x6CD5;4&#x8FDE;&#x63A5;-&#x6062;&#x590D;">&#x65B9;&#x6CD5;4:&#x8FDE;&#x63A5;-&#x6062;&#x590D;</h3>
 <p><img src="../../../imgs/leetcode/classify/image-20220318215940345.png" alt=""></p>
 <p><img src="../../../imgs/leetcode/classify/image-20220318215955302.png" alt=""></p>
 <ul>
@@ -1495,7 +1516,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-28T14:22:47.119Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T14:23:00.652Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-28T14:49:26.966Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T14:49:41.389Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

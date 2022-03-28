@@ -232,7 +232,33 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 ## [138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
 
-### 方法1:两次遍历+哈希表
+### 方法1.一遍遍历+哈希表
+
+```java
+public Node copyRandomList(Node head) {
+    if (head == null) return null;
+    HashMap<Node, Node> map = new HashMap<>();
+    Node newHead = new Node(head.val);
+    map.put(head, newHead);
+    while (head != null) {
+        Node mirror = map.get(head);
+        if (head.next != null) {
+            map.putIfAbsent(head.next, new Node(head.next.val));
+            mirror.next = map.get(head.next);
+        }
+        if (head.random != null) {
+            map.putIfAbsent(head.random, new Node(head.random.val));
+            mirror.random = map.get(head.random);
+        }
+        head = head.next;
+    }
+    return newHead;
+}
+```
+
+
+
+### 方法2:两次遍历+哈希表
 
 ```java
    public Node copyRandomList(Node head) {
@@ -252,7 +278,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         }
 ```
 
-### 方法2：记忆化递归
+### 方法3:记忆化递归
 
 - 1.从`head`节点开始`dfs`遍历整个链表
 - 2.创建一个和当前节点`cur`相同的节点`mirror`，并建立映射
@@ -284,7 +310,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
 
 
-### 方法3:连接-恢复
+### 方法4:连接-恢复
 
 ![](/imgs/leetcode/classify/image-20220318215940345.png)
 
