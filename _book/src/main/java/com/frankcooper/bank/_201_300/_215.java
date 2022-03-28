@@ -99,4 +99,45 @@ public class _215 {
         }
 
     }
+
+    static class _5th {
+        public int findKthLargest(int[] nums, int k) {
+            int n = nums.length;
+            heapInsert(nums);
+            for (int i = 0; i < k - 1; i++) {
+                int tmp = nums[0];
+                nums[0] = nums[n - 1 - i];
+                nums[n - 1 - i] = tmp;
+                heapify(nums, 0, n - 1 - i - 1);
+            }
+            return nums[0];
+        }
+
+
+        public void heapInsert(int[] nums) {
+            int n = nums.length;
+            for (int root = n / 2; root > -1; root--) {
+                heapify(nums, root, n - 1);
+            }
+        }
+
+        public void heapify(int[] nums, int root, int hi) {
+            if (root > hi)
+                return;
+            int t = nums[root];
+            int child = 2 * root + 1;
+            while (child <= hi) {
+                if (child + 1 <= hi && nums[child] < nums[child + 1])
+                    child++;
+                if (t > nums[child])
+                    break;
+                nums[root] = nums[child];
+                root = child;
+                child = 2 * root + 1;
+            }
+            nums[root] = t;
+        }
+
+
+    }
 }
