@@ -178,6 +178,39 @@ public ListNode deleteDuplicates(ListNode head) {
 
 
 
+## [86. 分隔链表](https://leetcode-cn.com/problems/partition-list/)
+
+### 方法1:双指针
+
+![](/imgs/leetcode/classify/image-20220328222033702.png)
+
+```java
+public ListNode partition(ListNode head, int x) {
+    if (head == null) return head;
+    ListNode dummyBefore = new ListNode(0);
+    ListNode before = dummyBefore;
+    ListNode dummyAfter = new ListNode(0);
+    ListNode after = dummyAfter;
+    while (head != null) {
+        if (head.val < x) {
+            before.next = head;
+            before = before.next;
+        } else {
+            after.next = head;
+            after = after.next;
+        }
+        head = head.next;
+    }
+    before.next = dummyAfter.next;
+    after.next = null;
+    return dummyBefore.next;
+}
+```
+
+
+
+
+
 ## [160. 相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
 
 ![](/imgs/leetcode/classify/image-20220317195629005.png)
