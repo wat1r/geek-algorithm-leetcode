@@ -1031,4 +1031,48 @@ public boolean canReach(int[] arr, int start) {
 
 关于倒序的遍历的问题：参考这篇：[背包问题之 01 背包问题（科普文，基础，背包九讲）](https://leetcode-cn.com/problems/coin-change/solution/bei-bao-wen-ti-zhi-01bei-bao-wen-ti-ke-pu-wen-ji-c/)
 
-### 
+
+
+## [509. 斐波那契数](https://leetcode-cn.com/problems/fibonacci-number/)
+
+#### 方法1:暴力递归
+
+- 经典的种子题
+
+```java
+    public int fib(int n) {
+        if(n==0) return 0;
+        if(n==1) return 1;
+        return fib(n-1)+fib(n-2);
+    }
+```
+
+#### 方法2:自顶向下记忆化递归(Top-down)
+
+```java
+Integer[] memo;
+public int fib(int n) {
+    memo = new Integer[n+1];
+    return recursive(n);
+}   
+private int recursive(int num){
+    if(memo[num]!=null) return memo[num];
+    if(num==0) return 0;
+    if(num==1) return 1;
+    return memo[num] = ( fib(num-1)+fib(num-2));
+}
+```
+
+#### 方法3:自底向上填表DP(Bottom-up)
+
+```java
+public int fib(int n) {
+    if(n<2) return n;
+    int[] f= new int[n+1];
+    f[0] = 0;
+    f[1]= 1;
+    for(int i = 2;i<=n;i++) f[i] =f[i-1]+f[i-2];
+    return f[n];
+}
+```
+

@@ -127,3 +127,38 @@ public String countAndSay(int n) {
 
 - 略
 
+
+
+## [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/)
+
+```java
+public String decodeString(String s) {
+
+    LinkedList<Integer> numList = new LinkedList<>();
+    LinkedList<String> strList = new LinkedList<>();
+    int multi = 0;
+    StringBuilder res = new StringBuilder();
+    char[] chas = s.toCharArray();
+    for (int i = 0; i < chas.length; i++) {
+        char c = chas[i];
+        if (c == '[') {
+            numList.addLast(multi);
+            strList.addLast(res.toString());
+            multi = 0;
+            res = new StringBuilder();
+        } else if (c == ']') {
+            StringBuilder tmp = new StringBuilder();
+            int curMulti = numList.pollLast();
+            for (int j = 0; j < curMulti; j++) {
+                tmp.append(res);
+            }
+            res = new StringBuilder(strList.pollLast() + tmp);
+        } else if (c >= '0' && c <= '9') {
+            multi = multi * 10 + Integer.valueOf(c + "");
+        } else {
+            res.append(c);
+        }
+    }
+    return res.toString();
+}
+```

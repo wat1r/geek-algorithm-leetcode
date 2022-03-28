@@ -664,7 +664,43 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="33-&#x641C;&#x7D22;&#x65CB;&#x8F6C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/" target="_blank">33. &#x641C;&#x7D22;&#x65CB;&#x8F6C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;</a></h2>
+                                <h2 id="4-&#x5BFB;&#x627E;&#x4E24;&#x4E2A;&#x6B63;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x4E2D;&#x4F4D;&#x6570;"><a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/" target="_blank">4. &#x5BFB;&#x627E;&#x4E24;&#x4E2A;&#x6B63;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x4E2D;&#x4F4D;&#x6570;</a></h2>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">findMedianSortedArrays</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums1, <span class="hljs-keyword">int</span>[] nums2)</span> </span>{
+            <span class="hljs-keyword">int</span> m = nums1.length, n = nums2.length;
+            <span class="hljs-keyword">if</span> (m &gt; n) {
+                <span class="hljs-keyword">int</span>[] temp = nums1;
+                nums1 = nums2;
+                nums2 = temp;
+            }
+            m = nums1.length;
+            n = nums2.length;
+            <span class="hljs-keyword">boolean</span> isOdd = ((m + n) &amp; <span class="hljs-number">1</span>) == <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = m;
+            <span class="hljs-keyword">while</span> (left &lt;= right) {
+                <span class="hljs-keyword">int</span> i = (left + right) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">int</span> j = (m + n + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span> - i;
+                <span class="hljs-keyword">int</span> nums1LeftMax = i == <span class="hljs-number">0</span> ? Integer.MIN_VALUE : nums1[i - <span class="hljs-number">1</span>];
+                <span class="hljs-keyword">int</span> nums1RightMin = i == m ? Integer.MAX_VALUE : nums1[i];
+
+                <span class="hljs-keyword">int</span> nums2LeftMax = j == <span class="hljs-number">0</span> ? Integer.MIN_VALUE : nums2[j - <span class="hljs-number">1</span>];
+                <span class="hljs-keyword">int</span> nums2RightMin = j == n ? Integer.MAX_VALUE : nums2[j];
+                <span class="hljs-keyword">if</span> (nums1LeftMax &lt;= nums2RightMin &amp;&amp; nums2LeftMax &lt;= nums1RightMin) {
+                    <span class="hljs-keyword">if</span> (isOdd) {
+                        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">double</span>) Math.max(nums1LeftMax, nums2LeftMax);
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">return</span> ((<span class="hljs-keyword">double</span>) (Math.max(nums1LeftMax, nums2LeftMax) + Math.min(nums1RightMin, nums2RightMin))) / <span class="hljs-number">2</span>;
+                    }
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums1RightMin &lt; nums2LeftMax) {
+                    left = i + <span class="hljs-number">1</span>;
+                } <span class="hljs-keyword">else</span> {
+                    right = i - <span class="hljs-number">1</span>;
+                }
+
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0.0</span>;
+        }
+</code></pre>
+<h2 id="33-&#x641C;&#x7D22;&#x65CB;&#x8F6C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/search-in-rotated-sorted-array/" target="_blank">33. &#x641C;&#x7D22;&#x65CB;&#x8F6C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;</a></h2>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target)</span> </span>{
     <span class="hljs-keyword">int</span> n = nums.length, l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>;
     <span class="hljs-keyword">while</span> (l &lt; r) {
@@ -914,7 +950,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.8","depth":2,"next":{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-03-27T14:08:09.758Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T05:22:17.889Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.8","depth":2,"next":{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-03-28T12:51:20.800Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T13:38:46.542Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

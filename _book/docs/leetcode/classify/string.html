@@ -776,6 +776,37 @@
 <ul>
 <li>&#x7565;</li>
 </ul>
+<h2 id="394-&#x5B57;&#x7B26;&#x4E32;&#x89E3;&#x7801;"><a href="https://leetcode-cn.com/problems/decode-string/" target="_blank">394. &#x5B57;&#x7B26;&#x4E32;&#x89E3;&#x7801;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">decodeString</span><span class="hljs-params">(String s)</span> </span>{
+
+    LinkedList&lt;Integer&gt; numList = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    LinkedList&lt;String&gt; strList = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    <span class="hljs-keyword">int</span> multi = <span class="hljs-number">0</span>;
+    StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+    <span class="hljs-keyword">char</span>[] chas = s.toCharArray();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; chas.length; i++) {
+        <span class="hljs-keyword">char</span> c = chas[i];
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;[&apos;</span>) {
+            numList.addLast(multi);
+            strList.addLast(res.toString());
+            multi = <span class="hljs-number">0</span>;
+            res = <span class="hljs-keyword">new</span> StringBuilder();
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;]&apos;</span>) {
+            StringBuilder tmp = <span class="hljs-keyword">new</span> StringBuilder();
+            <span class="hljs-keyword">int</span> curMulti = numList.pollLast();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; curMulti; j++) {
+                tmp.append(res);
+            }
+            res = <span class="hljs-keyword">new</span> StringBuilder(strList.pollLast() + tmp);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c &gt;= <span class="hljs-string">&apos;0&apos;</span> &amp;&amp; c &lt;= <span class="hljs-string">&apos;9&apos;</span>) {
+            multi = multi * <span class="hljs-number">10</span> + Integer.valueOf(c + <span class="hljs-string">&quot;&quot;</span>);
+        } <span class="hljs-keyword">else</span> {
+            res.append(c);
+        }
+    }
+    <span class="hljs-keyword">return</span> res.toString();
+}
+</code></pre>
 
                                 
                                 </section>
@@ -819,7 +850,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-03-28T05:21:51.694Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T05:22:17.889Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-03-28T13:36:49.829Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T13:38:46.542Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

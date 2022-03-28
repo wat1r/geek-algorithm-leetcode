@@ -78,7 +78,7 @@ public boolean hasAlternatingBits(int n) {
 
 ### 方法2:高阶位运算
 
-![](/imgs/leetcode/classify/image-20220328092831779.png)
+ ![](/imgs/leetcode/classify/image-20220328191800195.png)
 
 ```java
 public boolean hasAlternatingBits(int n) {
@@ -101,3 +101,4 @@ public boolean hasAlternatingBits(int n) {
     return true;
 }
 ```
+

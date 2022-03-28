@@ -1,5 +1,44 @@
 # 搜索
 
+
+
+## [10. 正则表达式匹配](https://leetcode-cn.com/problems/regular-expression-matching/)
+
+```java
+int[][] cache;
+
+
+public boolean isMatch(String s, String p) {
+    cache = new int[s.length() + 1][p.length() + 1];
+    char[] ss = s.toCharArray(), pp = p.toCharArray();
+    return isMatch(ss, 0, pp, 0);
+
+}
+
+private boolean isMatch(char[] ss, int s1, char[] pp, int p1) {
+    if (p1 >= pp.length) return s1 >= ss.length;
+    if (cache[s1][p1] != 0) return cache[s1][p1] > 0;
+    boolean f = s1 < ss.length && (ss[s1] == pp[p1] || pp[p1] == '.');
+    boolean res = true;
+    if (pp.length - p1 >= 2 && pp[p1 + 1] == '*') {
+        res = isMatch(ss, s1, pp, p1 + 2) || (f && isMatch(ss, s1 + 1, pp, p1));
+        if (res) cache[s1][p1] = 1;
+        else cache[s1][p1] = -1;
+        return res;
+    }
+    res = f && isMatch(ss, s1 + 1, pp, p1 + 1);
+    if (res) cache[s1][p1] = 1;
+    else cache[s1][p1] = -1;
+    return res;
+}
+```
+
+
+
+
+
+
+
 ## [39. 组合总和](https://leetcode-cn.com/problems/combination-sum/)
 
 ### 方法1:回溯

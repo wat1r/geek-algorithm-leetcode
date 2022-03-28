@@ -2,6 +2,8 @@ package com.frankcooper.bank._601_700;
 
 import java.util.*;
 
+import com.frankcooper.utils.BitOpUtils;
+import com.frankcooper.utils.PrintUtils;
 import org.junit.Assert;
 
 public class _693 {
@@ -35,6 +37,8 @@ public class _693 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int n = 11;
+            handler.hasAlternatingBits2(n);
         }
 
         boolean hasAlternatingBits2(int n) {
@@ -46,8 +50,10 @@ public class _693 {
         n + 1     1 0 0 0 0 0 0 0 0
         n & (n+1)   0 0 0 0 0 0 0 0
         */
-
+            PrintUtils.toBinaryString(n,8);
             n = n ^ (n >> 1);
+            PrintUtils.toBinaryString(n,8);
+            PrintUtils.toBinaryString(n+1,8);
             return (n & n + 1) == 0;
         }
 
