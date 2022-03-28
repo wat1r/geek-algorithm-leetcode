@@ -731,6 +731,51 @@
             <span class="hljs-keyword">return</span> sign * (<span class="hljs-keyword">int</span>) res;
         }
 </code></pre>
+<h2 id="38-&#x5916;&#x89C2;&#x6570;&#x5217;"><a href="https://leetcode-cn.com/problems/count-and-say/" target="_blank">38. &#x5916;&#x89C2;&#x6570;&#x5217;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x6A21;&#x62DF;">&#x65B9;&#x6CD5;1.&#x6A21;&#x62DF;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">countAndSay</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    String str = <span class="hljs-string">&quot;1&quot;</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) {
+        StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+        <span class="hljs-keyword">char</span> prev = str.charAt(<span class="hljs-number">0</span>);
+        <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt; str.length(); j++) {
+            <span class="hljs-keyword">char</span> cur = str.charAt(j);
+            <span class="hljs-keyword">if</span> (cur == prev) cnt++;
+            <span class="hljs-keyword">else</span> {
+                sb.append(cnt).append(prev);
+                cnt = <span class="hljs-number">1</span>;
+                prev = cur;
+            }
+        }
+        sb.append(cnt).append(prev);
+        str = sb.toString();
+    }
+    <span class="hljs-keyword">return</span> str;
+}
+</code></pre>
+<p>&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x5199;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">countAndSay</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+            String res = <span class="hljs-string">&quot;1&quot;</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) {
+                String cur = <span class="hljs-string">&quot;&quot;</span>;
+                <span class="hljs-keyword">char</span>[] ch = res.toCharArray();
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; ch.length; ) {
+                    <span class="hljs-keyword">int</span> k = j + <span class="hljs-number">1</span>;
+                    <span class="hljs-keyword">while</span> (k &lt; ch.length &amp;&amp; ch[j] == ch[k]) k++;
+                    <span class="hljs-keyword">int</span> cnt = k - j;
+                    cur += cnt + <span class="hljs-string">&quot;&quot;</span> + ch[j];
+                    j = k;
+                }
+                res = cur;
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x6253;&#x8868;">&#x65B9;&#x6CD5;2.&#x6253;&#x8868;</h3>
+<ul>
+<li>&#x7565;</li>
+</ul>
 
                                 
                                 </section>
@@ -774,7 +819,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-03-23T04:45:18.465Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T01:38:05.760Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-03-28T05:21:51.694Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-28T05:22:17.889Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

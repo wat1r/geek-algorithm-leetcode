@@ -75,7 +75,55 @@ public String convert(String s, int numRows) {
 
 
 
+## [38. 外观数列](https://leetcode-cn.com/problems/count-and-say/)
 
+### 方法1.模拟
 
+```java
+public String countAndSay(int n) {
+    String str = "1";
+    for (int i = 2; i <= n; i++) {
+        StringBuilder sb = new StringBuilder();
+        char prev = str.charAt(0);
+        int cnt = 1;
+        for (int j = 1; j < str.length(); j++) {
+            char cur = str.charAt(j);
+            if (cur == prev) cnt++;
+            else {
+                sb.append(cnt).append(prev);
+                cnt = 1;
+                prev = cur;
+            }
+        }
+        sb.append(cnt).append(prev);
+        str = sb.toString();
+    }
+    return str;
+}
+```
 
+另外一种写法：
+
+```java
+        public String countAndSay(int n) {
+            String res = "1";
+            for (int i = 2; i <= n; i++) {
+                String cur = "";
+                char[] ch = res.toCharArray();
+                for (int j = 0; j < ch.length; ) {
+                    int k = j + 1;
+                    while (k < ch.length && ch[j] == ch[k]) k++;
+                    int cnt = k - j;
+                    cur += cnt + "" + ch[j];
+                    j = k;
+                }
+                res = cur;
+            }
+            return res;
+        }
+```
+
+### 方法2.打表
+
+- 略
 
