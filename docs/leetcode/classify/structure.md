@@ -856,6 +856,81 @@ public int dfs(TreeNode root) {
 
 
 
+### Follow up :如何打印出路径
+
+- 相同的值的路径，全部打印出来
+
+```java
+│       ┌── 7
+│   ┌── 20
+│   │   └── 15
+└── -100
+    │   ┌── 17
+    └── 9
+        └── 16
+[[16,9,17],[15,20,7]]
+```
+
+
+
+```java
+  int maxPath = Integer.MIN_VALUE;
+        List<List<Integer>> resPath = new ArrayList<>();
+
+        public int maxPathSum(TreeNode root) {
+            dfs(root);
+            System.out.println(JSON.toJSONString(resPath));
+            return maxPath;
+        }
+
+        private Pair dfs(TreeNode root) {
+            if (root == null) return new Pair(0, new ArrayList<>());
+            Pair lp = dfs(root.left);
+            Pair rp = dfs(root.right);
+            int res = root.val;
+            List<Integer> subPath = new ArrayList<>();
+            if (lp.sum > 0 && lp.sum > rp.sum) {
+                res += lp.sum;
+                subPath.addAll(lp.path);
+                subPath.add(root.val);
+            } else if (rp.sum > 0 && rp.sum > lp.sum) {
+                res += rp.sum;
+                subPath.addAll(rp.path);
+                subPath.add(root.val);
+            } else {
+                subPath.add(root.val);
+            }
+            if (res >= maxPath) {
+                if (res > maxPath) resPath.clear();
+                maxPath = res;
+                resPath.add(new ArrayList<>(subPath));
+            }
+            if (lp.sum + rp.sum + root.val >= maxPath) {
+                List<Integer> t = new ArrayList<>();
+                t.addAll(lp.path);
+                t.add(root.val);
+                t.addAll(rp.path);
+                if (lp.sum + rp.sum + root.val > maxPath) resPath.clear();
+                maxPath = lp.sum + rp.sum + root.val;
+                resPath.add(new ArrayList<>(t));
+            }
+            return new Pair(res, subPath);
+        }
+
+
+        static class Pair {
+            int sum = 0;
+            List<Integer> path;
+
+            public Pair(int sum, List<Integer> path) {
+                this.sum = sum;
+                this.path = path;
+            }
+        }
+```
+
+
+
 
 
 
