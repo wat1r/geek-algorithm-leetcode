@@ -152,6 +152,89 @@ $d[m] = max(right[m], left[m+w-1])$
 
 
 
+## [2024. 考试的最大困扰度](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/)
+
+### 方法1:滑动窗口
+
+![](/imgs/leetcode/classify/image-20220329083101268.png)
+
+![](/imgs/leetcode/classify/image-20220329083116064.png)
+
+
+
+```java
+public int maxConsecutiveAnswers(String str, int k) {
+    return Math.max(getMaxLength(str, 'T', k), getMaxLength(str, 'F', k));
+}
+
+//字符s中不至多包含k个c的最大长度
+private int getMaxLength(String s, char c, int k) {
+    int n = s.length();
+    int cnt = 0;
+    int res = 0;
+    //左右窗口，让r自增往右推
+    for (int l = 0, r = 0; r < n; r++) {
+        //如果[r]=c cnt需要统计+1
+        if (s.charAt(r) == c) cnt++;
+        //当cnt > k 说明[l,r]当前的窗口内有超过了k个字符c，缩减左窗口
+        while (cnt > k) {
+            if (s.charAt(l++) == c) cnt--;
+        }
+        //统计最大长度
+        res = Math.max(res, r - l + 1);
+    }
+    return res;
+}
+```
+
+另外一种思路：
+
+```java
+public int maxConsecutiveAnswers(String str, int k) {
+    return Math.max(getMaxLength(str, 'T', k), getMaxLength(str, 'F', k));
+}
+
+//字符s中可以至多包含k个c的最大长度
+private int getMaxLength(String s, char c, int k) {
+    //左右窗口
+    int n = s.length(), l = 0, r = 0;
+    int res = 0;
+    while (r < n) {
+        //[r]如果不是c的话，消耗掉一次k的值 k--
+        if (s.charAt(r) != c) k--;
+        while (k < 0) {
+            if (s.charAt(l) != c) k++;
+            l++;
+        }
+        r++;
+        //注意已经想又移动过一次 
+        res = Math.max(res, r - l);
+    }
+    return res;
+}
+```
+
+### 方法2:滑动窗口+统计
+
+思路来自`@lee215`大佬，该解法可以参考424题
+
+```java
+      public int maxConsecutiveAnswers(String s, int k) {
+            //maxf表示滑窗中，相同字符最大的出现次数，本题只是'T' 和 'F'
+            int maxf = 0, l = 0, n = s.length();
+            //count数组 可以缩减到[2]个长度
+            int[] count = new int[26];
+            for (int r = 0; r < n; ++r) {
+                maxf = Math.max(maxf, ++count[s.charAt(r) - 'A']);
+                //如果当前的滑窗的大小 大于 maxf('F'或者'T')出现的次数+k次替换操作，开始缩减l窗口，移除次数
+                if (r - l + 1 > maxf + k) {
+                    --count[s.charAt(l++) - 'A'];
+                }
+            }
+            return n - l;
+        }
+```
+
 
 
 
