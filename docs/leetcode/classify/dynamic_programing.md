@@ -730,6 +730,41 @@ public int maxSubArray(int[] nums) {
 }
 ```
 
+### follow up:返回最大子数组和的起始索引
+
+```java
+        public int maxSubArray(int[] nums) {
+            int n = nums.length;
+            //全局最大子数组和的起始索引
+            int start = 0, end = 0;
+            //局部的最大子数组和的起始索引
+            int subStart = 0, subEnd = 0;
+            //全局最大值和局部最大值
+            int maxx = nums[0], subMaxx = nums[0];
+            for (int i = 1; i < n; i++) {
+                //之前的数对当前的nums[i]有增强，扩大subEnd
+                if (subMaxx > 0) {
+                    subMaxx += nums[i];
+                    subEnd++;
+                } else {//之前subMaxx是负数，重新开始
+                    subMaxx = nums[i];
+                    subStart = i;
+                    subEnd = i;
+                }
+                //更新全局的
+                if (subMaxx > maxx) {
+                    maxx = subMaxx;
+                    start = subStart;
+                    end = subEnd;
+                }
+            }
+            System.out.printf("%d %d ", start, end);
+            return maxx;
+        }
+```
+
+
+
 ## [55. 跳跃游戏](https://leetcode-cn.com/problems/jump-game/)
 
 ### 方法1:记忆化递归

@@ -2,6 +2,108 @@
 
 > 
 
+
+
+## [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+> 这一题是leetcode的NO.3题，曾经被面到过，很经典的一道题
+
+- **注意：子串与子序列的区别**
+  - 子串：不可跳跃，如 `pwwkew`中`wke`是子串
+  - 子序列：可以跳跃，如`pwwkew`中`pkw`是子序列
+
+#### 方法1:粗糙版滑动窗口
+
+- 用`Set`来维护重复字符与否的问题
+  - 出现新的字符，很好，`right`指针向右扩展，并将当前字符加入`Set`中，更新最长无重复子串长度
+  - 出现旧的字符，将左边界`left`指针向右收缩，移除当前的`left`指针指向的字符
+
+```java
+    public int lengthOfLongestSubstring1st(String s) {
+        int res = 0, left = 0, right = 0;
+        int n = s.length();
+        Set<Character> set = new HashSet<>();
+        while (right < n && left < n) {
+            if (!set.contains(s.charAt(right))) {
+                set.add(s.charAt(right++));
+                res = Math.max(res, right - left);
+            } else {
+                set.remove(s.charAt(left++));
+            }
+        }
+        return res;
+    }
+```
+
+#### 方法2:优化版滑动窗口
+
+- 用一个`hashmap`来建立字符和其出现位置之间的映射。
+- 维护一个滑动窗口，窗口内的都是没有重复的字符，去尽可能的扩大窗口的大小，窗口不停的向右滑动。
+- （1）如果当前遍历到的字符从未出现过，那么直接扩大右边界；
+- （2）如果当前遍历到的字符出现过，则缩小窗口（左边索引向右移动），然后继续观察当前遍历到的字符；
+- （3）重复（1）（2），直到左边索引无法再移动；
+- （4）维护一个结果`res`，每次用出现过的窗口大小来更新结果`res`，最后返回res获取结果。
+  - 用一个`mapper`记录出现过并且没有被删除的字符
+  - 用一个滑动窗口记录当前`index`开始的最大的不重复的字符序列
+  - 用`res`去记录目前位置最大的长度，每次滑动窗口更新就去决定是否需要更新`res`
+
+```java
+  public int lengthOfLongestSubstring2nd(String s) {
+        int res = 0, left = 0, right = 0;
+        int n = s.length();
+        Map<Character, Integer> map = new HashMap<>();
+        while (right < n) {
+             //使用hashmap作为存储，每次left的值取最大的
+            if (map.containsKey(s.charAt(right))) {
+                left = Math.max(left, map.get(s.charAt(right)));
+            }
+            //计算下标的距离，记录下标的绝对物理index
+            res = Math.max(res, right - left + 1);
+            map.put(s.charAt(right), 1 + right++);
+        }
+        return res;
+    }
+```
+
+#### 方法3:再优化版滑动窗口
+
+- 常用的表如下所示：
+
+```python
+int [26] 用于字母 ‘a’ - ‘z’ 或 ‘A’ - ‘Z’
+int [128] 用于ASCII码
+int [256] 用于扩展ASCII码
+```
+
+- 准备一个`helper`数组，每次记录`right`指针的绝对位置，
+- 更新`res`,更新`left`(拿到其最大位置)
+
+```java
+    public int lengthOfLongestSubstring3rd(String s) {
+        int res = 0, left = 0, right = 0;
+        int n = s.length();
+        int[] helper = new int[128];
+        while (right < n) {
+            left = Math.max(left, helper[s.charAt(right)]);
+            res = Math.max(res, right - left + 1);
+            helper[s.charAt(right)] = 1 + right++;
+        }
+        return res;
+    }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## [239. 滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/)
 
 ### 方法1：双端队列
@@ -149,6 +251,89 @@ $d[i*w+j]=max(right[i*w+j], left[(i*w+w+j-1])$
 $d[m] = max(right[m], left[m+w-1])$
 
 结果数组$d[]$​的最后一个元素是:$d[n-w]=max(right[n-w], left[n-1])$​
+
+
+
+## [395. 至少有 K 个重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+
+### 方法1:递归
+
+```java
+public int longestSubstring(String s, int k) {
+    int n = s.length();
+    return dfs(s, 0, n - 1, k);
+}
+
+public int dfs(String s, int l, int r, int k) {
+    int[] cnt = new int[26];
+    for (int i = l; i <= r; i++) {
+        cnt[s.charAt(i) - 'a']++;
+    }
+
+    char split = 0;
+    for (int i = 0; i < 26; i++) {
+        if (cnt[i] > 0 && cnt[i] < k) {
+            split = (char) (i + 'a');
+            break;
+        }
+    }
+    if (split == 0) {
+        return r - l + 1;
+    }
+
+    int i = l;
+    int ret = 0;
+    while (i <= r) {
+        while (i <= r && s.charAt(i) == split) {
+            i++;
+        }
+        if (i > r) {
+            break;
+        }
+        int start = i;
+        while (i <= r && s.charAt(i) != split) {
+            i++;
+        }
+
+        int length = dfs(s, start, i - 1, k);
+        ret = Math.max(ret, length);
+    }
+    return ret;
+}
+```
+
+
+
+
+
+
+
+## [424. 替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/)
+
+
+
+```java
+public int characterReplacement(String s, int k) {
+    int[] arr = new int[26];
+    char[] chas = s.toCharArray();
+    int l = 0, r = 0, ans = 0, maxCnt = 0;
+    while (r < chas.length) {
+        arr[chas[r] - 'A']++;
+        maxCnt = Math.max(maxCnt, arr[chas[r] - 'A']);
+        r++;
+        if ((r - l) > (maxCnt + k)) {
+            arr[chas[l] - 'A']--;
+            l++;
+        }
+        ans = r - l;
+    }
+    return ans;
+}
+```
+
+
+
+
 
 
 
