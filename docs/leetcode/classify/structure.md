@@ -1014,19 +1014,19 @@ public List<Integer> postorderTraversal(TreeNode root) {
 
 ##### 思路：
 
-1.$left$和$right$都为空，说明$root$的左右子树中都不包含$p$和$q$节点，返回$null$即可
+1.`left`和`right`都为空，说明`root`的左右子树中都不包含`p`和`q`节点，返回`null`即可
 
-2.$left$不为空，$right$为空，说明$p$和$q$不在右子树中（因为右子树为空了），这时，返回$left$，这里面有下面的两种情况：
+2.`left`不为空，`right`为空，说明`p`和`q`不在右子树中（因为右子树为空了），这时，返回`left`，这里面有下面的两种情况：
 
-- $p$和$q$都在$left$即左子树上，而$root$节点恰好指向了$p$或者$q$
-- $p$和$q$都在$left$即左子树上，而$root$节点未指向了$p$或者$q$，指向的是最近公共祖先节点
+- `p`和`q`都在`left`即左子树上，而`root`节点恰好指向了`p`或者`q`
+- `p`和`q`都在`left`即左子树上，而`root`节点未指向了`p`或者`q`，指向的是最近公共祖先节点
 
-3.$right$不为空，$left$为空，说明$p$和$q$不在左子树中（因为左子树为空了），这时，返回$right$，这里面有下面的两种情况：
+3.`right`不为空，`left`为空，说明`p`和`q`不在左子树中（因为左子树为空了），这时，返回`right`，这里面有下面的两种情况：
 
-- $p$和$q$都在$right$即右子树上，而$root$节点恰好指向了$p$或者$q$
-- $p$和$q$都在$right$即右子树上，而$root$节点未指向了$p$或者$q$，指向的是最近公共祖先节点
+- `p`和`q`都在`right`即右子树上，而`root`节点恰好指向了`p`或者`q`
+- `p`和`q`都在`right`即右子树上，而`root`节点未指向了`p`或者`q`，指向的是最近公共祖先节点
 
-4.$left$不为空，并且$right$不为空，说明$p$和$q$分布在$root$节点的左右子树的两侧，这时$root$为$p$和$q$的最近公共祖先节点，返回
+4.`left`不为空，并且`right`不为空，说明`p`和`q`分布在`root`节点的左右子树的两侧，这时`root`为`p`和`q`的最近公共祖先节点，返回
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a253c9a2405d47a5b674f13166e374e2.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6Zi_6aOe566X5rOV,size_20,color_FFFFFF,t_70,g_se,x_16)
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a9d7ab1901f1476c80270fa8ca5a5a5d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA6Zi_6aOe566X5rOV,size_20,color_FFFFFF,t_70,g_se,x_16)
