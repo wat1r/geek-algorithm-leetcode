@@ -158,7 +158,7 @@ $d[m] = max(right[m], left[m+w-1])$
 
 ![](/imgs/leetcode/classify/image-20220329083101268.png)
 
-![](/imgs/leetcode/classify/image-20220329083116064.png)
+![](/imgs/leetcode/classify/image-20220329090554204.png)
 
 
 
