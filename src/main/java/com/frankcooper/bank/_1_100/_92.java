@@ -31,7 +31,7 @@ public class _92 {
                 pre = curr;
                 curr = curr.next;
             }
-            System.out.printf("%d\n", curr.val);
+//            System.out.printf("%d\n", curr.val);
             ListNode con = pre, tail = curr;
             for (int i = 0; i < n - m + 1; i++) {
                 ListNode third = curr.next;
@@ -119,6 +119,28 @@ public class _92 {
             }
             System.out.printf("%d\n", prev.val);
             return prev;
+        }
+    }
+
+
+    static class _4th {
+
+        public ListNode reverseBetween(ListNode head, int m, int n) {
+            if (head == null) return null;
+            ListNode dummy = new ListNode(0);
+            dummy.next = head;
+            ListNode prev = dummy;
+            for (int i = 0; i < m - 1; i++) {
+                prev = prev.next;
+            }
+            ListNode start = prev.next, then = start.next;
+            for (int i = 0; i < n - m; i++) {
+                start.next = then.next;
+                then.next = prev.next;
+                prev.next = then;
+                then = start.next;
+            }
+            return dummy.next;
         }
     }
 }

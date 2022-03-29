@@ -235,6 +235,43 @@ private int getMaxLength(String s, char c, int k) {
         }
 ```
 
+### Follow up:返回所有符合条件的索引
+
+```java
+        static List<int[]> resList = new ArrayList<>();
+        int maxx = 0;
+
+
+        public List<int[]> maxConsecutiveAnswers(String str, int k) {
+            getMaxLength(str, 'T', k);
+            getMaxLength(str, 'F', k);
+            return resList;
+        }
+
+        //字符s中可以至多包含k个c的最大长度
+        private void getMaxLength(String s, char c, int k) {
+            //左右窗口
+            int n = s.length(), l = 0, r = 0;
+//            int res = 0;
+            while (r < n) {
+                //[r]如果不是c的话，消耗掉一次k的值 k--
+                if (s.charAt(r) != c) k--;
+                while (k < 0) {
+                    if (s.charAt(l) != c) k++;
+                    l++;
+                }
+                r++;
+                if (r - l >= maxx) {
+                    if (r - l > maxx) resList.clear();
+                    resList.add(new int[]{l, r});
+                    maxx = r - l;
+                }
+            }
+        }
+```
+
+
+
 
 
 

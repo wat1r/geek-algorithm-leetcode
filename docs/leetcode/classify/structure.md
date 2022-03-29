@@ -483,6 +483,95 @@ public void reorderList(ListNode head) {
 }
 ```
 
+
+
+
+
+## [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
+
+### 方法1:递归
+
+```java
+public ListNode reverseList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode newNode = reverseList(head.next);
+    //如果链表是 1->2->3->4->5，那么此时的cur就是5
+    //而head是4，head的next是5，next.next是空
+    //所以head.next.next 就是5->4
+    head.next.next = head;
+    //head的next需要断开
+    head.next = null;
+    return newNode;
+}
+```
+
+### 方法2:迭代
+
+```java
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null, cur = head;
+        while(cur!=null){
+            ListNode nxt = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = nxt;
+        }
+        return prev;
+    }
+```
+
+## [92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+
+### 方法1:头插法
+
+![](/imgs/leetcode/classify/image-20220329125523443.png)
+
+```java
+public ListNode reverseBetween(ListNode head, int m, int n) {
+    if (head == null) return null;
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode prev = dummy;
+    for (int i = 0; i < m - 1; i++) {
+        prev = prev.next;
+    }
+    ListNode start = prev.next, then = start.next;
+    for (int i = 0; i < n - m; i++) {
+        start.next = then.next;
+        then.next = prev.next;
+        prev.next = then;
+        then = start.next;
+    }
+    return dummy.next;
+}
+```
+
+
+
+### 方法2:迭代
+
+```java
+public ListNode reverseBetween(ListNode head, int m, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode pre = dummy;
+    ListNode cur = pre.next;
+    for (int i = 1; i < m; i++) {
+        pre = pre.next;
+        cur = cur.next;
+    }
+    for (int i = 0; i < n - m; i++) {
+        ListNode tmp = cur.next;
+        cur.next = tmp.next;
+        tmp.next = pre.next;
+        pre.next = tmp;
+    }
+    return dummy.next;
+}
+```
+
+
+
 ## 树
 
 
