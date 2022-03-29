@@ -85,7 +85,9 @@ public class _124 {
         public static void main(String[] args) {
             _4th handler = new _4th();
             TreeNode root = TreeNodeIOUtils.transform("[-100,9,20,16,17,15,7]");
-            handler.maxPathSum(root);
+             root = TreeNodeIOUtils.transform("[1,2,null,3,null,4,null,5]");
+
+//            handler.maxPathSum(root);
         }
 
 
