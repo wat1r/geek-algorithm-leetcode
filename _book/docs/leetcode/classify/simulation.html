@@ -667,6 +667,77 @@
                                 <h1 id="&#x6A21;&#x62DF;">&#x6A21;&#x62DF;</h1>
 <blockquote>
 </blockquote>
+<h2 id="36-&#x6709;&#x6548;&#x7684;&#x6570;&#x72EC;"><a href="https://leetcode-cn.com/problems/valid-sudoku/" target="_blank">36. &#x6709;&#x6548;&#x7684;&#x6570;&#x72EC;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isValidSudoku</span><span class="hljs-params">(<span class="hljs-keyword">char</span>[][] board)</span> </span>{
+    <span class="hljs-keyword">int</span> R = board.length, C = board[<span class="hljs-number">0</span>].length;
+    <span class="hljs-keyword">int</span>[] rows = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[R + <span class="hljs-number">1</span>], cols = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[C + <span class="hljs-number">1</span>], blocks = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; r++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; c++) {
+            <span class="hljs-keyword">char</span> cur = board[r][c];
+            <span class="hljs-keyword">if</span> (cur == <span class="hljs-string">&apos;.&apos;</span>) <span class="hljs-keyword">continue</span>;
+            <span class="hljs-keyword">int</span> t = cur - <span class="hljs-string">&apos;0&apos;</span>;
+            <span class="hljs-keyword">int</span> idx = r / <span class="hljs-number">3</span> * <span class="hljs-number">3</span> + c / <span class="hljs-number">3</span>;
+            <span class="hljs-keyword">if</span> (((rows[r] &gt;&gt; t) &amp; <span class="hljs-number">1</span>) == <span class="hljs-number">1</span> || ((cols[c] &gt;&gt; t) &amp; <span class="hljs-number">1</span>) == <span class="hljs-number">1</span> || ((blocks[idx] &gt;&gt; t) &amp; <span class="hljs-number">1</span>) == <span class="hljs-number">1</span>)
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            rows[r] |= (<span class="hljs-number">1</span> &lt;&lt; t);
+            cols[c] |= (<span class="hljs-number">1</span> &lt;&lt; t);
+            blocks[idx] |= (<span class="hljs-number">1</span> &lt;&lt; t);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</code></pre>
+<p>&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x5199;&#x6CD5;</p>
+<pre><code class="lang-java">      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isValidSudoku</span><span class="hljs-params">(<span class="hljs-keyword">char</span>[][] board)</span> </span>{
+            <span class="hljs-keyword">int</span> R = board.length, C = board[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">boolean</span>[][] rows = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[R][C];
+            <span class="hljs-keyword">boolean</span>[][] cols = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[R][C];
+            <span class="hljs-keyword">boolean</span>[][] blocks = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[R][C];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; r++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; c++) {
+                    <span class="hljs-keyword">char</span> cur = board[r][c];
+                    <span class="hljs-keyword">if</span> (cur == <span class="hljs-string">&apos;.&apos;</span>) <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">int</span> t = cur - <span class="hljs-string">&apos;1&apos;</span>;<span class="hljs-comment">//1&#x53D8;&#x6210;0 &#x65B9;&#x4FBF;&#x4E0B;&#x9762;&#x7684;&#x4E0B;&#x6807;&#xFF0C;&#x5426;&#x5219;&#x8981;&#x6539;&#x4E0A;&#x9762;&#x662F;array</span>
+                    <span class="hljs-keyword">int</span> idx = r / <span class="hljs-number">3</span> * <span class="hljs-number">3</span> + c / <span class="hljs-number">3</span>;
+                    <span class="hljs-comment">//&#x8FD9;&#x79CD;&#x76F8;&#x5F53;&#x4E8E;&#x662F;&#x7ED9;&#x6BCF;&#x4E00;&#x884C;/&#x5217;/&#x5757; &#x5B89;&#x6392;&#x4E86;9&#x4E2A;&#x6570;&#x5B57;&#x7684;&#x4F4D;&#x7F6E;&#x6392;&#x6392;&#x597D;&#xFF0C;</span>
+                    <span class="hljs-keyword">if</span> (rows[r][t] || cols[c][t] || blocks[idx][t]) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                    rows[r][t] = cols[c][t] = blocks[idx][t] = <span class="hljs-keyword">true</span>;
+                }
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2">&#x65B9;&#x6CD5;2</h3>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isValidSudoku</span><span class="hljs-params">(<span class="hljs-keyword">char</span>[][] board)</span> </span>{
+            <span class="hljs-keyword">int</span> R = board.length, C = board[<span class="hljs-number">0</span>].length;
+            <span class="hljs-comment">//&#x884C; &#x5217; &#x5757;&#x7684;map k:&#x5F53;&#x524D;&#x7684;&#x884C;/&#x5217;/&#x5757; &#x7684;&#x7D22;&#x5F15; [0-8] v:&#x5F53;&#x524D;&#x7684;&#x884C;/&#x5217;/&#x5757; &#x5305;&#x542B;&#x7684;&#x6570;&#x5B57;</span>
+            Map&lt;Integer, Set&lt;Integer&gt;&gt; rowsMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            Map&lt;Integer, Set&lt;Integer&gt;&gt; colsMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            Map&lt;Integer, Set&lt;Integer&gt;&gt; blocksMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">9</span>; i++) {
+                rowsMap.put(i, <span class="hljs-keyword">new</span> HashSet&lt;&gt;());
+                colsMap.put(i, <span class="hljs-keyword">new</span> HashSet&lt;&gt;());
+                blocksMap.put(i, <span class="hljs-keyword">new</span> HashSet&lt;&gt;());
+            }
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; r++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; c++) {
+                    <span class="hljs-keyword">char</span> cur = board[r][c];
+                    <span class="hljs-keyword">if</span> (cur == <span class="hljs-string">&apos;.&apos;</span>) <span class="hljs-keyword">continue</span>;
+                    <span class="hljs-keyword">int</span> t = cur - <span class="hljs-string">&apos;0&apos;</span>;<span class="hljs-comment">//&#x5F53;&#x524D;&#x8FD9;&#x4E2A;&#x70B9;&#x662F;&#x4E2A;&#x6570;&#x5B57;</span>
+                    <span class="hljs-keyword">int</span> idx = r / <span class="hljs-number">3</span> * <span class="hljs-number">3</span> + c / <span class="hljs-number">3</span>;<span class="hljs-comment">//&#x5C0F;&#x65B9;&#x5757;&#x7684;&#x7D22;&#x5F15;&#x4E0E;&#x5750;&#x6807;&#x7684;&#x8F6C;&#x6362;&#x516C;&#x5F0F;</span>
+                    <span class="hljs-comment">//&#x5982;&#x679C;&#x5F53;&#x524D;&#x7684;&#x884C;/&#x5217;/&#x5757; &#x542B;&#x6709;&#x91CD;&#x590D;&#x7684;&#x6570;&#x5B57;&#xFF0C;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x6548;&#x7684;&#x6570;&#x72EC;</span>
+                    <span class="hljs-keyword">if</span> (rowsMap.get(r).contains(t) || colsMap.get(c).contains(t) || blocksMap.get(idx).contains(t))
+                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                    rowsMap.get(r).add(t);
+                    colsMap.get(c).add(t);
+                    blocksMap.get(idx).add(t);
+                }
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
 <h2 id="2028-&#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;"><a href="https://leetcode-cn.com/problems/find-missing-observations/" target="_blank">2028. &#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] missingRolls(<span class="hljs-keyword">int</span>[] rolls, <span class="hljs-keyword">int</span> mean, <span class="hljs-keyword">int</span> n) {
             <span class="hljs-keyword">int</span> m = rolls.length;
@@ -726,7 +797,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.6","depth":2,"next":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-03-27T02:58:33.786Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-29T14:44:58.840Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.6","depth":2,"next":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-03-30T14:40:18.350Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-30T14:44:43.113Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
