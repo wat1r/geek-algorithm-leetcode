@@ -38,6 +38,35 @@ public List<Integer> spiralOrder(int[][] matrix) {
 
 
 
+## [56. 合并区间](https://leetcode-cn.com/problems/merge-intervals/)
+
+```java
+         public int[][] merge(int[][] arr) {
+            List<int[]> res = new ArrayList<>();
+            if (arr == null || arr.length == 0) return res.toArray(new int[0][]);
+            Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+            int n = arr.length, i = 0;
+            while (i < n) {
+                int start = arr[i][0], end = arr[i][1];
+                while (i < n - 1 && end >= arr[i + 1][0]) {
+                    end = Math.max(end, arr[i + 1][1]);
+                    i++;
+                }
+                res.add(new int[]{start, end});
+                i++;
+            }
+            return res.toArray(new int[0][]);
+        }
+```
+
+
+
+
+
+
+
+
+
 ## [215. 数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)
 
 ### 方法1:优先队列
