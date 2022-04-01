@@ -1672,6 +1672,80 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <span class="hljs-keyword">return</span> root.val;
 }
 </code></pre>
+<h2 id="297-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x4E0E;&#x53CD;&#x5E8F;&#x5217;&#x5316;"><a href="https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/" target="_blank">297. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x4E0E;&#x53CD;&#x5E8F;&#x5217;&#x5316;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1bfs">&#x65B9;&#x6CD5;1:BFS</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Codec</span> </span>{
+
+            <span class="hljs-comment">// Encodes a tree to a single string.</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">serialize</span><span class="hljs-params">(TreeNode root)</span> </span>{
+                <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;[]&quot;</span>;
+                StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder(<span class="hljs-string">&quot;[&quot;</span>);
+                Queue&lt;TreeNode&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+                q.offer(root);
+                <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    <span class="hljs-keyword">if</span> (cur != <span class="hljs-keyword">null</span>) {
+                        sb.append(cur.val).append(<span class="hljs-string">&quot;,&quot;</span>);
+                        q.offer(cur.left);
+                        q.offer(cur.right);
+                    } <span class="hljs-keyword">else</span> {
+                        sb.append(<span class="hljs-string">&quot;null&quot;</span>).append(<span class="hljs-string">&quot;,&quot;</span>);
+                    }
+                }
+                sb.deleteCharAt(sb.length() - <span class="hljs-number">1</span>);
+                sb.append(<span class="hljs-string">&quot;]&quot;</span>);
+                <span class="hljs-keyword">return</span> sb.toString();
+            }
+
+            <span class="hljs-comment">// Decodes your encoded data to tree.</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">deserialize</span><span class="hljs-params">(String data)</span> </span>{
+                <span class="hljs-keyword">if</span> (data.equals(<span class="hljs-string">&quot;[]&quot;</span>)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+                String[] arr = data.substring(<span class="hljs-number">1</span>, data.length() - <span class="hljs-number">1</span>).split(<span class="hljs-string">&quot;,&quot;</span>);
+                TreeNode root = <span class="hljs-keyword">new</span> TreeNode(Integer.parseInt(arr[<span class="hljs-number">0</span>]));
+                Queue&lt;TreeNode&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+                q.offer(root);
+                <span class="hljs-keyword">int</span> idx = <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    <span class="hljs-keyword">if</span> (!arr[idx].equals(<span class="hljs-string">&quot;null&quot;</span>)) {
+                        cur.left = <span class="hljs-keyword">new</span> TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.left);
+                    }
+                    idx++;
+                    <span class="hljs-keyword">if</span> (!arr[idx].equals(<span class="hljs-string">&quot;null&quot;</span>)) {
+                        cur.right = <span class="hljs-keyword">new</span> TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.right);
+                    }
+                    idx++;
+                }
+                <span class="hljs-keyword">return</span> root;
+            }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2dfs">&#x65B9;&#x6CD5;2:DFS</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Codec</span> </span>{
+
+    <span class="hljs-comment">// Encodes a tree to a single string.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">serialize</span><span class="hljs-params">(TreeNode root)</span> </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;null&quot;</span>;
+        <span class="hljs-keyword">return</span> root.val + <span class="hljs-string">&quot;,&quot;</span> + serialize(root.left) + <span class="hljs-string">&quot;,&quot;</span> + serialize(root.right);
+    }
+
+    <span class="hljs-comment">// Decodes your encoded data to tree.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">deserialize</span><span class="hljs-params">(String data)</span> </span>{
+        Queue&lt;String&gt; queue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;(Arrays.asList(data.split(<span class="hljs-string">&quot;,&quot;</span>)));
+        <span class="hljs-keyword">return</span> dfs(queue);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> TreeNode <span class="hljs-title">dfs</span><span class="hljs-params">(Queue&lt;String&gt; queue)</span> </span>{
+        String v = queue.poll();
+        <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;null&quot;</span>.equals(v)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        TreeNode node = <span class="hljs-keyword">new</span> TreeNode(Integer.parseInt(v));
+        node.left = dfs(queue);
+        node.right = dfs(queue);
+        <span class="hljs-keyword">return</span> node;
+    }
+}
+</code></pre>
 <h2 id="589-n-&#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/" target="_blank">589. N &#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;</a></h2>
 <pre><code class="lang-java">    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
     <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">preorder</span><span class="hljs-params">(Node root)</span> </span>{
@@ -1867,7 +1941,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-31T09:51:06.070Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-01T13:18:34.329Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-04-01T14:19:55.636Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-01T14:20:11.962Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

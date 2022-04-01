@@ -69,6 +69,30 @@ public class _297 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public class Codec {
+
+            // Encodes a tree to a single string.
+            public String serialize(TreeNode root) {
+                if (root == null) return "null";
+                return root.val + "," + serialize(root.left) + "," + serialize(root.right);
+            }
+
+            // Decodes your encoded data to tree.
+            public TreeNode deserialize(String data) {
+                Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
+                return dfs(queue);
+            }
+
+            private TreeNode dfs(Queue<String> queue) {
+                String v = queue.poll();
+                if ("null".equals(v)) return null;
+                TreeNode node = new TreeNode(Integer.parseInt(v));
+                node.left = dfs(queue);
+                node.right = dfs(queue);
+                return node;
+            }
+        }
     }
 
 

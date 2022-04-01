@@ -1262,9 +1262,86 @@ public int predecessor(TreeNode root) {
 
 
 
+## [297. 二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/)
 
+### 方法1:BFS
 
+```java
+        public class Codec {
 
+            // Encodes a tree to a single string.
+            public String serialize(TreeNode root) {
+                if (root == null) return "[]";
+                StringBuilder sb = new StringBuilder("[");
+                Queue<TreeNode> q = new LinkedList<>();
+                q.offer(root);
+                while (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    if (cur != null) {
+                        sb.append(cur.val).append(",");
+                        q.offer(cur.left);
+                        q.offer(cur.right);
+                    } else {
+                        sb.append("null").append(",");
+                    }
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                sb.append("]");
+                return sb.toString();
+            }
+
+            // Decodes your encoded data to tree.
+            public TreeNode deserialize(String data) {
+                if (data.equals("[]")) return null;
+                String[] arr = data.substring(1, data.length() - 1).split(",");
+                TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
+                Queue<TreeNode> q = new LinkedList<>();
+                q.offer(root);
+                int idx = 1;
+                while (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    if (!arr[idx].equals("null")) {
+                        cur.left = new TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.left);
+                    }
+                    idx++;
+                    if (!arr[idx].equals("null")) {
+                        cur.right = new TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.right);
+                    }
+                    idx++;
+                }
+                return root;
+            }
+```
+
+### 方法2:DFS
+
+```java
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if (root == null) return "null";
+        return root.val + "," + serialize(root.left) + "," + serialize(root.right);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
+        return dfs(queue);
+    }
+
+    private TreeNode dfs(Queue<String> queue) {
+        String v = queue.poll();
+        if ("null".equals(v)) return null;
+        TreeNode node = new TreeNode(Integer.parseInt(v));
+        node.left = dfs(queue);
+        node.right = dfs(queue);
+        return node;
+    }
+}
+```
 
 
 
