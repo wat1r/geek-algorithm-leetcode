@@ -1310,6 +1310,29 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h2 id="103-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x952F;&#x9F7F;&#x5F62;&#x5C42;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/" target="_blank">103. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x952F;&#x9F7F;&#x5F62;&#x5C42;&#x5E8F;&#x904D;&#x5386;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; result = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> result;
+    Queue&lt;TreeNode&gt; queue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    queue.add(root);
+    <span class="hljs-keyword">int</span> level = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (!queue.isEmpty()) {
+        List&lt;Integer&gt; levelList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">int</span> size = queue.size();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+            TreeNode cur = queue.poll();
+            <span class="hljs-keyword">if</span> (level % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) levelList.add(cur.val);
+            <span class="hljs-keyword">else</span> levelList.add(<span class="hljs-number">0</span>, cur.val);
+            <span class="hljs-keyword">if</span> (cur.left != <span class="hljs-keyword">null</span>) queue.offer(cur.left);
+            <span class="hljs-keyword">if</span> (cur.right != <span class="hljs-keyword">null</span>) queue.offer(cur.right);
+        }
+        level++;
+        result.add(levelList);
+    }
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
 <h2 id="124-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x8DEF;&#x5F84;&#x548C;"><a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/" target="_blank">124. &#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x8DEF;&#x5F84;&#x548C;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> res = Integer.MIN_VALUE;
 
@@ -1844,7 +1867,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-30T15:13:27.945Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-03-31T09:21:10.385Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/structure.md","mtime":"2022-03-31T09:51:06.070Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-01T13:18:34.329Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
