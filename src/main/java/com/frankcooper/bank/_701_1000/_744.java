@@ -81,5 +81,27 @@ public class _744 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+        public char nextGreatestLetter(char[] letters, char target) {
+            int n = letters.length, l = 0, r = n - 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (letters[mid] <= target) l = mid + 1;
+                else r = mid;
+            }
+            return letters[l] <= target ? (l == letters.length - 1 ? letters[0] : letters[l + 1]) : letters[l];
+        }
+    }
+
+    static class _5th {
+        public char nextGreatestLetter(char[] letters, char target) {
+            int n = letters.length, l = 0, r = n - 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (letters[mid] <= target) l = mid + 1;
+                else r = mid;
+            }
+            return letters[l] > target ? letters[l] : letters[0];
+        }
     }
 }

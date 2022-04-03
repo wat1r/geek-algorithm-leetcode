@@ -539,3 +539,54 @@ public int search(int[] nums, int target) {
 }
 ```
 
+## [744. 寻找比目标字母大的最小字母](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/)
+
+
+
+```java
+//需要临界点判断下
+public char nextGreatestLetter(char[] le, char ta) {
+    if (le == null || le.length == 0) return ta;
+    int l = 0, r = le.length - 1;
+    while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (le[mid] <= ta) l = mid + 1;
+        else r = mid;
+    }
+    return le[l] <= ta ? (l == le.length - 1 ? le[0] : le[l + 1]) : le[l];
+}
+```
+
+
+
+
+
+```java
+public char nextGreatestLetter(char[] le, char ta) {
+    if (le == null || le.length == 0) return ta;
+    int l = 0, r = le.length - 1;
+    while (l < r) {
+        int mid = l + (r - l + 1) / 2;
+        if (le[mid] <= ta) l = mid;
+        else r = mid - 1;
+    }
+    return le[l] <= ta ? (l == le.length - 1 ? le[0] : le[l + 1]) : le[l];
+}
+```
+
+
+
+
+
+```java
+   public char nextGreatestLetter(char[] letters, char target) {
+        int n = letters.length, l =0 , r = n-1;
+        while(l< r ){
+            int mid = l+(r-l)/2;
+            if(letters[mid]<=target) l= mid+1;
+            else r =mid;
+        }
+         return letters[l]> target ? letters[l] : letters[0];
+    }
+```
+
