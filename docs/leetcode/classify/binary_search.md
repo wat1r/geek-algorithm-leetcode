@@ -6,7 +6,7 @@
 
 ### 方法1:双指针
 
-- 双指针merger两个数组，用多余的数组来存储最终的结果
+- 双指针merge两个数组，用多余的数组来存储最终的结果
 
 ```java
 public double findMedianSortedArrays(int[] nums1, int[] nums2) {
