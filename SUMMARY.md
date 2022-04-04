@@ -5,7 +5,7 @@
 * LeetCode-PART1
 
   * [基础与技巧](/docs/leetcode/classify/basic_skill.md)
-  * [数据结构](/docs/leetcode/classify/structure.md)
+  * [数据结构](/docs/leetcode/classify/data_structure.md)
   * [堆栈](/docs/leetcode/classify/heap_stack.md)
   * [数组](/docs/leetcode/classify/array.md)
   * [排序](/docs/leetcode/classify/sorting.md)

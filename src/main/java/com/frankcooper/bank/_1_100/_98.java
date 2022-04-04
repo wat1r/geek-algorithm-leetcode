@@ -3,6 +3,9 @@ package com.frankcooper.bank._1_100;
 import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class _98 {
 
 
@@ -88,5 +91,42 @@ public class _98 {
         }
     }
 
+    static class _4th {
+        TreeNode prev = null;
+
+        public boolean isValidBST(TreeNode root) {
+            if (root == null) return true;
+            if (!isValidBST(root.left)) return false;
+            if (prev != null && prev.val >= root.val) return false;
+            prev = root;
+            if (!isValidBST(root.right)) return false;
+            return true;
+        }
+    }
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            TreeNode root = TreeNodeIOUtils.transform("[5,1,4,null,null,3,6]");
+            handler.isValidBST(root);
+        }
+
+
+        public boolean isValidBST(TreeNode root) {
+            Deque<TreeNode> stk = new ArrayDeque<>();
+            TreeNode prev = null;
+            while (root != null || !stk.isEmpty()) {
+                while (root != null) {
+                    stk.push(root);
+                    root = root.left;
+                }
+                root = stk.pop();
+                if (prev != null && prev.val >= root.val) return false;
+                prev = root;
+                root = root.right;
+            }
+            return true;
+        }
+    }
 
 }
