@@ -187,6 +187,47 @@ public List<List<Integer>> threeSum(int[] nums) {
 
 
 
+
+
+## [16. 最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)
+
+```java
+public int threeSumClosest(int[] nums, int target) {
+    //边界判断
+    if (nums == null || nums.length < 3) return -1;
+    //保持数组有序，使用双指针
+    Arrays.sort(nums);
+    int n = nums.length;
+    //目前的三数之和的值
+    int t = nums[0] + nums[1] + nums[2];
+    //初始的t 与 target之间的差值，取绝对值
+    int baseDelta = Math.abs(t - target);
+    //开始遍历，i到n-3止
+    for (int i = 0; i < n - 2; i++) {
+        int l = i + 1, r = n - 1;//左右指针
+        while (l < r) {
+            //三数之和
+            int sum = nums[i] + nums[l] + nums[r];
+            //新的 sum 与 target 之间的差值
+            int newDelta = Math.abs(sum - target);
+            //差值因为是绝对值，不可能比0还小
+            if (newDelta == 0) return sum;
+            //比较新旧差值，更新
+            if (newDelta < baseDelta) {
+                t = sum;
+                baseDelta = newDelta;
+            }
+            //双指针
+            if (sum > target) r--;
+            else l++;
+        }
+    }
+    return t;
+}
+```
+
+
+
 ## [18. 四数之和](https://leetcode-cn.com/problems/4sum/)
 
 ```java
