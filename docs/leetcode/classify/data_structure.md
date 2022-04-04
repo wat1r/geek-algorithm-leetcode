@@ -958,6 +958,16 @@ public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
 
 
 
+
+
+
+
+
+
+
+
+
+
 ## [124. 二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
 
 ```java
@@ -1435,6 +1445,33 @@ public class Codec {
     }
 }
 ```
+
+
+
+
+
+## [543. 二叉树的直径](https://leetcode-cn.com/problems/diameter-of-binary-tree/)
+
+### 方法1:DFS
+
+```java
+int res = 1;
+
+public int diameterOfBinaryTree(TreeNode root) {
+    dfs(root);
+    return res - 1;
+}
+
+public int dfs(TreeNode root) {
+    if (root == null) return 0;//如果达到叶子节点的子节点，返回0
+    int leftDepth = dfs(root.left);//遍历左子树
+    int rightDepth = dfs(root.right);//遍历右子树
+    res = Math.max(res, leftDepth + rightDepth + 1);//计算最大直径
+    return Math.max(leftDepth, rightDepth) + 1;//返回最大的深度
+}
+```
+
+
 
 
 

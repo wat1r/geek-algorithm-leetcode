@@ -953,6 +953,27 @@ public boolean canReach(int[] arr, int start) {
 
 
 
+
+
+## [91. 解码方法](https://leetcode-cn.com/problems/decode-ways/)
+
+```java
+public int numDecodings(String s) {
+    if (s == null || s.charAt(0) == '0') return 0;
+    int n = s.length();
+    char[] chas = s.toCharArray();
+    int[] f = new int[n + 1];
+    f[0] = f[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        if (chas[i - 1] != '0') f[i] += f[i - 1];
+        if (chas[i - 2] == '1' || chas[i - 2] == '2' && chas[i - 1] <= '6') f[i] += f[i - 2];
+    }
+    return f[n];
+}
+```
+
+
+
 ## [416. 分割等和子集](https://leetcode-cn.com/problems/partition-equal-subset-sum/)
 
 ### 方法1：朴素版DP
@@ -1081,4 +1102,8 @@ public int fib(int n) {
     return f[n];
 }
 ```
+
+
+
+
 

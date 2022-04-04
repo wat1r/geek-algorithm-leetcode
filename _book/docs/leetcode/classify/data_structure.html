@@ -1978,6 +1978,23 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     }
 }
 </code></pre>
+<h2 id="543-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;"><a href="https://leetcode-cn.com/problems/diameter-of-binary-tree/" target="_blank">543. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">diameterOfBinaryTree</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    dfs(root);
+    <span class="hljs-keyword">return</span> res - <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5982;&#x679C;&#x8FBE;&#x5230;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x8FD4;&#x56DE;0</span>
+    <span class="hljs-keyword">int</span> leftDepth = dfs(root.left);<span class="hljs-comment">//&#x904D;&#x5386;&#x5DE6;&#x5B50;&#x6811;</span>
+    <span class="hljs-keyword">int</span> rightDepth = dfs(root.right);<span class="hljs-comment">//&#x904D;&#x5386;&#x53F3;&#x5B50;&#x6811;</span>
+    res = Math.max(res, leftDepth + rightDepth + <span class="hljs-number">1</span>);<span class="hljs-comment">//&#x8BA1;&#x7B97;&#x6700;&#x5927;&#x76F4;&#x5F84;</span>
+    <span class="hljs-keyword">return</span> Math.max(leftDepth, rightDepth) + <span class="hljs-number">1</span>;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x6700;&#x5927;&#x7684;&#x6DF1;&#x5EA6;</span>
+}
+</code></pre>
 <h2 id="589-n-&#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/" target="_blank">589. N &#x53C9;&#x6811;&#x7684;&#x524D;&#x5E8F;&#x904D;&#x5386;</a></h2>
 <pre><code class="lang-java">    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
     <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">preorder</span><span class="hljs-params">(Node root)</span> </span>{
@@ -2173,7 +2190,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-04T06:50:24.533Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T07:45:22.529Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-04T13:06:38.051Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T13:12:12.041Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
