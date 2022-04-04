@@ -907,6 +907,48 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h3 id="follow-up&#xFF1A;&#x8FD4;&#x56DE;&#x6700;&#x957F;&#x957F;&#x5EA6;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;">Follow Up&#xFF1A;&#x8FD4;&#x56DE;&#x6700;&#x957F;&#x957F;&#x5EA6;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_3rd</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        _3rd handler = <span class="hljs-keyword">new</span> _3rd();
+        String s = <span class="hljs-string">&quot;)()())()()(()()&quot;</span>;
+        handler.longestValidParentheses(s);
+        <span class="hljs-comment">//output:[[1,4],[6,9],[11,14]]</span>
+        System.out.println(JSON.toJSONString(resList));
+    }
+
+
+    <span class="hljs-keyword">static</span> List&lt;<span class="hljs-keyword">int</span>[]&gt; resList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">longestValidParentheses</span><span class="hljs-params">(String s)</span> </span>{
+        <span class="hljs-comment">//stk&#x5B58;&#x7684;&#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x4E0D;&#x5339;&#x914D;&#x7684;&#x4F4D;&#x7F6E;&#xFF08;&#x4E0B;&#x6807;&#xFF09;</span>
+        Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-comment">//[0...3]&#x4E4B;&#x95F4;&#x7684;&#x957F;&#x5EA6;&#x662F;4&#xFF0C;0&#x4E5F;&#x5C31;&#x662F;3-(-1)=4 -1&#x4E3A;0&#x4F4D;&#x7F6E;&#x5F80;&#x524D;&#x63A8;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;</span>
+        stk.push(-<span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+            <span class="hljs-comment">// &apos;(&apos;&#x65F6;&#xFF0C;&#x5F80;&#x6808;&#x91CC;&#x63A8;&#x4E0B;&#x6807;</span>
+            <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;(&apos;</span>) stk.push(i);
+            <span class="hljs-keyword">else</span> {
+                <span class="hljs-comment">//&apos;)&apos; &#x628A;&#x4E0A;&#x4E00;&#x4E2A;&#x4E0B;&#x6807;&#x7D22;&#x5F15;&#x5F39;&#x51FA; &#x5982;&#x679C;&#x6808;&#x7A7A;&#x4E86;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x7684;&#x8FD9;&#x4E2A;&#x4E0B;&#x6807;&#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x4E0D;&#x5339;&#x914D;&#x7684;&#x4F4D;&#x7F6E;</span>
+                <span class="hljs-keyword">int</span> cur = stk.pop();
+                <span class="hljs-keyword">if</span> (stk.isEmpty()) stk.push(i);
+                    <span class="hljs-comment">//&#x6808;&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x8BA1;&#x7B97;&#x5F53;&#x524D;i&#x4E0E;&#x4E0A;&#x4E00;&#x4E2A;&#x4E0D;&#x5339;&#x914D;&#x4F4D;&#x7F6E;&#x7684;&#x8DDD;&#x79BB;</span>
+                <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">int</span> t = i - stk.peek();
+                    <span class="hljs-keyword">if</span> (t &gt;= res) {
+                        <span class="hljs-keyword">if</span> (t &gt; res) resList.clear();
+                        res = t;
+                        resList.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{stk.peek() + <span class="hljs-number">1</span>, i});
+                    }
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> res;
+    }
+}
+</code></pre>
 <h3 id="&#x65B9;&#x6CD5;2dp">&#x65B9;&#x6CD5;2:DP</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">longestValidParentheses</span><span class="hljs-params">(String s)</span> </span>{
     <span class="hljs-keyword">int</span> N = s.length();
@@ -1052,7 +1094,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-04-04T01:31:35.792Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T01:31:45.751Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-04-04T01:41:07.785Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T01:41:16.968Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

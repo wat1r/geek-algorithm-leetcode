@@ -2,6 +2,7 @@ package com.frankcooper.bank._1_100;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Assert;
 
 public class _32 {
@@ -69,6 +70,41 @@ public class _32 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            String s = ")()())()()(()()";
+            handler.longestValidParentheses(s);
+            //output:[[1,4],[6,9],[11,14]]
+            System.out.println(JSON.toJSONString(resList));
+        }
+
+
+        static List<int[]> resList = new ArrayList<>();
+
+
+        public int longestValidParentheses(String s) {
+            //stk存的是上一个不匹配的位置（下标）
+            Deque<Integer> stk = new ArrayDeque<>();
+            int res = 0;
+            //[0...3]之间的长度是4，0也就是3-(-1)=4 -1为0位置往前推一个位置
+            stk.push(-1);
+            for (int i = 0; i < s.length(); i++) {
+                // '('时，往栈里推下标
+                if (s.charAt(i) == '(') stk.push(i);
+                else {
+                    //')' 把上一个下标索引弹出 如果栈空了，说明当前的这个下标是上一个不匹配的位置
+                    int cur = stk.pop();
+                    if (stk.isEmpty()) stk.push(i);
+                        //栈不为空，计算当前i与上一个不匹配位置的距离
+                    else {
+                        int t = i - stk.peek();
+                        if (t >= res) {
+                            if (t > res) resList.clear();
+                            res = t;
+                            resList.add(new int[]{stk.peek() + 1, i});
+                        }
+                    }
+                }
+            }
+            return res;
         }
     }
 
