@@ -12,12 +12,13 @@ public class _168 {
 
             System.out.printf("%d\n", 2591 % 16);
 //            Assert.assertEquals("AB", handler.convertToTitle(28));
-//            Assert.assertEquals("ZY", handler.convertToTitle(701));
+            Assert.assertEquals("ZY", handler.convertToTitle(701));
 //            handler.convert(28);
-            handler.convert(26);
+//            handler.convert(26);
 //            handler.convert(701);
+//            handler.convertToTitle(701);
         }
-
+        //WA
         private String convert(int n) {
             StringBuilder ans = new StringBuilder();
             while (n > 0) {

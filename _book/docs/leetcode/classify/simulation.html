@@ -894,6 +894,28 @@
             <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
         }
 </code></pre>
+<h2 id="168-excel&#x8868;&#x5217;&#x540D;&#x79F0;"><a href="https://leetcode-cn.com/problems/excel-sheet-column-title/" target="_blank">168. Excel&#x8868;&#x5217;&#x540D;&#x79F0;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">convertToTitle</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+
+    StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+    <span class="hljs-keyword">while</span> (n &gt; <span class="hljs-number">0</span>) {
+        n--;<span class="hljs-comment">//&#x4ECE;1&#x5F00;&#x59CB;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x504F;&#x79BB;1</span>
+        res.append((<span class="hljs-keyword">char</span>) (<span class="hljs-string">&apos;A&apos;</span> + (n % <span class="hljs-number">26</span>)));
+        n /= <span class="hljs-number">26</span>;
+    }
+    <span class="hljs-keyword">return</span> res.reverse().toString();
+}
+</code></pre>
+<h2 id="171-excel-&#x8868;&#x5217;&#x5E8F;&#x53F7;"><a href="https://leetcode-cn.com/problems/excel-sheet-column-number/" target="_blank">171. Excel &#x8868;&#x5217;&#x5E8F;&#x53F7;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">titleToNumber</span><span class="hljs-params">(String s)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+        <span class="hljs-keyword">int</span> c = s.charAt(i) - <span class="hljs-string">&apos;A&apos;</span> + <span class="hljs-number">1</span>;
+        res = res * <span class="hljs-number">26</span> + c;
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
 <h2 id="2028-&#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;"><a href="https://leetcode-cn.com/problems/find-missing-observations/" target="_blank">2028. &#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] missingRolls(<span class="hljs-keyword">int</span>[] rolls, <span class="hljs-keyword">int</span> mean, <span class="hljs-keyword">int</span> n) {
             <span class="hljs-keyword">int</span> m = rolls.length;
@@ -909,6 +931,19 @@
             }
             <span class="hljs-keyword">return</span> res;
         }
+</code></pre>
+<h2 id="2194-excel-&#x8868;&#x4E2D;&#x67D0;&#x4E2A;&#x8303;&#x56F4;&#x5185;&#x7684;&#x5355;&#x5143;&#x683C;"><a href="https://leetcode-cn.com/problems/cells-in-a-range-on-an-excel-sheet/" target="_blank">2194. Excel &#x8868;&#x4E2D;&#x67D0;&#x4E2A;&#x8303;&#x56F4;&#x5185;&#x7684;&#x5355;&#x5143;&#x683C;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title">cellsInRange</span><span class="hljs-params">(String s)</span> </span>{
+    List&lt;String&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    String[] arr = s.split(<span class="hljs-string">&quot;:&quot;</span>);
+    String start = arr[<span class="hljs-number">0</span>], end = arr[<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c = start.charAt(<span class="hljs-number">0</span>); c &lt;= end.charAt(<span class="hljs-number">0</span>); c++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> i = start.charAt(<span class="hljs-number">1</span>); i &lt;= end.charAt(<span class="hljs-number">1</span>); i++) {
+            res.add(c + <span class="hljs-string">&quot;&quot;</span> + i);
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
 </code></pre>
 
                                 
@@ -953,7 +988,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.6","depth":2,"next":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-03-30T14:40:18.350Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T06:50:36.838Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.6","depth":2,"next":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-04-04T07:42:28.692Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T07:45:22.529Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

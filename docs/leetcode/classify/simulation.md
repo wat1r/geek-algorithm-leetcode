@@ -94,7 +94,37 @@ public boolean isValidSudoku(char[][] board) {
 
 
 
+## [168. Excel表列名称](https://leetcode-cn.com/problems/excel-sheet-column-title/)
 
+```java
+public String convertToTitle(int n) {
+
+    StringBuilder res = new StringBuilder();
+    while (n > 0) {
+        n--;//从1开始的，需要偏离1
+        res.append((char) ('A' + (n % 26)));
+        n /= 26;
+    }
+    return res.reverse().toString();
+}
+```
+
+
+
+
+
+## [171. Excel 表列序号](https://leetcode-cn.com/problems/excel-sheet-column-number/)
+
+```java
+public int titleToNumber(String s) {
+    int res = 0;
+    for (int i = 0; i < s.length(); i++) {
+        int c = s.charAt(i) - 'A' + 1;
+        res = res * 26 + c;
+    }
+    return res;
+}
+```
 
 
 
@@ -119,3 +149,22 @@ public boolean isValidSudoku(char[][] board) {
         }
 ```
 
+
+
+## [2194. Excel 表中某个范围内的单元格](https://leetcode-cn.com/problems/cells-in-a-range-on-an-excel-sheet/)
+
+
+
+```java
+public List<String> cellsInRange(String s) {
+    List<String> res = new ArrayList<>();
+    String[] arr = s.split(":");
+    String start = arr[0], end = arr[1];
+    for (char c = start.charAt(0); c <= end.charAt(0); c++) {
+        for (char i = start.charAt(1); i <= end.charAt(1); i++) {
+            res.add(c + "" + i);
+        }
+    }
+    return res;
+}
+```
