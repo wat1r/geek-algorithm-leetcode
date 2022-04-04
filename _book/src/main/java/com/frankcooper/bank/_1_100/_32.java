@@ -43,6 +43,26 @@ public class _32 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int longestValidParentheses(String s) {
+            //stk存的是上一个不匹配的位置（下标）
+            Deque<Integer> stk = new ArrayDeque<>();
+            int res = 0;
+            //[0...3]之间的长度是4，0也就是3-(-1)=4 -1为0位置往前推一个位置
+            stk.push(-1);
+            for (int i = 0; i < s.length(); i++) {
+                // '('时，往栈里推下标
+                if (s.charAt(i) == '(') stk.push(i);
+                else {
+                    //')' 把上一个下标索引弹出 如果栈空了，说明当前的这个下标是上一个不匹配的位置
+                    int cur = stk.pop();
+                    if (stk.isEmpty()) stk.push(i);
+                        //栈不为空，计算当前i与上一个不匹配位置的距离
+                    else res = Math.max(res, i - stk.peek());
+                }
+            }
+            return res;
+        }
     }
 
 
