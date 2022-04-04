@@ -813,6 +813,8 @@ public List<Integer> preorderTraversal(TreeNode root) {
 
 ## [94. 二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
 
+### 方法1:迭代
+
 ```java
 public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> res = new ArrayList<>();
@@ -832,6 +834,57 @@ public List<Integer> inorderTraversal(TreeNode root) {
     return res;
 }
 ```
+
+### 方法2:递归
+
+```java
+   List<Integer> inoderList = new ArrayList<>();
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if (root == null) return inoderList;
+        inorderTraversal(root.left);
+        inoderList.add(root.val);
+        inorderTraversal(root.right);
+        return inoderList;
+    }
+```
+
+### 方法3:Morris遍历
+
+```java
+public void inOrderByMorris(TreeNode root) {
+    TreeNode curr = root;
+    while (curr != null) {
+        if (curr.left == null) {//步骤1
+            System.out.print(curr.val + " ");
+            curr = curr.right;
+        } else {//步骤2
+            TreeNode predecessor = getPredecessor(curr);
+            if (predecessor.right == null) {//步骤2.a
+                predecessor.right = curr;
+                curr = curr.left;
+            } else if (predecessor.right == curr) {//步驟2.b
+                predecessor.right = null;
+                System.out.print(curr + " ");
+                curr = curr.right;
+            }
+        }
+    }
+}
+
+    private TreeNode getPredecessor(TreeNode curr) {
+        TreeNode predecessor = curr;
+        if (curr.left != null) {
+            predecessor = curr.left;
+            while (predecessor.right != null && predecessor.right != curr) {
+                predecessor = predecessor.right;
+            }
+        }
+        return predecessor;
+    }
+```
+
+- [一文掌握Morris遍历算法](https://leetcode-cn.com/problems/recover-binary-search-tree/solution/yi-wen-zhang-wo-morrisbian-li-suan-fa-by-a-fei-8/)
 
 
 

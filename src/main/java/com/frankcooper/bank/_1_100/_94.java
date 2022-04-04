@@ -94,4 +94,17 @@ public class _94 {
         }
     }
 
+
+    static class _4th{
+        List<Integer> inoderList = new ArrayList<>();
+
+        public List<Integer> inorderTraversal(TreeNode root) {
+            if (root == null) return inoderList;
+            inorderTraversal(root.left);
+            inoderList.add(root.val);
+            inorderTraversal(root.right);
+            return inoderList;
+        }
+    }
+
 }

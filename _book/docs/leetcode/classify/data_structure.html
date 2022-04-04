@@ -1448,6 +1448,7 @@
 }
 </code></pre>
 <h2 id="94-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x4E2D;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/" target="_blank">94. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x4E2D;&#x5E8F;&#x904D;&#x5386;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">inorderTraversal</span><span class="hljs-params">(TreeNode root)</span> </span>{
     List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
     Stack&lt;TreeNode&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
@@ -1466,6 +1467,52 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2:&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java">   List&lt;Integer&gt; inoderList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">inorderTraversal</span><span class="hljs-params">(TreeNode root)</span> </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> inoderList;
+        inorderTraversal(root.left);
+        inoderList.add(root.val);
+        inorderTraversal(root.right);
+        <span class="hljs-keyword">return</span> inoderList;
+    }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3morris&#x904D;&#x5386;">&#x65B9;&#x6CD5;3:Morris&#x904D;&#x5386;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">inOrderByMorris</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    TreeNode curr = root;
+    <span class="hljs-keyword">while</span> (curr != <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">if</span> (curr.left == <span class="hljs-keyword">null</span>) {<span class="hljs-comment">//&#x6B65;&#x9AA4;1</span>
+            System.out.print(curr.val + <span class="hljs-string">&quot; &quot;</span>);
+            curr = curr.right;
+        } <span class="hljs-keyword">else</span> {<span class="hljs-comment">//&#x6B65;&#x9AA4;2</span>
+            TreeNode predecessor = getPredecessor(curr);
+            <span class="hljs-keyword">if</span> (predecessor.right == <span class="hljs-keyword">null</span>) {<span class="hljs-comment">//&#x6B65;&#x9AA4;2.a</span>
+                predecessor.right = curr;
+                curr = curr.left;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (predecessor.right == curr) {<span class="hljs-comment">//&#x6B65;&#x9A5F;2.b</span>
+                predecessor.right = <span class="hljs-keyword">null</span>;
+                System.out.print(curr + <span class="hljs-string">&quot; &quot;</span>);
+                curr = curr.right;
+            }
+        }
+    }
+}
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> TreeNode <span class="hljs-title">getPredecessor</span><span class="hljs-params">(TreeNode curr)</span> </span>{
+        TreeNode predecessor = curr;
+        <span class="hljs-keyword">if</span> (curr.left != <span class="hljs-keyword">null</span>) {
+            predecessor = curr.left;
+            <span class="hljs-keyword">while</span> (predecessor.right != <span class="hljs-keyword">null</span> &amp;&amp; predecessor.right != curr) {
+                predecessor = predecessor.right;
+            }
+        }
+        <span class="hljs-keyword">return</span> predecessor;
+    }
+</code></pre>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/recover-binary-search-tree/solution/yi-wen-zhang-wo-morrisbian-li-suan-fa-by-a-fei-8/" target="_blank">&#x4E00;&#x6587;&#x638C;&#x63E1;Morris&#x904D;&#x5386;&#x7B97;&#x6CD5;</a></li>
+</ul>
 <h2 id="98-&#x9A8C;&#x8BC1;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;"><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank">98. &#x9A8C;&#x8BC1;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
 <pre><code class="lang-java"> TreeNode prev = <span class="hljs-keyword">null</span>;
@@ -2126,7 +2173,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-04T00:10:28.239Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T03:40:19.505Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-04T06:50:24.533Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T06:50:36.838Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
