@@ -1682,6 +1682,50 @@ Integer[] memo;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x4
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
 }
 </code></pre>
+<h2 id="72-&#x7F16;&#x8F91;&#x8DDD;&#x79BB;"><a href="https://leetcode-cn.com/problems/edit-distance/" target="_blank">72. &#x7F16;&#x8F91;&#x8DDD;&#x79BB;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1dp">&#x65B9;&#x6CD5;1:DP</h3>
+<pre><code class="lang-java"><span class="hljs-comment">/*dp*/</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(String word1, String word2)</span> </span>{
+    <span class="hljs-keyword">int</span> m = word1.length(), n = word2.length();
+    <span class="hljs-keyword">int</span>[][] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m + <span class="hljs-number">1</span>][n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= m; i++) f[i][<span class="hljs-number">0</span>] = i;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= n; j++) f[<span class="hljs-number">0</span>][j] = j;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {
+            <span class="hljs-keyword">char</span> c1 = word1.charAt(i - <span class="hljs-number">1</span>), c2 = word2.charAt(j - <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span> (c1 == c2) f[i][j] = f[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">else</span> {
+                f[i][j] = Math.min(f[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>], Math.min(f[i - <span class="hljs-number">1</span>][j], f[i][j - <span class="hljs-number">1</span>])) + <span class="hljs-number">1</span>;
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> f[m][n];
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2:&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java"><span class="hljs-comment">/*&#x8BB0;&#x5FC6;&#x5316;&#x9012;&#x5F52;*/</span>
+<span class="hljs-keyword">int</span>[][] cache;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minDistance</span><span class="hljs-params">(String word1, String word2)</span> </span>{
+    <span class="hljs-keyword">int</span> m = word1.length(), n = word2.length();
+    cache = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m + <span class="hljs-number">1</span>][n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= m; i++) Arrays.fill(cache[i], -<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">return</span> dfs(word1, word2, m, n);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(String word1, String word2, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (m == <span class="hljs-number">0</span> || n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> m == <span class="hljs-number">0</span> ? n : m;
+    <span class="hljs-keyword">if</span> (cache[m][n] != -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> cache[m][n];
+    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (word1.charAt(m - <span class="hljs-number">1</span>) == word2.charAt(n - <span class="hljs-number">1</span>)) {
+        ans = dfs(word1, word2, m - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>);
+    } <span class="hljs-keyword">else</span> {
+        ans = Math.min(dfs(word1, word2, m - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>),
+                Math.min(dfs(word1, word2, m - <span class="hljs-number">1</span>, n), dfs(word1, word2, m, n - <span class="hljs-number">1</span>))) + <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> cache[m][n] = ans;
+}
+</code></pre>
 <h2 id="91-&#x89E3;&#x7801;&#x65B9;&#x6CD5;"><a href="https://leetcode-cn.com/problems/decode-ways/" target="_blank">91. &#x89E3;&#x7801;&#x65B9;&#x6CD5;</a></h2>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">numDecodings</span><span class="hljs-params">(String s)</span> </span>{
     <span class="hljs-keyword">if</span> (s == <span class="hljs-keyword">null</span> || s.charAt(<span class="hljs-number">0</span>) == <span class="hljs-string">&apos;0&apos;</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -1853,7 +1897,7 @@ Integer[] memo;<span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x4
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.3.3","depth":2,"next":{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},"previous":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-04-04T13:11:10.649Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T13:12:12.041Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"动态规划","level":"1.3.3","depth":2,"next":{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},"previous":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/dynamic_programing.md","mtime":"2022-04-05T13:24:57.577Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-05T14:06:10.586Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

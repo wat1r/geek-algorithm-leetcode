@@ -1056,6 +1056,51 @@
             }
         }
 </code></pre>
+<h2 id="93-&#x590D;&#x539F;-ip-&#x5730;&#x5740;"><a href="https://leetcode-cn.com/problems/restore-ip-addresses/" target="_blank">93. &#x590D;&#x539F; IP &#x5730;&#x5740;</a></h2>
+<pre><code class="lang-java">    List&lt;String&gt; results = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title">restoreIpAddresses</span><span class="hljs-params">(String s)</span> </span>{
+        backtrack(s, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(), <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">return</span> results;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(String s, ArrayList&lt;String&gt; segment, <span class="hljs-keyword">int</span> index)</span> </span>{
+        <span class="hljs-keyword">if</span> (segment.size() == <span class="hljs-number">4</span> &amp;&amp; index == s.length()) {
+            results.add(String.join(<span class="hljs-string">&quot;.&quot;</span>, segment));
+            <span class="hljs-keyword">return</span>;
+        }
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">3</span>; i++) {
+            <span class="hljs-keyword">if</span> (index + i &gt; s.length() || segment.size() &gt; <span class="hljs-number">4</span>) <span class="hljs-keyword">break</span>;
+            String curr = s.substring(index, index + i);
+            <span class="hljs-keyword">if</span> ((i == <span class="hljs-number">3</span> &amp;&amp; Integer.parseInt(curr) &gt; <span class="hljs-number">255</span>) || (curr.startsWith(<span class="hljs-string">&quot;0&quot;</span>) &amp;&amp; curr.length() &gt; <span class="hljs-number">1</span>)) <span class="hljs-keyword">continue</span>;
+            segment.add(curr);
+            backtrack(s, segment, index + i);
+            segment.remove(segment.size() - <span class="hljs-number">1</span>);
+        }
+    }
+</code></pre>
+<pre><code class="lang-java">      List&lt;String&gt; results = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title">restoreIpAddresses</span><span class="hljs-params">(String s)</span> </span>{
+            backtracing(s, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-number">0</span>);
+            <span class="hljs-keyword">return</span> results;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">backtracing</span><span class="hljs-params">(String s, String path, <span class="hljs-keyword">int</span> segs)</span> </span>{
+            <span class="hljs-keyword">if</span> (s.isEmpty() || segs == <span class="hljs-number">4</span>) {
+                <span class="hljs-keyword">if</span> (s.isEmpty() &amp;&amp; segs == <span class="hljs-number">4</span>) results.add(path.substring(<span class="hljs-number">1</span>));
+                <span class="hljs-keyword">return</span>;
+            }
+            <span class="hljs-keyword">int</span> n = s.charAt(<span class="hljs-number">0</span>) == <span class="hljs-string">&apos;0&apos;</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">3</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n &amp;&amp; i &lt;= s.length(); i++) {
+                String sub = s.substring(<span class="hljs-number">0</span>, i);
+                <span class="hljs-keyword">if</span> (Integer.valueOf(sub) &lt;= <span class="hljs-number">255</span>) {
+                    backtracing(s.substring(i), path + <span class="hljs-string">&quot;.&quot;</span> + sub, segs + <span class="hljs-number">1</span>);
+                }
+            }
+
+        }
+</code></pre>
 <h2 id="139-&#x5355;&#x8BCD;&#x62C6;&#x5206;"><a href="https://leetcode-cn.com/problems/word-break/" target="_blank">139. &#x5355;&#x8BCD;&#x62C6;&#x5206;</a></h2>
 <p><img src="../../../imgs/leetcode/classify/image-20220313105908048.png" alt=""></p>
 <h3 id="&#x65B9;&#x6CD5;1&#x8BB0;&#x5FC6;&#x5316;dfs&#x4F7F;&#x7528;map">&#x65B9;&#x6CD5;1:&#x8BB0;&#x5FC6;&#x5316;DFS(&#x4F7F;&#x7528;map)</h3>
@@ -1695,7 +1740,7 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.1","depth":2,"next":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-03-28T13:38:33.964Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-04T13:12:12.041Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.1","depth":2,"next":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-05T05:13:24.432Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-05T14:06:10.586Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

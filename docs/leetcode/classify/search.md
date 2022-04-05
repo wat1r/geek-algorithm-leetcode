@@ -295,6 +295,66 @@ List<List<Integer>> res = new ArrayList<>();
 
 
 
+## [93. 复原 IP 地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
+
+
+
+```java
+    List<String> results = new ArrayList<>();
+
+    public List<String> restoreIpAddresses(String s) {
+        backtrack(s, new ArrayList<>(), 0);
+        return results;
+    }
+
+    private void backtrack(String s, ArrayList<String> segment, int index) {
+        if (segment.size() == 4 && index == s.length()) {
+            results.add(String.join(".", segment));
+            return;
+        }
+        for (int i = 1; i <= 3; i++) {
+            if (index + i > s.length() || segment.size() > 4) break;
+            String curr = s.substring(index, index + i);
+            if ((i == 3 && Integer.parseInt(curr) > 255) || (curr.startsWith("0") && curr.length() > 1)) continue;
+            segment.add(curr);
+            backtrack(s, segment, index + i);
+            segment.remove(segment.size() - 1);
+        }
+    }
+```
+
+
+
+
+
+```java
+      List<String> results = new ArrayList<>();
+
+        public List<String> restoreIpAddresses(String s) {
+            backtracing(s, "", 0);
+            return results;
+        }
+
+        private void backtracing(String s, String path, int segs) {
+            if (s.isEmpty() || segs == 4) {
+                if (s.isEmpty() && segs == 4) results.add(path.substring(1));
+                return;
+            }
+            int n = s.charAt(0) == '0' ? 1 : 3;
+            for (int i = 1; i <= n && i <= s.length(); i++) {
+                String sub = s.substring(0, i);
+                if (Integer.valueOf(sub) <= 255) {
+                    backtracing(s.substring(i), path + "." + sub, segs + 1);
+                }
+            }
+
+        }
+```
+
+
+
+
+
 
 
 ## [139. 单词拆分](https://leetcode-cn.com/problems/word-break/)

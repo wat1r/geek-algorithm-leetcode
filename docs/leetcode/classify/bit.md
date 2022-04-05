@@ -102,3 +102,148 @@ public boolean hasAlternatingBits(int n) {
 }
 ```
 
+
+
+
+
+## [762. 二进制表示中质数个计算置位](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/)
+
+### 方法1:模拟
+
+- 数据范围不大，模拟即可，两步走，
+  - step1.统计每一个数二进制数中1的个数，记为`bits`
+  - step2.判断`bits`是否是质数
+
+- 其中step1的操作:
+
+![image-20220405094541146](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220405094541146.png)
+
+```java
+统计二进制1的个数可以分别获取每个二进制位数，然后再统计其1的个数，此方法效率比较低。这里介绍另外一种高效的方法，同样以 34520 为例，我们计算其 a &= (a-1)的结果：
+方法1：
+- 第一次：计算前：1000 0110 1101 1000 计算后：1000 0110 1101 0000
+- 第二次：计算前：1000 0110 1101 0000 计算后：1000 0110 1100 0000
+- 第三次：计算前：1000 0110 1100 0000 计算后：1000 0110 1000 0000 我们发现，每计算一次二进制中就少了一个 1，则我们可以通过下面方法去统计：
+    
+count = 0  
+while(a){  
+  a = a & (a - 1);  
+  count++;  
+}  
+方法2：见下面的「返回i的二进制最低位位1的权值」
+count = 0  
+while(a){  
+  a -= a & (-a);  
+  count++;  
+}  
+方法3：
+count = 0  
+while(a){  
+  count+=a&1;  
+  a >>>= 1;//无符号右移 相当于 /2 
+}
+```
+
+**更加详细想位操作技巧，阅读[位运算操作常见技巧](https://blog.csdn.net/wat1r/article/details/114298873)（100+收藏，5K阅读）**
+
+```java
+public int countPrimeSetBits(int left, int right) {
+    int res = 0;
+    for (int a = left; a <= right; a++) {
+        if (isPrime(count(a))) res++;
+    }
+    return res;
+}
+
+
+public int count(int a) {
+    int cnt = 0;
+    while (a > 0) {
+        cnt += a & 1;
+        a >>= 1;
+    }
+    return cnt;
+}
+
+
+/**
+ * 判断一个数是否是素数
+ */
+public boolean isPrime(int a) {
+    if (a < 2) return false;
+    for (int i = 2; i * i <= a; i++) {
+        if (a % i == 0) return false;
+    }
+    return true;
+}
+```
+
+### 方法2:打表
+
+- 注意到数据的范围是100000，转成二进制是11110100001001000000，20位，也就是说每一位都为1的话，也只有20位，需要拿到20位以下质数打表
+
+```java
+public int countPrimeSetBits(int left, int right) {
+    List<Integer> primes = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19);
+    int cnt = 0;
+    for (int i = left; i <= right; i++) {
+        int bits = 0;
+        for (int x = i; x > 0; x >>= 1) {
+            bits += x & 1;
+        }
+        if (primes.contains(bits)) cnt++;
+    }
+    return cnt;
+}
+```
+
+### 方法3:DP打表
+
+- 质数的结果可以通过打表的方式获取，每个数的位数也可以通过打表的方式获取
+- `f[i]`表示当前数`i`的二进制1的个数
+  - 初始时0的二进制1的个数是0,1的二进制1的个数是1个
+  - 一般情况下`f[i]`与`i>>1`的结果有关，判断下当前位是否是1即可`f[i & 1]`，
+
+```java
+public int countPrimeSetBits(int left, int right) {
+    List<Integer> primes = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19);
+    int[] f = count(right);
+    int cnt = 0;
+    for (int i = left; i <= right; i++) {
+        if (primes.contains(f[i])) cnt++;
+    }
+    return cnt;
+}
+
+
+public int[] count(int x) {
+    if (x == 0) return new int[]{};
+    int[] f = new int[x + 1];
+    f[0] = 0;
+    f[1] = 1;
+    for (int i = 2; i <= x; i++) {
+        f[i] = f[i >> 1] + f[i & 1];
+    }
+    return f;
+}
+```
+
+
+
+
+
+### Follow Up
+
+> **如果`left`和`right`的数据范围不是10^6而扩大到10亿，如何优化算法**
+
+- 我能想到的是通过埃筛的方式快速的筛质数，然后打表
+- 你会如何做呢？欢迎评论区留言~
+
+
+
+### 扩展阅读
+
+\- [【阿飞算法】图解693交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/solution/a-fei-suan-fa-by-a-fei-8-es27/)
+
+\- [【阿飞算法】面试题 01.01. 判定字符是否唯一（位运算图解，附位运算链接）](https://leetcode-cn.com/problems/is-unique-lcci/solution/by-a-fei-8-pqij/)
+
