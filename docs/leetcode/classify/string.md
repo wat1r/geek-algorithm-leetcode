@@ -162,3 +162,71 @@ public String decodeString(String s) {
     return res.toString();
 }
 ```
+
+
+
+## [468. 验证IP地址](https://leetcode-cn.com/problems/validate-ip-address/)
+
+
+
+```java
+static class _1st {
+    public String validIPAddress(String IP) {
+        String[] arr = IP.split("\\.");
+        if (arr.length <= 1) {
+            if (IP.endsWith(":")) return "Neither";
+            arr = IP.split(":");
+            boolean ipv6 = isIPV6(arr);
+            if (ipv6) return "IPv6";
+        } else {
+            if (IP.endsWith(".")) return "Neither";
+            boolean ipv4 = isIPV4(arr);
+            if (ipv4) return "IPv4";
+        }
+        return "Neither";
+    }
+
+
+    private boolean isIPV4(String[] arr) {
+        if (arr.length != 4) return false;
+        for (String a : arr) {
+            if (a.length() == 0 || a.length() > 3) return false;
+            if (a.startsWith("0") && a.length() > 1) return false;
+            if (!isDigit(a)) return false;
+            if (Integer.parseInt(a) >= 256 || Integer.parseInt(a) < 0) return false;
+        }
+        return true;
+    }
+
+
+    private boolean isIPV6(String[] arr) {
+        if (arr.length != 8) return false;
+        for (String a : arr) {
+            if (a.length() == 0 || a.length() > 4) return false;
+            if (!checkIPV6(a)) return false;
+        }
+        return true;
+    }
+
+
+    private boolean isDigit(String a) {
+        char[] chas = a.toCharArray();
+        for (char c : chas) {
+            int ic = (int) c - (int) '0';
+            if (!(ic >= 0 && ic <= 9)) return false;
+        }
+        return true;
+    }
+
+
+    private boolean checkIPV6(String a) {
+        for (int i = 0; i < a.length(); ++i) {
+            char c = a.charAt(i);
+            if (!Character.isDigit(c) && !('a' <= c && c <= 'f') && !('A' <= c && c <= 'F')) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```

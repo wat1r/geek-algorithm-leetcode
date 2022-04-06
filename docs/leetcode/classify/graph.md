@@ -167,7 +167,13 @@ typedef struct Vnode
 
 
 
-![](/imgs/leetcode/classify/image-20220406094955011.png)
+![](/imgs/leetcode/classify/image-20220406142505835.png)
+
+
+
+
+
+
 
 ### 方法1:BFS+邻接矩阵
 
@@ -214,7 +220,7 @@ public List<Integer> findMinHeightTrees(int n, int[][] edges) {
 
 另外一种写法：
 
-- 不适用queue存储叶子节点，不存储出度，size为1的邻接矩阵为出度为1的点，即叶子节点
+- 不使用queue存储叶子节点，不存储出度，size为1的邻接矩阵为出度为1的点，即叶子节点
 
 ```java
 public List<Integer> findMinHeightTrees(int n, int[][] edges) {

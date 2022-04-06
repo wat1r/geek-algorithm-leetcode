@@ -963,6 +963,67 @@
     <span class="hljs-keyword">return</span> res.toString();
 }
 </code></pre>
+<h2 id="468-&#x9A8C;&#x8BC1;ip&#x5730;&#x5740;"><a href="https://leetcode-cn.com/problems/validate-ip-address/" target="_blank">468. &#x9A8C;&#x8BC1;IP&#x5730;&#x5740;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_1st</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">validIPAddress</span><span class="hljs-params">(String IP)</span> </span>{
+        String[] arr = IP.split(<span class="hljs-string">&quot;\\.&quot;</span>);
+        <span class="hljs-keyword">if</span> (arr.length &lt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">if</span> (IP.endsWith(<span class="hljs-string">&quot;:&quot;</span>)) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Neither&quot;</span>;
+            arr = IP.split(<span class="hljs-string">&quot;:&quot;</span>);
+            <span class="hljs-keyword">boolean</span> ipv6 = isIPV6(arr);
+            <span class="hljs-keyword">if</span> (ipv6) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;IPv6&quot;</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">if</span> (IP.endsWith(<span class="hljs-string">&quot;.&quot;</span>)) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Neither&quot;</span>;
+            <span class="hljs-keyword">boolean</span> ipv4 = isIPV4(arr);
+            <span class="hljs-keyword">if</span> (ipv4) <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;IPv4&quot;</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Neither&quot;</span>;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isIPV4</span><span class="hljs-params">(String[] arr)</span> </span>{
+        <span class="hljs-keyword">if</span> (arr.length != <span class="hljs-number">4</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">for</span> (String a : arr) {
+            <span class="hljs-keyword">if</span> (a.length() == <span class="hljs-number">0</span> || a.length() &gt; <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">if</span> (a.startsWith(<span class="hljs-string">&quot;0&quot;</span>) &amp;&amp; a.length() &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">if</span> (!isDigit(a)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">if</span> (Integer.parseInt(a) &gt;= <span class="hljs-number">256</span> || Integer.parseInt(a) &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isIPV6</span><span class="hljs-params">(String[] arr)</span> </span>{
+        <span class="hljs-keyword">if</span> (arr.length != <span class="hljs-number">8</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">for</span> (String a : arr) {
+            <span class="hljs-keyword">if</span> (a.length() == <span class="hljs-number">0</span> || a.length() &gt; <span class="hljs-number">4</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">if</span> (!checkIPV6(a)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isDigit</span><span class="hljs-params">(String a)</span> </span>{
+        <span class="hljs-keyword">char</span>[] chas = a.toCharArray();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : chas) {
+            <span class="hljs-keyword">int</span> ic = (<span class="hljs-keyword">int</span>) c - (<span class="hljs-keyword">int</span>) <span class="hljs-string">&apos;0&apos;</span>;
+            <span class="hljs-keyword">if</span> (!(ic &gt;= <span class="hljs-number">0</span> &amp;&amp; ic &lt;= <span class="hljs-number">9</span>)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">checkIPV6</span><span class="hljs-params">(String a)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; a.length(); ++i) {
+            <span class="hljs-keyword">char</span> c = a.charAt(i);
+            <span class="hljs-keyword">if</span> (!Character.isDigit(c) &amp;&amp; !(<span class="hljs-string">&apos;a&apos;</span> &lt;= c &amp;&amp; c &lt;= <span class="hljs-string">&apos;f&apos;</span>) &amp;&amp; !(<span class="hljs-string">&apos;A&apos;</span> &lt;= c &amp;&amp; c &lt;= <span class="hljs-string">&apos;F&apos;</span>)) {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1006,7 +1067,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-03-28T13:36:49.829Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T02:03:20.167Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-04-06T13:28:44.757Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T13:43:40.869Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

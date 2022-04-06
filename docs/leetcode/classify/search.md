@@ -991,6 +991,59 @@ private void helper(int num, StringBuilder sb) {
 }
 ```
 
+
+
+
+
+## [752. 打开转盘锁](https://leetcode-cn.com/problems/open-the-lock/)
+
+### 方法1:双向BFS
+
+```java
+public int openLock(String[] deadends, String target) {
+    Set<String> beginSet = new HashSet<>();
+    Set<String> endSet = new HashSet<>();
+    Set<String> deadSet = new HashSet<>(Arrays.asList(deadends));
+    //使用了额外的visitedSet来装被访问过的str，也可以使用deadSet来访问
+    Set<String> visitedSet = new HashSet<>();
+    beginSet.add("0000");
+    endSet.add(target);
+    int level = 0;
+    while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+        System.out.printf("beginSet:%s\n", JSON.toJSONString(beginSet));
+        System.out.printf("endSet:%s\n", JSON.toJSONString(endSet));
+        Set<String> tmpSet = new HashSet<>();
+        for (String str : beginSet) {
+            if (endSet.contains(str)) return level;
+            if (deadSet.contains(str)) continue;
+            visitedSet.add(str);
+            for (int i = 0; i < 4; i++) {
+                char c = str.charAt(i);
+                String upStr = str.substring(0, i) + ((c == '9' ? '0' : c + 1) - 48) + str.substring(i + 1);
+                String downStr = str.substring(0, i) + ((c == '0' ? '9' : c - 1) - 48) + str.substring(i + 1);
+                if (!deadSet.contains(upStr) && !visitedSet.contains(upStr)) {
+                    tmpSet.add(upStr);
+                }
+                if (!deadSet.contains(downStr) && !visitedSet.contains(downStr)) {
+                    tmpSet.add(downStr);
+                }
+            }
+        }
+        level++;
+        //轮转，上述的for loop中使用的是beginSet,相当于使用beginSet在beginSet与endSet中间来回跳跃
+        beginSet = endSet;
+        //本轮的tmpSet值赋值给beginSet
+        //相当于tmpSet给endSet后备，endSet给beginSet后备
+        endSet = tmpSet;
+    }
+    return -1;
+}
+```
+
+
+
+
+
 ## [2044. 统计按位或能得到最大值的子集数目](https://leetcode-cn.com/problems/count-number-of-maximum-bitwise-or-subsets/)
 
 ### 方法1:DFS枚举所有子集统计

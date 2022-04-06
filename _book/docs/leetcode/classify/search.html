@@ -1664,6 +1664,47 @@ List&lt;String&gt; wordDict;
     }
 }
 </code></pre>
+<h2 id="752-&#x6253;&#x5F00;&#x8F6C;&#x76D8;&#x9501;"><a href="https://leetcode-cn.com/problems/open-the-lock/" target="_blank">752. &#x6253;&#x5F00;&#x8F6C;&#x76D8;&#x9501;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x53CC;&#x5411;bfs">&#x65B9;&#x6CD5;1:&#x53CC;&#x5411;BFS</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">openLock</span><span class="hljs-params">(String[] deadends, String target)</span> </span>{
+    Set&lt;String&gt; beginSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+    Set&lt;String&gt; endSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+    Set&lt;String&gt; deadSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;(Arrays.asList(deadends));
+    <span class="hljs-comment">//&#x4F7F;&#x7528;&#x4E86;&#x989D;&#x5916;&#x7684;visitedSet&#x6765;&#x88C5;&#x88AB;&#x8BBF;&#x95EE;&#x8FC7;&#x7684;str&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;deadSet&#x6765;&#x8BBF;&#x95EE;</span>
+    Set&lt;String&gt; visitedSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+    beginSet.add(<span class="hljs-string">&quot;0000&quot;</span>);
+    endSet.add(target);
+    <span class="hljs-keyword">int</span> level = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (!beginSet.isEmpty() &amp;&amp; !endSet.isEmpty()) {
+        System.out.printf(<span class="hljs-string">&quot;beginSet:%s\n&quot;</span>, JSON.toJSONString(beginSet));
+        System.out.printf(<span class="hljs-string">&quot;endSet:%s\n&quot;</span>, JSON.toJSONString(endSet));
+        Set&lt;String&gt; tmpSet = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+        <span class="hljs-keyword">for</span> (String str : beginSet) {
+            <span class="hljs-keyword">if</span> (endSet.contains(str)) <span class="hljs-keyword">return</span> level;
+            <span class="hljs-keyword">if</span> (deadSet.contains(str)) <span class="hljs-keyword">continue</span>;
+            visitedSet.add(str);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+                <span class="hljs-keyword">char</span> c = str.charAt(i);
+                String upStr = str.substring(<span class="hljs-number">0</span>, i) + ((c == <span class="hljs-string">&apos;9&apos;</span> ? <span class="hljs-string">&apos;0&apos;</span> : c + <span class="hljs-number">1</span>) - <span class="hljs-number">48</span>) + str.substring(i + <span class="hljs-number">1</span>);
+                String downStr = str.substring(<span class="hljs-number">0</span>, i) + ((c == <span class="hljs-string">&apos;0&apos;</span> ? <span class="hljs-string">&apos;9&apos;</span> : c - <span class="hljs-number">1</span>) - <span class="hljs-number">48</span>) + str.substring(i + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span> (!deadSet.contains(upStr) &amp;&amp; !visitedSet.contains(upStr)) {
+                    tmpSet.add(upStr);
+                }
+                <span class="hljs-keyword">if</span> (!deadSet.contains(downStr) &amp;&amp; !visitedSet.contains(downStr)) {
+                    tmpSet.add(downStr);
+                }
+            }
+        }
+        level++;
+        <span class="hljs-comment">//&#x8F6E;&#x8F6C;&#xFF0C;&#x4E0A;&#x8FF0;&#x7684;for loop&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x662F;beginSet,&#x76F8;&#x5F53;&#x4E8E;&#x4F7F;&#x7528;beginSet&#x5728;beginSet&#x4E0E;endSet&#x4E2D;&#x95F4;&#x6765;&#x56DE;&#x8DF3;&#x8DC3;</span>
+        beginSet = endSet;
+        <span class="hljs-comment">//&#x672C;&#x8F6E;&#x7684;tmpSet&#x503C;&#x8D4B;&#x503C;&#x7ED9;beginSet</span>
+        <span class="hljs-comment">//&#x76F8;&#x5F53;&#x4E8E;tmpSet&#x7ED9;endSet&#x540E;&#x5907;&#xFF0C;endSet&#x7ED9;beginSet&#x540E;&#x5907;</span>
+        endSet = tmpSet;
+    }
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+}
+</code></pre>
 <h2 id="2044-&#x7EDF;&#x8BA1;&#x6309;&#x4F4D;&#x6216;&#x80FD;&#x5F97;&#x5230;&#x6700;&#x5927;&#x503C;&#x7684;&#x5B50;&#x96C6;&#x6570;&#x76EE;"><a href="https://leetcode-cn.com/problems/count-number-of-maximum-bitwise-or-subsets/" target="_blank">2044. &#x7EDF;&#x8BA1;&#x6309;&#x4F4D;&#x6216;&#x80FD;&#x5F97;&#x5230;&#x6700;&#x5927;&#x503C;&#x7684;&#x5B50;&#x96C6;&#x6570;&#x76EE;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1dfs&#x679A;&#x4E3E;&#x6240;&#x6709;&#x5B50;&#x96C6;&#x7EDF;&#x8BA1;">&#x65B9;&#x6CD5;1:DFS&#x679A;&#x4E3E;&#x6240;&#x6709;&#x5B50;&#x96C6;&#x7EDF;&#x8BA1;</h3>
 <pre><code class="lang-java"><span class="hljs-comment">//k:&#x5B50;&#x96C6;&#x6216;&#x540E;&#x7684;&#x503C;&#xFF0C;v:&#x8BE5;&#x503C;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
@@ -1740,7 +1781,7 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.1","depth":2,"next":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-05T05:13:24.432Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T02:03:20.167Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.1","depth":2,"next":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-06T13:22:37.908Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T13:43:40.869Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
