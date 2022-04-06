@@ -62,11 +62,21 @@ public class _141 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        public boolean hasCycle(ListNode head) {
+            Set<ListNode> set = new HashSet<>();
+            while (head != null) {
+                if (!set.add(head)) return true;
+                head = head.next;
+            }
+            return false;
+        }
     }
 
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
     }
 }

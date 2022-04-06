@@ -1028,6 +1028,43 @@
     <span class="hljs-keyword">return</span> sb.toString().equals(<span class="hljs-string">&quot;&quot;</span>) ? <span class="hljs-string">&quot;/&quot;</span> : sb.toString();
 }
 </code></pre>
+<h2 id="224-&#x57FA;&#x672C;&#x8BA1;&#x7B97;&#x5668;"><a href="https://leetcode-cn.com/problems/basic-calculator/" target="_blank">224. &#x57FA;&#x672C;&#x8BA1;&#x7B97;&#x5668;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6808;">&#x65B9;&#x6CD5;1&#xFF1A;&#x6808;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calculate</span><span class="hljs-params">(String s)</span> </span>{
+    Deque&lt;Integer&gt; ops = <span class="hljs-keyword">new</span> LinkedList&lt;Integer&gt;();
+    ops.push(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> sign = <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">int</span> ret = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> n = s.length();
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (i &lt; n) {
+        <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos; &apos;</span>) {
+            i++;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;+&apos;</span>) {
+            sign = ops.peek();
+            i++;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;-&apos;</span>) {
+            sign = -ops.peek();
+            i++;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;(&apos;</span>) {
+            ops.push(sign);
+            i++;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;)&apos;</span>) {
+            ops.pop();
+            i++;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">long</span> num = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (i &lt; n &amp;&amp; Character.isDigit(s.charAt(i))) {
+                num = num * <span class="hljs-number">10</span> + s.charAt(i) - <span class="hljs-string">&apos;0&apos;</span>;
+                i++;
+            }
+            ret += sign * num;
+        }
+    }
+    <span class="hljs-keyword">return</span> ret;
+}
+</code></pre>
 <h2 id="682-&#x68D2;&#x7403;&#x6BD4;&#x8D5B;"><a href="https://leetcode-cn.com/problems/baseball-game/" target="_blank">682. &#x68D2;&#x7403;&#x6BD4;&#x8D5B;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x6808;">&#x65B9;&#x6CD5;1:&#x6808;</h3>
 <ul>
@@ -1118,7 +1155,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-04-04T02:33:54.892Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T13:43:40.869Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-04-06T14:42:21.863Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T14:46:24.795Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

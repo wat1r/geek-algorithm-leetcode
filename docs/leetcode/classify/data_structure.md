@@ -372,6 +372,21 @@ public Node copyRandomList(Node head) {
     }
 ```
 
+### 方法2:Hash
+
+```java
+public boolean hasCycle(ListNode head) {
+    Set<ListNode> set = new HashSet<>();
+    while (head != null) {
+        if (!set.add(head)) return true;
+        head = head.next;
+    }
+    return false;
+}
+```
+
+- d
+
 
 
 ## [142. 环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/)
