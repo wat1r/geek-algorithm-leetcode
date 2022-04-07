@@ -36,6 +36,7 @@
   * [图解翻转矩阵问题](/docs/articles/data_structures/matrix/图解翻转矩阵问题.md)
   * [图解回溯算法](/docs/articles/algorithm/backtracing/图解回溯算法.md)
   * [二维矩阵的常见转换技巧](/docs/articles/data_structures/matrix/二维矩阵的常见转换技巧.md)
+  * [JAVA实现一个ArrayList](/docs/articles/data_structures/list/JAVA实现一个ArrayList.md)
 
 * 阿飞算法
 
