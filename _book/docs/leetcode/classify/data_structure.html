@@ -1578,6 +1578,58 @@
     <span class="hljs-keyword">return</span> result;
 }
 </code></pre>
+<h2 id="110-&#x5E73;&#x8861;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/balanced-binary-tree/" target="_blank">110. &#x5E73;&#x8861;&#x4E8C;&#x53C9;&#x6811;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isBalanced</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root != <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">if</span> (Math.abs(getHeight(root.left) - getHeight(root.right)) &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">if</span> (!isBalanced(root.left)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">return</span> isBalanced(root.right);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getHeight</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">return</span> root == <span class="hljs-keyword">null</span> ? <span class="hljs-number">0</span> : Math.max(getHeight(root.left), getHeight(root.right)) + <span class="hljs-number">1</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;2&#xFF1A;&#x8FED;&#x4EE3;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isBalanced</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    Deque&lt;TreeNode&gt; stack = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">while</span> (root != <span class="hljs-keyword">null</span> || !stack.isEmpty()) {
+        <span class="hljs-keyword">if</span> (root != <span class="hljs-keyword">null</span>) {
+            stack.push(root);
+            root = root.left;
+        } <span class="hljs-keyword">else</span> {
+            TreeNode cur = stack.pop();
+            <span class="hljs-keyword">int</span> lh = getHeight(cur.left);
+            <span class="hljs-keyword">int</span> rh = getHeight(cur.right);
+            <span class="hljs-keyword">if</span> (Math.abs(lh - rh) &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            root = cur.right;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getHeight</span><span class="hljs-params">(TreeNode node)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (node == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+    Queue&lt;TreeNode&gt; que = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    que.offer(node);
+    <span class="hljs-keyword">while</span> (!que.isEmpty()) {
+        <span class="hljs-keyword">int</span> size = que.size();
+        res++;
+        <span class="hljs-keyword">while</span> (size-- &gt; <span class="hljs-number">0</span>) {
+            TreeNode cur = que.poll();
+            <span class="hljs-keyword">if</span> (cur.left != <span class="hljs-keyword">null</span>) que.offer(cur.left);
+            <span class="hljs-keyword">if</span> (cur.right != <span class="hljs-keyword">null</span>) que.offer(cur.right);
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
 <h2 id="124-&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x8DEF;&#x5F84;&#x548C;"><a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/" target="_blank">124. &#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x8DEF;&#x5F84;&#x548C;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> res = Integer.MIN_VALUE;
 
@@ -2203,7 +2255,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-06T14:29:27.375Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T14:46:24.795Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-07T01:27:09.551Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-07T01:27:21.550Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

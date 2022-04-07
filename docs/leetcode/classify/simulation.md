@@ -128,6 +128,71 @@ public int titleToNumber(String s) {
 
 
 
+## [796. 旋转字符串](https://leetcode-cn.com/problems/rotate-string/)
+
+### 方法1：模拟+库函数
+
+- 每次模拟一次翻转，判断是否相同
+
+```java
+        public boolean rotateString(String s, String goal) {
+            String t = "";
+            for (int i = 0; i < s.length(); i++) {
+                t = s.substring(i + 1) + s.substring(0, i + 1);
+                if (t.equals(goal)) return true;
+            }
+            return false;
+        }
+```
+
+
+
+
+
+### 方法2：翻转点
+
+- 按翻转点的下标索引计算
+
+```java
+       public boolean rotateString(String s, String goal) {
+            if (s.length() != goal.length()) return false;
+            for (int i = 0; i < s.length(); i++) {
+                if (rotate(s, goal, i)) return true;
+            }
+            return false;
+        }
+        
+
+        private boolean rotate(String s, String goal, int rotate) {
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) != goal.charAt((i + rotate) % goal.length())) return false;
+            }
+            return true;
+        }
+```
+
+
+
+
+
+### 方法3：一行
+
+![](/imgs/leetcode/classify/image-20220407073202102.png)
+
+
+
+```java
+        public boolean rotateString(String s, String goal) {
+            return s.length() == goal.length() && (s + s).contains(goal);
+        }
+```
+
+
+
+
+
+
+
 
 
 ## [2028. 找出缺失的观测数据](https://leetcode-cn.com/problems/find-missing-observations/)

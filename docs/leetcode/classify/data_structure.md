@@ -973,9 +973,66 @@ public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
 
 
 
+## [110. 平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)
+
+### 方法1：递归
+
+```java
+public boolean isBalanced(TreeNode root) {
+    if (root != null) {
+        if (Math.abs(getHeight(root.left) - getHeight(root.right)) > 1) return false;
+        if (!isBalanced(root.left)) return false;
+        return isBalanced(root.right);
+    }
+    return true;
+}
+
+
+private int getHeight(TreeNode root) {
+    return root == null ? 0 : Math.max(getHeight(root.left), getHeight(root.right)) + 1;
+}
+```
 
 
 
+### 方法2：迭代
+
+```java
+public boolean isBalanced(TreeNode root) {
+    if (root == null) return true;
+    Deque<TreeNode> stack = new ArrayDeque<>();
+    while (root != null || !stack.isEmpty()) {
+        if (root != null) {
+            stack.push(root);
+            root = root.left;
+        } else {
+            TreeNode cur = stack.pop();
+            int lh = getHeight(cur.left);
+            int rh = getHeight(cur.right);
+            if (Math.abs(lh - rh) > 1) return false;
+            root = cur.right;
+        }
+    }
+    return true;
+}
+
+public int getHeight(TreeNode node) {
+    int res = 0;
+    if (node == null) return res;
+    Queue<TreeNode> que = new LinkedList<>();
+    que.offer(node);
+    while (!que.isEmpty()) {
+        int size = que.size();
+        res++;
+        while (size-- > 0) {
+            TreeNode cur = que.poll();
+            if (cur.left != null) que.offer(cur.left);
+            if (cur.right != null) que.offer(cur.right);
+        }
+    }
+    return res;
+}
+```
 
 
 

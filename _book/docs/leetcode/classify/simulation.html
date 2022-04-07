@@ -916,6 +916,46 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h2 id="796-&#x65CB;&#x8F6C;&#x5B57;&#x7B26;&#x4E32;"><a href="https://leetcode-cn.com/problems/rotate-string/" target="_blank">796. &#x65CB;&#x8F6C;&#x5B57;&#x7B26;&#x4E32;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6A21;&#x62DF;&#x5E93;&#x51FD;&#x6570;">&#x65B9;&#x6CD5;1&#xFF1A;&#x6A21;&#x62DF;+&#x5E93;&#x51FD;&#x6570;</h3>
+<ul>
+<li>&#x6BCF;&#x6B21;&#x6A21;&#x62DF;&#x4E00;&#x6B21;&#x7FFB;&#x8F6C;&#xFF0C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x76F8;&#x540C;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">rotateString</span><span class="hljs-params">(String s, String goal)</span> </span>{
+            String t = <span class="hljs-string">&quot;&quot;</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+                t = s.substring(i + <span class="hljs-number">1</span>) + s.substring(<span class="hljs-number">0</span>, i + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span> (t.equals(goal)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x7FFB;&#x8F6C;&#x70B9;">&#x65B9;&#x6CD5;2&#xFF1A;&#x7FFB;&#x8F6C;&#x70B9;</h3>
+<ul>
+<li>&#x6309;&#x7FFB;&#x8F6C;&#x70B9;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;&#x8BA1;&#x7B97;</li>
+</ul>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">rotateString</span><span class="hljs-params">(String s, String goal)</span> </span>{
+            <span class="hljs-keyword">if</span> (s.length() != goal.length()) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+                <span class="hljs-keyword">if</span> (rotate(s, goal, i)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">rotate</span><span class="hljs-params">(String s, String goal, <span class="hljs-keyword">int</span> rotate)</span> </span>{
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+                <span class="hljs-keyword">if</span> (s.charAt(i) != goal.charAt((i + rotate) % goal.length())) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;&#x4E00;&#x884C;">&#x65B9;&#x6CD5;3&#xFF1A;&#x4E00;&#x884C;</h3>
+<p><img src="../../../imgs/leetcode/classify/image-20220407073202102.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">rotateString</span><span class="hljs-params">(String s, String goal)</span> </span>{
+            <span class="hljs-keyword">return</span> s.length() == goal.length() &amp;&amp; (s + s).contains(goal);
+        }
+</code></pre>
 <h2 id="2028-&#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;"><a href="https://leetcode-cn.com/problems/find-missing-observations/" target="_blank">2028. &#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] missingRolls(<span class="hljs-keyword">int</span>[] rolls, <span class="hljs-keyword">int</span> mean, <span class="hljs-keyword">int</span> n) {
             <span class="hljs-keyword">int</span> m = rolls.length;
@@ -988,7 +1028,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.6","depth":2,"next":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-04-04T07:42:28.692Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-06T14:46:24.795Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.6","depth":2,"next":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-04-06T23:33:31.415Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-07T01:27:21.550Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
