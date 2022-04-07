@@ -64,6 +64,92 @@
 
 
 
+## [25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+#### 方法1:迭代
+
+![](/imgs/leetcode/classify/image-20220407171617514.png)
+
+- 需要注意是end节点的跳步的判断，可能不足k步，处理掉这种特殊情况
+
+```java
+    public ListNode reverseKGroup(ListNode head, int k) {
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode prev = dummy, end = dummy;
+            while (end.next != null) {
+                for (int i = 0; i < k && end != null; i++) {
+                    end = end.next;
+                }
+                if (end == null) break;
+                ListNode start = prev.next;
+                ListNode nxt = end.next;
+                end.next = null;
+                prev.next = reverse(start);
+                start.next = nxt;
+                prev = start;
+                end = start;
+            }
+            return dummy.next;
+        }
+
+        /**
+         * 翻转链表，并返回翻转后的头结点
+         *
+         * @param head
+         * @return
+         */
+        private ListNode reverse(ListNode head) {
+            ListNode prev = null, cur = head;
+            while (cur != null) {
+                ListNode nxt = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = nxt;
+            }
+            return prev;
+        }
+```
+
+#### 方法2:递归
+
+![](/imgs/leetcode/classify/image-20220407171643394.png)
+
+![](/imgs/leetcode/classify/image-20220407171651408.png)
+
+```java
+public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode tail = head;
+    for (int i = 0; i < k; i++) {
+        //当数量不足k的时候，返回head节点，不需要翻转了
+        if (tail == null) return head;
+        tail = tail.next;
+    }
+    //开始翻转[head,tail)范围内的链表，并返回翻转后的新的节点，也就是tail节点的上一个节点
+    ListNode new_head = reverse(head, tail);
+    //递归翻转以tail为头节点的如下部分链表
+    head.next = reverseKGroup(tail, k);
+    return new_head;//返回翻转后的新的头节点
+}
+//过程建figure.c
+private ListNode reverse(ListNode head, ListNode tail) {
+    ListNode prev = null, cur = null;
+    while (head != tail) {
+        cur = head.next;//step1
+        head.next = prev;//step2
+        prev = head;//step3
+        head = cur;//step4
+    }
+    return prev;
+}
+```
+
+
+
+
+
+
+
 
 
 ## [83. 删除排序链表中的重复元素](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/)
