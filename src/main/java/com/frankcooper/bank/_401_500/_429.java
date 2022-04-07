@@ -74,4 +74,29 @@ public class _429 {
     }
 
 
+    static class _3rd {
+        public List<List<Integer>> levelOrder(Node root) {
+            List<List<Integer>> res = new ArrayList<>();
+            if (root == null) return res;
+            Queue<Node> q = new LinkedList<>();
+            q.offer(root);
+            while (!q.isEmpty()) {
+                int size = q.size();
+                List<Integer> sub = new ArrayList<>();
+                for (int i = 0; i < size; ++i) {
+                    Node curr = q.poll();
+                    sub.add(curr.val);
+                    if (curr.children != null && curr.children.size() != 0) {
+                        for (int j = 0; j < curr.children.size(); j++) {
+                            q.offer(curr.children.get(j));
+                        }
+                    }
+                }
+                res.add(0, new ArrayList<>(sub));
+            }
+            return res;
+        }
+    }
+
+
 }

@@ -2201,6 +2201,31 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <span class="hljs-keyword">for</span> (Node child : root.children) dfs(child, level + <span class="hljs-number">1</span>);
 }
 </code></pre>
+<h4 id="follow-up&#xFF1A;1&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x7684;&#x5C42;&#x5E8F;&#x904D;&#x5386;&#x5982;&#x4F55;&#x505A;&#xFF1F;">Follow Up&#xFF1A;1.&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x7684;&#x5C42;&#x5E8F;&#x904D;&#x5386;&#x5982;&#x4F55;&#x505A;&#xFF1F;</h4>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(Node root) {
+    List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+    Queue&lt;Node&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    q.offer(root);
+    <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+        <span class="hljs-keyword">int</span> size = q.size();
+        List&lt;Integer&gt; sub = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i) {
+            Node curr = q.poll();
+            sub.add(curr.val);
+            <span class="hljs-keyword">if</span> (curr.children != <span class="hljs-keyword">null</span> &amp;&amp; curr.children.size() != <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; curr.children.size(); j++) {
+                    q.offer(curr.children.get(j));
+                }
+            }
+        }
+      <span class="hljs-comment">//&#x5012;&#x5E8F;&#x63D2;&#x5165;</span>
+        res.add(<span class="hljs-number">0</span>, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h4 id="follow-up&#xFF1A;2&#x6309;&#x5947;&#x5076;&#x5C42;&#x6570;&#x952F;&#x9F7F;&#x5C42;&#x5E8F;&#x904D;&#x5386;&#x5982;&#x4F55;&#x505A;&#xFF1F;">Follow Up&#xFF1A;2.&#x6309;&#x5947;&#x5076;&#x5C42;&#x6570;&#x952F;&#x9F7F;&#x5C42;&#x5E8F;&#x904D;&#x5386;&#x5982;&#x4F55;&#x505A;&#xFF1F;</h4>
 <h2 id="543-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;"><a href="https://leetcode-cn.com/problems/diameter-of-binary-tree/" target="_blank">543. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
@@ -2413,7 +2438,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-07T23:22:02.795Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-07T23:25:04.234Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-07T23:39:34.927Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-07T23:39:43.654Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
