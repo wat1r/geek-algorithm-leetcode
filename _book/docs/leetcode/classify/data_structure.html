@@ -2159,6 +2159,48 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     }
 }
 </code></pre>
+<h2 id="429-n-&#x53C9;&#x6811;&#x7684;&#x5C42;&#x5E8F;&#x904D;&#x5386;"><a href="https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/" target="_blank">429. N &#x53C9;&#x6811;&#x7684;&#x5C42;&#x5E8F;&#x904D;&#x5386;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1bfs">&#x65B9;&#x6CD5;1:BFS</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(Node root) {
+    List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> res;
+    Queue&lt;Node&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    q.offer(root);
+    <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+        <span class="hljs-keyword">int</span> size = q.size();
+        List&lt;Integer&gt; sub = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+            Node cur = q.poll();
+            sub.add(cur.val);
+            <span class="hljs-keyword">for</span> (Node child : cur.children) {
+                q.offer(child);
+            }
+        }
+        res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(sub));
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2dfs">&#x65B9;&#x6CD5;2:DFS</h3>
+<p><img src="../../../imgs/leetcode/classify/image-20220408072115052.png" alt=""></p>
+<pre><code class="lang-java">List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+<span class="hljs-keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(Node root) {
+    dfs(root, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> root  &#x5F53;&#x524D;&#x5904;&#x7406;&#x5230;&#x7684;&#x8282;&#x70B9;
+ * <span class="hljs-doctag">@param</span> level &#x5C42;&#x6570;
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Node root, <span class="hljs-keyword">int</span> level)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (level == res.size()) res.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+    res.get(level).add(root.val);
+    <span class="hljs-keyword">for</span> (Node child : root.children) dfs(child, level + <span class="hljs-number">1</span>);
+}
+</code></pre>
 <h2 id="543-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;"><a href="https://leetcode-cn.com/problems/diameter-of-binary-tree/" target="_blank">543. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
@@ -2371,7 +2413,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-07T09:20:03.820Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-07T12:54:29.001Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-07T23:22:02.795Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-07T23:25:04.234Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
