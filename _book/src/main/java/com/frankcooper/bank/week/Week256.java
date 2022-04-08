@@ -185,6 +185,99 @@ public class Week256 {
             return f[(1 << n) - 1];
         }
 
+    }
+
+
+    static class _3rd_3 {
+
+        //朴素版dfs TLE
+        //TLE case
+        //    [1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        //            14
+
+        //sessions.get(i)表示在完成ith 的session的最工作时长
+        //当遍历到tasks[i]的时候，有两种选择：
+        //1.加入到sessions的其中一个session中，参与贡献
+        //2.作为新的session加入到sessions中
+        //上面的两种选择的最小值是当前轮的结果
+        List<Integer> sessions = new ArrayList<>();
+        int n;
+
+        public int minSessions(int[] tasks, int sessionTime) {
+            this.n = tasks.length;
+            return helper(tasks, sessionTime, 0);
+        }
+
+
+        private int helper(int[] tasks, int sessionTime, int pos) {
+            if (pos >= n) return 0;
+            //将当前的task加入到sessions
+            sessions.add(tasks[pos]);
+            int ans = 1 + helper(tasks, sessionTime, pos + 1);
+            sessions.remove(sessions.size() - 1);
+            //尝试将其加入到之前的可以加入的session
+            for (int i = 0; i < sessions.size(); i++) {
+                if (sessions.get(i) + tasks[pos] <= sessionTime) {
+                    sessions.set(i, sessions.get(i) + tasks[pos]);
+                    ans = Math.min(ans, helper(tasks, sessionTime, pos + 1));
+                    sessions.set(i, sessions.get(i) - tasks[pos]);
+                }
+            }
+            return ans;
+        }
+
+    }
+
+
+    static class _3rd_4 {
+
+        //记忆化dfs
+
+        //sessions.get(i)表示在完成ith 的session的最工作时长
+        //当遍历到tasks[i]的时候，有两种选择：
+        //1.加入到sessions的其中一个session中，参与贡献
+        //2.作为新的session加入到sessions中
+        //上面的两种选择的最小值是当前轮的结果
+        List<Integer> sessions = new ArrayList<>();
+        int n;
+        Map<String, Integer> cache = new HashMap<>();
+
+        public int minSessions(int[] tasks, int sessionTime) {
+            this.n = tasks.length;
+            return helper(tasks, sessionTime, 0);
+        }
+
+
+        private int helper(int[] tasks, int sessionTime, int pos) {
+            if (pos >= n) return 0;
+            String key = encode(pos, sessions);
+            if (cache.containsKey(key)) return cache.get(key);
+            //将当前的task加入到sessions
+            sessions.add(tasks[pos]);
+            int ans = 1 + helper(tasks, sessionTime, pos + 1);
+            sessions.remove(sessions.size() - 1);
+            //尝试将其加入到之前的可以加入的session
+            for (int i = 0; i < sessions.size(); i++) {
+                if (sessions.get(i) + tasks[pos] <= sessionTime) {
+                    sessions.set(i, sessions.get(i) + tasks[pos]);
+                    ans = Math.min(ans, helper(tasks, sessionTime, pos + 1));
+                    sessions.set(i, sessions.get(i) - tasks[pos]);
+                }
+            }
+            cache.put(key, ans);
+            return ans;
+        }
+
+
+        private String encode(int pos, List<Integer> sessions) {
+            List<Integer> tmp = new ArrayList<>(sessions);
+            Collections.sort(tmp);
+            StringBuilder key = new StringBuilder(pos + "$");
+            for (int i = 0; i < tmp.size(); i++) {
+                key.append(tmp.get(i)).append("$");
+            }
+            return key.toString();
+        }
 
     }
 
@@ -198,6 +291,21 @@ public class Week256 {
                 PrintUtils.toBinaryString(j, 5);
                 System.out.println(j);
             }
+
+        }
+    }
+
+
+    static class _5th {
+        public static void main(String[] args) {
+            List<Integer> list = new ArrayList<Integer>() {
+                {
+                    add(1);
+                    add(2);
+                    add(4);
+                }
+            };
+//            list.get(0) -= 1;
 
         }
     }
