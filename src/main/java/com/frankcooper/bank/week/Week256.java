@@ -269,6 +269,7 @@ public class Week256 {
         }
 
 
+        //只需要对当前处理到的session和pos做一个key，存入到cache中
         private String encode(int pos, List<Integer> sessions) {
             List<Integer> tmp = new ArrayList<>(sessions);
             Collections.sort(tmp);
@@ -277,6 +278,35 @@ public class Week256 {
                 key.append(tmp.get(i)).append("$");
             }
             return key.toString();
+        }
+
+    }
+
+    static class _3rd_5 {
+
+        Integer[][] cache;
+        int n;
+
+        public int minSessions(int[] tasks, int sessionTime) {
+            this.n = tasks.length;
+            cache = new Integer[1 << n][16];
+            return dfs(tasks, sessionTime, 0, 0);
+        }
+
+        private int dfs(int[] tasks, int sessionTime, int state, int sum) {
+            if (state == (1 << n) - 1) return 1;
+            if (cache[state][sum] != null) return cache[state][sum];
+            int res = n;
+            for (int i = 0; i < n; i++) {
+                if ((state & (1 << i)) == 0) {
+                    if (sum + tasks[i] <= sessionTime) {
+                        res = Math.min(res, dfs(tasks, sessionTime, state | (1 << i), sum + tasks[i]));
+                    } else {
+                        res = Math.min(res, 1 + dfs(tasks, sessionTime, state | (1 << i), tasks[i]));
+                    }
+                }
+            }
+            return cache[state][sum] = res;
         }
 
     }
