@@ -586,6 +586,124 @@ public void reorderList(ListNode head) {
 
 
 
+## [148. 排序链表](https://leetcode-cn.com/problems/sort-list/)
+
+### 方法1：快排
+
+```java
+//quick sort
+public ListNode sortList(ListNode head) {
+    return quickSort(head, null);
+}
+
+
+public ListNode partition(ListNode first, ListNode end) {
+    if (first == end) return first;
+    ListNode head = first, tmp = null, prev = head;
+    int pivot = head.val;
+    while (prev != end) {
+        tmp = prev.next;
+        if (tmp == end) break;
+        if (tmp != null && tmp.val < pivot) {
+            prev.next = tmp.next;
+            tmp.next = head;
+            head = tmp;
+        } else {
+            prev = tmp;
+        }
+    }
+    return head;
+}
+
+public ListNode quickSort(ListNode start, ListNode end) {
+    if (start == end) return start;
+    ListNode partition = partition(start, end);
+    ListNode p1 = quickSort(partition, start);
+    ListNode p2 = quickSort(start.next, end);
+    start.next = p2;
+    return p1;
+}
+```
+
+
+
+### 方法2:归并排序
+
+```java
+     public ListNode sortList(ListNode head) {
+            if (head == null || head.next == null) return head;
+            //快慢指针找分隔点，slow为下一段的起点，prev是slow的前一个节点
+            ListNode prev = null, slow = head, fast = head;
+            while (fast != null && fast.next != null) {
+                prev = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            //切断
+            prev.next = null;
+            //分治（递归）
+            ListNode l1 = sortList(head);
+            ListNode l2 = sortList(slow);
+            //合并
+            return merge(l1, l2);
+        }
+
+
+        public ListNode merge(ListNode l1, ListNode l2) {
+            ListNode dummy = new ListNode(-1);
+            ListNode p = dummy;
+            while (l1 != null && l2 != null) {
+                if (l1.val < l2.val) {
+                    p.next = l1;
+                    l1 = l1.next;
+                } else {
+                    p.next = l2;
+                    l2 = l2.next;
+                }
+                p = p.next;
+            }
+            if (l1 != null) p.next = l1;
+            if (l2 != null) p.next = l2;
+            return dummy.next;
+        }
+```
+
+
+
+
+
+```java
+public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null)
+        return head;
+    ListNode fast = head.next, slow = head;
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode tmp = slow.next;
+    slow.next = null;
+    ListNode left = sortList(head);
+    ListNode right = sortList(tmp);
+    ListNode h = new ListNode(0);
+    ListNode res = h;
+    while (left != null && right != null) {
+        if (left.val < right.val) {
+            h.next = left;
+            left = left.next;
+        } else {
+            h.next = right;
+            right = right.next;
+        }
+        h = h.next;
+    }
+    h.next = left != null ? left : right;
+    return res.next;
+}
+```
+
+
+
 
 
 ## [206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)

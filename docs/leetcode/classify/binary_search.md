@@ -422,6 +422,59 @@ public int findMin(int[] nums) {
 
 
 
+
+
+## [240. 搜索二维矩阵 II](https://leetcode-cn.com/problems/search-a-2d-matrix-ii/)
+
+### 方法1:双指针
+
+```java
+     public boolean searchMatrix(int[][] mat, int target) {
+            int R = mat.length, C = mat[0].length;
+            int r = 0, c = C - 1;
+            while (r < R && c >= 0) {
+                if (mat[r][c] == target) return true;
+                else if (mat[r][c] < target) r++;
+                else if (mat[r][c] > target) c--;
+            }
+            return false;
+        }
+```
+
+
+
+
+
+### 方法2:二分
+
+```java
+    public boolean searchMatrix(int[][] matrix, int target) {
+       int m = matrix.length, n = matrix[0].length;
+       for(int i =0;i<m;i++){
+           int l = 0, r = n-1;
+           while(l<r){
+               int mid = l+ (r-l)/2;
+               if(matrix[i][mid]<target) l =mid+1;
+               else r= mid;
+           }
+           if(matrix[i][l]==target) return true;
+       } 
+       return false;
+    }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## [278. 第一个错误的版本](https://leetcode-cn.com/problems/first-bad-version/)
 
 ```java

@@ -120,11 +120,76 @@ public class _148 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        //quick sort
+        public ListNode sortList(ListNode head) {
+            return quickSort(head, null);
+        }
+
+
+        public ListNode partition(ListNode first, ListNode end) {
+            if (first == end) return first;
+            ListNode head = first, tmp = null, prev = head;
+            int pivot = head.val;
+            while (prev != end) {
+                tmp = prev.next;
+                if (tmp == end) break;
+                if (tmp != null && tmp.val < pivot) {
+                    prev.next = tmp.next;
+                    tmp.next = head;
+                    head = tmp;
+                } else {
+                    prev = tmp;
+                }
+            }
+            return head;
+        }
+
+        public ListNode quickSort(ListNode start, ListNode end) {
+            if (start == end) return start;
+            ListNode partition = partition(start, end);
+            ListNode p1 = quickSort(partition, start);
+            ListNode p2 = quickSort(start.next, end);
+            start.next = p2;
+            return p1;
+        }
+
     }
 
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+
+        public ListNode sortList(ListNode head) {
+            if (head == null || head.next == null)
+                return head;
+            ListNode fast = head.next, slow = head;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            ListNode tmp = slow.next;
+            slow.next = null;
+            ListNode left = sortList(head);
+            ListNode right = sortList(tmp);
+            ListNode h = new ListNode(0);
+            ListNode res = h;
+            while (left != null && right != null) {
+                if (left.val < right.val) {
+                    h.next = left;
+                    left = left.next;
+                } else {
+                    h.next = right;
+                    right = right.next;
+                }
+                h = h.next;
+            }
+            h.next = left != null ? left : right;
+            return res.next;
+        }
+
+
     }
 }

@@ -314,14 +314,44 @@ public class Week256 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+        }
 
-//            int i = 19;
-            int i = 21;
-            for (int j = i; j > 0; j = (j - 1) & i) {
-                PrintUtils.toBinaryString(j, 5);
-                System.out.println(j);
+        int MOD = (int) 1e9 + 7;
+
+        public int numberOfUniqueGoodSubsequences(String binary) {
+            int[][] dp = new int[2][2];
+            for (char c : binary.toCharArray()) {
+                if (c == '0') {
+                    dp[0][0] = 1;
+                    dp[1][0] = (dp[1][0] + dp[1][1]) % MOD;
+                } else {
+                    dp[1][1] = (dp[1][0] + dp[1][1] + 1) % MOD;
+                }
             }
+            return (dp[0][0] + dp[0][1] + dp[1][0] + dp[1][1]) % MOD;
+        }
+    }
 
+    static class _4th_1 {
+
+
+        public int numberOfUniqueGoodSubsequences(String binary) {
+            int MOD = (int) 1e9 + 7;
+            int even = 0, odd = 0;
+            int suff = -1;
+            for (int i = 0; i < binary.length(); i++) {
+                char c = binary.charAt(i);
+                if (c == '0') {
+                    even = (even + odd) % MOD;
+                    if (suff == -1) suff = i;
+                } else {
+                    odd = (even + odd + 1) % MOD;
+                }
+            }
+            if (suff != -1 && suff != binary.length() - 1) suff = 1;
+            else suff = 0;
+            int res = (even + odd + suff) % MOD;
+            return res;
         }
     }
 
@@ -336,7 +366,12 @@ public class Week256 {
                 }
             };
 //            list.get(0) -= 1;
-
+            int i = 19;
+            i = 21;
+            for (int j = i; j > 0; j = (j - 1) & i) {
+                PrintUtils.toBinaryString(j, 5);
+                System.out.println(j);
+            }
         }
     }
 }

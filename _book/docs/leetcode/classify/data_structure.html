@@ -1333,6 +1333,107 @@
 
 }
 </code></pre>
+<h2 id="148-&#x6392;&#x5E8F;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/sort-list/" target="_blank">148. &#x6392;&#x5E8F;&#x94FE;&#x8868;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x5FEB;&#x6392;">&#x65B9;&#x6CD5;1&#xFF1A;&#x5FEB;&#x6392;</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//quick sort</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">sortList</span><span class="hljs-params">(ListNode head)</span> </span>{
+    <span class="hljs-keyword">return</span> quickSort(head, <span class="hljs-keyword">null</span>);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">partition</span><span class="hljs-params">(ListNode first, ListNode end)</span> </span>{
+    <span class="hljs-keyword">if</span> (first == end) <span class="hljs-keyword">return</span> first;
+    ListNode head = first, tmp = <span class="hljs-keyword">null</span>, prev = head;
+    <span class="hljs-keyword">int</span> pivot = head.val;
+    <span class="hljs-keyword">while</span> (prev != end) {
+        tmp = prev.next;
+        <span class="hljs-keyword">if</span> (tmp == end) <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">if</span> (tmp != <span class="hljs-keyword">null</span> &amp;&amp; tmp.val &lt; pivot) {
+            prev.next = tmp.next;
+            tmp.next = head;
+            head = tmp;
+        } <span class="hljs-keyword">else</span> {
+            prev = tmp;
+        }
+    }
+    <span class="hljs-keyword">return</span> head;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">quickSort</span><span class="hljs-params">(ListNode start, ListNode end)</span> </span>{
+    <span class="hljs-keyword">if</span> (start == end) <span class="hljs-keyword">return</span> start;
+    ListNode partition = partition(start, end);
+    ListNode p1 = quickSort(partition, start);
+    ListNode p2 = quickSort(start.next, end);
+    start.next = p2;
+    <span class="hljs-keyword">return</span> p1;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x5F52;&#x5E76;&#x6392;&#x5E8F;">&#x65B9;&#x6CD5;2:&#x5F52;&#x5E76;&#x6392;&#x5E8F;</h3>
+<pre><code class="lang-java">     <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">sortList</span><span class="hljs-params">(ListNode head)</span> </span>{
+            <span class="hljs-keyword">if</span> (head == <span class="hljs-keyword">null</span> || head.next == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> head;
+            <span class="hljs-comment">//&#x5FEB;&#x6162;&#x6307;&#x9488;&#x627E;&#x5206;&#x9694;&#x70B9;&#xFF0C;slow&#x4E3A;&#x4E0B;&#x4E00;&#x6BB5;&#x7684;&#x8D77;&#x70B9;&#xFF0C;prev&#x662F;slow&#x7684;&#x524D;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+            ListNode prev = <span class="hljs-keyword">null</span>, slow = head, fast = head;
+            <span class="hljs-keyword">while</span> (fast != <span class="hljs-keyword">null</span> &amp;&amp; fast.next != <span class="hljs-keyword">null</span>) {
+                prev = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            <span class="hljs-comment">//&#x5207;&#x65AD;</span>
+            prev.next = <span class="hljs-keyword">null</span>;
+            <span class="hljs-comment">//&#x5206;&#x6CBB;&#xFF08;&#x9012;&#x5F52;&#xFF09;</span>
+            ListNode l1 = sortList(head);
+            ListNode l2 = sortList(slow);
+            <span class="hljs-comment">//&#x5408;&#x5E76;</span>
+            <span class="hljs-keyword">return</span> merge(l1, l2);
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">merge</span><span class="hljs-params">(ListNode l1, ListNode l2)</span> </span>{
+            ListNode dummy = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+            ListNode p = dummy;
+            <span class="hljs-keyword">while</span> (l1 != <span class="hljs-keyword">null</span> &amp;&amp; l2 != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (l1.val &lt; l2.val) {
+                    p.next = l1;
+                    l1 = l1.next;
+                } <span class="hljs-keyword">else</span> {
+                    p.next = l2;
+                    l2 = l2.next;
+                }
+                p = p.next;
+            }
+            <span class="hljs-keyword">if</span> (l1 != <span class="hljs-keyword">null</span>) p.next = l1;
+            <span class="hljs-keyword">if</span> (l2 != <span class="hljs-keyword">null</span>) p.next = l2;
+            <span class="hljs-keyword">return</span> dummy.next;
+        }
+</code></pre>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">sortList</span><span class="hljs-params">(ListNode head)</span> </span>{
+    <span class="hljs-keyword">if</span> (head == <span class="hljs-keyword">null</span> || head.next == <span class="hljs-keyword">null</span>)
+        <span class="hljs-keyword">return</span> head;
+    ListNode fast = head.next, slow = head;
+    <span class="hljs-keyword">while</span> (fast != <span class="hljs-keyword">null</span> &amp;&amp; fast.next != <span class="hljs-keyword">null</span>) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    ListNode tmp = slow.next;
+    slow.next = <span class="hljs-keyword">null</span>;
+    ListNode left = sortList(head);
+    ListNode right = sortList(tmp);
+    ListNode h = <span class="hljs-keyword">new</span> ListNode(<span class="hljs-number">0</span>);
+    ListNode res = h;
+    <span class="hljs-keyword">while</span> (left != <span class="hljs-keyword">null</span> &amp;&amp; right != <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">if</span> (left.val &lt; right.val) {
+            h.next = left;
+            left = left.next;
+        } <span class="hljs-keyword">else</span> {
+            h.next = right;
+            right = right.next;
+        }
+        h = h.next;
+    }
+    h.next = left != <span class="hljs-keyword">null</span> ? left : right;
+    <span class="hljs-keyword">return</span> res.next;
+}
+</code></pre>
 <h2 id="206-&#x53CD;&#x8F6C;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/reverse-linked-list/" target="_blank">206. &#x53CD;&#x8F6C;&#x94FE;&#x8868;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1:&#x9012;&#x5F52;</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode head)</span> </span>{
@@ -2438,7 +2539,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-07T23:39:34.927Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-08T01:29:59.494Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-08T15:24:38.010Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T02:32:32.165Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
