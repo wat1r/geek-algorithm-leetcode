@@ -64,9 +64,24 @@ public class _69 {
     }
 
 
+    //牛顿迭代法
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+        }
+
+
+        int y;
+
+        public int mySqrt(int x) {
+            y = x;
+            if (x == 0) return 0;
+            return (int) helper(x);
+        }
+
+        private double helper(double x) {
+            double res = (x + y / x) / 2;
+            return res == x ? x : helper(res);
         }
     }
 

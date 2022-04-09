@@ -53,6 +53,57 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 }
 ```
 
+### Follow Up：合并两个有序链表并去重
+
+```java
+   public ListNode mergeSortedListWithoutDuplicates(ListNode node1, ListNode node2) {
+            //1.首先，根据两个结点情况判空，高效返回
+            if (node1 == null) return node2;
+            if (node2 == null) return node1;
+            //2. 新建一个结点，指向结点值较小的那个
+            ListNode head = (node1.val <= node2.val) ? node1 : node2;
+            //3. 创建两个指针，动态的指向 node1 和 node2
+            ListNode prev = head;
+            ListNode point = null;
+
+            while (node1 != null && node2 != null) {
+                if (node1.val <= node2.val) {
+                    point = node1;
+                    node1 = node1.next;
+                } else {
+                    point = node2;
+                    node2 = node2.next;
+                }
+                if (prev.val != point.val) {
+                    prev.next = point;
+                    prev = point;
+                }
+            }
+
+            //处理多余结点
+            while (node2 != null) {
+                if (prev.val != node2.val) {
+                    prev.next = node2;
+                    prev = node2;
+                }
+                node2 = node2.next;
+            }
+
+            while (node1 != null) {
+                if (prev.val != node1.val) {
+                    prev.next = node1;
+                    prev = node1;
+                }
+                node1 = node1.next;
+            }
+//        将最后一个结点的下一个结点置位 null
+            prev.next = null;
+            return head;
+        }
+```
+
+
+
 
 
 ## [23. 合并K个升序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
@@ -987,6 +1038,81 @@ public int maxDepth(TreeNode root) {
 }
 ```
 
+## [105. 从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+
+```java
+//二叉树问题 通过先序和中序数组生成后序数组...
+public static int[] getPosArray(int[] pre, int[] in) {
+    if (pre == null || in == null) {
+        return null;
+    }
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < in.length; i++) {
+        map.put(in[i], i);
+    }
+    int[] pos = new int[in.length];
+    preAndIn(pre, 0, pre.length - 1, in, 0, in.length - 1, pos, pos.length - 1, map);
+    return pos;
+}
+
+/**
+ * @param pre      前序数组
+ * @param preStart 前序数组的开始节点下标
+ * @param preEnd   前序节点的结束节点下标
+ * @param in       中序数组
+ * @param inStart  中序数组的开始节点下标
+ * @param inEnd    中序节点的结束节点下标
+ * @param pos
+ * @param posEnd
+ * @param map
+ * @return
+ */
+public static int preAndIn(int[] pre, int preStart, int preEnd, int[] in, int inStart, int inEnd, int[] pos, int posEnd, Map<Integer, Integer> map) {
+    if (preStart > preEnd) {
+        return posEnd;
+    }
+    //每一步按root节点进行切分
+    int value = pre[preStart];
+    pos[posEnd--] = value;
+    int index = map.get(value);
+    posEnd = preAndIn(pre, preStart + index - inStart + 1, preEnd, in, index + 1, inEnd, pos, posEnd, map);
+    posEnd = preAndIn(pre, preStart + 1, preStart + index - inStart, in, inStart, index - 1, pos, posEnd, map);
+    return posEnd;
+}
+```
+
+
+
+
+
+```java
+Map<Integer, Integer> rootMap = new HashMap<>();
+
+public TreeNode buildTree(int[] preorder, int[] inorder) {
+    if (preorder == null || inorder == null || preorder.length != inorder.length) {
+        return null;
+    }
+    for (int i = 0; i < inorder.length; i++) rootMap.put(inorder[i], i);
+
+    return buildTreeDFS(preorder, 0, preorder.length - 1
+            , inorder, 0, inorder.length);
+}
+
+
+public TreeNode buildTreeDFS(int[] preorder, int preStart, int preEnd,
+                             int[] inorder, int inStart, int inEnd) {
+    if (preStart > preEnd) return null;
+    TreeNode root = new TreeNode(preorder[preStart]);
+    int mid = rootMap.get(preorder[preStart]);
+    if (mid < 0) return null;
+    root.left = buildTreeDFS(preorder, preStart + 1, preStart + (mid - inStart)
+            , inorder, inStart, mid - 1);
+    root.right = buildTreeDFS(preorder, preStart + (mid - inStart) + 1, preEnd
+            , inorder, mid + 1, inEnd);
+    return root;
+}
+```
+
 
 
 
@@ -1439,6 +1565,53 @@ public List<Integer> postorderTraversal(TreeNode root) {
     return res;
 }
 ```
+
+
+
+## [173. 二叉搜索树迭代器](https://leetcode-cn.com/problems/binary-search-tree-iterator/)
+
+
+
+```java
+class BSTIterator {
+    Stack<TreeNode> stack = new Stack<>();
+    TreeNode cur = null;
+
+
+    public BSTIterator(TreeNode root) {
+        cur = root;
+    }
+
+    /**
+     * @return the next smallest number
+     */
+    public int next() {
+        int res = -1;
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            res = cur.val;
+            cur = cur.right;
+            break;
+        }
+        return res;
+
+
+    }
+
+    /**
+     * @return whether we have a next smallest number
+     */
+    public boolean hasNext() {
+        return (cur != null || !stack.isEmpty());
+    }
+}
+```
+
+
 
 
 

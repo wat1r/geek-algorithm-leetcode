@@ -14,29 +14,39 @@ public class _173 {
         }
 
         class BSTIterator {
-            Stack<TreeNode> stk = new Stack<>();
-            TreeNode cur;
+            Stack<TreeNode> stack = new Stack<>();
+            TreeNode cur = null;
+
 
             public BSTIterator(TreeNode root) {
                 cur = root;
             }
 
+            /**
+             * @return the next smallest number
+             */
             public int next() {
                 int res = -1;
-                while (cur != null || !stk.isEmpty()) {
+                while (cur != null || !stack.isEmpty()) {
                     while (cur != null) {
-                        stk.push(cur);
+                        stack.push(cur);
                         cur = cur.left;
                     }
-                    cur = stk.pop();
+                    cur = stack.pop();
                     res = cur.val;
                     cur = cur.right;
+                    break;
                 }
                 return res;
+
+
             }
 
+            /**
+             * @return whether we have a next smallest number
+             */
             public boolean hasNext() {
-                return cur != null || !stk.isEmpty();
+                return (cur != null || !stack.isEmpty());
             }
         }
 

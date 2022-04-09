@@ -903,6 +903,52 @@
     <span class="hljs-keyword">return</span> head.next;
 }
 </code></pre>
+<h3 id="follow-up&#xFF1A;&#x5408;&#x5E76;&#x4E24;&#x4E2A;&#x6709;&#x5E8F;&#x94FE;&#x8868;&#x5E76;&#x53BB;&#x91CD;">Follow Up&#xFF1A;&#x5408;&#x5E76;&#x4E24;&#x4E2A;&#x6709;&#x5E8F;&#x94FE;&#x8868;&#x5E76;&#x53BB;&#x91CD;</h3>
+<pre><code class="lang-java">   <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">mergeSortedListWithoutDuplicates</span><span class="hljs-params">(ListNode node1, ListNode node2)</span> </span>{
+            <span class="hljs-comment">//1.&#x9996;&#x5148;&#xFF0C;&#x6839;&#x636E;&#x4E24;&#x4E2A;&#x7ED3;&#x70B9;&#x60C5;&#x51B5;&#x5224;&#x7A7A;&#xFF0C;&#x9AD8;&#x6548;&#x8FD4;&#x56DE;</span>
+            <span class="hljs-keyword">if</span> (node1 == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> node2;
+            <span class="hljs-keyword">if</span> (node2 == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> node1;
+            <span class="hljs-comment">//2. &#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#xFF0C;&#x6307;&#x5411;&#x7ED3;&#x70B9;&#x503C;&#x8F83;&#x5C0F;&#x7684;&#x90A3;&#x4E2A;</span>
+            ListNode head = (node1.val &lt;= node2.val) ? node1 : node2;
+            <span class="hljs-comment">//3. &#x521B;&#x5EFA;&#x4E24;&#x4E2A;&#x6307;&#x9488;&#xFF0C;&#x52A8;&#x6001;&#x7684;&#x6307;&#x5411; node1 &#x548C; node2</span>
+            ListNode prev = head;
+            ListNode point = <span class="hljs-keyword">null</span>;
+
+            <span class="hljs-keyword">while</span> (node1 != <span class="hljs-keyword">null</span> &amp;&amp; node2 != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (node1.val &lt;= node2.val) {
+                    point = node1;
+                    node1 = node1.next;
+                } <span class="hljs-keyword">else</span> {
+                    point = node2;
+                    node2 = node2.next;
+                }
+                <span class="hljs-keyword">if</span> (prev.val != point.val) {
+                    prev.next = point;
+                    prev = point;
+                }
+            }
+
+            <span class="hljs-comment">//&#x5904;&#x7406;&#x591A;&#x4F59;&#x7ED3;&#x70B9;</span>
+            <span class="hljs-keyword">while</span> (node2 != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (prev.val != node2.val) {
+                    prev.next = node2;
+                    prev = node2;
+                }
+                node2 = node2.next;
+            }
+
+            <span class="hljs-keyword">while</span> (node1 != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">if</span> (prev.val != node1.val) {
+                    prev.next = node1;
+                    prev = node1;
+                }
+                node1 = node1.next;
+            }
+<span class="hljs-comment">//        &#x5C06;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7F6E;&#x4F4D; null</span>
+            prev.next = <span class="hljs-keyword">null</span>;
+            <span class="hljs-keyword">return</span> head;
+        }
+</code></pre>
 <h2 id="23-&#x5408;&#x5E76;k&#x4E2A;&#x5347;&#x5E8F;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/" target="_blank">23. &#x5408;&#x5E76;K&#x4E2A;&#x5347;&#x5E8F;&#x94FE;&#x8868;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x4F18;&#x5148;&#x961F;&#x5217;">&#x65B9;&#x6CD5;1:&#x4F18;&#x5148;&#x961F;&#x5217;</h3>
 <ul>
@@ -1639,6 +1685,72 @@
     <span class="hljs-keyword">return</span> level;
 }
 </code></pre>
+<h2 id="105-&#x4ECE;&#x524D;&#x5E8F;&#x4E0E;&#x4E2D;&#x5E8F;&#x904D;&#x5386;&#x5E8F;&#x5217;&#x6784;&#x9020;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" target="_blank">105. &#x4ECE;&#x524D;&#x5E8F;&#x4E0E;&#x4E2D;&#x5E8F;&#x904D;&#x5386;&#x5E8F;&#x5217;&#x6784;&#x9020;&#x4E8C;&#x53C9;&#x6811;</a></h2>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x4E8C;&#x53C9;&#x6811;&#x95EE;&#x9898; &#x901A;&#x8FC7;&#x5148;&#x5E8F;&#x548C;&#x4E2D;&#x5E8F;&#x6570;&#x7EC4;&#x751F;&#x6210;&#x540E;&#x5E8F;&#x6570;&#x7EC4;...</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>[] getPosArray(<span class="hljs-keyword">int</span>[] pre, <span class="hljs-keyword">int</span>[] in) {
+    <span class="hljs-keyword">if</span> (pre == <span class="hljs-keyword">null</span> || in == <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    }
+    Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; in.length; i++) {
+        map.put(in[i], i);
+    }
+    <span class="hljs-keyword">int</span>[] pos = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[in.length];
+    preAndIn(pre, <span class="hljs-number">0</span>, pre.length - <span class="hljs-number">1</span>, in, <span class="hljs-number">0</span>, in.length - <span class="hljs-number">1</span>, pos, pos.length - <span class="hljs-number">1</span>, map);
+    <span class="hljs-keyword">return</span> pos;
+}
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> pre      &#x524D;&#x5E8F;&#x6570;&#x7EC4;
+ * <span class="hljs-doctag">@param</span> preStart &#x524D;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x5F00;&#x59CB;&#x8282;&#x70B9;&#x4E0B;&#x6807;
+ * <span class="hljs-doctag">@param</span> preEnd   &#x524D;&#x5E8F;&#x8282;&#x70B9;&#x7684;&#x7ED3;&#x675F;&#x8282;&#x70B9;&#x4E0B;&#x6807;
+ * <span class="hljs-doctag">@param</span> in       &#x4E2D;&#x5E8F;&#x6570;&#x7EC4;
+ * <span class="hljs-doctag">@param</span> inStart  &#x4E2D;&#x5E8F;&#x6570;&#x7EC4;&#x7684;&#x5F00;&#x59CB;&#x8282;&#x70B9;&#x4E0B;&#x6807;
+ * <span class="hljs-doctag">@param</span> inEnd    &#x4E2D;&#x5E8F;&#x8282;&#x70B9;&#x7684;&#x7ED3;&#x675F;&#x8282;&#x70B9;&#x4E0B;&#x6807;
+ * <span class="hljs-doctag">@param</span> pos
+ * <span class="hljs-doctag">@param</span> posEnd
+ * <span class="hljs-doctag">@param</span> map
+ * <span class="hljs-doctag">@return</span>
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">preAndIn</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] pre, <span class="hljs-keyword">int</span> preStart, <span class="hljs-keyword">int</span> preEnd, <span class="hljs-keyword">int</span>[] in, <span class="hljs-keyword">int</span> inStart, <span class="hljs-keyword">int</span> inEnd, <span class="hljs-keyword">int</span>[] pos, <span class="hljs-keyword">int</span> posEnd, Map&lt;Integer, Integer&gt; map)</span> </span>{
+    <span class="hljs-keyword">if</span> (preStart &gt; preEnd) {
+        <span class="hljs-keyword">return</span> posEnd;
+    }
+    <span class="hljs-comment">//&#x6BCF;&#x4E00;&#x6B65;&#x6309;root&#x8282;&#x70B9;&#x8FDB;&#x884C;&#x5207;&#x5206;</span>
+    <span class="hljs-keyword">int</span> value = pre[preStart];
+    pos[posEnd--] = value;
+    <span class="hljs-keyword">int</span> index = map.get(value);
+    posEnd = preAndIn(pre, preStart + index - inStart + <span class="hljs-number">1</span>, preEnd, in, index + <span class="hljs-number">1</span>, inEnd, pos, posEnd, map);
+    posEnd = preAndIn(pre, preStart + <span class="hljs-number">1</span>, preStart + index - inStart, in, inStart, index - <span class="hljs-number">1</span>, pos, posEnd, map);
+    <span class="hljs-keyword">return</span> posEnd;
+}
+</code></pre>
+<pre><code class="lang-java">Map&lt;Integer, Integer&gt; rootMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">buildTree</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] preorder, <span class="hljs-keyword">int</span>[] inorder)</span> </span>{
+    <span class="hljs-keyword">if</span> (preorder == <span class="hljs-keyword">null</span> || inorder == <span class="hljs-keyword">null</span> || preorder.length != inorder.length) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; inorder.length; i++) rootMap.put(inorder[i], i);
+
+    <span class="hljs-keyword">return</span> buildTreeDFS(preorder, <span class="hljs-number">0</span>, preorder.length - <span class="hljs-number">1</span>
+            , inorder, <span class="hljs-number">0</span>, inorder.length);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">buildTreeDFS</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] preorder, <span class="hljs-keyword">int</span> preStart, <span class="hljs-keyword">int</span> preEnd,
+                             <span class="hljs-keyword">int</span>[] inorder, <span class="hljs-keyword">int</span> inStart, <span class="hljs-keyword">int</span> inEnd)</span> </span>{
+    <span class="hljs-keyword">if</span> (preStart &gt; preEnd) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    TreeNode root = <span class="hljs-keyword">new</span> TreeNode(preorder[preStart]);
+    <span class="hljs-keyword">int</span> mid = rootMap.get(preorder[preStart]);
+    <span class="hljs-keyword">if</span> (mid &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    root.left = buildTreeDFS(preorder, preStart + <span class="hljs-number">1</span>, preStart + (mid - inStart)
+            , inorder, inStart, mid - <span class="hljs-number">1</span>);
+    root.right = buildTreeDFS(preorder, preStart + (mid - inStart) + <span class="hljs-number">1</span>, preEnd
+            , inorder, mid + <span class="hljs-number">1</span>, inEnd);
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
 <h2 id="111-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6700;&#x5C0F;&#x6DF1;&#x5EA6;"><a href="https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/" target="_blank">111. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6700;&#x5C0F;&#x6DF1;&#x5EA6;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minDepth</span><span class="hljs-params">(TreeNode root)</span> </span>{
             <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -2014,6 +2126,44 @@
         }
     }
     <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="173-&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x8FED;&#x4EE3;&#x5668;"><a href="https://leetcode-cn.com/problems/binary-search-tree-iterator/" target="_blank">173. &#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x8FED;&#x4EE3;&#x5668;</a></h2>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BSTIterator</span> </span>{
+    Stack&lt;TreeNode&gt; stack = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    TreeNode cur = <span class="hljs-keyword">null</span>;
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BSTIterator</span><span class="hljs-params">(TreeNode root)</span> </span>{
+        cur = root;
+    }
+
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@return</span> the next smallest number
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">next</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">int</span> res = -<span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span> || !stack.isEmpty()) {
+            <span class="hljs-keyword">while</span> (cur != <span class="hljs-keyword">null</span>) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            res = cur.val;
+            cur = cur.right;
+            <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">return</span> res;
+
+
+    }
+
+    <span class="hljs-comment">/**
+     * <span class="hljs-doctag">@return</span> whether we have a next smallest number
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasNext</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> (cur != <span class="hljs-keyword">null</span> || !stack.isEmpty());
+    }
 }
 </code></pre>
 <h2 id="226-&#x7FFB;&#x8F6C;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/invert-binary-tree/" target="_blank">226. &#x7FFB;&#x8F6C;&#x4E8C;&#x53C9;&#x6811;</a></h2>
@@ -2575,7 +2725,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-09T11:43:03.086Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T11:43:11.811Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-09T13:27:10.611Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T13:27:20.431Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

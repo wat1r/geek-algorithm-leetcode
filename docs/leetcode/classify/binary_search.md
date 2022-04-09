@@ -331,6 +331,48 @@ public int[] searchRange(int[] nums, int target) {
 
 
 
+## [69. x 的平方根 ](https://leetcode-cn.com/problems/sqrtx/)
+
+```java
+//上取整
+public int mySqrt(int x) {
+    long l = 0, r = x;
+    while (l < r) {
+        long mid = l + r + 1 >> 1;
+        if (mid * mid <= x) {
+            l = mid;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return (int) l;
+}
+```
+
+
+
+- 牛顿迭代法
+
+```java
+
+        int y;
+
+        public int mySqrt(int x) {
+            y = x;
+            if (x == 0) return 0;
+            return (int) helper(x);
+        }
+
+        private double helper(double x) {
+            double res = (x + y / x) / 2;
+            return res == x ? x : helper(res);
+        }
+```
+
+
+
+
+
 
 
 ## [81. 搜索旋转排序数组 II](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/)
