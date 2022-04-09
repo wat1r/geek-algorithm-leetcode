@@ -618,3 +618,69 @@ public boolean gcdSort(int[] nums) {
     return true;
 }
 ```
+
+### 扩展：[952. 按公因数计算最大组件大小](https://leetcode-cn.com/problems/largest-component-size-by-common-factor/)
+
+```java
+        int N = 100010;
+
+        class UnionFind {
+            int[] parent;
+            int[] rank;
+
+            public UnionFind(int[] nums) {
+                parent = new int[N];
+                rank = new int[N];
+                for (int i = 2; i < N; i++) {
+                    parent[i] = i;
+                }
+                Arrays.fill(rank, 1);
+            }
+
+            public int find(int i) {
+                if (parent[i] != i) parent[i] = find(parent[i]);
+                return parent[i];
+            }
+
+            public void union(int i, int j) {
+                int rootx = find(i);
+                int rooty = find(j);
+                if (rootx != rooty) {
+                    if (rank[rootx] > rank[rooty]) {
+                        parent[rooty] = rootx;
+                        rank[rootx]++;
+                    } else if (rank[rooty] > rank[rootx]) {
+                        parent[rootx] = rooty;
+                        rank[rooty]++;
+                    } else {
+                        parent[rooty] = rootx;
+                        rank[rootx]++;
+                    }
+                }
+            }
+        }
+
+        public int largestComponentSize(int[] nums) {
+            UnionFind uf = new UnionFind(nums);
+            int maxx = 0;
+            for (int x : nums) {
+                int j = x;
+                for (int i = 2; i <= x / i; i++) {
+                    boolean flag = false;
+                    while (x % i == 0) {
+                        x /= i;
+                        flag = true;
+                    }
+                    if (flag) uf.union(j, i);
+                }
+                if (x > 1) uf.union(j, x);
+            }
+            int[] cnt = new int[N];
+            for (int x : nums) {
+                int i = uf.find(x);
+                maxx = Math.max(maxx, ++cnt[i]);
+            }
+            return maxx;
+        }
+```
+

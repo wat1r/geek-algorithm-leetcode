@@ -192,6 +192,7 @@ public class Week257 {
 
 
     //1997. 访问完所有房间的第一天
+    //扩展：952. 按公因数计算最大组件大小
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
