@@ -263,7 +263,7 @@ private int dfs(int[] tasks, int sessionTime, int state, int sum) {
 
 
 
-## T4[1987. 不同的好子序列数目](https://leetcode-cn.com/problems/number-of-unique-good-subsequences/)
+## T4.[1987. 不同的好子序列数目](https://leetcode-cn.com/problems/number-of-unique-good-subsequences/)
 
 ```java
           int MOD = (int) 1e9 + 7;
