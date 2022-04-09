@@ -867,6 +867,42 @@
                                 
                                 <h1 id="&#x6570;&#x636E;&#x7ED3;&#x6784;">&#x6570;&#x636E;&#x7ED3;&#x6784;</h1>
 <h2 id="&#x94FE;&#x8868;">&#x94FE;&#x8868;</h2>
+<h2 id="21-&#x5408;&#x5E76;&#x4E24;&#x4E2A;&#x6709;&#x5E8F;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/" target="_blank">21. &#x5408;&#x5E76;&#x4E24;&#x4E2A;&#x6709;&#x5E8F;&#x94FE;&#x8868;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">mergeTwoLists</span><span class="hljs-params">(ListNode l1, ListNode l2)</span> </span>{
+    <span class="hljs-keyword">if</span> (l1 == <span class="hljs-keyword">null</span> || l2 == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> l1 == <span class="hljs-keyword">null</span> ? l2 : l1;
+    <span class="hljs-keyword">if</span> (l1.val &gt; l2.val) {
+        l2.next = mergeTwoLists(l1, l2.next);
+        <span class="hljs-keyword">return</span> l2;
+    } <span class="hljs-keyword">else</span> {
+        l1.next = mergeTwoLists(l1.next, l2);
+        <span class="hljs-keyword">return</span> l1;
+    }
+}
+</code></pre>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">mergeTwoLists</span><span class="hljs-params">(ListNode l1, ListNode l2)</span> </span>{
+    <span class="hljs-keyword">if</span> (l1 == <span class="hljs-keyword">null</span> || l2 == <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">return</span> l1 == <span class="hljs-keyword">null</span> ? l2 : l1;
+    }
+    ListNode head = <span class="hljs-keyword">new</span> ListNode(<span class="hljs-number">0</span>);
+    ListNode node = head;
+    <span class="hljs-keyword">while</span> (l1 != <span class="hljs-keyword">null</span> &amp;&amp; l2 != <span class="hljs-keyword">null</span>) {
+        <span class="hljs-keyword">if</span> (l1.val &lt; l2.val) {
+            node.next = l1;
+            l1 = l1.next;
+        } <span class="hljs-keyword">else</span> {
+            node.next = l2;
+            l2 = l2.next;
+        }
+        node = node.next;
+    }
+    <span class="hljs-keyword">if</span> (l1 != <span class="hljs-keyword">null</span>) {
+        node.next = l1;
+    } <span class="hljs-keyword">else</span> {
+        node.next = l2;
+    }
+    <span class="hljs-keyword">return</span> head.next;
+}
+</code></pre>
 <h2 id="23-&#x5408;&#x5E76;k&#x4E2A;&#x5347;&#x5E8F;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/" target="_blank">23. &#x5408;&#x5E76;K&#x4E2A;&#x5347;&#x5E8F;&#x94FE;&#x8868;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x4F18;&#x5148;&#x961F;&#x5217;">&#x65B9;&#x6CD5;1:&#x4F18;&#x5148;&#x961F;&#x5217;</h3>
 <ul>
@@ -2539,7 +2575,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-08T15:24:38.010Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T10:57:17.576Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-09T11:43:03.086Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T11:43:11.811Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

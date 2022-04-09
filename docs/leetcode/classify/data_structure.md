@@ -6,6 +6,55 @@
 
 
 
+
+
+## [21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null || l2 == null) return l1 == null ? l2 : l1;
+    if (l1.val > l2.val) {
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    } else {
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    }
+}
+```
+
+
+
+
+
+```java
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null || l2 == null) {
+        return l1 == null ? l2 : l1;
+    }
+    ListNode head = new ListNode(0);
+    ListNode node = head;
+    while (l1 != null && l2 != null) {
+        if (l1.val < l2.val) {
+            node.next = l1;
+            l1 = l1.next;
+        } else {
+            node.next = l2;
+            l2 = l2.next;
+        }
+        node = node.next;
+    }
+    if (l1 != null) {
+        node.next = l1;
+    } else {
+        node.next = l2;
+    }
+    return head.next;
+}
+```
+
+
+
 ## [23. 合并K个升序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
 
 ### 方法1:优先队列
