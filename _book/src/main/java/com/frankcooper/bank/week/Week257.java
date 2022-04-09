@@ -255,9 +255,86 @@ public class Week257 {
     }
 
 
+    //1998. 数组的最大公因数排序
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            int[] nums = new int[]{10, 5, 9, 3, 15};
+//            handler.gcdSort(nums);
+            Assert.assertTrue(handler.gcdSort(new int[]{10, 3, 9, 6, 8}));
+
+        }
+
+
+        int N = 100010;
+
+        class UnionFind {
+            int[] parent;
+            int[] rank;
+
+            public UnionFind(int[] nums) {
+                parent = new int[N];
+                rank = new int[N];
+                for (int i = 2; i < N; i++) {
+                    parent[i] = i;
+                }
+                Arrays.fill(rank, 1);
+            }
+
+            public int find(int i) {
+                if (parent[i] != i) parent[i] = find(parent[i]);
+                return parent[i];
+            }
+
+            public void union(int i, int j) {
+                int rootx = find(i);
+                int rooty = find(j);
+                if (rootx != rooty) {
+                    if (rank[rootx] > rank[rooty]) {
+                        parent[rooty] = rootx;
+                        rank[rootx]++;
+                    } else if (rank[rooty] > rank[rootx]) {
+                        parent[rootx] = rooty;
+                        rank[rooty]++;
+                    } else {
+                        parent[rooty] = rootx;
+                        rank[rootx]++;
+                    }
+                }
+            }
+        }
+
+        //1. 如果a和b的公因数大于1，则可以交换，
+        // 同理b和c的公因数大于1，b和c也可以交换，a和b和c在一个集合里，它们之间任意都可以交换
+        //2.在做公因数的时候，对于当前x，将它的质因子也一并合并，比如21，质因子是3，7， 21 3 7 都在一个集合里
+        //比如说15 15 3 5 都在一个集合里 相当于 21 3 7  15 3 5 这些数都在一个集合里，因为gca(21,15)=3
+        //3.并查集合并后，在一个集合里的都可以交换，开出额外的数组mirror，将其排序，与原数组nums每一个进行比较
+        //相同则说明在在一个集合里，不同即返回false
+        //4.举例{10, 3, 9, 6, 8} 10 和 3 这两个数乍一看好像不能调换因为 10 =2*5 3=3 之间好像没有交集
+        //但是一旦牵扯到6这个数 6 =2*3 gcd(6,3)=3>1 6和3可以调换 gcd(6,10)=2 6和10可以调换，参考上面的结论1
+        //3和10也可以交换 3 6 10 属于一个集合 处理到6的时候，将9的parent从9挂到了10下，9和3又有联系。3的parent是9 相当于3的parent变成10
+        public boolean gcdSort(int[] nums) {
+            UnionFind uf = new UnionFind(nums);
+            for (int x : nums) {
+                int j = x;
+                for (int i = 2; i <= x / i; i++) {
+                    boolean flag = false;
+                    while (x % i == 0) {
+                        x /= i;
+                        flag = true;
+                    }
+                    if (flag) uf.union(j, i);
+                }
+                if (x > 1) uf.union(j, x);
+            }
+            int[] mirror = Arrays.copyOf(nums, nums.length);
+            Arrays.sort(mirror);
+            for (int i = 0; i < mirror.length; i++) {
+                if (uf.find(mirror[i]) != uf.find(nums[i])) {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
