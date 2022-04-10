@@ -144,7 +144,7 @@ while(a){
 }
 ```
 
-**更加详细想位操作技巧，阅读[位运算操作常见技巧](https://blog.csdn.net/wat1r/article/details/114298873)（100+收藏，5K阅读）**
+**更加详细的位操作技巧，阅读[位运算操作常见技巧](https://blog.csdn.net/wat1r/article/details/114298873)（100+收藏，5K阅读）**
 
 ```java
 public int countPrimeSetBits(int left, int right) {
