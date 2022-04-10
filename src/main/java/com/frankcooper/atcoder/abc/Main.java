@@ -55,20 +55,31 @@ public class Main {
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
-        String[] arr = fr.nextLine().split("\\s+");
-        int N = Integer.parseInt(arr[0]);
-        int M = Integer.parseInt(arr[1]);
-        int K = Integer.parseInt(arr[2]);
-        int S = Integer.parseInt(arr[3]);
-        int T = Integer.parseInt(arr[4]);
-        int X = Integer.parseInt(arr[5]);
-//        System.out.printf("N=%d M=%d K=%d S=%d T=%d X=%d\n", N, M, K, S, T, X);
-        for (int i = 0; i < M; i++) {
-            arr = fr.nextLine().split("\\s+");
-            int u = Integer.parseInt(arr[0]), v = Integer.parseInt(arr[1]);
-//            System.out.printf("%d %d\n", u, v);
-        }
+        int N = fr.nextInt();
+        process(N);
+    }
 
+
+    private static void process(int N) {
+        int K = 10;
+        //f dp[n][k] 是 f(k???…???)的值，n表示当前的数字的位数，k表示的收首位的数字
+        long[][] dp = new long[N + 1][K];
+        for (int k = 1; k <= 9; k++) dp[1][k] = 1;
+        for (int i = 2; i <= N; i++) {
+            for (int k = 1; k <= 9; k++) {
+                for (int j = Math.max(1, k - 1); j <= Math.min(9, k + 1); j++) {
+//                    System.out.printf("j=%d,k=%d\n", j, k);
+                    dp[i][j] += dp[i - 1][k];
+                    dp[i][j] %= MOD;
+                }
+            }
+        }
+        int res = 0;
+        for (int k = 1; k <= 9; k++) {
+            res += dp[N][k];
+            res %= MOD;
+        }
+        System.out.println(res);
     }
 
 }

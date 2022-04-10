@@ -209,6 +209,7 @@ public class Week288 {
             handler.maximumBeauty(flowers, newFlowers, target, full, partial);
         }
 
+        //WA
         int full, partial, target;
 
         public long maximumBeauty(int[] flowers, long newFlowers, int target, int full, int partial) {
@@ -349,6 +350,8 @@ public class Week288 {
              * 15
              * 1
              */
+            //参考上面的case ，当还有花可以分，这时候需要需要 和这种方案比较：
+            //flowers 所有的花园全部到定格>=target 没有不完善的花园 即partial的数量为0
             if (newFlowers >= 0) res = Math.max(res, (long) n * full);
             return res;
         }

@@ -685,3 +685,110 @@ public char nextGreatestLetter(char[] le, char ta) {
     }
 ```
 
+
+
+## [6040. 花园的最大总美丽值](https://leetcode-cn.com/problems/maximum-total-beauty-of-the-gardens/)
+
+
+
+```java
+    static class _4th_2 {
+        public static void main(String[] args) {
+            _4th_2 handler = new _4th_2();
+            int[] flowers = {1, 3, 1, 1};
+            int newFlowers = 7, target = 6, full = 12, partial = 1;
+//            Assert.assertEquals(14, handler.maximumBeauty(flowers, newFlowers, target, full, partial));
+            flowers = new int[]{10, 9, 16, 14, 6, 5, 11, 12, 17, 2, 11, 15, 1};
+            newFlowers = 80;
+            target = 14;
+            full = 15;
+            partial = 1;
+            Assert.assertEquals(14, handler.maximumBeauty(flowers, newFlowers, target, full, partial));
+        }
+
+        long[] pre;//前缀和
+
+
+        public long maximumBeauty(int[] f, long newFlowers, int target, int full, int partial) {
+            int n = f.length;
+            //flowers数组 从大到小排序
+            Integer[] flowers = new Integer[n];
+            for (int i = 0; i < n; i++) {
+                flowers[i] = f[i];
+            }
+            //新的arr 数组 相当于 f数组
+            Integer[] arr = Arrays.copyOf(flowers, n);
+            //从大到小排序flowers
+            Arrays.sort(flowers, ((o1, o2) -> o2 - o1));
+            long res = 0;
+            if (flowers[n - 1] >= target) {
+                res = (long) n * full;
+                return res;
+            }
+            Arrays.sort(arr);
+            pre = new long[n + 1];
+            for (int i = 0; i < n; i++) pre[i + 1] = pre[i] + arr[i];
+            for (int i = 0; i < n; i++) {
+                //flowers按大到小的排序，前i个花园都是完善的状态
+                if (flowers[i] >= target) continue;
+                //难点在分配那些不完善的花园的数量 也就是mid
+                int r = target - 1;
+                int l = flowers[n - 1];
+                while (l <= r) {
+                    //当前应该给多少个花园分配鲜花
+                    int mid = l + (r - l) / 2;
+                    //如果mid够分，说明mid小了，可以扩大
+                    if (judge(arr, newFlowers, mid, n - i)) {
+                        l = mid + 1;
+                    } else {//如果mid不够份，说明mid大了，要缩小
+                        r = mid - 1;
+                    }
+                }
+                //当前有l-1个是不完善的花园，
+                res = Math.max(res, (long) i * full + (long) (l - 1) * partial);
+                newFlowers -= Math.max(0, target - flowers[i]);
+                if (newFlowers < 0) return res;
+            }
+            /**
+             * [10,9,16,14,6,5,11,12,17,2,11,15,1]
+             * 80
+             * 14
+             * 15
+             * 1
+             */
+            //参考上面的case ，当还有花可以分，这时候需要需要 和这种方案比较：
+            //flowers 所有的花园全部到定格>=target 没有不完善的花园 即partial的数量为0
+            if (newFlowers >= 0) res = Math.max(res, (long) n * full);
+            return res;
+        }
+
+        /**
+         * @param arr        正序数组
+         * @param newFlowers 当前剩下的可用花的数量
+         * @param mid        给定一个鲜花的数量
+         * @param range      查找的范围
+         * @return
+         */
+        private boolean judge(Integer[] arr, long newFlowers, int mid, int range) {
+            int p = lower_bound(arr, 0, range, mid);
+            long t = (long) p * mid - pre[p];
+            return newFlowers >= t;
+        }
+
+        //函数 lower_bound() 在 [begin, end) 进行二分查找，返回 大于或等于 target的第一个元素位置。如果所有元素都小于target，则返回 end.
+        public static int lower_bound(Integer[] arr, int begin, int end, int target) {
+            while (begin < end) {
+                int mid = begin + (end - begin) / 2;
+                // 当 mid 的元素小于 target 时
+                if (arr[mid] < target)
+                    // begin 为 mid + 1, arr[begin] 的值会小于或等于 target
+                    begin = mid + 1;
+                    // 当 mid 的元素大于等于 target 时
+                else if (arr[mid] >= target)
+                    end = mid;
+            }
+            return begin;
+        }
+
+    }
+```
