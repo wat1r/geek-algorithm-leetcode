@@ -233,6 +233,35 @@ static class _1st {
 
 
 
+## [415. 字符串相加](https://leetcode-cn.com/problems/add-strings/)
+
+
+
+
+
+```java
+public String addStrings(String num1, String num2) {
+    int m = num1.length(), n = num2.length();
+    int i = m - 1, j = n - 1;
+    int carry = 0;
+    StringBuilder res = new StringBuilder();
+    while (i >= 0 || j >= 0 || carry != 0) {
+        int tmp = 0;
+        int first = i < 0 ? 0 : num1.charAt(i) - '0';
+        int second = j < 0 ? 0 : num2.charAt(j) - '0';
+        tmp = first + second + carry;
+        carry = tmp / 10;
+        int remain = tmp % 10;
+        res.append(remain);
+        i--;
+        j--;
+    }
+    return res.reverse().toString();
+}
+```
+
+
+
 
 
 ## [804. 唯一摩尔斯密码词](https://leetcode-cn.com/problems/unique-morse-code-words/)

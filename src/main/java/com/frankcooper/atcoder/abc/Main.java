@@ -55,31 +55,25 @@ public class Main {
 
     public static void main(String[] args) {
         FastReader fr = new FastReader();
-        int N = fr.nextInt();
-        process(N);
-    }
-
-
-    private static void process(int N) {
-        int K = 10;
-        //f dp[n][k] 是 f(k???…???)的值，n表示当前的数字的位数，k表示的收首位的数字
-        long[][] dp = new long[N + 1][K];
-        for (int k = 1; k <= 9; k++) dp[1][k] = 1;
-        for (int i = 2; i <= N; i++) {
-            for (int k = 1; k <= 9; k++) {
-                for (int j = Math.max(1, k - 1); j <= Math.min(9, k + 1); j++) {
-//                    System.out.printf("j=%d,k=%d\n", j, k);
-                    dp[i][j] += dp[i - 1][k];
-                    dp[i][j] %= MOD;
-                }
+        String s = fr.next();
+        String abc = "ABC";
+        int q = fr.nextInt();
+        for (int i = 0; i < q; i++) {
+            long t = fr.nextLong();
+            long k = fr.nextLong();
+            k--;
+            int si = 0;
+            if (t <= 60) {
+                long b = 1L << t;
+                si = (int) (k / b);
+                k %= b;
             }
+            long r = Long.bitCount(k);
+            long l = t - r;
+            int idx = ((int) ((l + 2 * r) % 3) + abc.indexOf(s.charAt(si))) % 3;
+            System.out.println(abc.charAt(idx));
         }
-        int res = 0;
-        for (int k = 1; k <= 9; k++) {
-            res += dp[N][k];
-            res %= MOD;
-        }
-        System.out.println(res);
     }
+
 
 }
