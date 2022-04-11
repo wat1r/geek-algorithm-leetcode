@@ -340,3 +340,24 @@ public String addStrings(String num1, String num2) {
         }
 ```
 
+
+
+## [806. 写字符串需要的行数](https://leetcode-cn.com/problems/number-of-lines-to-write-string/)
+
+```java
+public int[] numberOfLines(int[] widths, String s) {
+    //行数 最后一行个留下的字符的宽度
+    int lines = 1, num = 0;
+    int i = 0;
+    while (i < s.length()) {
+        int t = widths[s.charAt(i) - 'a'];
+        num += t;
+        if (num > 100) {
+            lines++;
+            num = t;
+        }
+        i++;
+    }
+    return new int[]{lines, num};
+}
+```
