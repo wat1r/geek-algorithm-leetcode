@@ -165,6 +165,57 @@ public String decodeString(String s) {
 
 
 
+
+
+## [395. 至少有 K 个重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/)
+
+```java
+public int longestSubstring(String s, int k) {
+    if (s.length() < k) return 0;
+    Map<Character, Integer> counter = new HashMap();
+    for (char c : s.toCharArray()) {
+        counter.put(c, counter.getOrDefault(c, 0) + 1);
+    }
+    for (char c : counter.keySet()) {
+        if (counter.get(c) < k) {
+            int res = 0;
+            for (String t : s.split(String.valueOf(c))) {
+                res = Math.max(res, longestSubstring(t, k));
+            }
+            return res;
+        }
+    }
+    return s.length();
+}
+```
+
+
+
+```java
+public int longestSubstring(String s, int k) {
+    if (s.length() < k) return 0;
+    int[] hash = new int[26];
+    for (char c : s.toCharArray()) hash[c - 'a']++;
+    int res = 0;
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (hash[c - 'a'] < k && hash[c - 'a'] != 0) {
+            String part1 = s.substring(0, i);//按当前点进行切分
+            String part2 = s.substring(i + 1);
+            res = Math.max(longestSubstring(part1, k), longestSubstring(part2, k));
+            return res;
+        }
+    }
+    return s.length();
+}
+```
+
+
+
+
+
+
+
 ## [468. 验证IP地址](https://leetcode-cn.com/problems/validate-ip-address/)
 
 
