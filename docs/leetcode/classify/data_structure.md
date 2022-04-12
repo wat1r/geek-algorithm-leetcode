@@ -160,6 +160,34 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     }
 ```
 
+## [24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+```java
+        public ListNode swapPairs(ListNode head) {
+            if (head == null || head.next == null) return head;
+            ListNode dummy = new ListNode(-1);
+            dummy.next = head;
+            ListNode prev = dummy;
+            while (prev.next != null && prev.next.next != null) {
+                ListNode first = prev.next;
+                ListNode second = prev.next.next;
+                ListNode nxt = second.next;
+                //step1
+                second.next = first;
+                //step2
+                first.next = nxt;
+                //step3
+                prev.next = second;
+                prev = first;
+            }
+            return dummy.next;
+        }
+```
+
+
+
+
+
 
 
 

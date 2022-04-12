@@ -1069,6 +1069,105 @@
     }
 }
 </code></pre>
+<h2 id="415-&#x5B57;&#x7B26;&#x4E32;&#x76F8;&#x52A0;"><a href="https://leetcode-cn.com/problems/add-strings/" target="_blank">415. &#x5B57;&#x7B26;&#x4E32;&#x76F8;&#x52A0;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">addStrings</span><span class="hljs-params">(String num1, String num2)</span> </span>{
+    <span class="hljs-keyword">int</span> m = num1.length(), n = num2.length();
+    <span class="hljs-keyword">int</span> i = m - <span class="hljs-number">1</span>, j = n - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> carry = <span class="hljs-number">0</span>;
+    StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+    <span class="hljs-keyword">while</span> (i &gt;= <span class="hljs-number">0</span> || j &gt;= <span class="hljs-number">0</span> || carry != <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">int</span> tmp = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> first = i &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : num1.charAt(i) - <span class="hljs-string">&apos;0&apos;</span>;
+        <span class="hljs-keyword">int</span> second = j &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : num2.charAt(j) - <span class="hljs-string">&apos;0&apos;</span>;
+        tmp = first + second + carry;
+        carry = tmp / <span class="hljs-number">10</span>;
+        <span class="hljs-keyword">int</span> remain = tmp % <span class="hljs-number">10</span>;
+        res.append(remain);
+        i--;
+        j--;
+    }
+    <span class="hljs-keyword">return</span> res.reverse().toString();
+}
+</code></pre>
+<h2 id="804-&#x552F;&#x4E00;&#x6469;&#x5C14;&#x65AF;&#x5BC6;&#x7801;&#x8BCD;"><a href="https://leetcode-cn.com/problems/unique-morse-code-words/" target="_blank">804. &#x552F;&#x4E00;&#x6469;&#x5C14;&#x65AF;&#x5BC6;&#x7801;&#x8BCD;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1hash">&#x65B9;&#x6CD5;1:Hash</h3>
+<ul>
+<li>&#x6BCF;&#x4E2A;&#x5355;&#x8BCD;&#x62FC;&#x63A5;&#x6210;&#x83AB;&#x65AF;&#x5BC6;&#x7801;&#x7684;&#x5B57;&#x7B26;&#xFF0C;&#x9001;&#x5230;set&#x4E2D;&#xFF0C;&#x53BB;&#x91CD;</li>
+</ul>
+<pre><code class="lang-java">        String[] dict = {<span class="hljs-string">&quot;.-&quot;</span>, <span class="hljs-string">&quot;-...&quot;</span>, <span class="hljs-string">&quot;-.-.&quot;</span>, <span class="hljs-string">&quot;-..&quot;</span>, <span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;..-.&quot;</span>, <span class="hljs-string">&quot;--.&quot;</span>, <span class="hljs-string">&quot;....&quot;</span>, <span class="hljs-string">&quot;..&quot;</span>, <span class="hljs-string">&quot;.---&quot;</span>, <span class="hljs-string">&quot;-.-&quot;</span>, <span class="hljs-string">&quot;.-..&quot;</span>, <span class="hljs-string">&quot;--&quot;</span>, <span class="hljs-string">&quot;-.&quot;</span>, <span class="hljs-string">&quot;---&quot;</span>, <span class="hljs-string">&quot;.--.&quot;</span>, <span class="hljs-string">&quot;--.-&quot;</span>, <span class="hljs-string">&quot;.-.&quot;</span>, <span class="hljs-string">&quot;...&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;..-&quot;</span>, <span class="hljs-string">&quot;...-&quot;</span>, <span class="hljs-string">&quot;.--&quot;</span>, <span class="hljs-string">&quot;-..-&quot;</span>, <span class="hljs-string">&quot;-.--&quot;</span>, <span class="hljs-string">&quot;--..&quot;</span>};
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">uniqueMorseRepresentations</span><span class="hljs-params">(String[] words)</span> </span>{
+            Set&lt;String&gt; set = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+            <span class="hljs-keyword">for</span> (String word : words) {
+                StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : word.toCharArray()) {
+                    sb.append(dict[c - <span class="hljs-string">&apos;a&apos;</span>]);
+                }
+                set.add(sb.toString());
+            }
+            <span class="hljs-keyword">return</span> set.size();
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x4F4D;&#x8FD0;&#x7B97;">&#x65B9;&#x6CD5;2:&#x4F4D;&#x8FD0;&#x7B97;</h3>
+<p><img src="../../../imgs/leetcode/classify/image-20220410085817240.png" alt=""></p>
+<ul>
+<li>&#x5C06;&#x5F53;&#x524D;&#x7684;&#x5B57;&#x7B26;&#x8F6C;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#xFF0C;<code>-</code>&#x8868;&#x793A;&#x4E8C;&#x8FDB;&#x5236;&#x4E2D;&#x7684;1&#xFF0C;<code>.</code>&#x8868;&#x793A;&#x4E8C;&#x8FDB;&#x5236;&#x4E2D;&#x7684;<code>0</code>,&#x505A;&#x6CD5;&#x6709;&#x70B9;&#x50CF;<a href="https://cnwangzhou.gitbook.io/algorithm/zhuan-lan/er-wei-ju-zhen-de-chang-jian-zhuan-huan-ji-qiao" target="_blank"><strong>&#x4E8C;&#x7EF4;&#x77E9;&#x9635;&#x7684;&#x5E38;&#x89C1;&#x8F6C;&#x6362;&#x6280;&#x5DE7;</strong></a></li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-keyword">int</span>[] bin = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">26</span>];
+        String[] dict = {<span class="hljs-string">&quot;.-&quot;</span>, <span class="hljs-string">&quot;-...&quot;</span>, <span class="hljs-string">&quot;-.-.&quot;</span>, <span class="hljs-string">&quot;-..&quot;</span>, <span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;..-.&quot;</span>, <span class="hljs-string">&quot;--.&quot;</span>, <span class="hljs-string">&quot;....&quot;</span>, <span class="hljs-string">&quot;..&quot;</span>, <span class="hljs-string">&quot;.---&quot;</span>, <span class="hljs-string">&quot;-.-&quot;</span>, <span class="hljs-string">&quot;.-..&quot;</span>, <span class="hljs-string">&quot;--&quot;</span>, <span class="hljs-string">&quot;-.&quot;</span>, <span class="hljs-string">&quot;---&quot;</span>, <span class="hljs-string">&quot;.--.&quot;</span>, <span class="hljs-string">&quot;--.-&quot;</span>, <span class="hljs-string">&quot;.-.&quot;</span>, <span class="hljs-string">&quot;...&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;..-&quot;</span>, <span class="hljs-string">&quot;...-&quot;</span>, <span class="hljs-string">&quot;.--&quot;</span>, <span class="hljs-string">&quot;-..-&quot;</span>, <span class="hljs-string">&quot;-.--&quot;</span>, <span class="hljs-string">&quot;--..&quot;</span>};
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">uniqueMorseRepresentations</span><span class="hljs-params">(String[] words)</span> </span>{
+            <span class="hljs-comment">//&#x53EA;&#x505A;&#x4E8C;&#x8FDB;&#x5236;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; dict.length; i++) {
+                encode(dict[i], i);
+            }
+            Set&lt;Integer&gt; set = <span class="hljs-keyword">new</span> HashSet&lt;&gt;();
+            <span class="hljs-keyword">for</span> (String word : words) {
+                <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; word.length(); i++) {
+                    <span class="hljs-comment">//&#x62FF;&#x5230;word&#x4E2D;&#x5F53;&#x524D;&#x5B57;&#x7B26;&#x7684;&#x7D22;&#x5F15;</span>
+                    <span class="hljs-keyword">int</span> idx = word.charAt(i) - <span class="hljs-string">&apos;a&apos;</span>;
+                    <span class="hljs-comment">//&#x5148;&#x5C06;x&#x5411;&#x5DE6;&#x79FB;&#x4F4D;len(dict[idx]) &#x5C06;&#x8BE5;&#x5B57;&#x7B26;&#x5BF9;&#x5E94;&#x7684;&#x83AB;&#x65AF;&#x5BC6;&#x7801;&#x4F4D;&#x7684;&#x6570;&#x62FC;&#x63A5;&#x5230;x&#x4E0A;</span>
+                    x = x &lt;&lt; dict[idx].length() | bin[idx];
+                }
+              <span class="hljs-comment">//  System.out.printf(&quot;%s-&gt;%4d-&gt;%10s&quot;, word, x, PrintUtils.toBinaryString(x, 10));</span>
+                set.add(x);
+            }
+            <span class="hljs-keyword">return</span> set.size();
+        }
+
+        <span class="hljs-comment">//&#x5C06;&#x5F62;&#x5982; -... &#x7684;&#x83AB;&#x65AF;&#x5BC6;&#x7801; &#x7FFB;&#x8BD1;&#x6210; &#x4E8C;&#x8FDB;&#x5236; -&#x8868;&#x793A;1 .&#x8868;&#x793A;0</span>
+        <span class="hljs-comment">//-... -&gt; 1000(2) -&gt; 16(10)</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">encode</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> idx)</span> </span>{
+            <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> n = s.length();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+                <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;-&apos;</span>) {
+                    x |= (<span class="hljs-number">1</span> &lt;&lt; (n - <span class="hljs-number">1</span> - i));
+                }
+            }
+            <span class="hljs-keyword">this</span>.bin[idx] = x;
+            <span class="hljs-keyword">return</span> x;
+        }
+</code></pre>
+<h2 id="806-&#x5199;&#x5B57;&#x7B26;&#x4E32;&#x9700;&#x8981;&#x7684;&#x884C;&#x6570;"><a href="https://leetcode-cn.com/problems/number-of-lines-to-write-string/" target="_blank">806. &#x5199;&#x5B57;&#x7B26;&#x4E32;&#x9700;&#x8981;&#x7684;&#x884C;&#x6570;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] numberOfLines(<span class="hljs-keyword">int</span>[] widths, String s) {
+    <span class="hljs-comment">//&#x884C;&#x6570; &#x6700;&#x540E;&#x4E00;&#x884C;&#x4E2A;&#x7559;&#x4E0B;&#x7684;&#x5B57;&#x7B26;&#x7684;&#x5BBD;&#x5EA6;</span>
+    <span class="hljs-keyword">int</span> lines = <span class="hljs-number">1</span>, num = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (i &lt; s.length()) {
+        <span class="hljs-keyword">int</span> t = widths[s.charAt(i) - <span class="hljs-string">&apos;a&apos;</span>];
+        num += t;
+        <span class="hljs-keyword">if</span> (num &gt; <span class="hljs-number">100</span>) {
+            lines++;
+            num = t;
+        }
+        i++;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{lines, num};
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1112,7 +1211,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-04-06T13:28:44.757Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T14:47:26.532Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-04-11T22:57:38.474Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-12T08:10:55.960Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

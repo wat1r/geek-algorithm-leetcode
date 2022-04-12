@@ -997,6 +997,27 @@
         }
     }
 </code></pre>
+<h2 id="24-&#x4E24;&#x4E24;&#x4EA4;&#x6362;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x8282;&#x70B9;"><a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/" target="_blank">24. &#x4E24;&#x4E24;&#x4EA4;&#x6362;&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x8282;&#x70B9;</a></h2>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> ListNode <span class="hljs-title">swapPairs</span><span class="hljs-params">(ListNode head)</span> </span>{
+            <span class="hljs-keyword">if</span> (head == <span class="hljs-keyword">null</span> || head.next == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> head;
+            ListNode dummy = <span class="hljs-keyword">new</span> ListNode(-<span class="hljs-number">1</span>);
+            dummy.next = head;
+            ListNode prev = dummy;
+            <span class="hljs-keyword">while</span> (prev.next != <span class="hljs-keyword">null</span> &amp;&amp; prev.next.next != <span class="hljs-keyword">null</span>) {
+                ListNode first = prev.next;
+                ListNode second = prev.next.next;
+                ListNode nxt = second.next;
+                <span class="hljs-comment">//step1</span>
+                second.next = first;
+                <span class="hljs-comment">//step2</span>
+                first.next = nxt;
+                <span class="hljs-comment">//step3</span>
+                prev.next = second;
+                prev = first;
+            }
+            <span class="hljs-keyword">return</span> dummy.next;
+        }
+</code></pre>
 <h2 id="25-k-&#x4E2A;&#x4E00;&#x7EC4;&#x7FFB;&#x8F6C;&#x94FE;&#x8868;"><a href="https://leetcode-cn.com/problems/reverse-nodes-in-k-group/" target="_blank">25. K &#x4E2A;&#x4E00;&#x7EC4;&#x7FFB;&#x8F6C;&#x94FE;&#x8868;</a></h2>
 <h4 id="&#x65B9;&#x6CD5;1&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:&#x8FED;&#x4EE3;</h4>
 <p><img src="../../../imgs/leetcode/classify/image-20220407171617514.png" alt=""></p>
@@ -2725,7 +2746,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-09T13:27:10.611Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T14:47:26.532Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-12T08:10:22.981Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-12T08:10:55.960Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

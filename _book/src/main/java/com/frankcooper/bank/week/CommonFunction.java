@@ -30,6 +30,7 @@ public class CommonFunction {
 
     /**
      * 更相减损法 求GCD
+     *
      * @param a
      * @param b
      * @return
@@ -192,5 +193,33 @@ public class CommonFunction {
         }
         return rem;
     }
+//    函数 upper_bound() 在 [begin, end) 进行二分查找，返回 大于 tar的第一个元素位置。如果所有元素都小于tar，则返回 end.
+    public static int upper_bound(int[] arr, int begin, int end, int tar) {
+        while (begin < end) {
+            int mid = begin + (end - begin) / 2;
+            if (arr[mid] <= tar)
+                begin = mid + 1;
+            else if (arr[mid] < tar)
+                end = mid;
+        }
+        return begin;
+    }
+
+
+    //函数 lower_bound() 在 [begin, end) 进行二分查找，返回 大于或等于 tar的第一个元素位置。如果所有元素都小于tar，则返回 end.
+    public static int lower_bound(int[] arr, int begin, int end, int tar) {
+        while (begin < end) {
+            int mid = begin + (end - begin) / 2;
+            // 当 mid 的元素小于 tar 时
+            if (arr[mid] < tar)
+                // begin 为 mid + 1, arr[begin] 的值会小于或等于 tar
+                begin = mid + 1;
+                // 当 mid 的元素大于等于 tar 时
+            else if (arr[mid] >= tar)
+                end = mid;
+        }
+        return begin;
+    }
+
 
 }

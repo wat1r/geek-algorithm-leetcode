@@ -1391,6 +1391,107 @@
          <span class="hljs-keyword">return</span> letters[l]&gt; target ? letters[l] : letters[<span class="hljs-number">0</span>];
     }
 </code></pre>
+<h2 id="6040-&#x82B1;&#x56ED;&#x7684;&#x6700;&#x5927;&#x603B;&#x7F8E;&#x4E3D;&#x503C;"><a href="https://leetcode-cn.com/problems/maximum-total-beauty-of-the-gardens/" target="_blank">6040. &#x82B1;&#x56ED;&#x7684;&#x6700;&#x5927;&#x603B;&#x7F8E;&#x4E3D;&#x503C;</a></h2>
+<pre><code class="lang-java">    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_4th_2</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+            _4th_2 handler = <span class="hljs-keyword">new</span> _4th_2();
+            <span class="hljs-keyword">int</span>[] flowers = {<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>};
+            <span class="hljs-keyword">int</span> newFlowers = <span class="hljs-number">7</span>, target = <span class="hljs-number">6</span>, full = <span class="hljs-number">12</span>, partial = <span class="hljs-number">1</span>;
+<span class="hljs-comment">//            Assert.assertEquals(14, handler.maximumBeauty(flowers, newFlowers, target, full, partial));</span>
+            flowers = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">10</span>, <span class="hljs-number">9</span>, <span class="hljs-number">16</span>, <span class="hljs-number">14</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">17</span>, <span class="hljs-number">2</span>, <span class="hljs-number">11</span>, <span class="hljs-number">15</span>, <span class="hljs-number">1</span>};
+            newFlowers = <span class="hljs-number">80</span>;
+            target = <span class="hljs-number">14</span>;
+            full = <span class="hljs-number">15</span>;
+            partial = <span class="hljs-number">1</span>;
+            Assert.assertEquals(<span class="hljs-number">14</span>, handler.maximumBeauty(flowers, newFlowers, target, full, partial));
+        }
+
+        <span class="hljs-keyword">long</span>[] pre;<span class="hljs-comment">//&#x524D;&#x7F00;&#x548C;</span>
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> <span class="hljs-title">maximumBeauty</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] f, <span class="hljs-keyword">long</span> newFlowers, <span class="hljs-keyword">int</span> target, <span class="hljs-keyword">int</span> full, <span class="hljs-keyword">int</span> partial)</span> </span>{
+            <span class="hljs-keyword">int</span> n = f.length;
+            <span class="hljs-comment">//flowers&#x6570;&#x7EC4; &#x4ECE;&#x5927;&#x5230;&#x5C0F;&#x6392;&#x5E8F;</span>
+            Integer[] flowers = <span class="hljs-keyword">new</span> Integer[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                flowers[i] = f[i];
+            }
+            <span class="hljs-comment">//&#x65B0;&#x7684;arr &#x6570;&#x7EC4; &#x76F8;&#x5F53;&#x4E8E; f&#x6570;&#x7EC4;</span>
+            Integer[] arr = Arrays.copyOf(flowers, n);
+            <span class="hljs-comment">//&#x4ECE;&#x5927;&#x5230;&#x5C0F;&#x6392;&#x5E8F;flowers</span>
+            Arrays.sort(flowers, ((o1, o2) -&gt; o2 - o1));
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">if</span> (flowers[n - <span class="hljs-number">1</span>] &gt;= target) {
+                res = (<span class="hljs-keyword">long</span>) n * full;
+                <span class="hljs-keyword">return</span> res;
+            }
+            Arrays.sort(arr);
+            pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) pre[i + <span class="hljs-number">1</span>] = pre[i] + arr[i];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-comment">//flowers&#x6309;&#x5927;&#x5230;&#x5C0F;&#x7684;&#x6392;&#x5E8F;&#xFF0C;&#x524D;i&#x4E2A;&#x82B1;&#x56ED;&#x90FD;&#x662F;&#x5B8C;&#x5584;&#x7684;&#x72B6;&#x6001;</span>
+                <span class="hljs-keyword">if</span> (flowers[i] &gt;= target) <span class="hljs-keyword">continue</span>;
+                <span class="hljs-comment">//&#x96BE;&#x70B9;&#x5728;&#x5206;&#x914D;&#x90A3;&#x4E9B;&#x4E0D;&#x5B8C;&#x5584;&#x7684;&#x82B1;&#x56ED;&#x7684;&#x6570;&#x91CF; &#x4E5F;&#x5C31;&#x662F;mid</span>
+                <span class="hljs-keyword">int</span> r = target - <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> l = flowers[n - <span class="hljs-number">1</span>];
+                <span class="hljs-keyword">while</span> (l &lt;= r) {
+                    <span class="hljs-comment">//&#x5F53;&#x524D;&#x5E94;&#x8BE5;&#x7ED9;&#x591A;&#x5C11;&#x4E2A;&#x82B1;&#x56ED;&#x5206;&#x914D;&#x9C9C;&#x82B1;</span>
+                    <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+                    <span class="hljs-comment">//&#x5982;&#x679C;mid&#x591F;&#x5206;&#xFF0C;&#x8BF4;&#x660E;mid&#x5C0F;&#x4E86;&#xFF0C;&#x53EF;&#x4EE5;&#x6269;&#x5927;</span>
+                    <span class="hljs-keyword">if</span> (judge(arr, newFlowers, mid, n - i)) {
+                        l = mid + <span class="hljs-number">1</span>;
+                    } <span class="hljs-keyword">else</span> {<span class="hljs-comment">//&#x5982;&#x679C;mid&#x4E0D;&#x591F;&#x4EFD;&#xFF0C;&#x8BF4;&#x660E;mid&#x5927;&#x4E86;&#xFF0C;&#x8981;&#x7F29;&#x5C0F;</span>
+                        r = mid - <span class="hljs-number">1</span>;
+                    }
+                }
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x6709;l-1&#x4E2A;&#x662F;&#x4E0D;&#x5B8C;&#x5584;&#x7684;&#x82B1;&#x56ED;&#xFF0C;</span>
+                res = Math.max(res, (<span class="hljs-keyword">long</span>) i * full + (<span class="hljs-keyword">long</span>) (l - <span class="hljs-number">1</span>) * partial);
+                newFlowers -= Math.max(<span class="hljs-number">0</span>, target - flowers[i]);
+                <span class="hljs-keyword">if</span> (newFlowers &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;
+            }
+            <span class="hljs-comment">/**
+             * [10,9,16,14,6,5,11,12,17,2,11,15,1]
+             * 80
+             * 14
+             * 15
+             * 1
+             */</span>
+            <span class="hljs-comment">//&#x53C2;&#x8003;&#x4E0A;&#x9762;&#x7684;case &#xFF0C;&#x5F53;&#x8FD8;&#x6709;&#x82B1;&#x53EF;&#x4EE5;&#x5206;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x9700;&#x8981;&#x9700;&#x8981; &#x548C;&#x8FD9;&#x79CD;&#x65B9;&#x6848;&#x6BD4;&#x8F83;&#xFF1A;</span>
+            <span class="hljs-comment">//flowers &#x6240;&#x6709;&#x7684;&#x82B1;&#x56ED;&#x5168;&#x90E8;&#x5230;&#x5B9A;&#x683C;&gt;=target &#x6CA1;&#x6709;&#x4E0D;&#x5B8C;&#x5584;&#x7684;&#x82B1;&#x56ED; &#x5373;partial&#x7684;&#x6570;&#x91CF;&#x4E3A;0</span>
+            <span class="hljs-keyword">if</span> (newFlowers &gt;= <span class="hljs-number">0</span>) res = Math.max(res, (<span class="hljs-keyword">long</span>) n * full);
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-comment">/**
+         * <span class="hljs-doctag">@param</span> arr        &#x6B63;&#x5E8F;&#x6570;&#x7EC4;
+         * <span class="hljs-doctag">@param</span> newFlowers &#x5F53;&#x524D;&#x5269;&#x4E0B;&#x7684;&#x53EF;&#x7528;&#x82B1;&#x7684;&#x6570;&#x91CF;
+         * <span class="hljs-doctag">@param</span> mid        &#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x9C9C;&#x82B1;&#x7684;&#x6570;&#x91CF;
+         * <span class="hljs-doctag">@param</span> range      &#x67E5;&#x627E;&#x7684;&#x8303;&#x56F4;
+         * <span class="hljs-doctag">@return</span>
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">judge</span><span class="hljs-params">(Integer[] arr, <span class="hljs-keyword">long</span> newFlowers, <span class="hljs-keyword">int</span> mid, <span class="hljs-keyword">int</span> range)</span> </span>{
+            <span class="hljs-keyword">int</span> p = lower_bound(arr, <span class="hljs-number">0</span>, range, mid);
+            <span class="hljs-keyword">long</span> t = (<span class="hljs-keyword">long</span>) p * mid - pre[p];
+            <span class="hljs-keyword">return</span> newFlowers &gt;= t;
+        }
+
+        <span class="hljs-comment">//&#x51FD;&#x6570; lower_bound() &#x5728; [begin, end) &#x8FDB;&#x884C;&#x4E8C;&#x5206;&#x67E5;&#x627E;&#xFF0C;&#x8FD4;&#x56DE; &#x5927;&#x4E8E;&#x6216;&#x7B49;&#x4E8E; target&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x4F4D;&#x7F6E;&#x3002;&#x5982;&#x679C;&#x6240;&#x6709;&#x5143;&#x7D20;&#x90FD;&#x5C0F;&#x4E8E;target&#xFF0C;&#x5219;&#x8FD4;&#x56DE; end.</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lower_bound</span><span class="hljs-params">(Integer[] arr, <span class="hljs-keyword">int</span> begin, <span class="hljs-keyword">int</span> end, <span class="hljs-keyword">int</span> target)</span> </span>{
+            <span class="hljs-keyword">while</span> (begin &lt; end) {
+                <span class="hljs-keyword">int</span> mid = begin + (end - begin) / <span class="hljs-number">2</span>;
+                <span class="hljs-comment">// &#x5F53; mid &#x7684;&#x5143;&#x7D20;&#x5C0F;&#x4E8E; target &#x65F6;</span>
+                <span class="hljs-keyword">if</span> (arr[mid] &lt; target)
+                    <span class="hljs-comment">// begin &#x4E3A; mid + 1, arr[begin] &#x7684;&#x503C;&#x4F1A;&#x5C0F;&#x4E8E;&#x6216;&#x7B49;&#x4E8E; target</span>
+                    begin = mid + <span class="hljs-number">1</span>;
+                    <span class="hljs-comment">// &#x5F53; mid &#x7684;&#x5143;&#x7D20;&#x5927;&#x4E8E;&#x7B49;&#x4E8E; target &#x65F6;</span>
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (arr[mid] &gt;= target)
+                    end = mid;
+            }
+            <span class="hljs-keyword">return</span> begin;
+        }
+
+    }
+</code></pre>
 
                                 
                                 </section>
@@ -1434,7 +1535,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.8","depth":2,"next":{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-04-09T12:23:11.845Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-09T14:47:26.532Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.8","depth":2,"next":{"title":"结构设计","level":"1.2.9","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-04-10T11:46:24.727Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-12T08:10:55.960Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

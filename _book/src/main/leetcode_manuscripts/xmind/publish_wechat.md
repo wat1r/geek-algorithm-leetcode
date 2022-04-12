@@ -4,7 +4,7 @@
 
 
 
-## 图解682棒球比赛
+## 图解804唯一摩尔斯密码词
 
 
 
@@ -15,69 +15,79 @@
 
 
 
-## [429. N 叉树的层序遍历](https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/)
+## [804. 唯一摩尔斯密码词](https://leetcode-cn.com/problems/unique-morse-code-words/)
 
-### 方法1:BFS
-
-
+### 方法1:Hash
 
 ```java
-public List<List<Integer>> levelOrder(Node root) {
-    List<List<Integer>> res = new ArrayList<>();
-    if (root == null) return res;
-    Queue<Node> q = new LinkedList<>();
-    q.offer(root);
-    while (!q.isEmpty()) {
-        int size = q.size();
-        List<Integer> sub = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            Node cur = q.poll();
-            sub.add(cur.val);
-            for (Node child : cur.children) {
-                q.offer(child);
+        String[] dict = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
+
+
+        public int uniqueMorseRepresentations(String[] words) {
+            Set<String> set = new HashSet<>();
+            for (String word : words) {
+                StringBuilder sb = new StringBuilder();
+                for (char c : word.toCharArray()) {
+                    sb.append(dict[c - 'a']);
+                }
+                set.add(sb.toString());
             }
+            return set.size();
         }
-        res.add(new ArrayList<>(sub));
-    }
-    return res;
-}
 ```
 
 
 
+### 方法2:位运算
 
 
 
-
-### 方法2:DFS
-
+![](/imgs/leetcode/classify/image-20220410085817240.png)
 
 
-![](/imgs/leetcode/classify/image-20220408072115052.png)
+
+- 将当前的字符转成二进制，`-`表示二进制中的1，`0`表示二进制中的`0`,做法有点像[**二维矩阵的常见转换技巧**](https://cnwangzhou.gitbook.io/algorithm/zhuan-lan/er-wei-ju-zhen-de-chang-jian-zhuan-huan-ji-qiao)
 
 
 
 ```java
-List<List<Integer>> res = new ArrayList<>();
+        int[] bin = new int[26];
+        String[] dict = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
 
-public List<List<Integer>> levelOrder(Node root) {
-    dfs(root, 0);
-    return res;
-}
+        public int uniqueMorseRepresentations(String[] words) {
+            //只做二进制的映射关系
+            for (int i = 0; i < dict.length; i++) {
+                encode(dict[i], i);
+            }
+            Set<Integer> set = new HashSet<>();
+            for (String word : words) {
+                int x = 0;
+                for (int i = 0; i < word.length(); i++) {
+                    //拿到word中当前字符的索引
+                    int idx = word.charAt(i) - 'a';
+                    //先将x向左移位len(dict[idx]) 将该字符对应的莫斯密码位的数拼接到x上
+                    x = x << dict[idx].length() | bin[idx];
+                }
+              //  System.out.printf("%s->%4d->%10s", word, x, PrintUtils.toBinaryString(x, 10));
+                set.add(x);
+            }
+            return set.size();
+        }
 
-/**
- * @param root  当前处理到的节点
- * @param level 层数
- */
-private void dfs(Node root, int level) {
-    if (root == null) return;
-    if (level == res.size()) res.add(new ArrayList<>());
-    res.get(level).add(root.val);
-    for (Node child : root.children) dfs(child, level + 1);
-}
+        //将形如 -... 的莫斯密码 翻译成 二进制 -表示1 .表示0
+        //-... -> 1000(2) -> 16(10)
+        public int encode(String s, int idx) {
+            int x = 0;
+            int n = s.length();
+            for (int i = n - 1; i >= 0; i--) {
+                if (s.charAt(i) == '-') {
+                    x |= (1 << (n - 1 - i));
+                }
+            }
+            this.bin[idx] = x;
+            return x;
+        }
 ```
-
-
 
 
 
