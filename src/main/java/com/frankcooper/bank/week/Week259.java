@@ -108,8 +108,90 @@ public class Week259 {
     }
 
     static class _4th {
+
+        //https://leetcode-cn.com/problems/longest-subsequence-repeated-k-times/solution/zui-jian-ji-yi-dong-de-fang-fa-li-yong-z-hay1/
         public static void main(String[] args) {
             _4th handler = new _4th();
+            String s = "letsleetcode";
+            int k = 2;
+            handler.longestSubsequenceRepeatedK(s, k);
         }
+
+        StringBuilder ans = new StringBuilder();
+        boolean[] used = new boolean[10];//n < 8*k 所以 n/k 比10小
+
+
+        public String longestSubsequenceRepeatedK(String s, int k) {
+            int[] hash = new int[26];//记录每个字符出现的次数
+            char[] ch = s.toCharArray();
+            for (char c : ch) hash[c - 'a']++;
+            //按字典逆序，将满足k次的字符加入其中
+            StringBuilder sb = new StringBuilder();
+            for (int i = hash.length - 1; i >= 0; i--) {
+                for (int j = 0; j < hash[i] / k; j++) {
+                    sb.append((char) ('a' + i));
+                }
+            }
+            //搜索 i=n->1长度的前i个字符的全排列
+            int n = sb.length();
+            char[] pattern = sb.toString().toCharArray();
+            for (int i = n; i > 0; i--) {
+                if (dfs(ch, pattern, 0, i, n, k)) {
+                    return ans.toString();
+                }
+            }
+            return "";
+
+        }
+
+        /**
+         * @param ch      s字符
+         * @param pattern 满足k次要求的字符
+         * @param len     当前的子序列长度
+         * @param cnt     查找长度为cnt的子序列
+         * @param n       pattern的总长度
+         * @param k       目标要求的重复k次的子序列
+         * @return
+         */
+        private boolean dfs(char[] ch, char[] pattern, int len, int cnt, int n, int k) {
+            if (len == cnt) return check(ch, cnt, k);
+            for (int i = 0; i < n; i++) {
+                if (!used[i]) {
+                    used[i] = true;
+                    ans.append(pattern[i]);
+                    if (dfs(ch, pattern, len + 1, cnt, n, k)) {
+                        return true;
+                    }
+                    ans.deleteCharAt(len);
+                    used[i] = false;
+                }
+            }
+            return false;
+        }
+
+
+        /**
+         * 检查当前排列是不是满足s中的k次子序列 ans要在s中出现k次
+         *
+         * @param s 源字符串
+         * @param n 当前子序列的长度
+         * @param k 目标要求的重复k次的子序列
+         * @return
+         */
+        private boolean check(char[] s, int n, int k) {
+            int cnt = 0, idx = 0;
+            for (char c : s) {
+                if (c == ans.charAt(idx)) {
+                    idx++;
+                    if (idx == n) {
+                        idx = 0;
+                        cnt++;
+                    }
+                }
+            }
+            System.out.printf("ans:%s-> %s\n", ans.toString(), cnt >= k);
+            return cnt >= k;
+        }
+
     }
 }
