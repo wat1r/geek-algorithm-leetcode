@@ -455,6 +455,59 @@ class NumArray {
 
 
 
+## [380. O(1) 时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/)
+
+```java
+class RandomizedSet {
+
+    Map<Integer, Integer> map = new HashMap<>();//k:插入的值，v:list的size
+    List<Integer> list = new ArrayList<>();
+    Random random = new Random();
+
+    /**
+     * Initialize your data structure here.
+     */
+    public RandomizedSet() {
+
+    }
+
+    /**
+     * Inserts a value to the set. Returns true if the set did not already contain the specified element.
+     */
+    public boolean insert(int val) {
+        if (map.containsKey(val)) return false;
+        map.put(val, list.size());
+        list.add(val);
+        return true;
+    }
+
+    /**
+     * Removes a value from the set. Returns true if the set contained the specified element.
+     */
+    public boolean remove(int val) {
+        if (!map.containsKey(val)) return false;
+        int idx = map.get(val);//找到val的索引
+        int lastEle = list.get(list.size() - 1);//list中的最后一个元素
+        list.set(idx, lastEle);//当前的val用lastEle替换
+        map.put(lastEle, idx);//更新关系
+        //移除元素
+        list.remove(list.size() - 1);
+        map.remove(val);
+        return true;
+    }
+
+    /**
+     * Get a random element from the set.
+     */
+    public int getRandom() {
+        int ranIdx = random.nextInt(list.size());
+        return list.get(ranIdx);
+    }
+}
+```
+
+
+
 ## [146. LRU 缓存](https://leetcode-cn.com/problems/lru-cache/)
 
 需要一个哈希双端链表，`DoubleLinkedNode`

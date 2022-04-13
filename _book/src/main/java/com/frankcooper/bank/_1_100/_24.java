@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.frankcooper.struct.ListNode;
 import org.junit.Assert;
+
 public class _24 {
 
     static class _1st {
@@ -40,6 +41,17 @@ public class _24 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public ListNode swapPairs(ListNode head) {
+            if (head == null || head.next == null) {
+                return head;
+            }
+            ListNode newHead = head.next;
+            head.next = swapPairs(newHead.next);
+            newHead.next = head;
+            return newHead;
+        }
+
     }
 
 

@@ -1008,6 +1008,42 @@
     <span class="hljs-keyword">return</span> res.toString();
 }
 </code></pre>
+<h2 id="395-&#x81F3;&#x5C11;&#x6709;-k-&#x4E2A;&#x91CD;&#x590D;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;"><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank">395. &#x81F3;&#x5C11;&#x6709; K &#x4E2A;&#x91CD;&#x590D;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">longestSubstring</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">if</span> (s.length() &lt; k) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    Map&lt;Character, Integer&gt; counter = <span class="hljs-keyword">new</span> HashMap();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+        counter.put(c, counter.getOrDefault(c, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : counter.keySet()) {
+        <span class="hljs-keyword">if</span> (counter.get(c) &lt; k) {
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (String t : s.split(String.valueOf(c))) {
+                res = Math.max(res, longestSubstring(t, k));
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+    }
+    <span class="hljs-keyword">return</span> s.length();
+}
+</code></pre>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">longestSubstring</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">if</span> (s.length() &lt; k) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span>[] hash = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">26</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) hash[c - <span class="hljs-string">&apos;a&apos;</span>]++;
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+        <span class="hljs-keyword">char</span> c = s.charAt(i);
+        <span class="hljs-keyword">if</span> (hash[c - <span class="hljs-string">&apos;a&apos;</span>] &lt; k &amp;&amp; hash[c - <span class="hljs-string">&apos;a&apos;</span>] != <span class="hljs-number">0</span>) {
+            String part1 = s.substring(<span class="hljs-number">0</span>, i);<span class="hljs-comment">//&#x6309;&#x5F53;&#x524D;&#x70B9;&#x8FDB;&#x884C;&#x5207;&#x5206;</span>
+            String part2 = s.substring(i + <span class="hljs-number">1</span>);
+            res = Math.max(longestSubstring(part1, k), longestSubstring(part2, k));
+            <span class="hljs-keyword">return</span> res;
+        }
+    }
+    <span class="hljs-keyword">return</span> s.length();
+}
+</code></pre>
 <h2 id="468-&#x9A8C;&#x8BC1;ip&#x5730;&#x5740;"><a href="https://leetcode-cn.com/problems/validate-ip-address/" target="_blank">468. &#x9A8C;&#x8BC1;IP&#x5730;&#x5740;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_1st</span> </span>{
     <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">validIPAddress</span><span class="hljs-params">(String IP)</span> </span>{
@@ -1211,7 +1247,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-04-11T22:57:38.474Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-12T08:10:55.960Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"字符串","level":"1.2.7","depth":2,"next":{"title":"二分","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/binary_search.md","ref":"docs/leetcode/classify/binary_search.md","articles":[]},"previous":{"title":"模拟","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/string.md","mtime":"2022-04-12T14:21:30.891Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-13T01:54:54.411Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
