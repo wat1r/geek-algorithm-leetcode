@@ -27,6 +27,7 @@ public class Week260 {
 
     }
 
+    //WA
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
@@ -80,6 +81,12 @@ public class Week260 {
                 grid[i][j] = 0;
                 dfs(dp, grid, i, j - 1);
             }
+        }
+    }
+
+    static class _2nd_1{
+        public static void main(String[] args) {
+
         }
     }
 

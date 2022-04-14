@@ -209,6 +209,41 @@ public String removeDuplicateLetters(String s) {
 
 
 
+## [402. 移掉 K 位数字](https://leetcode-cn.com/problems/remove-k-digits/)
+
+```java
+        public String removeKdigits(String num, int k) {
+            //维护一个单调递增的单调栈，该栈的大小是len(num)-k的长度
+            Deque<Character> stk = new ArrayDeque<>();
+            for (int i = 0; i < num.length(); i++) {
+                char c = num.charAt(i);
+                while (!stk.isEmpty() && stk.peek() > c && k > 0) {
+                    stk.pop();
+                    k--;
+                }
+                stk.push(c);
+            }
+            //防止k没有完全消耗完
+            /*num="9"
+              k=1
+              exprected:"0"
+             */
+            while (k-- > 0) stk.pop();
+            StringBuilder sb = new StringBuilder();
+            while (!stk.isEmpty()) sb.append(stk.pop());
+            boolean headZero = true;//前导零
+            StringBuilder res = new StringBuilder();
+            for (char c : sb.reverse().toString().toCharArray()) {
+                if (c == '0' && headZero) continue;
+                res.append(c);
+                headZero = false;
+            }
+            return res.toString().equals("") ? "0" : res.toString();
+        }
+```
+
+
+
 
 
 ## [739. 每日温度](https://leetcode-cn.com/problems/daily-temperatures/)

@@ -20,6 +20,11 @@ public class _316 {
         }
 
 
+        /*
+1.在考虑字符 s[i] 时，如果它已经存在于栈中，则不能加入字符 s[i]。为此，需要记录每个字符是否出现在栈中。
+2.在弹出栈顶字符时，如果字符串在后面的位置上再也没有这一字符，则不能弹出栈顶字符。为此，需要记录每个字符的剩余数量，当这个值为 0 时，就不能弹出栈顶字符了。
+
+         */
         public String removeDuplicateLetters(String s) {
             int[] counter = new int[26];
             for (char c : s.toCharArray()) counter[c - 'a']++;

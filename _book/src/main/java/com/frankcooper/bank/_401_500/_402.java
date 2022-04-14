@@ -1,7 +1,9 @@
 package com.frankcooper.bank._401_500;
 
+import org.junit.Assert;
+
 import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Date 2020/9/9
@@ -91,6 +93,48 @@ public class _402 {
             headZero = false;
         }
         return res.toString().equals("") ? "0" : res.toString();
+    }
+
+
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            String num = "1432219";
+            int k = 3;
+//            handler.removeKdigits(num, k);
+            num = "9";
+            k = 1;
+            Assert.assertEquals("0", handler.removeKdigits(num, k));
+        }
+
+        public String removeKdigits(String num, int k) {
+            //维护一个单调递增的单调栈，该栈的大小是len(num)-k的长度
+            Deque<Character> stk = new ArrayDeque<>();
+            for (int i = 0; i < num.length(); i++) {
+                char c = num.charAt(i);
+                while (!stk.isEmpty() && stk.peek() > c && k > 0) {
+                    stk.pop();
+                    k--;
+                }
+                stk.push(c);
+            }
+            //防止k没有完全消耗完
+            /*num="9"
+              k=1
+              exprected:"0"
+             */
+            while (k-- > 0) stk.pop();
+            StringBuilder sb = new StringBuilder();
+            while (!stk.isEmpty()) sb.append(stk.pop());
+            boolean headZero = true;//前导零
+            StringBuilder res = new StringBuilder();
+            for (char c : sb.reverse().toString().toCharArray()) {
+                if (c == '0' && headZero) continue;
+                res.append(c);
+                headZero = false;
+            }
+            return res.toString().equals("") ? "0" : res.toString();
+        }
     }
 
 
