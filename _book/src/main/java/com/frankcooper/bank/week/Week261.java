@@ -150,6 +150,63 @@ public class Week261 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            String s = "leet";
+            int k = 3;
+            char letter = 'e';
+            int repetition = 1;
+//            Assert.assertEquals("eet", handler.smallestSubsequence(s, k, letter, repetition));
+            s = "aaabbbcccddd";
+            k = 3;
+            letter = 'b';
+            repetition = 2;
+            Assert.assertEquals("abb", handler.smallestSubsequence(s, k, letter, repetition));
+
+
         }
+
+
+        public String smallestSubsequence(String s, int k, char letter, int repetition) {
+
+            //letter这个字符出现的次数
+            int cnt = 0;
+            for (char c : s.toCharArray()) {
+                if (c == letter) cnt++;
+            }
+            //m是s中要删除的字符的数量，留下的字符从长度是k个
+            int n = s.length(), m = n - k;
+            StringBuilder res = new StringBuilder();
+            int p = 0;//目前为止letter已扫描了的次数
+            for (int i = 0; i < n; i++) {
+                //删除逆序的字母
+                while (m > 0 && res.length() > 0 && res.charAt(res.length() - 1) > s.charAt(i)) {
+                    if (res.charAt(res.length() - 1) == letter) {
+                        if (repetition > cnt - 1 + p) {//后面的letter不够凑成repetition个letter
+                            break;
+                        }
+                        p--;//删除一个letter
+                    }
+                    res.deleteCharAt(res.length() - 1);
+                    m--;
+                }
+                if (s.charAt(i) == letter) {
+                    p++;//扫描letter的次数+1
+                    cnt--;//使用一次letter -1
+                }
+                res.append(s.charAt(i));
+            }
+            while (res.length() > k) {
+                if (res.charAt(res.length() - 1) == letter) p--;
+                res.deleteCharAt(res.length() - 1);
+            }
+            for (int i = k - 1; i >= 0; i--) {
+                if (p < repetition && res.charAt(i) != letter) {
+                    res.setCharAt(i, letter);
+                    p++;
+                }
+            }
+            return res.toString();
+        }
+
+
     }
 }

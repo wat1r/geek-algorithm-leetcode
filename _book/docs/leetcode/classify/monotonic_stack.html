@@ -1025,6 +1025,83 @@
     <span class="hljs-keyword">return</span> sb.reverse().toString();
 }
 </code></pre>
+<h2 id="321-&#x62FC;&#x63A5;&#x6700;&#x5927;&#x6570;"><a href="https://leetcode-cn.com/problems/create-maximum-number/" target="_blank">321. &#x62FC;&#x63A5;&#x6700;&#x5927;&#x6570;</a></h2>
+<pre><code class="lang-java">    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_1st</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+            _1st handler = <span class="hljs-keyword">new</span> _1st();
+            <span class="hljs-keyword">int</span>[] nums1 = {<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>};
+            <span class="hljs-keyword">int</span>[] nums2 = {<span class="hljs-number">9</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">8</span>, <span class="hljs-number">3</span>};
+            <span class="hljs-keyword">int</span> k = <span class="hljs-number">5</span>;
+            <span class="hljs-comment">//[9, 8, 6, 5, 3]</span>
+            handler.maxNumber(nums1, nums2, k);
+            nums1 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">6</span>, <span class="hljs-number">7</span>};
+            nums2 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">6</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>};
+            k = <span class="hljs-number">5</span>;
+            <span class="hljs-comment">//[6, 7, 6, 0, 4]</span>
+            handler.maxNumber(nums1, nums2, k);
+        }
+
+
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] maxNumber(<span class="hljs-keyword">int</span>[] nums1, <span class="hljs-keyword">int</span>[] nums2, <span class="hljs-keyword">int</span> k) {
+            <span class="hljs-keyword">int</span> m = nums1.length, n = nums2.length;
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">null</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= k; i++) {
+                <span class="hljs-keyword">int</span>[] arr1 = getMaxKArray(nums1, Math.min(i, m));
+                <span class="hljs-keyword">int</span>[] arr2 = getMaxKArray(nums2, Math.min(k - i, n));
+                <span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">null</span>;
+                <span class="hljs-keyword">if</span> (arr1.length + arr2.length == k) {
+                    arr = merge(arr1, arr2);
+                    System.out.println(Arrays.toString(arr));
+                }
+                <span class="hljs-keyword">if</span> (res == <span class="hljs-keyword">null</span> || arr != <span class="hljs-keyword">null</span> &amp;&amp; arr.length == k &amp;&amp; compare(arr, <span class="hljs-number">0</span>, res, <span class="hljs-number">0</span>)) {
+                    res = arr;
+                }
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-comment">//&#x5728;&#x6570;&#x7EC4;nums&#x4E2D;&#x62FF;&#x5230;k&#x4E2A;&#x6570;&#xFF0C;&#x8BE5;&#x6570;&#x662F;&#x5355;&#x8C03;&#x9012;&#x51CF;&#x7684;</span>
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] getMaxKArray(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k) {
+            <span class="hljs-comment">//&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x5355;&#x8C03;&#x9012;&#x51CF;&#x7684;&#x5355;&#x8C03;&#x6808;</span>
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; stk.peek() &lt; nums[i] &amp;&amp; (k - stk.size()) &lt; nums.length - i) {
+                    stk.pop();
+                }
+                <span class="hljs-keyword">if</span> (stk.size() &lt; k) stk.push(nums[i]);
+            }
+
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[k];
+            <span class="hljs-keyword">int</span> idx = k - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; idx &gt;= <span class="hljs-number">0</span>) res[idx--] = stk.pop();
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-comment">//&#x5408;&#x5E76;A&#x548C;B&#x6570;&#x7EC4;&#xFF0C;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x6570;&#x7EC4;</span>
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] merge(<span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span>[] B) {
+            <span class="hljs-keyword">int</span> m = A.length, n = B.length;
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m + n];
+            <span class="hljs-keyword">int</span> idx = <span class="hljs-number">0</span>, i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (i &lt; m || j &lt; n) {
+                res[idx++] = compare(A, i, B, j) ? A[i++] : B[j++];
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+
+
+
+        <span class="hljs-comment">//&#x6BD4;&#x8F83;A&#x548C;B&#x6570;&#x7EC4;&#x4ECE;idx1&#x548C;idx2&#x5206;&#x522B;&#x5F00;&#x59CB;&#x7684;&#x5B57;&#x5178;&#x5E8F;&#x7684;&#x5927;&#x5C0F;</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">compare</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span> idx1, <span class="hljs-keyword">int</span>[] B, <span class="hljs-keyword">int</span> idx2)</span> </span>{
+            <span class="hljs-keyword">while</span> (idx1 &lt; A.length &amp;&amp; idx2 &lt; B.length &amp;&amp; A[idx1] == B[idx2]) {
+                idx1++;
+                idx2++;
+            }
+            <span class="hljs-keyword">return</span> idx2 == B.length || (idx1 &lt; A.length &amp;&amp; A[idx1] &gt; B[idx2]);
+        }
+
+
+    }
+</code></pre>
 <h2 id="402-&#x79FB;&#x6389;-k-&#x4F4D;&#x6570;&#x5B57;"><a href="https://leetcode-cn.com/problems/remove-k-digits/" target="_blank">402. &#x79FB;&#x6389; K &#x4F4D;&#x6570;&#x5B57;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">removeKdigits</span><span class="hljs-params">(String num, <span class="hljs-keyword">int</span> k)</span> </span>{
             <span class="hljs-comment">//&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x5355;&#x8C03;&#x9012;&#x589E;&#x7684;&#x5355;&#x8C03;&#x6808;&#xFF0C;&#x8BE5;&#x6808;&#x7684;&#x5927;&#x5C0F;&#x662F;len(num)-k&#x7684;&#x957F;&#x5EA6;</span>
@@ -1054,6 +1131,24 @@
             }
             <span class="hljs-keyword">return</span> res.toString().equals(<span class="hljs-string">&quot;&quot;</span>) ? <span class="hljs-string">&quot;0&quot;</span> : res.toString();
         }
+</code></pre>
+<h2 id="654-&#x6700;&#x5927;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/maximum-binary-tree/" target="_blank">654. &#x6700;&#x5927;&#x4E8C;&#x53C9;&#x6811;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">constructMaximumBinaryTree</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+    <span class="hljs-keyword">return</span> dfs(nums, <span class="hljs-number">0</span>, nums.length);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> TreeNode <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+    <span class="hljs-keyword">if</span> (start == end) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    <span class="hljs-keyword">int</span> rootIdx = start;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt; end; i++) {
+        <span class="hljs-keyword">if</span> (nums[i] &gt; nums[rootIdx]) rootIdx = i;
+    }
+    TreeNode root = <span class="hljs-keyword">new</span> TreeNode(nums[rootIdx]);
+    root.left = dfs(nums, start, rootIdx);
+    root.right = dfs(nums, rootIdx + <span class="hljs-number">1</span>, end);
+    <span class="hljs-keyword">return</span> root;
+
+}
 </code></pre>
 <h2 id="739-&#x6BCF;&#x65E5;&#x6E29;&#x5EA6;"><a href="https://leetcode-cn.com/problems/daily-temperatures/" target="_blank">739. &#x6BCF;&#x65E5;&#x6E29;&#x5EA6;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1stack">&#x65B9;&#x6CD5;1:Stack</h3>
@@ -1092,6 +1187,89 @@
             }
             <span class="hljs-keyword">return</span> res;
         }
+</code></pre>
+<h2 id="1019-&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x8282;&#x70B9;"><a href="https://leetcode-cn.com/problems/next-greater-node-in-linked-list/" target="_blank">1019. &#x94FE;&#x8868;&#x4E2D;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x8282;&#x70B9;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] nextLargerNodes(ListNode head) {
+    List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">while</span> (head != <span class="hljs-keyword">null</span>) {
+        list.add(head.val);
+        head = head.next;
+    }
+    Stack&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[list.size()];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; list.size(); ++i) {
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; list.get(stk.peek()) &lt; list.get(i)) {
+            <span class="hljs-keyword">int</span> idx = stk.pop();
+            res[idx] = list.get(i);
+        }
+        stk.push(i);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="2030-&#x542B;&#x7279;&#x5B9A;&#x5B57;&#x6BCD;&#x7684;&#x6700;&#x5C0F;&#x5B50;&#x5E8F;&#x5217;"><a href="https://leetcode-cn.com/problems/smallest-k-length-subsequence-with-occurrences-of-a-letter/" target="_blank">2030. &#x542B;&#x7279;&#x5B9A;&#x5B57;&#x6BCD;&#x7684;&#x6700;&#x5C0F;&#x5B50;&#x5E8F;&#x5217;</a></h2>
+<pre><code class="lang-java">  <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_4th</span> </span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+            _4th handler = <span class="hljs-keyword">new</span> _4th();
+            String s = <span class="hljs-string">&quot;leet&quot;</span>;
+            <span class="hljs-keyword">int</span> k = <span class="hljs-number">3</span>;
+            <span class="hljs-keyword">char</span> letter = <span class="hljs-string">&apos;e&apos;</span>;
+            <span class="hljs-keyword">int</span> repetition = <span class="hljs-number">1</span>;
+<span class="hljs-comment">//            Assert.assertEquals(&quot;eet&quot;, handler.smallestSubsequence(s, k, letter, repetition));</span>
+            s = <span class="hljs-string">&quot;aaabbbcccddd&quot;</span>;
+            k = <span class="hljs-number">3</span>;
+            letter = <span class="hljs-string">&apos;b&apos;</span>;
+            repetition = <span class="hljs-number">2</span>;
+            Assert.assertEquals(<span class="hljs-string">&quot;abb&quot;</span>, handler.smallestSubsequence(s, k, letter, repetition));
+
+
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">smallestSubsequence</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">char</span> letter, <span class="hljs-keyword">int</span> repetition)</span> </span>{
+
+            <span class="hljs-comment">//letter&#x8FD9;&#x4E2A;&#x5B57;&#x7B26;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+            <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+                <span class="hljs-keyword">if</span> (c == letter) cnt++;
+            }
+            <span class="hljs-comment">//m&#x662F;s&#x4E2D;&#x8981;&#x5220;&#x9664;&#x7684;&#x5B57;&#x7B26;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x7559;&#x4E0B;&#x7684;&#x5B57;&#x7B26;&#x4ECE;&#x957F;&#x5EA6;&#x662F;k&#x4E2A;</span>
+            <span class="hljs-keyword">int</span> n = s.length(), m = n - k;
+            StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+            <span class="hljs-keyword">int</span> p = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x76EE;&#x524D;&#x4E3A;&#x6B62;letter&#x5DF2;&#x626B;&#x63CF;&#x4E86;&#x7684;&#x6B21;&#x6570;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-comment">//&#x5220;&#x9664;&#x9006;&#x5E8F;&#x7684;&#x5B57;&#x6BCD;</span>
+                <span class="hljs-keyword">while</span> (m &gt; <span class="hljs-number">0</span> &amp;&amp; res.length() &gt; <span class="hljs-number">0</span> &amp;&amp; res.charAt(res.length() - <span class="hljs-number">1</span>) &gt; s.charAt(i)) {
+                    <span class="hljs-keyword">if</span> (res.charAt(res.length() - <span class="hljs-number">1</span>) == letter) {
+                        <span class="hljs-keyword">if</span> (repetition &gt; cnt - <span class="hljs-number">1</span> + p) {<span class="hljs-comment">//&#x540E;&#x9762;&#x7684;letter&#x4E0D;&#x591F;&#x51D1;&#x6210;repetition&#x4E2A;letter</span>
+                            <span class="hljs-keyword">break</span>;
+                        }
+                        p--;<span class="hljs-comment">//&#x5220;&#x9664;&#x4E00;&#x4E2A;letter</span>
+                    }
+                    res.deleteCharAt(res.length() - <span class="hljs-number">1</span>);
+                    m--;
+                }
+                <span class="hljs-keyword">if</span> (s.charAt(i) == letter) {
+                    p++;<span class="hljs-comment">//&#x626B;&#x63CF;letter&#x7684;&#x6B21;&#x6570;+1</span>
+                    cnt--;<span class="hljs-comment">//&#x4F7F;&#x7528;&#x4E00;&#x6B21;letter -1</span>
+                }
+                res.append(s.charAt(i));
+            }
+            <span class="hljs-keyword">while</span> (res.length() &gt; k) {
+                <span class="hljs-keyword">if</span> (res.charAt(res.length() - <span class="hljs-number">1</span>) == letter) p--;
+                res.deleteCharAt(res.length() - <span class="hljs-number">1</span>);
+            }
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = k - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+                <span class="hljs-keyword">if</span> (p &lt; repetition &amp;&amp; res.charAt(i) != letter) {
+                    res.setCharAt(i, letter);
+                    p++;
+                }
+            }
+            <span class="hljs-keyword">return</span> res.toString();
+        }
+
+
+    }
 </code></pre>
 
                                 
@@ -1132,7 +1310,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"单调栈","level":"1.2.12","depth":2,"next":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"previous":{"title":"滑动窗口","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/monotonic_stack.md","mtime":"2022-04-14T04:01:05.738Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-14T04:01:44.043Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"单调栈","level":"1.2.12","depth":2,"next":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"previous":{"title":"滑动窗口","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/monotonic_stack.md","mtime":"2022-04-14T13:33:23.084Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-15T03:05:58.371Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

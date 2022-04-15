@@ -207,6 +207,92 @@ public String removeDuplicateLetters(String s) {
 }
 ```
 
+## [321. 拼接最大数](https://leetcode-cn.com/problems/create-maximum-number/)
+
+```java
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums1 = {3, 4, 6, 5};
+            int[] nums2 = {9, 1, 2, 5, 8, 3};
+            int k = 5;
+            //[9, 8, 6, 5, 3]
+            handler.maxNumber(nums1, nums2, k);
+            nums1 = new int[]{6, 7};
+            nums2 = new int[]{6, 0, 4};
+            k = 5;
+            //[6, 7, 6, 0, 4]
+            handler.maxNumber(nums1, nums2, k);
+        }
+
+
+        public int[] maxNumber(int[] nums1, int[] nums2, int k) {
+            int m = nums1.length, n = nums2.length;
+            int[] res = null;
+            for (int i = 0; i <= k; i++) {
+                int[] arr1 = getMaxKArray(nums1, Math.min(i, m));
+                int[] arr2 = getMaxKArray(nums2, Math.min(k - i, n));
+                int[] arr = null;
+                if (arr1.length + arr2.length == k) {
+                    arr = merge(arr1, arr2);
+                    System.out.println(Arrays.toString(arr));
+                }
+                if (res == null || arr != null && arr.length == k && compare(arr, 0, res, 0)) {
+                    res = arr;
+                }
+            }
+            return res;
+        }
+
+        //在数组nums中拿到k个数，该数是单调递减的
+        private int[] getMaxKArray(int[] nums, int k) {
+            //维护一个单调递减的单调栈
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < nums.length; i++) {
+                while (!stk.isEmpty() && stk.peek() < nums[i] && (k - stk.size()) < nums.length - i) {
+                    stk.pop();
+                }
+                if (stk.size() < k) stk.push(nums[i]);
+            }
+
+            int[] res = new int[k];
+            int idx = k - 1;
+            while (!stk.isEmpty() && idx >= 0) res[idx--] = stk.pop();
+            return res;
+        }
+
+        //合并A和B数组，生成一个新的数组
+        private int[] merge(int[] A, int[] B) {
+            int m = A.length, n = B.length;
+            int[] res = new int[m + n];
+            int idx = 0, i = 0, j = 0;
+            while (i < m || j < n) {
+                res[idx++] = compare(A, i, B, j) ? A[i++] : B[j++];
+            }
+            return res;
+        }
+
+
+
+        //比较A和B数组从idx1和idx2分别开始的字典序的大小
+        private boolean compare(int[] A, int idx1, int[] B, int idx2) {
+            while (idx1 < A.length && idx2 < B.length && A[idx1] == B[idx2]) {
+                idx1++;
+                idx2++;
+            }
+            return idx2 == B.length || (idx1 < A.length && A[idx1] > B[idx2]);
+        }
+
+
+    }
+```
+
+
+
+
+
+
+
 
 
 ## [402. 移掉 K 位数字](https://leetcode-cn.com/problems/remove-k-digits/)
@@ -240,6 +326,27 @@ public String removeDuplicateLetters(String s) {
             }
             return res.toString().equals("") ? "0" : res.toString();
         }
+```
+
+## [654. 最大二叉树](https://leetcode-cn.com/problems/maximum-binary-tree/)
+
+```java
+public TreeNode constructMaximumBinaryTree(int[] nums) {
+    return dfs(nums, 0, nums.length);
+}
+
+private TreeNode dfs(int[] nums, int start, int end) {
+    if (start == end) return null;
+    int rootIdx = start;
+    for (int i = start; i < end; i++) {
+        if (nums[i] > nums[rootIdx]) rootIdx = i;
+    }
+    TreeNode root = new TreeNode(nums[rootIdx]);
+    root.left = dfs(nums, start, rootIdx);
+    root.right = dfs(nums, rootIdx + 1, end);
+    return root;
+
+}
 ```
 
 
@@ -292,3 +399,97 @@ public int[] dailyTemperatures(int[] T) {
 
 
 
+## [1019. 链表中的下一个更大节点](https://leetcode-cn.com/problems/next-greater-node-in-linked-list/)
+
+```java
+public int[] nextLargerNodes(ListNode head) {
+    List<Integer> list = new ArrayList<>();
+    while (head != null) {
+        list.add(head.val);
+        head = head.next;
+    }
+    Stack<Integer> stk = new Stack<>();
+    int[] res = new int[list.size()];
+    for (int i = 0; i < list.size(); ++i) {
+        while (!stk.isEmpty() && list.get(stk.peek()) < list.get(i)) {
+            int idx = stk.pop();
+            res[idx] = list.get(i);
+        }
+        stk.push(i);
+    }
+    return res;
+}
+```
+
+
+
+
+
+## [2030. 含特定字母的最小子序列](https://leetcode-cn.com/problems/smallest-k-length-subsequence-with-occurrences-of-a-letter/)
+
+
+
+```java
+  static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            String s = "leet";
+            int k = 3;
+            char letter = 'e';
+            int repetition = 1;
+//            Assert.assertEquals("eet", handler.smallestSubsequence(s, k, letter, repetition));
+            s = "aaabbbcccddd";
+            k = 3;
+            letter = 'b';
+            repetition = 2;
+            Assert.assertEquals("abb", handler.smallestSubsequence(s, k, letter, repetition));
+
+
+        }
+
+
+        public String smallestSubsequence(String s, int k, char letter, int repetition) {
+
+            //letter这个字符出现的次数
+            int cnt = 0;
+            for (char c : s.toCharArray()) {
+                if (c == letter) cnt++;
+            }
+            //m是s中要删除的字符的数量，留下的字符从长度是k个
+            int n = s.length(), m = n - k;
+            StringBuilder res = new StringBuilder();
+            int p = 0;//目前为止letter已扫描了的次数
+            for (int i = 0; i < n; i++) {
+                //删除逆序的字母
+                while (m > 0 && res.length() > 0 && res.charAt(res.length() - 1) > s.charAt(i)) {
+                    if (res.charAt(res.length() - 1) == letter) {
+                        if (repetition > cnt - 1 + p) {//后面的letter不够凑成repetition个letter
+                            break;
+                        }
+                        p--;//删除一个letter
+                    }
+                    res.deleteCharAt(res.length() - 1);
+                    m--;
+                }
+                if (s.charAt(i) == letter) {
+                    p++;//扫描letter的次数+1
+                    cnt--;//使用一次letter -1
+                }
+                res.append(s.charAt(i));
+            }
+            while (res.length() > k) {
+                if (res.charAt(res.length() - 1) == letter) p--;
+                res.deleteCharAt(res.length() - 1);
+            }
+            for (int i = k - 1; i >= 0; i--) {
+                if (p < repetition && res.charAt(i) != letter) {
+                    res.setCharAt(i, letter);
+                    p++;
+                }
+            }
+            return res.toString();
+        }
+
+
+    }
+```
