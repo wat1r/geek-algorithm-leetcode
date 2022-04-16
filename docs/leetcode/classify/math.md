@@ -54,6 +54,35 @@ public int countNumbersWithUniqueDigits(int n) {
 }
 ```
 
+## [479. 最大回文数乘积](https://leetcode-cn.com/problems/largest-palindrome-product/)
+
+```java
+public int largestPalindrome(int n) {
+    if (n == 1) return 9;
+    int MOD = 1337;
+    int maxx = (int) (Math.pow(10, n) - 1);
+    for (int i = maxx; i >= 0; i--) {
+        long num = i, t = i;
+        while (t > 0) {
+            num = num * 10 + (t % 10);
+            t /= 10;
+        }
+        for (long j = maxx; j * j >= num; --j) {
+            if (num % j == 0) {
+                return (int) (num % MOD);
+            }
+        }
+    }
+    return -1;
+}
+```
+
+
+
+
+
+
+
 ## [728. 自除数](https://leetcode-cn.com/problems/self-dividing-numbers/)
 
 ### 方法1:模拟
