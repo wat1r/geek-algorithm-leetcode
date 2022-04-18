@@ -2102,6 +2102,10 @@ public int dfs(TreeNode root) {
 
 
 
+
+
+
+
 ## [589. N 叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/)
 
 ```java

@@ -1,50 +1,41 @@
 package com.frankcooper;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        String[] arr = reader.readLine().split(" ");
-        int x = Integer.parseInt(arr[0]);
-        int y = Integer.parseInt(arr[1]);
-        int n = x + y;
-        if (x == y) {
-            for (int i = 0; i < x; i++) writer.write("A");
-            for (int i = 0; i < y; i++) writer.write("B");
-        } else {
-            List<int[]> vals = new ArrayList<>();
-            arr = reader.readLine().split(" ");
-            for (int i = 0; i < n; i++) {
-                int t = Integer.parseInt(arr[i]);
-                vals.add(new int[]{t, i});
-            }
-            vals.sort((Comparator.comparingInt(o -> o[0])));
-            int[] res = new int[n];
-            for (int i = 0; i < n; i++) res[vals.get(i)[1]] = i;
-            for (int i = 0; i < n; i++) {
-                if (x > y) {
-                    if (res[i] >= y) writer.write("A");
-                    else writer.write("B");
-                } else {
-                    if (res[i] < x) writer.write("A");
-                    else writer.write("B");
-                }
-            }
+    static int N = 500010;
+    static int res = 0;
+    static List<List<int[]>> adj = new ArrayList<>();
+    static int[] dist = new int[N];
+//    static int[] vis = new int[N];
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
+        for (int i = 1; i < n; i++) {
+            int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
+            adj.get(u).add(new int[]{v, w});
+            adj.get(v).add(new int[]{u, w});
         }
-        writer.flush();
-        reader.close();
-        writer.close();
+        dp(1, 0);
+        System.out.println(res);
     }
+
+
+    public static void dp(int u, int fa) {
+        for (int[] ne : adj.get(u)) {
+            int v = ne[0], w = ne[1];
+            if (v == fa) continue;
+            dp(v, u);
+            res = Math.max(res, dist[u] + dist[v] + w);
+            dist[u] = Math.max(dist[u], dist[v] + w);
+        }
+    }
+
 
 }
