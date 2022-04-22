@@ -1740,6 +1740,117 @@ List&lt;String&gt; wordDict;
     }
 }
 </code></pre>
+<h2 id="386-&#x5B57;&#x5178;&#x5E8F;&#x6392;&#x6570;"><a href="https://leetcode-cn.com/problems/lexicographical-numbers/" target="_blank">386. &#x5B57;&#x5178;&#x5E8F;&#x6392;&#x6570;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1o1&#x7A7A;&#x95F4;&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;1:O(1)&#x7A7A;&#x95F4;&#x8FED;&#x4EE3;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">lexicalOrder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">1</span>;
+    <span class="hljs-comment">//list&#x7684;&#x5927;&#x5C0F;=n</span>
+    <span class="hljs-keyword">while</span> (res.size() &lt; n) {
+        <span class="hljs-comment">//&#x6BCF;&#x6B21;&#x5C06;&#x5F53;&#x524D;&#x5C42; *10&#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x5C42;</span>
+        <span class="hljs-keyword">while</span> (x &lt;= n) {
+            res.add(x);
+            x *= <span class="hljs-number">10</span>;
+        }
+        <span class="hljs-comment">//&#x5982;&#x679C;&#x5F53;&#x524D;&#x5C42;&#x7684;&#x5143;&#x7D20;&#x5DF2;&#x7ECF;&#x4ECE;9&#x8DC3;&#x5347;&#x5230;10&#x8FD9;&#x4E2A;&#x9636;&#x68AF;&#x6216;&#x8005;&#x5F53;&#x524D;&#x5C42;&#x5143;&#x7D20;&#x6BD4;n&#x5927;&#xFF0C;&#x8FD4;&#x56DE;&#x4E0A;&#x4E00;&#x5C42;</span>
+        <span class="hljs-keyword">while</span> (x % <span class="hljs-number">10</span> == <span class="hljs-number">9</span> || x &gt; n) {
+            x /= <span class="hljs-number">10</span>;
+        }
+        <span class="hljs-comment">//&#x5F53;&#x524D;&#x5C42;&#x904D;&#x5386;&#x5B8C;&#xFF0C;&#x9012;&#x8FDB;1</span>
+        x++;
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2dfs">&#x65B9;&#x6CD5;2:DFS</h3>
+<pre><code class="lang-java">List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">lexicalOrder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    dfs(<span class="hljs-number">0</span>, n);
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> prev, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">int</span> cur = prev * <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">if</span> (prev &gt; n) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+        <span class="hljs-keyword">int</span> next = cur + i;
+        <span class="hljs-keyword">if</span> (next &lt;= n &amp;&amp; next != <span class="hljs-number">0</span>) {
+            res.add(next);
+            dfs(next, n);
+        }
+    }
+}
+</code></pre>
+<ul>
+<li>&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">lexicalOrder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">10</span>; i++) {
+                dfs(i, n, res);
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> n, List&lt;Integer&gt; res)</span> </span>{
+            <span class="hljs-keyword">if</span> (i &gt; n) <span class="hljs-keyword">return</span>;
+            res.add(i);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= <span class="hljs-number">9</span>; j++) {
+                dfs(i * <span class="hljs-number">10</span> + j, n, res);
+            }
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3triedfs">&#x65B9;&#x6CD5;3:Trie+DFS</h3>
+<ul>
+<li>Trie&#x7684;&#x5199;&#x6CD5;&#x4E5F;&#x5F88;&#x6709;&#x610F;&#x601D;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TrieNode</span> </span>{
+    <span class="hljs-keyword">boolean</span> isNum;
+    Map&lt;Character, TrieNode&gt; map;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TrieNode</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">this</span>.isNum = <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">this</span>.map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> </span>{
+        TrieNode cur = <span class="hljs-keyword">this</span>;
+        String s = String.valueOf(num);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+            <span class="hljs-keyword">char</span> c = s.charAt(i);
+            <span class="hljs-keyword">if</span> (!cur.map.containsKey(c)) {
+                cur.map.put(c, <span class="hljs-keyword">new</span> TrieNode());
+            }
+            cur = cur.map.get(c);
+        }
+        cur.isNum = <span class="hljs-keyword">true</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">lexicalOrder</span><span class="hljs-params">(TrieNode root, StringBuilder sb, List&lt;Integer&gt; res)</span> </span>{
+        <span class="hljs-keyword">if</span> (root.isNum) res.add(Integer.parseInt(sb.toString()));
+        <span class="hljs-keyword">for</span> (Map.Entry&lt;Character, TrieNode&gt; e : root.map.entrySet()) {
+            sb.append(e.getKey());
+            lexicalOrder(e.getValue(), sb, res);
+            sb.deleteCharAt(sb.length() - <span class="hljs-number">1</span>);
+        }
+    }
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">lexicalOrder</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    TrieNode root = <span class="hljs-keyword">new</span> TrieNode();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) root.insert(i);
+    root.lexicalOrder(root, <span class="hljs-keyword">new</span> StringBuilder(), res);
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h3>
+<ul>
+<li>&#x53EA;&#x6709;&#x65B9;&#x6CD5;1&#x662F;&#x7B26;&#x5408;&#x9898;&#x610F;&#x7684;O(1)&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;</li>
+</ul>
 <h2 id="752-&#x6253;&#x5F00;&#x8F6C;&#x76D8;&#x9501;"><a href="https://leetcode-cn.com/problems/open-the-lock/" target="_blank">752. &#x6253;&#x5F00;&#x8F6C;&#x76D8;&#x9501;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x53CC;&#x5411;bfs">&#x65B9;&#x6CD5;1:&#x53CC;&#x5411;BFS</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">openLock</span><span class="hljs-params">(String[] deadends, String target)</span> </span>{
@@ -1857,7 +1968,7 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.1","depth":2,"next":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-07T01:02:17.157Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-15T03:05:58.371Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.1","depth":2,"next":{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"搜索","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"扫描线","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.8","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-18T01:00:16.142Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-22T00:18:04.462Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

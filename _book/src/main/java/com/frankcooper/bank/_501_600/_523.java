@@ -43,6 +43,9 @@ public class _523 {
             _2nd handler = new _2nd();
             int[] nums = {2, 4, 3};
             int k = 6;
+//            Assert.assertTrue(handler.checkSubarraySum(nums, k));
+            nums = new int[]{2, 2, 2, 2};
+            k = 4;
             Assert.assertTrue(handler.checkSubarraySum(nums, k));
         }
 
