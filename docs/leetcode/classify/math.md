@@ -54,6 +54,61 @@ public int countNumbersWithUniqueDigits(int n) {
 }
 ```
 
+
+
+
+
+## [396. 旋转函数](https://leetcode-cn.com/problems/rotate-function/)
+
+- `F(0) = 0 * A[0] + 1 * A[1] + 2 * A[2] +...+ i * A[i] +...+ (n - 1) * A[n - 1]`
+- `F(1) = 0 * A[n - 1] + 1 * A[0] + 2 * A[1] +...+ (i + 1) * A[i] +...+ (n - 1) * A[n - 2]`
+
+错位相减，拿`F(1)`中的第二位减去`F(0)`中的第一位
+
+`F(1)-F(0)=0 * A[n - 1] + (1 * A[0]-0 * A[0]) + (2 * A[1]-1 * A[1]) +...+ ((i + 1) * A[i]-i * A[i]) +...+ ((n - 1) * A[n - 2] -(n - 2) * A[n - 2])-(n - 1) * A[n - 1]`
+
+整理得到 
+
+`F(1)-F(0)= A[0]+A[1]+...+A[i]+...A[n-2]-(n-1)A[n-1]`
+
+多配一个`A[n-1]`
+
+`F(1)-F(0)= A[0]+A[1]+...+A[i]+...A[n-2]+A[n-1]-  n* A[n-1]`
+
+`F(1)-F(0)= sum{A[0]:A[n-1]}-  n* A[n-1]`
+
+推广到一般情况，`A[n-1]`换成`A[n-k]`
+
+`F(k+1)-F(k)= sum{A[0]:A[n-1]}-n*A[n-k]`
+
+```java
+        public int maxRotateFunction(int[] nums) {
+            int n = nums.length, sum = 0;
+            int t = 0;
+            for (int i = 0; i < n; i++) {
+                sum += nums[i];
+                t += i * nums[i];
+            }
+            int res = t;
+            for (int i = 1; i < n; i++) {
+                int nxt = t + sum - n * nums[n - i];
+                res = Math.max(res, nxt);
+                t = nxt;
+            }
+            return res;
+        }
+```
+
+
+
+
+
+
+
+
+
+
+
 ## [479. 最大回文数乘积](https://leetcode-cn.com/problems/largest-palindrome-product/)
 
 ```java
@@ -95,4 +150,31 @@ public int largestPalindrome(int n) {
 
 
 
+
+## [2121. 相同元素的间隔之和](https://leetcode-cn.com/problems/intervals-between-identical-elements/)
+
+
+
+```java
+public long[] getDistances(int[] arr) {
+    // k: arr[i] v: i
+    Map<Integer, List<Integer>> map = new HashMap<>();
+    for (int i = 0; i < arr.length; i++) {
+        List<Integer> list = map.getOrDefault(arr[i], new ArrayList<>());
+        list.add(i);
+        map.put(arr[i], list);
+    }
+    long[] intervals = new long[arr.length];
+    for (List<Integer> ls : map.values()) {
+        long sum = 0;
+        for (int index : ls) sum += index - ls.get(0);
+        intervals[ls.get(0)] = sum;
+        for (int i = 1; i < ls.size(); i++) {
+            sum += (2 * i - ls.size()) * (ls.get(i) - ls.get(i - 1));
+            intervals[ls.get(i)] = sum;
+        }
+    }
+    return intervals;
+}
+```
 
