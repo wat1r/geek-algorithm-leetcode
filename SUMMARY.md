@@ -24,9 +24,11 @@
   * [博弈问题](/docs/leetcode/classify/game_problem.md)
   * [位运算](/docs/leetcode/classify/bit.md)
   * [数学](/docs/leetcode/classify/math.md)
+  * [计算几何](/docs/leetcode/classify/computational_geometry.md)
+  
   * [扫描线](/docs/leetcode/classify/sweep_line.md)
   * [剑指Offer(leetcode)](/docs/leetcode/swordoffer/swordoffer.md)
-
+  
 * 比赛
 
   * [力扣周赛](/docs/contest/leetcode_weekly.md)
