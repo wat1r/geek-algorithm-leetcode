@@ -116,7 +116,7 @@ public boolean hasAlternatingBits(int n) {
 
 - 其中step1的操作:
 
-![image-20220405094541146](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220405094541146.png)
+![](/imgs/leetcode/classify/image-20220405094541146.png)
 
 ```java
 统计二进制1的个数可以分别获取每个二进制位数，然后再统计其1的个数，此方法效率比较低。这里介绍另外一种高效的方法，同样以 34520 为例，我们计算其 a &= (a-1)的结果：
@@ -241,9 +241,41 @@ public int[] count(int x) {
 
 
 
+
+
+## [868. 二进制间距](https://leetcode-cn.com/problems/binary-gap/)
+
+![](/imgs/leetcode/classify/image-20220424070227853.png)
+
+```java
+public int binaryGap(int n) {
+    //前一个为1的位置的索引，当前的索引
+    int prev = -1, cur = 0;
+    int gap = 0;
+    while (n > 0) {
+        //记录下当前位为1的索引，如果满足更新gap的条件，开始更新
+        if ((n & 1) == 1) {
+            if (prev != -1) gap = Math.max(gap, cur - prev);
+            prev = cur;
+        }
+        n >>= 1;//向右移位，去掉一位
+        PrintUtils.toBinaryString(n,8);
+        cur++;//当前位+1
+    }
+    return gap;
+}
+```
+
+
+
+
+
 ### 扩展阅读
 
-\- [【阿飞算法】图解693交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/solution/a-fei-suan-fa-by-a-fei-8-es27/)
 
-\- [【阿飞算法】面试题 01.01. 判定字符是否唯一（位运算图解，附位运算链接）](https://leetcode-cn.com/problems/is-unique-lcci/solution/by-a-fei-8-pqij/)
+- 更加详细的位操作技巧，阅读[**位运算操作常见技巧**](https://blog.csdn.net/wat1r/article/details/114298873)（100+收藏，5K阅读）
 
+- [【阿飞算法】图解804唯一摩尔斯密码词(Hash/位运算)](https://leetcode-cn.com/problems/unique-morse-code-words/solution/by-a-fei-8-1p1x/)
+- [【阿飞算法】图解762.二进制表示中质数个计算置位](https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/by-a-fei-8-ucsg)
+- [【阿飞算法】图解693交替位二进制数](https://leetcode-cn.com/problems/binary-number-with-alternating-bits/solution/a-fei-suan-fa-by-a-fei-8-es27/)
+- [【阿飞算法】面试题 01.01. 判定字符是否唯一（位运算图解，附位运算链接）](https://leetcode-cn.com/problems/is-unique-lcci/solution/by-a-fei-8-pqij/)
