@@ -199,7 +199,7 @@ public class CommonFunction {
             int mid = begin + (end - begin) / 2;
             if (arr[mid] <= tar)
                 begin = mid + 1;
-            else if (arr[mid] < tar)
+            else if (arr[mid] > tar)
                 end = mid;
         }
         return begin;

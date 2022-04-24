@@ -163,6 +163,91 @@ public boolean checkSubarraySum(int[] nums, int k) {
     }
 ```
 
+## 差分数组
+
+### 定义
+
+> **对于一个长度大小为n的数组arr[n] 我们可以建立他的差分数组f[n]。其中f[i] = arr[i] - arr[i-1]。  例如 f[2] = arr[2] - arr[1]。**
+
+### 性质
+
+(1) 可通过差分数组计算arr[i]的值：
+	arr[i] = f[i] + f[i-1] + ... + f[0]  或 arr[i] = f[i] + arr[i-1]
+(2) 计算数组每一项的前缀和：
+	这里简单解释一下： 如果要求sum2 则sum2 = arr[0] + arr[1] + arr[2] 
+	而每个arr[i] = f[i] + f[i-1] + ... + f[0]  故 sum2的求解中 f[0]出现3次 f[1]出现2次 f[2] 1次
+	故sum[2] = 3 * f[0] + 2 * f[1] + 1 * f[2]
+
+### 用途
+
+(1) 区间快速加减操作：
+	假如现在对数列中区间[L,R]上的数加上x，我们通过性质(1)知道，第一个受影响的差分数组中的元素为f[L],
+即令f[L]+=x，那么后面数列元素在计算过程中都会加上x；最后一个受影响的差分数组中的元素为f[R],
+所以令f[R+1]-=x，即可保证不会影响到R以后数列元素的计算。这样我们不必对区间内每一个数进行处理，
+只需处理两个差分后的数即可。
+(2) 询问区间和
+	求区间[l, r]的和即为 sum[R] - sum[L-1] 
+
+
+
+
+
+
+
+## [1094. 拼车](https://leetcode-cn.com/problems/car-pooling/)
+
+- 差分
+
+```java
+        public boolean carPooling(int[][] trips, int capacity) {
+            int n = 1010;
+            int[] d = new int[n];
+            for (int[] t : trips) {
+                d[t[1]] += t[0];
+                d[t[2]] -= t[0];
+            }
+            for (int i = 0; i < n - 1; i++) {
+                if (d[i] > capacity) return false;
+                d[i + 1] += d[i];
+            }
+            return true;
+        }
+```
+
+
+
+
+
+## [1109. 航班预订统计](https://leetcode-cn.com/problems/corporate-flight-bookings/)
+
+- 差分数组模板题
+
+```java
+public int[] corpFlightBookings(int[][] bookings, int n) {
+    //差分数组
+    int[] d = new int[n + 1];
+    for (int[] b : bookings) {
+        int l = b[0] - 1, r = b[1] - 1, v = b[2];
+        d[l] += v;
+        d[r + 1] -= v;
+    }
+    int[] res = new int[n];
+    res[0] = d[0];
+    for (int i = 1; i < n; i++) res[i] = res[i - 1] + d[i];
+    return res;
+}
+```
+
+
+
+## 1674. 使数组互补的最少操作数
+
+- 差分
+
+
+
+
+
 ## [1685. 有序数组中差绝对值之和](https://leetcode-cn.com/problems/sum-of-absolute-differences-in-a-sorted-array/)
 
 - 2121题的简化版本
@@ -247,3 +332,13 @@ public long[] getDistances(int[] arr) {
     return intervals;
 }
 ```
+
+
+
+
+
+### Reference
+
+- [STUACM-算法入门-前缀和与差分(含二维)](https://www.bilibili.com/video/BV1pi4y1j7si?p=2)
+
+- [其他「区间求和」问题](https://leetcode-cn.com/problems/corporate-flight-bookings/solution/gong-shui-san-xie-yi-ti-shuang-jie-chai-fm1ef/)
