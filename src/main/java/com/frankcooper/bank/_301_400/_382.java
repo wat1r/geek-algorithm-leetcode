@@ -76,6 +76,28 @@ public class _382 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        class Solution {
+            ListNode head;
+            Random random;
+
+            public Solution(ListNode head) {
+                this.head = head;
+                this.random = new Random();
+            }
+
+            public int getRandom() {
+                ListNode cur = head;
+                int i = 1;
+                int reserve = 0;
+                while (cur != null) {
+                    if (random.nextInt(i) == 0) reserve = cur.val;
+                    cur = cur.next;
+                    i++;
+                }
+                return reserve;
+            }
+        }
     }
 
     static class _4th {

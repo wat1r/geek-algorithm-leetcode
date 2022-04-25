@@ -55,6 +55,36 @@ for (int i = m; i < dataStream.length; i++)
 
 ### 方法1：蓄水池抽样
 
+```java
+class Solution {
+    ListNode head;
+    Random random;
+
+    public Solution(ListNode head) {
+        this.head = head;
+        this.random = new Random();
+    }
+
+    public int getRandom() {
+        ListNode cur = head;
+        int i = 1;
+        int reserve = 0;
+        while (cur != null) {
+            if (random.nextInt(i) == 0) reserve = cur.val;
+            cur = cur.next;
+            i++;
+        }
+        return reserve;
+    }
+}
+```
+
+## [384. 打乱数组](https://leetcode-cn.com/problems/shuffle-an-array/)
+
+
+
+
+
 
 
 ## [398. 随机数索引](https://leetcode-cn.com/problems/random-pick-index/)
@@ -115,6 +145,18 @@ class Solution {
 
 
 
+
+
+## [470. 用 Rand7() 实现 Rand10()](https://leetcode-cn.com/problems/implement-rand10-using-rand7/)
+
+
+
+
+
+
+
+
+
 ## Reference
 
 - [蓄水池抽样算法（Reservoir Sampling）](https://www.jianshu.com/p/7a9ea6ece2af)
@@ -122,3 +164,4 @@ class Solution {
 - [【经典算法题】蓄水池抽样算法](https://www.bilibili.com/video/BV17i4y1j7wE?spm_id_from=333.337.search-card.all.click)
 
 - [【白纸推导】蓄水池采样](https://www.bilibili.com/video/BV16K4y1T7J9?spm_id_from=333.337.search-card.all.click)
+- [蓄水池抽样算法](https://leetcode-cn.com/problems/linked-list-random-node/solution/xu-shui-chi-chou-yang-suan-fa-by-idouble-g7y9/)

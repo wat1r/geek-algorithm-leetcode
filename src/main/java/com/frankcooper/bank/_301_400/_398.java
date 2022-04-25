@@ -73,8 +73,7 @@ public class _398 {
                         //统计target遇到的次数
                         cnt++;// 第 cnt 次遇到 target
                         //同一个数字的频数1/n的概率选出其中一个索引
-                        int r = random.nextInt(cnt);
-                        if (r == 0) {
+                        if (random.nextInt(cnt) == 0) {
                             res = i;
                         }
                     }
