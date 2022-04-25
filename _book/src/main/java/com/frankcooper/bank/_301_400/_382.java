@@ -46,6 +46,29 @@ public class _382 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+        class Solution {
+            ListNode head;
+            Random random;
+
+            public Solution(ListNode head) {
+                this.head = head;
+                this.random = new Random();
+            }
+
+            public int getRandom() {
+                ListNode cur = head;
+                int cnt = 0;
+                int reserve = 0;
+                while (cur != null) {
+                    cnt++;
+                    if (random.nextInt(cnt) == 0) reserve = cur.val;
+                    cur = cur.next;
+                }
+                return reserve;
+            }
+        }
     }
 
 

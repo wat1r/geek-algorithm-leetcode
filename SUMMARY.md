@@ -27,6 +27,8 @@
   * [计算几何](/docs/leetcode/classify/computational_geometry.md)
   
   * [扫描线](/docs/leetcode/classify/sweep_line.md)
+  * [随机化](/docs/leetcode/classify/randomization.md)
+  
   * [剑指Offer(leetcode)](/docs/leetcode/swordoffer/swordoffer.md)
   
 * 比赛
