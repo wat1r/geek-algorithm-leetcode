@@ -165,3 +165,5 @@ class Solution {
 
 - [【白纸推导】蓄水池采样](https://www.bilibili.com/video/BV16K4y1T7J9?spm_id_from=333.337.search-card.all.click)
 - [蓄水池抽样算法](https://leetcode-cn.com/problems/linked-list-random-node/solution/xu-shui-chi-chou-yang-suan-fa-by-idouble-g7y9/)
+
+- [水塘抽样](https://zh.wikipedia.org/wiki/%E6%B0%B4%E5%A1%98%E6%8A%BD%E6%A8%A3)
