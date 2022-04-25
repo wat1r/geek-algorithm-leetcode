@@ -8,6 +8,36 @@
 
 
 
+## [304. 二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)
+
+### 方法1：二维前缀和
+
+```java
+class NumMatrix {
+
+    int[][] preSum;
+
+    public NumMatrix(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        preSum = new int[m + 1][n + 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                preSum[i + 1][j + 1] = preSum[i + 1][j] + preSum[i][j + 1] - preSum[i][j] + matrix[i][j];
+            }
+        }
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        return preSum[row2 + 1][col2 + 1] - preSum[row2 + 1][col1]
+                - preSum[row1][col2 + 1] + preSum[row1][col1];
+    }
+}
+```
+
+
+
+
+
 
 
 
@@ -187,6 +217,26 @@ public boolean checkSubarraySum(int[] nums, int k) {
 只需处理两个差分后的数即可。
 (2) 询问区间和
 	求区间[l, r]的和即为 sum[R] - sum[L-1] 
+
+
+
+### 差分
+
+差分是一种和前缀和相对的策略，可以当做是求和的逆运算。
+
+这种策略的定义是令  $ b_i=\begin{cases}
+a_i-a_{i-1},\quad i\in [2,n]\\
+1, \quad i=1
+\end{cases} $
+
+简单性质：
+
+-  $a_i$的值是$b_i$的前缀和，即 $ a_i= \sum_{i=1}^n b_i $
+-  计算 的前缀和 $ sum= \sum_{i=1}^n a_i =\sum_{i=1}^n\sum_{j=1}^i b_i =\sum_{i=1}^n (n-i+1)b_i  $
+
+它可以维护多次对序列的一个区间加上一个数，并在最后询问某一位的数或是多次询问某一位的数。注意修改操作一定要在查询操作之前。
+
+
 
 
 
