@@ -51,11 +51,33 @@ public class _304 {
                         s[i + 1][j + 1] = s[i + 1][j] + s[i][j + 1] - s[i][j] + matrix[i][j];
                     }
                 }
-                PrintUtils.printMatrix(s);
+//                PrintUtils.printMatrix(s);
             }
 
             public int sumRegion(int r1, int c1, int r2, int c2) {
-                return s[r2 + 1][c2 + 1] - s[r1 + 1][c2] - s[r2][c1 + 1] + s[r1][c1];
+                return s[r2 + 1][c2 + 1] - s[r2 + 1][c1] - s[r1][c2 + 1] + s[r1][c1];
+            }
+        }
+    }
+
+    static class _3rd {
+        class NumMatrix {
+
+            int[][] preSum;
+
+            public NumMatrix(int[][] matrix) {
+                int m = matrix.length, n = matrix[0].length;
+                preSum = new int[m + 1][n + 1];
+                for (int i = 0; i < m; i++) {
+                    for (int j = 0; j < n; j++) {
+                        preSum[i + 1][j + 1] = preSum[i + 1][j] + preSum[i][j + 1] - preSum[i][j] + matrix[i][j];
+                    }
+                }
+            }
+
+            public int sumRegion(int row1, int col1, int row2, int col2) {
+                return preSum[row2 + 1][col2 + 1] - preSum[row2 + 1][col1]
+                        - preSum[row1][col2 + 1] + preSum[row1][col1];
             }
         }
     }

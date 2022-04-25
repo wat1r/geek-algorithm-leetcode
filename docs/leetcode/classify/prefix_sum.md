@@ -8,6 +8,32 @@
 
 
 
+
+
+
+
+## [303. 区域和检索 - 数组不可变](https://leetcode-cn.com/problems/range-sum-query-immutable/)
+
+
+
+```java
+class NumArray {
+
+    int[] pre;
+
+    public NumArray(int[] nums) {
+        pre = new int[nums.length + 1];
+        for (int i = 0; i < nums.length; i++) pre[i + 1] = pre[i] + nums[i];
+    }
+
+    public int sumRange(int left, int right) {
+        return pre[right + 1] - pre[left];
+    }
+}
+```
+
+
+
 ## [304. 二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)
 
 ### 方法1：二维前缀和
@@ -290,6 +316,72 @@ public int[] corpFlightBookings(int[][] bookings, int n) {
 
 
 
+## [1480. 一维数组的动态和](https://leetcode-cn.com/problems/running-sum-of-1d-array/)
+
+### 方法1：前缀和
+
+```java
+    public int[] runningSum(int[] nums) {
+        int n = nums.length;
+        int[] pre = new int[n];
+        pre[0] = nums[0];
+        for(int i =1;i<n;i++) pre[i] =pre[i-1]+nums[i];
+        return pre;
+    }
+```
+
+## [1524. 和为奇数的子数组数目](https://leetcode-cn.com/problems/number-of-sub-arrays-with-odd-sum/)
+
+### 方法1：前缀和+数学
+
+- 选出一个奇数的前缀和一个偶数的前缀和，相减一定得到一个奇数，多少个奇数 * 多少个偶数 = 方案数
+- 加上单独拉拉出来的奇数的前缀和的数量
+
+
+
+```java
+public int numOfSubarrays(int[] arr) {
+    int MOD = (int) 1e9 + 7;
+    long ans = 0;
+    int n = arr.length;
+    int[] pre = new int[n + 1];
+    long odd = 0, even = 0;//奇数的个数，偶数的个数
+    for (int i = 0; i < n; i++) {
+        pre[i + 1] = pre[i] + arr[i];
+        if ((pre[i + 1] % 2) == 1) odd++;
+        else even++;
+    }
+    ans = (odd * even) % MOD + odd;
+    return (int) ans % MOD;
+}
+```
+
+- 另一种写法
+
+```java
+public int numOfSubarrays(int[] arr) {
+    final int MOD = (int) 1e9 + 7;
+    int odd = 0, even = 1;
+    int res = 0;
+    int sum = 0;
+    int length = arr.length;
+    for (int i = 0; i < length; i++) {
+        sum += arr[i];
+        res = (res + (sum % 2 == 0 ? odd : even)) % MOD;
+        if (sum % 2 == 0) {
+            even++;
+        } else {
+            odd++;
+        }
+    }
+    return res;
+}
+```
+
+
+
+
+
 ## 1674. 使数组互补的最少操作数
 
 - 差分
@@ -322,6 +414,96 @@ public int[] getSumAbsoluteDifferences(int[] nums) {
 ```
 
 
+
+
+
+## [1738. 找出第 K 大的异或坐标值](https://leetcode-cn.com/problems/find-kth-largest-xor-coordinate-value/)
+
+### 方法1：前缀和+排序
+
+```java
+public int kthLargestValue(int[][] matrix, int k) {
+    int R = matrix.length, C = matrix[0].length;
+    int[][] arr = new int[R + 1][C + 1];
+    PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> o2 - o1);
+    for (int i = 1; i <= R; i++) {
+        for (int j = 1; j <= C; j++) {
+            arr[i][j] = arr[i - 1][j - 1] ^ arr[i - 1][j] ^ arr[i][j - 1] ^ matrix[i - 1][j - 1];
+            pq.offer(arr[i][j]);
+        }
+    }
+    while (k-- > 1) pq.poll();
+    return pq.peek();
+}
+```
+
+- 另外一种写法
+
+```java
+public int kthLargestValue(int[][] matrix, int k) {
+    int m = matrix.length, n = matrix[0].length;
+    int[][] pre = new int[m + 1][n + 1];
+    List<Integer> list = new ArrayList<>();
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            pre[i][j] = pre[i - 1][j] ^ pre[i][j - 1] ^ pre[i - 1][j - 1] ^ matrix[i - 1][j - 1];
+            list.add(pre[i][j]);
+        }
+    }
+    Collections.sort(list, (a, b) -> b - a);
+    return list.get(k - 1);
+}
+```
+
+### 方法2：前缀和+快排
+
+```java
+public int kthLargestValue(int[][] matrix, int k) {
+    int m = matrix.length, n = matrix[0].length;
+    int[][] pre = new int[m + 1][n + 1];
+    List<Integer> results = new ArrayList<Integer>();
+    for (int i = 1; i <= m; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            pre[i][j] = pre[i - 1][j] ^ pre[i][j - 1] ^ pre[i - 1][j - 1] ^ matrix[i - 1][j - 1];
+            results.add(pre[i][j]);
+        }
+    }
+
+    nthElement(results, 0, k - 1, results.size() - 1);
+    return results.get(k - 1);
+}
+
+public void nthElement(List<Integer> results, int left, int kth, int right) {
+    if (left == right) {
+        return;
+    }
+    int pivot = (int) (left + Math.random() * (right - left + 1));
+    swap(results, pivot, right);
+    // 三路划分（three-way partition）
+    int sepl = left - 1, sepr = left - 1;
+    for (int i = left; i <= right; i++) {
+        if (results.get(i) > results.get(right)) {
+            swap(results, ++sepr, i);
+            swap(results, ++sepl, sepr);
+        } else if (results.get(i) == results.get(right)) {
+            swap(results, ++sepr, i);
+        }
+    }
+    if (sepl < left + kth && left + kth <= sepr) {
+        return;
+    } else if (left + kth <= sepl) {
+        nthElement(results, left, kth, sepl);
+    } else {
+        nthElement(results, sepr + 1, kth - (sepr - left + 1), right);
+    }
+}
+
+public void swap(List<Integer> results, int index1, int index2) {
+    int temp = results.get(index1);
+    results.set(index1, results.get(index2));
+    results.set(index2, temp);
+}
+```
 
 
 
