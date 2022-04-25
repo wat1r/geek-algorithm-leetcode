@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>排序 · GitBook</title>
+        <title>前缀和与差分 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="simulation.html" />
+    <link rel="next" href="sorting.html" />
     
     
-    <link rel="prev" href="prefix_sum.html" />
+    <link rel="prev" href="array.html" />
     
 
     </head>
@@ -168,7 +168,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.5" data-path="prefix_sum.html">
+        <li class="chapter active" data-level="1.2.5" data-path="prefix_sum.html">
             
                 <a href="prefix_sum.html">
             
@@ -181,7 +181,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.6" data-path="sorting.html">
+        <li class="chapter " data-level="1.2.6" data-path="sorting.html">
             
                 <a href="sorting.html">
             
@@ -889,7 +889,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >排序</a>
+        <a href="../../.." >前缀和与差分</a>
     </h1>
 </div>
 
@@ -904,48 +904,253 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x6392;&#x5E8F;">&#x6392;&#x5E8F;</h1>
-<blockquote>
+                                <blockquote>
 </blockquote>
-<h2 id="912-&#x6392;&#x5E8F;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/sort-an-array/" target="_blank">912. &#x6392;&#x5E8F;&#x6570;&#x7EC4;</a></h2>
-<h3 id="&#x65B9;&#x6CD5;1&#x5FEB;&#x6392;">&#x65B9;&#x6CD5;1:&#x5FEB;&#x6392;</h3>
-<pre><code class="lang-java">  <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] sortArray(<span class="hljs-keyword">int</span>[] nums) {
-            <span class="hljs-keyword">return</span> quickSort(nums, <span class="hljs-number">0</span>, nums.length - <span class="hljs-number">1</span>);
-
-        }
-
-
-        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] quickSort(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right) {
-            <span class="hljs-keyword">if</span> (left &lt; right) {
-                <span class="hljs-keyword">int</span> pId = parition(nums, left, right);
-                quickSort(nums, left, pId - <span class="hljs-number">1</span>);
-                quickSort(nums, pId + <span class="hljs-number">1</span>, right);
-            }
-            <span class="hljs-keyword">return</span> nums;
-        }
-
-        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">parition</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
-            <span class="hljs-keyword">int</span> pivot = left;
-            <span class="hljs-keyword">int</span> index = pivot + <span class="hljs-number">1</span>;
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = index; i &lt;= right; i++) {
-                <span class="hljs-keyword">if</span> (nums[i] &lt; nums[pivot]) {
-                    swap(nums, i, index);
-                    index++;
+<p><img src="../../../Users/frankcooper/Library/Application Support/typora-user-images/image-20220422073930902.png" alt="image-20220422073930902"></p>
+<h2 id="525-&#x8FDE;&#x7EED;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/contiguous-array/" target="_blank">525. &#x8FDE;&#x7EED;&#x6570;&#x7EC4;</a></h2>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findMaxLength</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-comment">//0 &#x76F8;&#x5F53;&#x4E8E;-1 -1 +1 cnt&#x503C;&#x7EF4;&#x6301;&#x5728;0&#x9644;&#x8FD1;&#x6CE2;&#x52A8;</span>
+            <span class="hljs-comment">//k &#x8868;&#x793A;&#x8BA1;&#x6570;0&#x7684;&#x6B21;&#x6570;&#xFF0C;v&#x8868;&#x793A;&#x5F53;&#x524D;&#x8BA1;&#x6570;&#x4E0B;&#xFF0C;0&#x7684;&#x6700;&#x65E9;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;</span>
+            <span class="hljs-comment">//&#x54C8;&#x5E0C;&#x8868;&#x8868;&#x793A;&#x6BCF;&#x4E00;&#x4E2A;&#x524D;&#x7F00;&#x548C;&#x7B2C;&#x4E00;&#x6B21;&#x51FA;&#x73B0;&#x65F6;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;</span>
+            Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, cnt = <span class="hljs-number">0</span>;
+            map.put(<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">if</span> (nums[i] == <span class="hljs-number">1</span>) cnt++;
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[i] == <span class="hljs-number">0</span>) cnt--;
+                <span class="hljs-keyword">if</span> (map.containsKey(cnt)) {
+                    <span class="hljs-keyword">int</span> prev = map.get(cnt);
+                    res = Math.max(res, i - prev);
+                } <span class="hljs-keyword">else</span> {
+                    map.put(cnt, i);
                 }
             }
-            swap(nums, pivot, index - <span class="hljs-number">1</span>);
-            <span class="hljs-keyword">return</span> index - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">return</span> res;
         }
+</code></pre>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findMaxLength</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, n = nums.length;
+    <span class="hljs-keyword">int</span>[] preSum = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        preSum[i + <span class="hljs-number">1</span>] = preSum[i] + (nums[i] == <span class="hljs-number">0</span> ? -<span class="hljs-number">1</span> : <span class="hljs-number">1</span>);
+    }
+    Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">if</span> (map.containsKey(preSum[i])) {
+            res = Math.max(res, i - map.get(preSum[i]));
+        } <span class="hljs-keyword">else</span> {
+            map.put(preSum[i], i);
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="560-&#x548C;&#x4E3A;-k-&#x7684;&#x5B50;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/subarray-sum-equals-k/" target="_blank">560. &#x548C;&#x4E3A; K &#x7684;&#x5B50;&#x6570;&#x7EC4;</a></h2>
+<h4 id="&#x65B9;&#x6CD5;1&#x524D;&#x7F00;&#x548C;hash">&#x65B9;&#x6CD5;1:&#x524D;&#x7F00;&#x548C;+Hash</h4>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subarraySum</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//k&#xFF1A;&#x5B58;&#x50A8;&#x7684;&#x662F;&#x524D;&#x7F00;&#x548C; [0...i]&#x7684;&#x5143;&#x7D20;&#x7684;&#x524D;&#x7F00;&#x548C;&#xFF0C;v:&#x8BE5;&#x524D;&#x7F00;&#x548C;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+    Map&lt;Integer, Integer&gt; dict = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    dict.put(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> preSum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+        preSum += nums[i];
+        <span class="hljs-comment">//preSum[i]-preSum[j] =k &#x76F8;&#x5F53;&#x4E8E;&#x5728;[0...i]&#x4E2D;&#x627E;&#x6709;&#x591A;&#x5C11;&#x4E2A;j&#x6EE1;&#x8DB3;&#x6761;&#x4EF6;</span>
+        <span class="hljs-keyword">int</span> t = preSum - k;
+        <span class="hljs-keyword">if</span> (dict.containsKey(t)) res += dict.get(t);
+        dict.put(preSum, dict.getOrDefault(preSum, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="523-&#x8FDE;&#x7EED;&#x7684;&#x5B50;&#x6570;&#x7EC4;&#x548C;"><a href="https://leetcode-cn.com/problems/continuous-subarray-sum/" target="_blank">523. &#x8FDE;&#x7EED;&#x7684;&#x5B50;&#x6570;&#x7EC4;&#x548C;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">checkSubarraySum</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">int</span>[] preSum = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-comment">//k&#x5B58;&#x50A8;&#x7684;&#x662F;preSum[i]%k&#x7684;&#x503C;&#xFF0C;v&#x662F;&#x4E0B;&#x6807;&#x7D22;&#x5F15;</span>
+    Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        preSum[i] = preSum[i - <span class="hljs-number">1</span>] + nums[i - <span class="hljs-number">1</span>];
+        map.put(preSum[i] % k, i - <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">int</span> t = preSum[i] % k;
+        <span class="hljs-comment">//&#x5B58;&#x7684;&#x662F;&#x4E0B;&#x6807; [0,1]&#x8DDD;&#x79BB;&#x4E3A;2 &#x53EF;&#x80FD;&#x4E0B;&#x6807;&#x7684;&#x7ED3;&#x679C;&#x5C0F;</span>
+        <span class="hljs-keyword">if</span> (map.containsKey(t) &amp;&amp; Math.abs(map.get(t) - i + <span class="hljs-number">1</span>) &gt;= <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+}
+</code></pre>
+<h2 id="974-&#x548C;&#x53EF;&#x88AB;-k-&#x6574;&#x9664;&#x7684;&#x5B50;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/subarray-sums-divisible-by-k/" target="_blank">974. &#x548C;&#x53EF;&#x88AB; K &#x6574;&#x9664;&#x7684;&#x5B50;&#x6570;&#x7EC4;</a></h2>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subarraysDivByK</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span> K)</span> </span>{
 
-        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span> </span>{
-            <span class="hljs-keyword">int</span> t = nums[i];
-            nums[i] = nums[j];
-            nums[j] = t;
+        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>, ans = <span class="hljs-number">0</span>, n = A.length;
+        <span class="hljs-keyword">int</span>[] map = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[K];
+        map[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+            sum += A[i - <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">int</span> key = (sum % K + K) % K;
+            ans += map[key];
+            map[key]++;
         }
+        <span class="hljs-keyword">return</span> ans;
+    }
+</code></pre>
+<ul>
+<li>TLE</li>
+</ul>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subarraysDivByK</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span> K)</span> </span>{
+        <span class="hljs-keyword">int</span> n = A.length;
+        <span class="hljs-keyword">int</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            pre[i + <span class="hljs-number">1</span>] = pre[i] + A[i];
+        }
+        <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+                <span class="hljs-keyword">if</span> ((pre[i] - pre[j]) % K == <span class="hljs-number">0</span>) ans++;
+            }
+        }
+        <span class="hljs-keyword">return</span> ans;
+    }
+</code></pre>
+<h2 id="&#x5DEE;&#x5206;&#x6570;&#x7EC4;">&#x5DEE;&#x5206;&#x6570;&#x7EC4;</h2>
+<h3 id="&#x5B9A;&#x4E49;">&#x5B9A;&#x4E49;</h3>
+<blockquote>
+<p><strong>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x957F;&#x5EA6;&#x5927;&#x5C0F;&#x4E3A;n&#x7684;&#x6570;&#x7EC4;arr[n] &#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5EFA;&#x7ACB;&#x4ED6;&#x7684;&#x5DEE;&#x5206;&#x6570;&#x7EC4;f[n]&#x3002;&#x5176;&#x4E2D;f[i] = arr[i] - arr[i-1]&#x3002;  &#x4F8B;&#x5982; f[2] = arr[2] - arr[1]&#x3002;</strong></p>
+</blockquote>
+<h3 id="&#x6027;&#x8D28;">&#x6027;&#x8D28;</h3>
+<p>(1) &#x53EF;&#x901A;&#x8FC7;&#x5DEE;&#x5206;&#x6570;&#x7EC4;&#x8BA1;&#x7B97;arr[i]&#x7684;&#x503C;&#xFF1A;
+    arr[i] = f[i] + f[i-1] + ... + f[0]  &#x6216; arr[i] = f[i] + arr[i-1]
+(2) &#x8BA1;&#x7B97;&#x6570;&#x7EC4;&#x6BCF;&#x4E00;&#x9879;&#x7684;&#x524D;&#x7F00;&#x548C;&#xFF1A;
+    &#x8FD9;&#x91CC;&#x7B80;&#x5355;&#x89E3;&#x91CA;&#x4E00;&#x4E0B;&#xFF1A; &#x5982;&#x679C;&#x8981;&#x6C42;sum2 &#x5219;sum2 = arr[0] + arr[1] + arr[2] 
+    &#x800C;&#x6BCF;&#x4E2A;arr[i] = f[i] + f[i-1] + ... + f[0]  &#x6545; sum2&#x7684;&#x6C42;&#x89E3;&#x4E2D; f[0]&#x51FA;&#x73B0;3&#x6B21; f[1]&#x51FA;&#x73B0;2&#x6B21; f[2] 1&#x6B21;
+    &#x6545;sum[2] = 3 <em> f[0] + 2 </em> f[1] + 1 * f[2]</p>
+<h3 id="&#x7528;&#x9014;">&#x7528;&#x9014;</h3>
+<p>(1) &#x533A;&#x95F4;&#x5FEB;&#x901F;&#x52A0;&#x51CF;&#x64CD;&#x4F5C;&#xFF1A;
+    &#x5047;&#x5982;&#x73B0;&#x5728;&#x5BF9;&#x6570;&#x5217;&#x4E2D;&#x533A;&#x95F4;[L,R]&#x4E0A;&#x7684;&#x6570;&#x52A0;&#x4E0A;x&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x8FC7;&#x6027;&#x8D28;(1)&#x77E5;&#x9053;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x53D7;&#x5F71;&#x54CD;&#x7684;&#x5DEE;&#x5206;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x4E3A;f[L],
+&#x5373;&#x4EE4;f[L]+=x&#xFF0C;&#x90A3;&#x4E48;&#x540E;&#x9762;&#x6570;&#x5217;&#x5143;&#x7D20;&#x5728;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x4E2D;&#x90FD;&#x4F1A;&#x52A0;&#x4E0A;x&#xFF1B;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53D7;&#x5F71;&#x54CD;&#x7684;&#x5DEE;&#x5206;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x4E3A;f[R],
+&#x6240;&#x4EE5;&#x4EE4;f[R+1]-=x&#xFF0C;&#x5373;&#x53EF;&#x4FDD;&#x8BC1;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5230;R&#x4EE5;&#x540E;&#x6570;&#x5217;&#x5143;&#x7D20;&#x7684;&#x8BA1;&#x7B97;&#x3002;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x4E0D;&#x5FC5;&#x5BF9;&#x533A;&#x95F4;&#x5185;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;
+&#x53EA;&#x9700;&#x5904;&#x7406;&#x4E24;&#x4E2A;&#x5DEE;&#x5206;&#x540E;&#x7684;&#x6570;&#x5373;&#x53EF;&#x3002;
+(2) &#x8BE2;&#x95EE;&#x533A;&#x95F4;&#x548C;
+    &#x6C42;&#x533A;&#x95F4;[l, r]&#x7684;&#x548C;&#x5373;&#x4E3A; sum[R] - sum[L-1] </p>
+<h2 id="1094-&#x62FC;&#x8F66;"><a href="https://leetcode-cn.com/problems/car-pooling/" target="_blank">1094. &#x62FC;&#x8F66;</a></h2>
+<ul>
+<li>&#x5DEE;&#x5206;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">carPooling</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] trips, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+            <span class="hljs-keyword">int</span> n = <span class="hljs-number">1010</span>;
+            <span class="hljs-keyword">int</span>[] d = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] t : trips) {
+                d[t[<span class="hljs-number">1</span>]] += t[<span class="hljs-number">0</span>];
+                d[t[<span class="hljs-number">2</span>]] -= t[<span class="hljs-number">0</span>];
+            }
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; i++) {
+                <span class="hljs-keyword">if</span> (d[i] &gt; capacity) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                d[i + <span class="hljs-number">1</span>] += d[i];
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<h2 id="1109-&#x822A;&#x73ED;&#x9884;&#x8BA2;&#x7EDF;&#x8BA1;"><a href="https://leetcode-cn.com/problems/corporate-flight-bookings/" target="_blank">1109. &#x822A;&#x73ED;&#x9884;&#x8BA2;&#x7EDF;&#x8BA1;</a></h2>
+<ul>
+<li>&#x5DEE;&#x5206;&#x6570;&#x7EC4;&#x6A21;&#x677F;&#x9898;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] corpFlightBookings(<span class="hljs-keyword">int</span>[][] bookings, <span class="hljs-keyword">int</span> n) {
+    <span class="hljs-comment">//&#x5DEE;&#x5206;&#x6570;&#x7EC4;</span>
+    <span class="hljs-keyword">int</span>[] d = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] b : bookings) {
+        <span class="hljs-keyword">int</span> l = b[<span class="hljs-number">0</span>] - <span class="hljs-number">1</span>, r = b[<span class="hljs-number">1</span>] - <span class="hljs-number">1</span>, v = b[<span class="hljs-number">2</span>];
+        d[l] += v;
+        d[r + <span class="hljs-number">1</span>] -= v;
+    }
+    <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    res[<span class="hljs-number">0</span>] = d[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) res[i] = res[i - <span class="hljs-number">1</span>] + d[i];
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="1674-&#x4F7F;&#x6570;&#x7EC4;&#x4E92;&#x8865;&#x7684;&#x6700;&#x5C11;&#x64CD;&#x4F5C;&#x6570;">1674. &#x4F7F;&#x6570;&#x7EC4;&#x4E92;&#x8865;&#x7684;&#x6700;&#x5C11;&#x64CD;&#x4F5C;&#x6570;</h2>
+<ul>
+<li>&#x5DEE;&#x5206;</li>
+</ul>
+<h2 id="1685-&#x6709;&#x5E8F;&#x6570;&#x7EC4;&#x4E2D;&#x5DEE;&#x7EDD;&#x5BF9;&#x503C;&#x4E4B;&#x548C;"><a href="https://leetcode-cn.com/problems/sum-of-absolute-differences-in-a-sorted-array/" target="_blank">1685. &#x6709;&#x5E8F;&#x6570;&#x7EC4;&#x4E2D;&#x5DEE;&#x7EDD;&#x5BF9;&#x503C;&#x4E4B;&#x548C;</a></h2>
+<ul>
+<li>2121&#x9898;&#x7684;&#x7B80;&#x5316;&#x7248;&#x672C;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] getSumAbsoluteDifferences(<span class="hljs-keyword">int</span>[] nums) {
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">int</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        t += nums[i];
+        pre[i] = t;
+    }
+    <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">int</span> left = (i + <span class="hljs-number">1</span>) * nums[i] - pre[i];
+        <span class="hljs-keyword">int</span> right = pre[n - <span class="hljs-number">1</span>] - pre[i] - (n - i - <span class="hljs-number">1</span>) * nums[i];
+        res[i] = left + right;
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="2121-&#x76F8;&#x540C;&#x5143;&#x7D20;&#x7684;&#x95F4;&#x9694;&#x4E4B;&#x548C;"><a href="https://leetcode-cn.com/problems/intervals-between-identical-elements/" target="_blank">2121. &#x76F8;&#x540C;&#x5143;&#x7D20;&#x7684;&#x95F4;&#x9694;&#x4E4B;&#x548C;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span>[] getDistances(<span class="hljs-keyword">int</span>[] arr) {
+    <span class="hljs-comment">// k: arr[i] v: i</span>
+    Map&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) {
+        List&lt;Integer&gt; list = map.getOrDefault(arr[i], <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+        list.add(i);
+        map.put(arr[i], list);
+    }
+    <span class="hljs-keyword">long</span>[] intervals = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[arr.length];
+    <span class="hljs-keyword">for</span> (List&lt;Integer&gt; ls : map.values()) {
+        <span class="hljs-keyword">long</span> sum = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> index : ls) sum += index - ls.get(<span class="hljs-number">0</span>);
+        intervals[ls.get(<span class="hljs-number">0</span>)] = sum;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; ls.size(); i++) {
+            sum += (<span class="hljs-number">2</span> * i - ls.size()) * (ls.get(i) - ls.get(i - <span class="hljs-number">1</span>));
+            intervals[ls.get(i)] = sum;
+        }
+    }
+    <span class="hljs-keyword">return</span> intervals;
+}
+</code></pre>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/intervals-between-identical-elements/solution/java-qian-zhui-hou-zhui-he-by-merickbao-mtcpy/" target="_blank">&#x9898;&#x89E3;</a></li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span>[] getDistances(<span class="hljs-keyword">int</span>[] arr) {
+    <span class="hljs-comment">// k: arr[i] v: i</span>
+    Map&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) {
+        List&lt;Integer&gt; list = map.getOrDefault(arr[i], <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+        list.add(i);
+        map.put(arr[i], list);
+    }
+    <span class="hljs-keyword">long</span>[] intervals = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[arr.length];
+    <span class="hljs-keyword">for</span> (Map.Entry&lt;Integer, List&lt;Integer&gt;&gt; e : map.entrySet()) {
+        List&lt;Integer&gt; ls = e.getValue();
+        <span class="hljs-keyword">int</span> m = ls.size();
+        <span class="hljs-keyword">long</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[m];
+        <span class="hljs-keyword">long</span>[] right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[m];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, j = m - <span class="hljs-number">2</span>; i &lt; m; i++, j--) {
+            left[i] = left[i - <span class="hljs-number">1</span>] + i * (ls.get(i) - ls.get(i - <span class="hljs-number">1</span>));
+            right[j] = right[j + <span class="hljs-number">1</span>] + (m - j - <span class="hljs-number">1</span>) * (ls.get(j + <span class="hljs-number">1</span>) - ls.get(j));
+        }
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+            intervals[ls.get(i)] = left[i] + right[i];
+        }
+    }
+    <span class="hljs-keyword">return</span> intervals;
+}
 </code></pre>
 <h3 id="reference">Reference</h3>
 <ul>
-<li><a href="https://www.bilibili.com/video/BV13Y4y1H7j5" target="_blank">&#x52A8;&#x753B;&#x9610;&#x91CA;&#x5404;&#x79CD;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;</a></li>
+<li><p><a href="https://www.bilibili.com/video/BV1pi4y1j7si?p=2" target="_blank">STUACM-&#x7B97;&#x6CD5;&#x5165;&#x95E8;-&#x524D;&#x7F00;&#x548C;&#x4E0E;&#x5DEE;&#x5206;(&#x542B;&#x4E8C;&#x7EF4;)</a></p>
+</li>
+<li><p><a href="https://leetcode-cn.com/problems/corporate-flight-bookings/solution/gong-shui-san-xie-yi-ti-shuang-jie-chai-fm1ef/" target="_blank">&#x5176;&#x4ED6;&#x300C;&#x533A;&#x95F4;&#x6C42;&#x548C;&#x300D;&#x95EE;&#x9898;</a></p>
+</li>
 </ul>
 
                                 
@@ -974,12 +1179,12 @@
 
             
                 
-                <a href="prefix_sum.html" class="navigation navigation-prev " aria-label="Previous page: 前缀和与差分">
+                <a href="array.html" class="navigation navigation-prev " aria-label="Previous page: 数组">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="simulation.html" class="navigation navigation-next " aria-label="Next page: 模拟">
+                <a href="sorting.html" class="navigation navigation-next " aria-label="Next page: 排序">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -990,7 +1195,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"排序","level":"1.2.6","depth":2,"next":{"title":"模拟","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"previous":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sorting.md","mtime":"2022-04-11T04:25:38.346Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-25T01:56:48.349Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-04-25T01:55:31.245Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-25T01:56:48.349Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

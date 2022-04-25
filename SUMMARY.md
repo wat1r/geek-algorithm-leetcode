@@ -8,6 +8,7 @@
   * [数据结构](/docs/leetcode/classify/data_structure.md)
   * [堆栈](/docs/leetcode/classify/heap_stack.md)
   * [数组](/docs/leetcode/classify/array.md)
+  * [前缀和与差分](/docs/leetcode/classify/prefix_sum.md)
   * [排序](/docs/leetcode/classify/sorting.md)
   * [模拟](/docs/leetcode/classify/simulation.md)
   * [字符串](/docs/leetcode/classify/string.md)
@@ -15,9 +16,10 @@
   * [结构设计](/docs/leetcode/classify/structure_design.md)
   * [双指针](/docs/leetcode/classify/two_pointers.md)
   * [滑动窗口](/docs/leetcode/classify/sliding_window.md)
-  * [单调栈](/docs/leetcode/classify/monotonic_stack.md)
 
 * LeetCode-PART2
+  
+  * [单调栈](/docs/leetcode/classify/monotonic_stack.md)
   * [搜索](/docs/leetcode/classify/search.md)
   * [图论](/docs/leetcode/classify/graph.md)
   * [动态规划](/docs/leetcode/classify/dynamic_programing.md)
