@@ -1018,6 +1018,17 @@
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
 }
 </code></pre>
+<h2 id="724-&#x5BFB;&#x627E;&#x6570;&#x7EC4;&#x7684;&#x4E2D;&#x5FC3;&#x4E0B;&#x6807;"><a href="https://leetcode-cn.com/problems/find-pivot-index/" target="_blank">724. &#x5BFB;&#x627E;&#x6570;&#x7EC4;&#x7684;&#x4E2D;&#x5FC3;&#x4E0B;&#x6807;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">pivotIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">int</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) pre[i + <span class="hljs-number">1</span>] = pre[i] + nums[i];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (pre[i] == pre[n] - pre[i + <span class="hljs-number">1</span>]) <span class="hljs-keyword">return</span> i;
+    }
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+}
+</code></pre>
 <h2 id="974-&#x548C;&#x53EF;&#x88AB;-k-&#x6574;&#x9664;&#x7684;&#x5B50;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/subarray-sums-divisible-by-k/" target="_blank">974. &#x548C;&#x53EF;&#x88AB; K &#x6574;&#x9664;&#x7684;&#x5B50;&#x6570;&#x7EC4;</a></h2>
 <pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subarraysDivByK</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] A, <span class="hljs-keyword">int</span> K)</span> </span>{
 
@@ -1117,6 +1128,20 @@ a_i-a</em>{i-1},\quad i\in [2,n]\
     res[<span class="hljs-number">0</span>] = d[<span class="hljs-number">0</span>];
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) res[i] = res[i - <span class="hljs-number">1</span>] + d[i];
     <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="1310-&#x5B50;&#x6570;&#x7EC4;&#x5F02;&#x6216;&#x67E5;&#x8BE2;"><a href="https://leetcode-cn.com/problems/xor-queries-of-a-subarray/" target="_blank">1310. &#x5B50;&#x6570;&#x7EC4;&#x5F02;&#x6216;&#x67E5;&#x8BE2;</a></h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] xorQueries(<span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span>[][] queries) {
+    <span class="hljs-keyword">int</span> n = arr.length;
+    <span class="hljs-keyword">int</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) pre[i + <span class="hljs-number">1</span>] = pre[i] ^ arr[i];
+    <span class="hljs-keyword">int</span> m = queries.length;
+    <span class="hljs-keyword">int</span>[] ans = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+        <span class="hljs-keyword">int</span>[] q = queries[i];
+        ans[i] = pre[q[<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>] ^ pre[q[<span class="hljs-number">0</span>]];
+    }
+    <span class="hljs-keyword">return</span> ans;
 }
 </code></pre>
 <h2 id="1480-&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x7684;&#x52A8;&#x6001;&#x548C;"><a href="https://leetcode-cn.com/problems/running-sum-of-1d-array/" target="_blank">1480. &#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x7684;&#x52A8;&#x6001;&#x548C;</a></h2>
@@ -1376,7 +1401,7 @@ a_i-a</em>{i-1},\quad i\in [2,n]\
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-04-25T13:46:33.604Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-25T13:47:02.667Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-04-25T14:08:03.253Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-25T14:11:59.784Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

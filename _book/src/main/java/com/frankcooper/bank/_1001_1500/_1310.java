@@ -63,8 +63,22 @@ public class _1310 {
                 int l = queries[i][0], r = queries[i][1];
                 res[i] = pre[l] ^ pre[r + 1];
             }
-
             return res;
+        }
+    }
+
+    static class _2nd {
+        public int[] xorQueries(int[] arr, int[][] queries) {
+            int n = arr.length;
+            int[] pre = new int[n + 1];
+            for (int i = 0; i < n; i++) pre[i + 1] = pre[i] ^ arr[i];
+            int m = queries.length;
+            int[] ans = new int[m];
+            for (int i = 0; i < m; i++) {
+                int[] q = queries[i];
+                ans[i] = pre[q[1] + 1] ^ pre[q[0]];
+            }
+            return ans;
         }
     }
 

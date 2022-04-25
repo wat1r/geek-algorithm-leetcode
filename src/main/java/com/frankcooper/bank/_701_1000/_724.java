@@ -22,4 +22,16 @@ public class _724 {
         }
         return -1;
     }
+
+    static class _1st {
+        public int pivotIndex(int[] nums) {
+            int n = nums.length;
+            int[] pre = new int[n + 1];
+            for (int i = 0; i < n; i++) pre[i + 1] = pre[i] + nums[i];
+            for (int i = 0; i < n; i++) {
+                if (pre[i] == pre[n] - pre[i + 1]) return i;
+            }
+            return -1;
+        }
+    }
 }

@@ -172,6 +172,22 @@ public boolean checkSubarraySum(int[] nums, int k) {
 
 
 
+## [724. 寻找数组的中心下标](https://leetcode-cn.com/problems/find-pivot-index/)
+
+
+
+```java
+public int pivotIndex(int[] nums) {
+    int n = nums.length;
+    int[] pre = new int[n + 1];
+    for (int i = 0; i < n; i++) pre[i + 1] = pre[i] + nums[i];
+    for (int i = 0; i < n; i++) {
+        if (pre[i] == pre[n] - pre[i + 1]) return i;
+    }
+    return -1;
+}
+```
+
 
 
 
@@ -313,6 +329,33 @@ public int[] corpFlightBookings(int[][] bookings, int n) {
     return res;
 }
 ```
+
+
+
+
+
+## [1310. 子数组异或查询](https://leetcode-cn.com/problems/xor-queries-of-a-subarray/)
+
+```java
+public int[] xorQueries(int[] arr, int[][] queries) {
+    int n = arr.length;
+    int[] pre = new int[n + 1];
+    for (int i = 0; i < n; i++) pre[i + 1] = pre[i] ^ arr[i];
+    int m = queries.length;
+    int[] ans = new int[m];
+    for (int i = 0; i < m; i++) {
+        int[] q = queries[i];
+        ans[i] = pre[q[1] + 1] ^ pre[q[0]];
+    }
+    return ans;
+}
+```
+
+
+
+
+
+
 
 
 
