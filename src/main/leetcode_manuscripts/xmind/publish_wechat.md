@@ -4,7 +4,7 @@
 
 
 
-## 图解804唯一摩尔斯密码词
+## 图解883三维形体投影面积
 
 
 
@@ -15,79 +15,64 @@
 
 
 
-## [804. 唯一摩尔斯密码词](https://leetcode-cn.com/problems/unique-morse-code-words/)
 
-### 方法1:Hash
+
+
+
+
+
+- 这一题我看了下很多评论，很多人应该没看懂题目
+
+
+
+#### 需要明白的预设：
+
+- 每个cube的体积是`1✖️1✖️1`
+- `grid`的长度和宽度相等，构成正方体
+
+#### 举例
+
+![](/imgs/leetcode/classify/image-20220426080821947.png)
+
+
+
+#### 
+
+如上图，拿`[[2,2,2],[2,1,2],[2,2,2]] `举例
+
+- 在`[0,0]`点，高度为`2`，在在`[0,2]`点，高度为`2`，在`[0,2]`点，高度为`2`
+
+- 在`[1,0]`点，高度为`2`，在在`[1,1]`点，高度为`1`，在`[1,2]`点，高度为`2`
+
+- 在`[2,0]`点，高度为`2`，在在`[2,1]`点，高度为`2`，在`[2,2]`点，高度为`2`
+
+
+
+#### 解法
+
+- `xy `平面的投影面积等于网格上非零数值的数目；
+- `yz `平面的投影面积等于网格上每一行最大数值之和；
+- `zx`平面的投影面积等于网格上每一列最大数值之和。
 
 ```java
-        String[] dict = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
-
-
-        public int uniqueMorseRepresentations(String[] words) {
-            Set<String> set = new HashSet<>();
-            for (String word : words) {
-                StringBuilder sb = new StringBuilder();
-                for (char c : word.toCharArray()) {
-                    sb.append(dict[c - 'a']);
+        public int projectionArea(int[][] grid) {
+            int xy = 0, yz = 0, zx = 0;
+            int R = grid.length, C = grid[0].length;
+            for (int r = 0; r < R; r++) {
+                int yzHeight = 0, zxHeight = 0;
+                for (int c = 0; c < C; c++) {
+                    xy += (grid[r][c] != 0 ? 1 : 0);//有多少不是0的格子就有多大的面积
+                    yzHeight = Math.max(yzHeight, grid[r][c]);
+                    zxHeight = Math.max(zxHeight, grid[c][r]);//调转行列坐标
                 }
-                set.add(sb.toString());
+                yz += yzHeight;
+                zx += zxHeight;
             }
-            return set.size();
+            return xy + yz + zx;
         }
 ```
 
 
-
-### 方法2:位运算
-
-
-
-![](/imgs/leetcode/classify/image-20220410085817240.png)
-
-
-
-- 将当前的字符转成二进制，`-`表示二进制中的1，`0`表示二进制中的`0`,做法有点像[**二维矩阵的常见转换技巧**](https://cnwangzhou.gitbook.io/algorithm/zhuan-lan/er-wei-ju-zhen-de-chang-jian-zhuan-huan-ji-qiao)
-
-
-
-```java
-        int[] bin = new int[26];
-        String[] dict = {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."};
-
-        public int uniqueMorseRepresentations(String[] words) {
-            //只做二进制的映射关系
-            for (int i = 0; i < dict.length; i++) {
-                encode(dict[i], i);
-            }
-            Set<Integer> set = new HashSet<>();
-            for (String word : words) {
-                int x = 0;
-                for (int i = 0; i < word.length(); i++) {
-                    //拿到word中当前字符的索引
-                    int idx = word.charAt(i) - 'a';
-                    //先将x向左移位len(dict[idx]) 将该字符对应的莫斯密码位的数拼接到x上
-                    x = x << dict[idx].length() | bin[idx];
-                }
-              //  System.out.printf("%s->%4d->%10s", word, x, PrintUtils.toBinaryString(x, 10));
-                set.add(x);
-            }
-            return set.size();
-        }
-
-        //将形如 -... 的莫斯密码 翻译成 二进制 -表示1 .表示0
-        //-... -> 1000(2) -> 16(10)
-        public int encode(String s, int idx) {
-            int x = 0;
-            int n = s.length();
-            for (int i = n - 1; i >= 0; i--) {
-                if (s.charAt(i) == '-') {
-                    x |= (1 << (n - 1 - i));
-                }
-            }
-            this.bin[idx] = x;
-            return x;
-        }
-```
 
 
 

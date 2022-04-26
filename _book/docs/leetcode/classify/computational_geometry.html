@@ -906,6 +906,46 @@
                                 
                                 <blockquote>
 </blockquote>
+<h2 id="883-&#x4E09;&#x7EF4;&#x5F62;&#x4F53;&#x6295;&#x5F71;&#x9762;&#x79EF;"><a href="https://leetcode-cn.com/problems/projection-area-of-3d-shapes/" target="_blank">883. &#x4E09;&#x7EF4;&#x5F62;&#x4F53;&#x6295;&#x5F71;&#x9762;&#x79EF;</a></h2>
+<h4 id="&#x9700;&#x8981;&#x660E;&#x767D;&#x7684;&#x9884;&#x8BBE;&#xFF1A;">&#x9700;&#x8981;&#x660E;&#x767D;&#x7684;&#x9884;&#x8BBE;&#xFF1A;</h4>
+<ul>
+<li>&#x6BCF;&#x4E2A;cube&#x7684;&#x4F53;&#x79EF;&#x662F;<code>1&#x2716;&#xFE0F;1&#x2716;&#xFE0F;1</code></li>
+<li><code>grid</code>&#x7684;&#x957F;&#x5EA6;&#x548C;&#x5BBD;&#x5EA6;&#x76F8;&#x7B49;&#xFF0C;&#x6784;&#x6210;&#x6B63;&#x65B9;&#x4F53;</li>
+</ul>
+<h4 id="&#x4E3E;&#x4F8B;">&#x4E3E;&#x4F8B;</h4>
+<p><img src="../../../imgs/leetcode/classify/image-20220426080821947.png" alt=""></p>
+<h4 id=""> </h4>
+<p>&#x5982;&#x4E0A;&#x56FE;&#xFF0C;&#x62FF;<code>[[2,2,2],[2,1,2],[2,2,2]]</code>&#x4E3E;&#x4F8B;</p>
+<ul>
+<li><p>&#x5728;<code>[0,0]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code>&#xFF0C;&#x5728;&#x5728;<code>[0,2]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code>&#xFF0C;&#x5728;<code>[0,2]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code></p>
+</li>
+<li><p>&#x5728;<code>[1,0]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code>&#xFF0C;&#x5728;&#x5728;<code>[1,1]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>1</code>&#xFF0C;&#x5728;<code>[1,2]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code></p>
+</li>
+<li><p>&#x5728;<code>[2,0]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code>&#xFF0C;&#x5728;&#x5728;<code>[2,1]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code>&#xFF0C;&#x5728;<code>[2,2]</code>&#x70B9;&#xFF0C;&#x9AD8;&#x5EA6;&#x4E3A;<code>2</code></p>
+</li>
+</ul>
+<h4 id="&#x89E3;&#x6CD5;">&#x89E3;&#x6CD5;</h4>
+<ul>
+<li><code>xy</code>&#x5E73;&#x9762;&#x7684;&#x6295;&#x5F71;&#x9762;&#x79EF;&#x7B49;&#x4E8E;&#x7F51;&#x683C;&#x4E0A;&#x975E;&#x96F6;&#x6570;&#x503C;&#x7684;&#x6570;&#x76EE;&#xFF1B;</li>
+<li><code>yz</code>&#x5E73;&#x9762;&#x7684;&#x6295;&#x5F71;&#x9762;&#x79EF;&#x7B49;&#x4E8E;&#x7F51;&#x683C;&#x4E0A;&#x6BCF;&#x4E00;&#x884C;&#x6700;&#x5927;&#x6570;&#x503C;&#x4E4B;&#x548C;&#xFF1B;</li>
+<li><code>zx</code>&#x5E73;&#x9762;&#x7684;&#x6295;&#x5F71;&#x9762;&#x79EF;&#x7B49;&#x4E8E;&#x7F51;&#x683C;&#x4E0A;&#x6BCF;&#x4E00;&#x5217;&#x6700;&#x5927;&#x6570;&#x503C;&#x4E4B;&#x548C;&#x3002;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">projectionArea</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            <span class="hljs-keyword">int</span> xy = <span class="hljs-number">0</span>, yz = <span class="hljs-number">0</span>, zx = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> R = grid.length, C = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; r++) {
+                <span class="hljs-keyword">int</span> yzHeight = <span class="hljs-number">0</span>, zxHeight = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; c++) {
+                    xy += (grid[r][c] != <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>);<span class="hljs-comment">//&#x6709;&#x591A;&#x5C11;&#x4E0D;&#x662F;0&#x7684;&#x683C;&#x5B50;&#x5C31;&#x6709;&#x591A;&#x5927;&#x7684;&#x9762;&#x79EF;</span>
+                    yzHeight = Math.max(yzHeight, grid[r][c]);
+                    zxHeight = Math.max(zxHeight, grid[c][r]);<span class="hljs-comment">//&#x8C03;&#x8F6C;&#x884C;&#x5217;&#x5750;&#x6807;</span>
+                }
+                yz += yzHeight;
+                zx += zxHeight;
+            }
+            <span class="hljs-keyword">return</span> xy + yz + zx;
+        }
+</code></pre>
 <h3 id="reference">Reference</h3>
 <ul>
 <li><p><a href="https://www.cnblogs.com/aiguona/p/7232243.html" target="_blank">&#x6570;&#x5B66;&#xFF1A;&#x51F8;&#x5305;&#x7B97;&#x6CD5;&#x8BE6;&#x89E3;</a></p>
@@ -958,7 +998,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"计算几何","level":"1.3","depth":1,"next":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"previous":{"title":"滑动窗口","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/computational_geometry.md","mtime":"2022-04-22T23:58:59.878Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-25T14:11:59.784Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"计算几何","level":"1.3","depth":1,"next":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"previous":{"title":"滑动窗口","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/computational_geometry.md","mtime":"2022-04-26T00:25:59.494Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-26T00:32:27.285Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
