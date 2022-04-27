@@ -1289,7 +1289,7 @@ private void dfs(List<Integer> sub, int[] nums, int idx) {
 
 ### 方法1:DFS
 
-![](/imgs/leetcode/classify/image-20220427064502883.png)
+![](/imgs/leetcode/classify/image-20220427092158521.png)
 
 - 从四个边缘开始反向往内部搜索
 - 上下分别与`Pacific`和`Atlantic`接壤
