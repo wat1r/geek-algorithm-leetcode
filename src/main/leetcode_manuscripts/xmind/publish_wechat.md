@@ -4,7 +4,7 @@
 
 
 
-## 图解883三维形体投影面积
+## 图解905按奇偶排序数组(原地多解法)
 
 
 
@@ -15,62 +15,51 @@
 
 
 
+- 这一题应该选择原地，没有额外空间复杂度的写法
 
+### 方法1：前前双指针
 
+- 固定`i`,`j`指针，`j`指针往后滑动，如果是偶数，交换`i`和`j`，并将i后滑动
 
-
-
-
-- 这一题我看了下很多评论，很多人应该没看懂题目
-
-
-
-#### 需要明白的预设：
-
-- 每个cube的体积是`1✖️1✖️1`
-- `grid`的长度和宽度相等，构成正方体
-
-#### 举例
-
-![](/imgs/leetcode/classify/image-20220426080821947.png)
-
-
-
-#### 
-
-如上图，拿`[[2,2,2],[2,1,2],[2,2,2]] `举例
-
-- 在`[0,0]`点，高度为`2`，在在`[0,2]`点，高度为`2`，在`[0,2]`点，高度为`2`
-
-- 在`[1,0]`点，高度为`2`，在在`[1,1]`点，高度为`1`，在`[1,2]`点，高度为`2`
-
-- 在`[2,0]`点，高度为`2`，在在`[2,1]`点，高度为`2`，在`[2,2]`点，高度为`2`
-
-
-
-#### 解法
-
-- `xy `平面的投影面积等于网格上非零数值的数目；
-- `yz `平面的投影面积等于网格上每一行最大数值之和；
-- `zx`平面的投影面积等于网格上每一列最大数值之和。
+![image-20220428074838120](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220428074838120.png)
 
 ```java
-        public int projectionArea(int[][] grid) {
-            int xy = 0, yz = 0, zx = 0;
-            int R = grid.length, C = grid[0].length;
-            for (int r = 0; r < R; r++) {
-                int yzHeight = 0, zxHeight = 0;
-                for (int c = 0; c < C; c++) {
-                    xy += (grid[r][c] != 0 ? 1 : 0);//有多少不是0的格子就有多大的面积
-                    yzHeight = Math.max(yzHeight, grid[r][c]);
-                    zxHeight = Math.max(zxHeight, grid[c][r]);//调转行列坐标
-                }
-                yz += yzHeight;
-                zx += zxHeight;
+public int[] sortArrayByParity(int[] nums) {
+    for (int i = 0, j = 0; j < nums.length; j++) {
+        if (nums[j] % 2 == 0) {
+            int t = nums[i];
+            nums[i++] = nums[j];
+            nums[j] = t;
+        }
+    }
+    return nums;
+}
+```
+
+
+
+
+
+### 方法2：前后双指针
+
+![image-20220428075433494](/Users/frankcooper/Library/Application Support/typora-user-images/image-20220428075433494.png)
+
+```java
+        public int[] sortArrayByParity(int[] nums) {
+            int n = nums.length, l = 0, r = n - 1;
+            while (l < r) {
+                if (nums[l] % 2 == 1 && nums[r] % 2 == 0) {
+                    int t = nums[l];
+                    nums[l++] = nums[r];
+                    nums[r--] = t;
+                } else if (nums[l] % 2 == 0) l++;
+                else if (nums[r] % 2 == 1) r--;
             }
-            return xy + yz + zx;
+            return nums;
         }
 ```
+
+
 
 
 

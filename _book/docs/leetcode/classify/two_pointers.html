@@ -1243,6 +1243,41 @@ int [<span class="hljs-number">256</span>] &#x7528;&#x4E8E;&#x6269;&#x5C55;ASCII
     }
 }
 </code></pre>
+<h2 id="905-&#x6309;&#x5947;&#x5076;&#x6392;&#x5E8F;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/sort-array-by-parity/" target="_blank">905. &#x6309;&#x5947;&#x5076;&#x6392;&#x5E8F;&#x6570;&#x7EC4;</a></h2>
+<ul>
+<li>&#x8FD9;&#x4E00;&#x9898;&#x5E94;&#x8BE5;&#x9009;&#x62E9;&#x539F;&#x5730;&#xFF0C;&#x6CA1;&#x6709;&#x989D;&#x5916;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x7684;&#x5199;&#x6CD5;</li>
+</ul>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x524D;&#x524D;&#x53CC;&#x6307;&#x9488;">&#x65B9;&#x6CD5;1&#xFF1A;&#x524D;&#x524D;&#x53CC;&#x6307;&#x9488;</h3>
+<ul>
+<li>&#x56FA;&#x5B9A;<code>i</code>,<code>j</code>&#x6307;&#x9488;&#xFF0C;<code>j</code>&#x6307;&#x9488;&#x5F80;&#x540E;&#x6ED1;&#x52A8;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x5076;&#x6570;&#xFF0C;&#x4EA4;&#x6362;<code>i</code>&#x548C;<code>j</code>&#xFF0C;&#x5E76;&#x5C06;i&#x540E;&#x6ED1;&#x52A8;</li>
+</ul>
+<p><img src="../../../imgs/leetcode/classify/image-20220428074838120.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] sortArrayByParity(<span class="hljs-keyword">int</span>[] nums) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; j &lt; nums.length; j++) {
+        <span class="hljs-keyword">if</span> (nums[j] % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">int</span> t = nums[i];
+            nums[i++] = nums[j];
+            nums[j] = t;
+        }
+    }
+    <span class="hljs-keyword">return</span> nums;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x524D;&#x540E;&#x53CC;&#x6307;&#x9488;">&#x65B9;&#x6CD5;2&#xFF1A;&#x524D;&#x540E;&#x53CC;&#x6307;&#x9488;</h3>
+<p><img src="../../../imgs/leetcode/classify/image-20220428075433494.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] sortArrayByParity(<span class="hljs-keyword">int</span>[] nums) {
+            <span class="hljs-keyword">int</span> n = nums.length, l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">while</span> (l &lt; r) {
+                <span class="hljs-keyword">if</span> (nums[l] % <span class="hljs-number">2</span> == <span class="hljs-number">1</span> &amp;&amp; nums[r] % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">int</span> t = nums[l];
+                    nums[l++] = nums[r];
+                    nums[r--] = t;
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[l] % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) l++;
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[r] % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>) r--;
+            }
+            <span class="hljs-keyword">return</span> nums;
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -1286,7 +1321,7 @@ int [<span class="hljs-number">256</span>] &#x7528;&#x4E8E;&#x6269;&#x5C55;ASCII
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"双指针","level":"1.2.11","depth":2,"next":{"title":"滑动窗口","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},"previous":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/two_pointers.md","mtime":"2022-04-04T03:39:17.056Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-26T00:32:27.285Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"双指针","level":"1.2.11","depth":2,"next":{"title":"滑动窗口","level":"1.2.12","depth":2,"path":"docs/leetcode/classify/sliding_window.md","ref":"docs/leetcode/classify/sliding_window.md","articles":[]},"previous":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/two_pointers.md","mtime":"2022-04-28T00:00:44.439Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-28T00:02:35.006Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

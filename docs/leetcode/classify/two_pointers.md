@@ -397,3 +397,55 @@ public void reverse(char[] chas, int l, int r) {
 }
 ```
 
+
+
+
+
+## [905. 按奇偶排序数组](https://leetcode-cn.com/problems/sort-array-by-parity/)
+
+- 这一题应该选择原地，没有额外空间复杂度的写法
+
+### 方法1：前前双指针
+
+- 固定`i`,`j`指针，`j`指针往后滑动，如果是偶数，交换`i`和`j`，并将i后滑动
+
+![](/imgs/leetcode/classify/image-20220428074838120.png)
+
+```java
+public int[] sortArrayByParity(int[] nums) {
+    for (int i = 0, j = 0; j < nums.length; j++) {
+        if (nums[j] % 2 == 0) {
+            int t = nums[i];
+            nums[i++] = nums[j];
+            nums[j] = t;
+        }
+    }
+    return nums;
+}
+```
+
+
+
+
+
+### 方法2：前后双指针
+
+![](/imgs/leetcode/classify/image-20220428075433494.png)
+
+```java
+        public int[] sortArrayByParity(int[] nums) {
+            int n = nums.length, l = 0, r = n - 1;
+            while (l < r) {
+                if (nums[l] % 2 == 1 && nums[r] % 2 == 0) {
+                    int t = nums[l];
+                    nums[l++] = nums[r];
+                    nums[r--] = t;
+                } else if (nums[l] % 2 == 0) l++;
+                else if (nums[r] % 2 == 1) r--;
+            }
+            return nums;
+        }
+```
+
+
+

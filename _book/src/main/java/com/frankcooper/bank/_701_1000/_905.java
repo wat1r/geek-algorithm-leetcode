@@ -39,6 +39,21 @@ public class _905 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int[] nums = new int[]{3, 1, 2, 4};
+            handler.sortArrayByParity(nums);
+        }
+
+        public int[] sortArrayByParity(int[] nums) {
+            int n = nums.length, l = 0, r = n - 1;
+            while (l < r) {
+                if (nums[l] % 2 == 1 && nums[r] % 2 == 0) {
+                    int t = nums[l];
+                    nums[l++] = nums[r];
+                    nums[r--] = t;
+                } else if (nums[l] % 2 == 0) l++;
+                else if (nums[r] % 2 == 1) r--;
+            }
+            return nums;
         }
     }
 
@@ -46,6 +61,19 @@ public class _905 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int[] nums = new int[]{3, 1, 2, 4};
+            handler.sortArrayByParity(nums);
+        }
+
+        public int[] sortArrayByParity(int[] nums) {
+            for (int i = 0, j = 0; j < nums.length; j++) {
+                if (nums[j] % 2 == 0) {
+                    int t = nums[i];
+                    nums[i++] = nums[j];
+                    nums[j] = t;
+                }
+            }
+            return nums;
         }
     }
 
