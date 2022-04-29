@@ -1161,6 +1161,79 @@ public List<Integer> lexicalOrder(int n) {
 
 
 
+## [427. 建立四叉树](https://leetcode-cn.com/problems/construct-quad-tree/)
+
+![](/imgs/leetcode/classify/image-20220429070729525.png)
+
+```java
+  public Node construct(int[][] grid) {
+            return construct(grid, 0, 0, grid.length - 1, grid[0].length - 1);
+        }
+
+        private Node construct(int[][] grid, int r1, int c1, int r2, int c2) {
+            if (r1 > r2 || c1 > c2) return null;
+            if (isLeafNode(grid, r1, c1, r2, c2)) {
+                return new Node(grid[r1][c1] == 1, true, null, null, null, null);
+            }
+            int rowMid = r1 + (r2 - r1) / 2;
+            int colMid = c1 + (c2 - c1) / 2;
+            return new Node(false, false,
+                    construct(grid, r1, c1, rowMid, colMid),
+                    construct(grid, r1, colMid + 1, rowMid, c2),
+                    construct(grid, rowMid + 1, c1, r2, colMid),
+                    construct(grid, rowMid + 1, colMid + 1, r2, c2)
+            );
+        }
+
+
+        private boolean isLeafNode(int[][] grid, int r1, int c1, int r2, int c2) {
+            int val = grid[r1][c1];
+            for (int r = r1; r <= r2; r++) {
+                for (int c = c1; c <= c2; c++) {
+                    if (grid[r][c] != val) return false;
+                }
+            }
+            return true;
+        }
+```
+
+- 另外一种写法
+
+```java
+    public Node construct(int[][] grid) {
+            return dfs(grid, 0, 0, grid.length);
+        }
+
+
+        private Node dfs(int[][] grid, int r, int c, int offset) {
+            if (offset == 1) {
+                return new Node(grid[r][c] != 0, true, null, null, null, null);
+            }
+            int half = offset / 2;
+            Node newNode = new Node();
+            Node topLeft = dfs(grid, r, c, half);
+            Node topRight = dfs(grid, r, c + half, half);
+            Node bottomLeft = dfs(grid, r + half, c, half);
+            Node bottomRight = dfs(grid, r + half, c + half, half);
+            if (topLeft.isLeaf && topRight.isLeaf && bottomLeft.isLeaf && bottomRight.isLeaf
+                    && topLeft.val == topRight.val && topRight.val == bottomLeft.val
+                    && bottomLeft.val == bottomRight.val) {
+                newNode.isLeaf = true;
+                newNode.val = topLeft.val;
+            } else {
+                newNode.topLeft = topLeft;
+                newNode.topRight = topRight;
+                newNode.bottomLeft = bottomLeft;
+                newNode.bottomRight = bottomRight;
+            }
+            return newNode;
+        }
+```
+
+
+
+
+
 
 
 

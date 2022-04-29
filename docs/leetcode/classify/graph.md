@@ -313,3 +313,150 @@ public int networkBecomesIdle(int[][] edges, int[] patience) {
     return res + 1;
 }
 ```
+
+
+
+
+
+
+
+## [2049. 统计最高分的节点数目](https://leetcode-cn.com/problems/count-nodes-with-the-highest-score/)
+
+### 方法1:邻接表+DFS
+
+```java
+int N = 100010, M = N * 2;
+int[] head = new int[N];//存储某个节点所对应的边的集合(链表)的头节点
+int[] to = new int[M];//某一条边的指向节点
+int[] next = new int[M];//指针数组，存储当前边的下一条边
+int idx = 0;
+int[] f = new int[N];
+
+private void add(int u, int v) {
+    to[idx] = v;
+    next[idx] = head[u];
+    head[u] = idx;
+    idx++;
+}
+
+
+public int countHighestScoreNodes(int[] parents) {
+    Arrays.fill(head, -1);
+    int n = parents.length;
+    for (int i = 1; i < n; i++) {
+        add(parents[i], i);
+    }
+    dfs(0);
+    long maxScore = 0;
+    int cnt = 0;
+    for (int u = 0; u < n; u++) {
+        long score = 1;
+        for (int i = head[u]; i != -1; i = next[i]) {
+            score *= f[to[i]];
+        }
+        if (u != 0) {
+            score *= n - f[u];
+        }
+        if (score > maxScore) {
+            maxScore = score;
+            cnt = 1;
+        } else if (score == maxScore) {
+            cnt++;
+        }
+    }
+    return cnt;
+}
+
+
+private int dfs(int u) {
+    int res = 1;
+    for (int i = head[u]; i != -1; i = next[i]) {
+        res += dfs(to[i]);
+    }
+    return f[u] = res;
+}
+```
+
+### 方法2:DFS
+
+```java
+int n;
+long maxScore = 0;
+int cnt = 0;
+List<Integer>[] children;
+
+public int countHighestScoreNodes(int[] parents) {
+    n = parents.length;
+    children = new List[n];
+    for (int i = 0; i < n; i++) children[i] = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+        if (parents[i] != -1) children[parents[i]].add(i);
+    }
+    dfs(0);
+    return cnt;
+}
+
+
+private int dfs(int node) {
+    long score = 1;
+    int size = n - 1;
+    for (int child : children[node]) {
+        int t = dfs(child);
+        score *= t;
+        size -= t;
+    }
+    if (node != 0) score *= size;
+    if (score == maxScore) {
+        cnt++;
+    } else if (score > maxScore) {
+        maxScore = score;
+        cnt = 1;
+    }
+    return n - size;
+}
+```
+
+
+
+
+
+
+
+### 方法3:拓扑排序
+
+```java
+public int countHighestScoreNodes(int[] parents) {
+    int n = parents.length;
+    int[] outdegrees = new int[n];//记录每个节点的出度
+    for (int i = 1; i < n; i++) outdegrees[parents[i]]++;
+    Deque<Integer> q = new ArrayDeque<>();
+    for (int i = 0; i < n; i++) {
+        if (outdegrees[i] == 0) q.offer(i);
+    }
+    //分别表示[i]节点的左右子树上节点的个数
+    int[] left = new int[n], right = new int[n];
+    while (!q.isEmpty()) {
+        int t = q.poll();
+        int fa = parents[t];
+        outdegrees[fa]--;
+        if (left[fa] == 0) left[fa] = left[t] + right[t] + 1;
+        else right[fa] = left[t] + right[t] + 1;
+        if (outdegrees[fa] == 0 && fa != 0) q.offer(fa);
+    }
+    long maxScore = 0;
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        long score = (long) Math.max(1, left[i]) * Math.max(1, right[i]);
+        if (i != 0) {
+            score *= n - (left[i] + right[i] + 1);
+        }
+        if (score > maxScore) {
+            maxScore = score;
+            cnt = 1;
+        } else if (score == maxScore) {
+            cnt++;
+        }
+    }
+    return cnt;
+}
+```
