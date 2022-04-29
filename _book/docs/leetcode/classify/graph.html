@@ -1154,6 +1154,131 @@ index&#x8BB0;&#x5F55;&#x52A0;&#x5165;&#x8DEF;&#x5F84;&#x7684;&#x6E38;&#x6807;
     <span class="hljs-keyword">return</span> res + <span class="hljs-number">1</span>;
 }
 </code></pre>
+<h2 id="2049-&#x7EDF;&#x8BA1;&#x6700;&#x9AD8;&#x5206;&#x7684;&#x8282;&#x70B9;&#x6570;&#x76EE;"><a href="https://leetcode-cn.com/problems/count-nodes-with-the-highest-score/" target="_blank">2049. &#x7EDF;&#x8BA1;&#x6700;&#x9AD8;&#x5206;&#x7684;&#x8282;&#x70B9;&#x6570;&#x76EE;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x90BB;&#x63A5;&#x8868;dfs">&#x65B9;&#x6CD5;1:&#x90BB;&#x63A5;&#x8868;+DFS</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>, M = N * <span class="hljs-number">2</span>;
+<span class="hljs-keyword">int</span>[] head = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[N];<span class="hljs-comment">//&#x5B58;&#x50A8;&#x67D0;&#x4E2A;&#x8282;&#x70B9;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x8FB9;&#x7684;&#x96C6;&#x5408;(&#x94FE;&#x8868;)&#x7684;&#x5934;&#x8282;&#x70B9;</span>
+<span class="hljs-keyword">int</span>[] to = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[M];<span class="hljs-comment">//&#x67D0;&#x4E00;&#x6761;&#x8FB9;&#x7684;&#x6307;&#x5411;&#x8282;&#x70B9;</span>
+<span class="hljs-keyword">int</span>[] next = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[M];<span class="hljs-comment">//&#x6307;&#x9488;&#x6570;&#x7EC4;&#xFF0C;&#x5B58;&#x50A8;&#x5F53;&#x524D;&#x8FB9;&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x8FB9;</span>
+<span class="hljs-keyword">int</span> idx = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">int</span>[] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[N];
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    to[idx] = v;
+    next[idx] = head[u];
+    head[u] = idx;
+    idx++;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">countHighestScoreNodes</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] parents)</span> </span>{
+    Arrays.fill(head, -<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">int</span> n = parents.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        add(parents[i], i);
+    }
+    dfs(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">long</span> maxScore = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> u = <span class="hljs-number">0</span>; u &lt; n; u++) {
+        <span class="hljs-keyword">long</span> score = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = head[u]; i != -<span class="hljs-number">1</span>; i = next[i]) {
+            score *= f[to[i]];
+        }
+        <span class="hljs-keyword">if</span> (u != <span class="hljs-number">0</span>) {
+            score *= n - f[u];
+        }
+        <span class="hljs-keyword">if</span> (score &gt; maxScore) {
+            maxScore = score;
+            cnt = <span class="hljs-number">1</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (score == maxScore) {
+            cnt++;
+        }
+    }
+    <span class="hljs-keyword">return</span> cnt;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = head[u]; i != -<span class="hljs-number">1</span>; i = next[i]) {
+        res += dfs(to[i]);
+    }
+    <span class="hljs-keyword">return</span> f[u] = res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2dfs">&#x65B9;&#x6CD5;2:DFS</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> n;
+<span class="hljs-keyword">long</span> maxScore = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+List&lt;Integer&gt;[] children;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">countHighestScoreNodes</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] parents)</span> </span>{
+    n = parents.length;
+    children = <span class="hljs-keyword">new</span> List[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) children[i] = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (parents[i] != -<span class="hljs-number">1</span>) children[parents[i]].add(i);
+    }
+    dfs(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">return</span> cnt;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node)</span> </span>{
+    <span class="hljs-keyword">long</span> score = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> size = n - <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> child : children[node]) {
+        <span class="hljs-keyword">int</span> t = dfs(child);
+        score *= t;
+        size -= t;
+    }
+    <span class="hljs-keyword">if</span> (node != <span class="hljs-number">0</span>) score *= size;
+    <span class="hljs-keyword">if</span> (score == maxScore) {
+        cnt++;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (score &gt; maxScore) {
+        maxScore = score;
+        cnt = <span class="hljs-number">1</span>;
+    }
+    <span class="hljs-keyword">return</span> n - size;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#x62D3;&#x6251;&#x6392;&#x5E8F;">&#x65B9;&#x6CD5;3:&#x62D3;&#x6251;&#x6392;&#x5E8F;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">countHighestScoreNodes</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] parents)</span> </span>{
+    <span class="hljs-keyword">int</span> n = parents.length;
+    <span class="hljs-keyword">int</span>[] outdegrees = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];<span class="hljs-comment">//&#x8BB0;&#x5F55;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x51FA;&#x5EA6;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) outdegrees[parents[i]]++;
+    Deque&lt;Integer&gt; q = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (outdegrees[i] == <span class="hljs-number">0</span>) q.offer(i);
+    }
+    <span class="hljs-comment">//&#x5206;&#x522B;&#x8868;&#x793A;[i]&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x4E0A;&#x8282;&#x70B9;&#x7684;&#x4E2A;&#x6570;</span>
+    <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n], right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+        <span class="hljs-keyword">int</span> t = q.poll();
+        <span class="hljs-keyword">int</span> fa = parents[t];
+        outdegrees[fa]--;
+        <span class="hljs-keyword">if</span> (left[fa] == <span class="hljs-number">0</span>) left[fa] = left[t] + right[t] + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span> right[fa] = left[t] + right[t] + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (outdegrees[fa] == <span class="hljs-number">0</span> &amp;&amp; fa != <span class="hljs-number">0</span>) q.offer(fa);
+    }
+    <span class="hljs-keyword">long</span> maxScore = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">long</span> score = (<span class="hljs-keyword">long</span>) Math.max(<span class="hljs-number">1</span>, left[i]) * Math.max(<span class="hljs-number">1</span>, right[i]);
+        <span class="hljs-keyword">if</span> (i != <span class="hljs-number">0</span>) {
+            score *= n - (left[i] + right[i] + <span class="hljs-number">1</span>);
+        }
+        <span class="hljs-keyword">if</span> (score &gt; maxScore) {
+            maxScore = score;
+            cnt = <span class="hljs-number">1</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (score == maxScore) {
+            cnt++;
+        }
+    }
+    <span class="hljs-keyword">return</span> cnt;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1197,7 +1322,7 @@ index&#x8BB0;&#x5F55;&#x52A0;&#x5165;&#x8DEF;&#x5F84;&#x7684;&#x6E38;&#x6807;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.3.3","depth":2,"next":{"title":"动态规划","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-04-06T06:25:41.126Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-28T00:02:35.006Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.3.3","depth":2,"next":{"title":"动态规划","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-04-28T23:58:30.456Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-29T07:52:37.208Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

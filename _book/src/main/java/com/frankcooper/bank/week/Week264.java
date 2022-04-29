@@ -62,8 +62,30 @@ public class Week264 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int n = 1;
+            System.out.println(handler.nextBeautifulNumber(n));
         }
 
+        public int nextBeautifulNumber(int n) {
+            for (int x = n + 1; n <= 1000005; x++) {
+                if (check(x)) return x;
+            }
+            return -1;
+        }
+
+
+        private boolean check(int x) {
+            int[] cnt = new int[10];
+            while (x > 0) {
+                int t = x % 10;
+                cnt[t]++;
+                x /= 10;
+            }
+            for (int i = 0; i < 10; i++) {
+                if (cnt[i] != 0 && i != cnt[i]) return false;
+            }
+            return true;
+        }
 
     }
 
@@ -72,6 +94,28 @@ public class Week264 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+
+        int n;
+        boolean[] vis;
+
+        public int countHighestScoreNodes(int[] parents) {
+            n = parents.length;
+            vis = new boolean[n];
+
+
+            return 0;
+        }
+
+
+        public void dfs(int[] parent, int cur) {
+            if (vis[cur]) {
+                return;
+            }
+            vis[cur] = true;
+            dfs(parent, parent[cur]);
+        }
+
     }
 
     static class _4th {

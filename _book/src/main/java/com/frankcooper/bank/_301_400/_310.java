@@ -100,10 +100,59 @@ public class _310 {
     }
 
 
+    //https://leetcode-cn.com/problems/minimum-height-trees/solution/by-ac_oier-7xio/
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        int N = 20010, M = 2 * N;
+        int[] head = new int[N];
+        int[] to = new int[M];
+        int[] next = new int[M];
+        int idx = 0;
+        int[] f1 = new int[N], f2 = new int[N];
+        int[] g = new int[N];
+        int[] p = new int[N];
+
+        private void add(int a, int b) {
+            next[idx] = head[a];
+            to[idx] = b;
+            head[idx++] = a;
+        }
+
+        //从当前节点开始往下dfs
+        private int dfsBottom(int u, int fa) {
+            for (int x = head[u]; x != -1; x = next[x]) {
+                int v = to[x];
+                if (v == fa) continue;
+                int height = dfsBottom(v, u) + 1;
+                if (height > f1[u]) {
+                    f2[u] = f1[u];
+                    f1[u] = height;
+                    p[u] = v;
+                } else if (height > f2[u]) {
+                    f2[u] = height;
+                }
+            }
+            return f1[u];
+        }
+
+//        private int dfsTop(int u, int fa) {
+//            for (int x = head[u]; x != -1; x = next[x]) {
+//                int v = to[x];
+//                if (v == fa) continue;
+//
+//            }
+//        }
+
+
+        //其中 f[u] 代表在以 0 号点为根节点的树中，以 u 节点为子树根节点时，往下的最大高度；g[u]代表在以 0 号点为根节点的树中，以 u 节点为子节点时，往上的最大高度
+        public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+
+            return null;
+        }
+
     }
 
     static class _4th {

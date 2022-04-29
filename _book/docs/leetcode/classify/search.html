@@ -1892,6 +1892,70 @@ List&lt;String&gt; wordDict;
 <ul>
 <li>&#x53EA;&#x6709;&#x65B9;&#x6CD5;1&#x662F;&#x7B26;&#x5408;&#x9898;&#x610F;&#x7684;O(1)&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;</li>
 </ul>
+<h2 id="427-&#x5EFA;&#x7ACB;&#x56DB;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/construct-quad-tree/" target="_blank">427. &#x5EFA;&#x7ACB;&#x56DB;&#x53C9;&#x6811;</a></h2>
+<p><img src="../../../imgs/leetcode/classify/image-20220429070729525.png" alt=""></p>
+<pre><code class="lang-java">  <span class="hljs-function"><span class="hljs-keyword">public</span> Node <span class="hljs-title">construct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            <span class="hljs-keyword">return</span> construct(grid, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, grid.length - <span class="hljs-number">1</span>, grid[<span class="hljs-number">0</span>].length - <span class="hljs-number">1</span>);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">construct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid, <span class="hljs-keyword">int</span> r1, <span class="hljs-keyword">int</span> c1, <span class="hljs-keyword">int</span> r2, <span class="hljs-keyword">int</span> c2)</span> </span>{
+            <span class="hljs-keyword">if</span> (r1 &gt; r2 || c1 &gt; c2) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            <span class="hljs-keyword">if</span> (isLeafNode(grid, r1, c1, r2, c2)) {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(grid[r1][c1] == <span class="hljs-number">1</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>);
+            }
+            <span class="hljs-keyword">int</span> rowMid = r1 + (r2 - r1) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">int</span> colMid = c1 + (c2 - c1) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(<span class="hljs-keyword">false</span>, <span class="hljs-keyword">false</span>,
+                    construct(grid, r1, c1, rowMid, colMid),
+                    construct(grid, r1, colMid + <span class="hljs-number">1</span>, rowMid, c2),
+                    construct(grid, rowMid + <span class="hljs-number">1</span>, c1, r2, colMid),
+                    construct(grid, rowMid + <span class="hljs-number">1</span>, colMid + <span class="hljs-number">1</span>, r2, c2)
+            );
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isLeafNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid, <span class="hljs-keyword">int</span> r1, <span class="hljs-keyword">int</span> c1, <span class="hljs-keyword">int</span> r2, <span class="hljs-keyword">int</span> c2)</span> </span>{
+            <span class="hljs-keyword">int</span> val = grid[r1][c1];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = r1; r &lt;= r2; r++) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = c1; c &lt;= c2; c++) {
+                    <span class="hljs-keyword">if</span> (grid[r][c] != val) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                }
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> Node <span class="hljs-title">construct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            <span class="hljs-keyword">return</span> dfs(grid, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, grid.length);
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c, <span class="hljs-keyword">int</span> offset)</span> </span>{
+            <span class="hljs-keyword">if</span> (offset == <span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(grid[r][c] != <span class="hljs-number">0</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>);
+            }
+            <span class="hljs-keyword">int</span> half = offset / <span class="hljs-number">2</span>;
+            Node newNode = <span class="hljs-keyword">new</span> Node();
+            Node topLeft = dfs(grid, r, c, half);
+            Node topRight = dfs(grid, r, c + half, half);
+            Node bottomLeft = dfs(grid, r + half, c, half);
+            Node bottomRight = dfs(grid, r + half, c + half, half);
+            <span class="hljs-keyword">if</span> (topLeft.isLeaf &amp;&amp; topRight.isLeaf &amp;&amp; bottomLeft.isLeaf &amp;&amp; bottomRight.isLeaf
+                    &amp;&amp; topLeft.val == topRight.val &amp;&amp; topRight.val == bottomLeft.val
+                    &amp;&amp; bottomLeft.val == bottomRight.val) {
+                newNode.isLeaf = <span class="hljs-keyword">true</span>;
+                newNode.val = topLeft.val;
+            } <span class="hljs-keyword">else</span> {
+                newNode.topLeft = topLeft;
+                newNode.topRight = topRight;
+                newNode.bottomLeft = bottomLeft;
+                newNode.bottomRight = bottomRight;
+            }
+            <span class="hljs-keyword">return</span> newNode;
+        }
+</code></pre>
 <h2 id="752-&#x6253;&#x5F00;&#x8F6C;&#x76D8;&#x9501;"><a href="https://leetcode-cn.com/problems/open-the-lock/" target="_blank">752. &#x6253;&#x5F00;&#x8F6C;&#x76D8;&#x9501;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x53CC;&#x5411;bfs">&#x65B9;&#x6CD5;1:&#x53CC;&#x5411;BFS</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">openLock</span><span class="hljs-params">(String[] deadends, String target)</span> </span>{
@@ -2142,7 +2206,7 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.2","depth":2,"next":{"title":"图论","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-27T12:03:32.079Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-28T00:02:35.006Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.2","depth":2,"next":{"title":"图论","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-04-28T23:27:07.486Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-29T07:52:37.208Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
