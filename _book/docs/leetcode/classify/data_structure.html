@@ -2742,6 +2742,131 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <span class="hljs-keyword">return</span> q.peekLast();
 }
 </code></pre>
+<h2 id="1305-&#x4E24;&#x68F5;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;"><a href="https://leetcode-cn.com/problems/all-elements-in-two-binary-search-trees/" target="_blank">1305. &#x4E24;&#x68F5;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x4E2D;&#x5E8F;&#x5F52;&#x5E76;">&#x65B9;&#x6CD5;1&#xFF1A;&#x4E2D;&#x5E8F;+&#x5F52;&#x5E76;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">getAllElements</span><span class="hljs-params">(TreeNode root1, TreeNode root2)</span> </span>{
+    List&lt;Integer&gt; list1 = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(), list2 = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(), res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    inOrder(root1, list1);
+    inOrder(root2, list2);
+    <span class="hljs-keyword">int</span> p1 = <span class="hljs-number">0</span>, p2 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+        <span class="hljs-keyword">if</span> (p1 == list1.size()) {
+            res.addAll(list2.subList(p2, list2.size()));
+            <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">if</span> (p2 == list2.size()) {
+            res.addAll(list1.subList(p1, list1.size()));
+            <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">if</span> (list1.get(p1) &lt;= list2.get(p2)) {
+            res.add(list1.get(p1++));
+        } <span class="hljs-keyword">else</span> {
+            res.add(list2.get(p2++));
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">inOrder</span><span class="hljs-params">(TreeNode root, List&lt;Integer&gt; list)</span> </span>{
+    <span class="hljs-keyword">if</span> (root != <span class="hljs-keyword">null</span>) {
+        inOrder(root.left, list);
+        list.add(root.val);
+        inOrder(root.right, list);
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2bfs">&#x65B9;&#x6CD5;2:BFS</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">getAllElements</span><span class="hljs-params">(TreeNode root1, TreeNode root2)</span> </span>{
+    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    Deque&lt;TreeNode&gt; stk1 = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;(), stk2 = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    TreeNode cur1 = root1, cur2 = root2;
+    <span class="hljs-keyword">while</span> (cur1 != <span class="hljs-keyword">null</span> || cur2 != <span class="hljs-keyword">null</span> || !stk1.isEmpty() || !stk2.isEmpty()) {
+        <span class="hljs-keyword">while</span> (cur1 != <span class="hljs-keyword">null</span>) {
+            stk1.push(cur1);
+            cur1 = cur1.left;
+        }
+        <span class="hljs-keyword">while</span> (cur2 != <span class="hljs-keyword">null</span>) {
+            stk2.push(cur2);
+            cur2 = cur2.left;
+        }
+        <span class="hljs-comment">//&#x6CE8;&#x610F;&#x5F53;stk2&#x662F;&#x7A7A;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C06;stk1&#x7684;&#x5143;&#x7D20;&#x5168;&#x90E8;pop&#x51FA;&#x6765;&#x5373;&#x53EF;</span>
+        <span class="hljs-keyword">if</span> (stk2.isEmpty() || !stk1.isEmpty() &amp;&amp; stk1.peek().val &lt; stk2.peek().val) {
+            cur1 = stk1.pop();
+            res.add(cur1.val);
+            cur1 = cur1.right;
+        } <span class="hljs-keyword">else</span> {
+            cur2 = stk2.pop();
+            res.add(cur2.val);
+            cur2 = cur2.right;
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<ul>
+<li>&#x53E6;&#x4E00;&#x79CD;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">getAllElements</span><span class="hljs-params">(TreeNode root1, TreeNode root2)</span> </span>{
+    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    Deque&lt;TreeNode&gt; stk1 = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;(), stk2 = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    pushLeft(stk1, root1);
+    pushLeft(stk2, root2);
+    <span class="hljs-keyword">while</span> (!stk1.isEmpty() || !stk2.isEmpty()) {
+        Deque&lt;TreeNode&gt; stk;
+        <span class="hljs-keyword">if</span> (stk1.isEmpty()) stk = stk2;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (stk2.isEmpty()) stk = stk1;
+        <span class="hljs-keyword">else</span> stk = stk1.peek().val &lt; stk2.peek().val ? stk1 : stk2;
+        TreeNode cur = stk.pop();
+        res.add(cur.val);
+        pushLeft(stk, cur.right);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushLeft</span><span class="hljs-params">(Deque&lt;TreeNode&gt; stk, TreeNode root)</span> </span>{
+    <span class="hljs-keyword">while</span> (root != <span class="hljs-keyword">null</span>) {
+        stk.push(root);
+        root = root.left;
+    }
+}
+</code></pre>
+<ul>
+<li>&#x53E6;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">getAllElements</span><span class="hljs-params">(TreeNode root1, TreeNode root2)</span> </span>{
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            Deque&lt;TreeNode&gt; stk1 = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;(), stk2 = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            pushLeft(stk1, root1);
+            pushLeft(stk2, root2);
+            <span class="hljs-keyword">while</span> (!stk1.isEmpty() &amp;&amp; !stk2.isEmpty()) {
+                <span class="hljs-keyword">if</span> (stk1.peek().val &lt; stk2.peek().val) {
+                    res.add(next(stk1));
+                } <span class="hljs-keyword">else</span> {
+                    res.add(next(stk2));
+                }
+            }
+            <span class="hljs-keyword">while</span> (!stk1.isEmpty()) res.add(next(stk1));
+            <span class="hljs-keyword">while</span> (!stk2.isEmpty()) res.add(next(stk2));
+            <span class="hljs-keyword">return</span> res;
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushLeft</span><span class="hljs-params">(Deque&lt;TreeNode&gt; stk, TreeNode root)</span> </span>{
+            <span class="hljs-keyword">while</span> (root != <span class="hljs-keyword">null</span>) {
+                stk.push(root);
+                root = root.left;
+            }
+        }
+
+        <span class="hljs-comment">//&#x5148;&#x5B58;&#x53F3;&#x8282;&#x70B9;&#xFF0C;&#x518D;&#x4E00;&#x76F4;&#x538B;&#x5DE6;&#x5B50;&#x6811;&#x8282;&#x70B9;</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">next</span><span class="hljs-params">(Deque&lt;TreeNode&gt; stk)</span> </span>{
+            TreeNode cur = stk.pop();
+            <span class="hljs-keyword">int</span> res = cur.val;
+            pushLeft(stk, cur.right);
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -2785,7 +2910,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-17T12:38:36.943Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-04-29T07:52:37.208Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-04-30T23:46:51.092Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-01T13:41:08.124Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1264,3 +1264,108 @@ public int fib(int n) {
 
 
 
+
+
+## [6050. 字符串的总引力](https://leetcode-cn.com/problems/total-appeal-of-a-string/)
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com//imgs/leetcode/classify/20220501192107.png)
+
+- `sum[i]`表示`s[0...i]`区间的字符产生的引力值
+- `pos[c]`表示字符`c`最近一次出现的位置
+
+```java
+public long appealSum(String s) {
+    int n = s.length();
+    //sum[i]为字符s[0...i]的引力值之和
+    int[] sum = new int[n];
+    sum[0] = 1;
+    //字符最近一次出现的位置
+    int[] pos = new int[26];
+    Arrays.fill(pos, -1);
+    pos[s.charAt(0) - 'a'] = 0;
+    long res = sum[0];
+    for (int i = 1; i < n; i++) {
+        char c = s.charAt(i);
+        if (pos[c - 'a'] == -1) sum[i] = sum[i - 1] + i + 1;
+        else sum[i] = sum[i - 1] + (i - pos[c - 'a']);//该字符最近一次出现的位置
+        pos[c - 'a'] = i;
+        res += sum[i];
+    }
+    return res;
+}
+```
+
+
+
+- 优化
+
+```java
+public long appealSum(String s) {
+    long res = 0;
+    int[] pos = new int[26];
+    int sum = 0;
+    Arrays.fill(pos, -1);
+    for (int i = 0; i < s.length(); i++) {
+        int c = s.charAt(i) - 'a';
+        sum += i - pos[c];
+        res += sum;
+        pos[c] = i;
+    }
+    return res;
+}
+```
+
+- 优化
+  - 记录每个字母上一次的下标，累加贡献，设定贡献为一个字母在子字符串第一次出现时产生贡献，后续重复出现不贡献；
+  - 则每次贡献为 左边有 i - lastpos 种选法，右边有 n - i 种选法；
+  - 初始位置设为-1；
+
+```java
+public long appealSum(String s) {
+    int[] pos = new int[26];
+    long sum = 0;
+    Arrays.fill(pos, -1);
+    int n = s.length();
+    for (int i = 0; i < n; i++) {
+        int c = s.charAt(i) - 'a';
+        sum += (n - i) * (i - pos[c]);
+        pos[c] = i;
+    }
+    return sum;
+}
+```
+
+- dp的思路
+
+```java
+//TLE 63 / 76
+public long appealSum(String s) {
+    int[] pos = new int[26];
+    int n = s.length();
+    Arrays.fill(pos, -1);
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < 26; i++) map.put(i, -1);
+    //pos[i]表示当前字符出现时，该字符前一出现的位置
+    for (int i = 0; i < s.length(); i++) {
+        int k = s.charAt(i) - 'a';
+        pos[k] = map.get(k);
+        map.put(k, i);
+    }
+    int[][] dp = new int[n][n];
+    long res = dp[0][0] = 1;
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            if (j == 0) continue;
+            if (i == j) {
+                dp[i][j] = 1;
+                res += 1;
+            } else {
+                if (pos[s.charAt(j) - 'a'] >= i && pos[s.charAt(j) - 'a'] < j) dp[i][j] = dp[i][j - 1];
+                else dp[i][j] = dp[i][j - 1] + 1;
+                res += dp[i][j];
+            }
+        }
+    }
+    return res;
+}
+```

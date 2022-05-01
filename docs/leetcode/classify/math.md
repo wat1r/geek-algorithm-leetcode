@@ -147,7 +147,51 @@ public int largestPalindrome(int n) {
 
 
 
+## [908. 最小差值 I](https://leetcode-cn.com/problems/smallest-range-i/)
 
+- [链接](https://leetcode-cn.com/problems/smallest-range-i/solution/zui-xiao-chai-zhi-i-by-leetcode-solution-7lcl/)
+
+```java
+        public int smallestRangeI(int[] nums, int k) {
+            int minn = 10010, maxx = -10010;
+            for (int x : nums) {
+                minn = Math.min(minn, x);
+                maxx = Math.max(maxx, x);
+            }
+            return maxx - minn <= 2 * k ? 0 : maxx - minn - 2 * k;
+        }
+```
+
+lambda写法
+
+```java
+public int smallestRangeI(int[] nums, int k) {
+    int minn = Arrays.stream(nums).min().getAsInt();
+    int maxx = Arrays.stream(nums).max().getAsInt();
+    return Math.max(0, maxx - minn - 2 * k);
+}
+```
+
+
+
+## [910. 最小差值 II](https://leetcode-cn.com/problems/smallest-range-ii/)
+
+- [链接](https://leetcode-cn.com/problems/smallest-range-ii/solution/tai-nan-liao-zhi-neng-hua-tu-ping-zhi-jue-by-user8/)
+
+```java
+public int smallestRangeII(int[] nums, int k) {
+    int n = nums.length;
+    Arrays.sort(nums);
+    int res = nums[n - 1] - nums[0];
+    for (int i = 0; i < n - 1; i++) {
+        int maxx = Math.max(nums[i] + k, nums[n - 1] - k);
+        int minn = Math.min(nums[i + 1] - k, nums[0] + k);
+        int diff = maxx - minn;
+        res = Math.min(res, diff);
+    }
+    return res;
+}
+```
 
 
 

@@ -13,6 +13,11 @@ import java.util.Stack;
  */
 public class _94 {
 
+    public static void main(String[] args) {
+        List<Integer> list1 = new ArrayList<>(),res= new ArrayList<>();
+//        res.addAll(list1.subList())
+    }
+
 
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
