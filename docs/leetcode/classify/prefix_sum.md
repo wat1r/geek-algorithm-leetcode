@@ -612,6 +612,31 @@ public long[] getDistances(int[] arr) {
 
 
 
+## [2256. 最小平均差](https://leetcode-cn.com/problems/minimum-average-difference/)
+
+```java
+//注意使用long类型
+public int minimumAverageDifference(int[] nums) {
+    int n = nums.length;
+    long[] pre = new long[n + 1];
+    for (int i = 0; i < n; i++) pre[i + 1] = pre[i] + nums[i];
+    long minn = 100010;
+    int index = 0;
+    for (int i = 0; i < n; i++) {
+        long front = (int) (pre[i + 1] / (i + 1));
+        long back = i == n - 1 ? 0 : (long) ((pre[n] - pre[i + 1]) / (n - i - 1));
+        long diff = Math.abs(front - back);
+        if (diff < minn) {
+            minn = diff;
+            index = i;
+        }
+    }
+    return index;
+}
+```
+
+
+
 ### Reference
 
 - [STUACM-算法入门-前缀和与差分(含二维)](https://www.bilibili.com/video/BV1pi4y1j7si?p=2)

@@ -16,6 +16,7 @@ public class _937 {
         }
 
 
+        //a和b排序，如果return -1（或其他负数)，那么排序后a在b左边。如果return 1（或其他整数），那么排序后b在a左边。
         public String[] reorderLogFiles(String[] logs) {
             Arrays.sort(logs, (a, b) -> {
                 //limit表示分割的份数 dig1 8 1 5 1 -> "dig1"与"8 1 5 1"
