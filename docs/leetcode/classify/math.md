@@ -195,6 +195,55 @@ public int smallestRangeII(int[] nums, int k) {
 
 
 
+
+
+## [1823. 找出游戏的获胜者](https://leetcode-cn.com/problems/find-the-winner-of-the-circular-game/)
+
+- 约瑟夫环，同[剑指 Offer 62. 圆圈中最后剩下的数字](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
+
+```java
+public int findTheWinner(int n, int k) {
+    List<Integer> list = new ArrayList<>();
+    for (int i = 1; i <= n; i++) list.add(i);
+    int index = 0;
+    while (list.size() > 1) {
+        index = (index + k - 1) % list.size();
+        list.remove(index);
+    }
+    return list.get(0);
+}
+```
+
+- 动态规划参考**[剑指 Offer 62. 圆圈中最后剩下的数字（数学 / 动态规划，清晰图解）](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solution/jian-zhi-offer-62-yuan-quan-zhong-zui-ho-dcow/)**
+- 参考链接**[换个角度举例解决约瑟夫环](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solution/huan-ge-jiao-du-ju-li-jie-jue-yue-se-fu-huan-by-as/)**
+
+```java
+public int findTheWinner(int n, int k) {
+    int[] f = new int[n + 1];
+    f[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        f[i] = (f[i - 1] + k) % i;
+    }
+    return f[n] + 1;
+}
+```
+
+- 动态规划优化
+
+```java
+public int findTheWinner(int n, int k) {
+    int x = 0;
+    for (int i = 2; i <= n; i++) {
+        x = (x + k) % i;
+    }
+    return x + 1;
+}
+```
+
+
+
+
+
 ## [2121. 相同元素的间隔之和](https://leetcode-cn.com/problems/intervals-between-identical-elements/)
 
 

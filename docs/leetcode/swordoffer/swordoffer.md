@@ -179,3 +179,17 @@ public int lastRemaining(int n, int m) {
 }
 ```
 
+
+
+- 动态规划，参考**[剑指 Offer 62. 圆圈中最后剩下的数字（数学 / 动态规划，清晰图解）](https://leetcode-cn.com/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/solution/jian-zhi-offer-62-yuan-quan-zhong-zui-ho-dcow/)**
+
+```java
+public int lastRemaining(int n, int m) {
+    int[] f = new int[n + 1];
+    f[0] = 0;
+    for (int i = 1; i <= n; i++) {
+        f[i] = (f[i - 1] + m) % i;
+    }
+    return f[n];
+}
+```
