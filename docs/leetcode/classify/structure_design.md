@@ -667,6 +667,47 @@ class RandomizedSet {
 
 
 
+## [933. 最近的请求次数](https://leetcode-cn.com/problems/number-of-recent-calls/)
+
+```java
+class RecentCounter {
+    Deque<Integer> q;
+
+    public RecentCounter() {
+        q = new LinkedList<>();
+    }
+
+    public int ping(int t) {
+        q.offerLast(t);
+        while (q.peek() < t - 3000) q.pollFirst();
+        return q.size();
+    }
+}
+```
+
+- 另
+
+```java
+class RecentCounter {
+
+    PriorityQueue<Integer> pq;
+    int N = 3000;
+
+    public RecentCounter() {
+        pq = new PriorityQueue<>();
+    }
+
+    public int ping(int t) {
+
+        while (!pq.isEmpty() && pq.peek() < t - N) {
+            pq.poll();
+        }
+        pq.offer(t);
+        return pq.size();
+    }
+}
+```
+
 
 
 
