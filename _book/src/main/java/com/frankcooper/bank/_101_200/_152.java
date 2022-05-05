@@ -82,4 +82,19 @@ public class _152 {
             }
         }
     }
+
+    static class _4th {
+        public int maxProduct(int[] nums) {
+            if (nums.length == 0) return 0;
+            if (nums.length == 1) return nums[0];
+            int maxx = nums[0], minn = nums[0], res = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                int t = maxx;
+                maxx = Math.max(Math.max(nums[i], maxx * nums[i]), minn * nums[i]);
+                minn = Math.min(Math.min(nums[i], minn * nums[i]), nums[i] * t);
+                res = Math.max(res, maxx);
+            }
+            return res;
+        }
+    }
 }

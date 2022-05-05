@@ -117,4 +117,20 @@ public class Sword_62 {
             return list.get(0);
         }
     }
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            handler.lastRemaining(5, 3);
+        }
+
+        public int lastRemaining(int n, int m) {
+            int[] f = new int[n + 1];
+            f[0] = 0;
+            for (int i = 1; i <= n; i++) {
+                f[i] = (f[i - 1] + m) % i;
+            }
+            return f[n];
+        }
+    }
 }

@@ -943,6 +943,35 @@
             nums[j] = t;
         }
 </code></pre>
+<h2 id="937-&#x91CD;&#x65B0;&#x6392;&#x5217;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;"><a href="https://leetcode-cn.com/problems/reorder-data-in-log-files/" target="_blank">937. &#x91CD;&#x65B0;&#x6392;&#x5217;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;</a></h2>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> String[] reorderLogFiles(String[] logs) {
+            Arrays.sort(logs, (a, b) -&gt; {
+                <span class="hljs-comment">//limit&#x8868;&#x793A;&#x5206;&#x5272;&#x7684;&#x4EFD;&#x6570; dig1 8 1 5 1 -&gt; &quot;dig1&quot;&#x4E0E;&quot;8 1 5 1&quot;</span>
+                <span class="hljs-comment">//let1 art can -&gt; &quot;let1&quot;&#x4E0E;&quot;art can&quot;</span>
+                String[] splitA = a.split(<span class="hljs-string">&quot; &quot;</span>, <span class="hljs-number">2</span>);
+                String[] splitB = b.split(<span class="hljs-string">&quot; &quot;</span>, <span class="hljs-number">2</span>);
+                <span class="hljs-comment">//&#x5224;&#x65AD;&#x65E5;&#x5FD7;&#x7684;&#x7C7B;&#x578B;</span>
+                <span class="hljs-keyword">boolean</span> aIsDigit = Character.isDigit(splitA[<span class="hljs-number">1</span>].charAt(<span class="hljs-number">0</span>));
+                <span class="hljs-keyword">boolean</span> bIsDigit = Character.isDigit(splitB[<span class="hljs-number">1</span>].charAt(<span class="hljs-number">0</span>));
+                <span class="hljs-comment">//a&#x548C;b&#x90FD;&#x662F;&#x6570;&#x5B57;&#x65E5;&#x5FD7;&#xFF0C;&#x4FDD;&#x7559;&#x539F;&#x6765;&#x7684;&#x76F8;&#x5BF9;&#x987A;&#x5E8F; return 0;</span>
+                <span class="hljs-keyword">if</span> (aIsDigit &amp;&amp; bIsDigit) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+                    <span class="hljs-comment">//a&#x662F;&#x5B57;&#x6BCD;&#x65E5;&#x5FD7;&#xFF0C;b&#x662F;&#x6570;&#x5B57;&#x65E5;&#x5FD7; &#x5B57;&#x6BCD;&#x65E5;&#x5FD7;&#x5728;&#x6570;&#x5B57;&#x65E5;&#x5FD7;&#x4E4B;&#x524D; return -1;</span>
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!aIsDigit &amp;&amp; bIsDigit) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+                    <span class="hljs-comment">//a&#x662F;&#x6570;&#x5B57;&#x65E5;&#x5FD7;&#xFF0C;b&#x662F;&#x5B57;&#x6BCD;&#x65E5;&#x5FD7; &#x5B57;&#x6BCD;&#x65E5;&#x5FD7;&#x5728;&#x6570;&#x5B57;&#x65E5;&#x5FD7;&#x4E4B;&#x524D; return 1;</span>
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (aIsDigit &amp; !bIsDigit) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+                    <span class="hljs-comment">//a&#x548C;b&#x90FD;&#x662F;&#x5B57;&#x6BCD;&#x65E5;&#x5FD7; &#x5185;&#x5BB9;&#x4E0D;&#x540C;&#xFF0C;&#x6309;&#x5185;&#x5BB9;&#x6392;&#x5E8F;</span>
+                    <span class="hljs-comment">//&#x5185;&#x5BB9;&#x76F8;&#x540C;&#xFF0C;&#x6309;&#x6807;&#x8BC6;&#x7B26;&#x6765;&#x6392;&#x5E8F;</span>
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!aIsDigit &amp;&amp; !bIsDigit) {
+                    <span class="hljs-keyword">return</span> !splitA[<span class="hljs-number">1</span>].equals(splitB[<span class="hljs-number">1</span>]) ? splitA[<span class="hljs-number">1</span>].compareTo(splitB[<span class="hljs-number">1</span>])
+                            : splitA[<span class="hljs-number">0</span>].compareTo(splitB[<span class="hljs-number">0</span>]);
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+            });
+            <span class="hljs-keyword">return</span> logs;
+
+        }
+</code></pre>
 <h3 id="reference">Reference</h3>
 <ul>
 <li><a href="https://www.bilibili.com/video/BV13Y4y1H7j5" target="_blank">&#x52A8;&#x753B;&#x9610;&#x91CA;&#x5404;&#x79CD;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;</a></li>
@@ -990,7 +1019,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"排序","level":"1.2.6","depth":2,"next":{"title":"模拟","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"previous":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sorting.md","mtime":"2022-04-11T04:25:38.346Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-01T13:41:08.124Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"排序","level":"1.2.6","depth":2,"next":{"title":"模拟","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"previous":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sorting.md","mtime":"2022-05-02T23:07:03.451Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-05T00:32:01.923Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

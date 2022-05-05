@@ -335,6 +335,39 @@ public int characterReplacement(String s, int k) {
 
 
 
+## [713. 乘积小于 K 的子数组](https://leetcode-cn.com/problems/subarray-product-less-than-k/)
+
+```java
+public int numSubarrayProductLessThanK(int[] nums, int k) {
+    if (k <= 1) return 0;
+    int n = nums.length, res = 0;
+    //统计以nums[r]为右边界的子数组的个数
+    for (int t = 1, l = 0, r = 0; r < n; r++) {
+        t *= nums[r];
+        while (t >= k) t /= nums[l++];
+        res += r - l + 1;
+    }
+    return res;
+}
+```
+
+- 拿掉边界的处理
+
+```java
+public int numSubarrayProductLessThanK(int[] nums, int k) {
+    int n = nums.length, res = 0;
+    //统计以nums[r]为右边界的子数组的个数
+    for (int t = 1, l = 0, r = 0; r < n; ) {
+        t *= nums[r++];//这一步执行 ++
+        while (l < r && t >= k) t /= nums[l++];
+        res += r - l;//长度搞好是r-l不需要+1
+    }
+    return res;
+}
+```
+
+
+
 
 
 ## [2024. 考试的最大困扰度](https://leetcode-cn.com/problems/maximize-the-confusion-of-an-exam/)

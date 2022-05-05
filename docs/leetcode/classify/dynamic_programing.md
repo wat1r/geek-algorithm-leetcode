@@ -1129,6 +1129,31 @@ public int numDecodings(String s) {
 
 
 
+
+
+## [152. 乘积最大子数组](https://leetcode-cn.com/problems/maximum-product-subarray/)
+
+- 参考**[链接](https://leetcode-cn.com/problems/maximum-product-subarray/solution/dpfang-fa-xiang-jie-by-yang-cong-12/)**
+
+```java
+public int maxProduct(int[] nums) {
+    if (nums.length == 0) return 0;
+    if (nums.length == 1) return nums[0];
+    int maxx = nums[0], minn = nums[0], res = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        int t = maxx;
+        maxx = Math.max(Math.max(nums[i], maxx * nums[i]), minn * nums[i]);
+        minn = Math.min(Math.min(nums[i], minn * nums[i]), nums[i] * t);
+        res = Math.max(res, maxx);
+    }
+    return res;
+}
+```
+
+
+
+
+
 ## [416. 分割等和子集](https://leetcode-cn.com/problems/partition-equal-subset-sum/)
 
 ### 方法1：朴素版DP

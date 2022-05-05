@@ -944,6 +944,33 @@
     }
 }
 </code></pre>
+<h2 id="325&#x548C;&#x7B49;&#x4E8E;-k-&#x7684;&#x6700;&#x957F;&#x5B50;&#x6570;&#x7EC4;&#x957F;&#x5EA6;">325.&#x548C;&#x7B49;&#x4E8E; k &#x7684;&#x6700;&#x957F;&#x5B50;&#x6570;&#x7EC4;&#x957F;&#x5EA6;</h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxSubArrayLen</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">int</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-comment">//k: &#x5B58;&#x50A8;&#x5F53;&#x524D;&#x7684;&#x524D;&#x7F00;&#x548C;&#x7684;&#x503C;pre[i], v:&#x5B58;&#x50A8;&#x5F53;&#x524D;&#x524D;&#x7F00;&#x548C;&#x4E0B;&#x6700;&#x5C0F;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;</span>
+    Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    map.put(pre[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        pre[i] = pre[i - <span class="hljs-number">1</span>] + nums[i - <span class="hljs-number">1</span>];
+        <span class="hljs-keyword">if</span> (!map.containsKey(pre[i])) {
+            map.put(pre[i], i);
+        }
+    }
+    <span class="hljs-keyword">int</span> maxLen = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//&#x904D;&#x5386;&#x5230;&#x7684;&#x4E3A; pre[i] ,&#x5982;&#x679C;&#x5728; map &#x4E2D;&#x5B58;&#x5728; pre[i]-k &#xFF0C;&#x8BF4;&#x660E;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x957F;&#x5EA6;&#x4E3A; k &#x7684;&#x5B50;&#x6570;&#x7EC4;&#xFF0C;</span>
+    <span class="hljs-comment">//&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x5F97;&#x627E;&#x5230;&#x8FD9;&#x4E2A;&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x8D77;&#x59CB;&#x7D22;&#x5F15;&#xFF0C;&#x5373; map.get(pre[i]-k)&#xFF0C;</span>
+    <span class="hljs-comment">// &#x4E8E;&#x662F;&#x6211;&#x4EEC;&#x7EDF;&#x8BA1;&#x4ECE; map.get(sum[i]-k) &#x5230; i-1 &#x957F;&#x5EA6;,&#x5E76;&#x66F4;&#x65B0; maxLen</span>
+    <span class="hljs-comment">//&#x5012;&#x5E8F;&#x904D;&#x5386; [0...i]&#x7684;&#x957F;&#x5EA6;&#x5982;&#x679C;&#x6BD4;maxLen&#x5C0F;&#xFF0C;&#x6CA1;&#x5FC5;&#x8981;&#x7EE7;&#x7EED;&#x904D;&#x5386;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n; i &gt; maxLen; i--) {
+        <span class="hljs-keyword">int</span> t = pre[i] - k;
+        <span class="hljs-keyword">if</span> (map.containsKey(t)) {
+            maxLen = Math.max(maxLen, i - map.get(t));
+        }
+    }
+    <span class="hljs-keyword">return</span> maxLen;
+}
+</code></pre>
 <h2 id="525-&#x8FDE;&#x7EED;&#x6570;&#x7EC4;"><a href="https://leetcode-cn.com/problems/contiguous-array/" target="_blank">525. &#x8FDE;&#x7EED;&#x6570;&#x7EC4;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findMaxLength</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
             <span class="hljs-comment">//0 &#x76F8;&#x5F53;&#x4E8E;-1 -1 +1 cnt&#x503C;&#x7EF4;&#x6301;&#x5728;0&#x9644;&#x8FD1;&#x6CE2;&#x52A8;</span>
@@ -1351,6 +1378,26 @@ a_i-a</em>{i-1},\quad i\in [2,n]\
     <span class="hljs-keyword">return</span> intervals;
 }
 </code></pre>
+<h2 id="2256-&#x6700;&#x5C0F;&#x5E73;&#x5747;&#x5DEE;"><a href="https://leetcode-cn.com/problems/minimum-average-difference/" target="_blank">2256. &#x6700;&#x5C0F;&#x5E73;&#x5747;&#x5DEE;</a></h2>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x6CE8;&#x610F;&#x4F7F;&#x7528;long&#x7C7B;&#x578B;</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minimumAverageDifference</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">long</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) pre[i + <span class="hljs-number">1</span>] = pre[i] + nums[i];
+    <span class="hljs-keyword">long</span> minn = <span class="hljs-number">100010</span>;
+    <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">long</span> front = (<span class="hljs-keyword">int</span>) (pre[i + <span class="hljs-number">1</span>] / (i + <span class="hljs-number">1</span>));
+        <span class="hljs-keyword">long</span> back = i == n - <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : (<span class="hljs-keyword">long</span>) ((pre[n] - pre[i + <span class="hljs-number">1</span>]) / (n - i - <span class="hljs-number">1</span>));
+        <span class="hljs-keyword">long</span> diff = Math.abs(front - back);
+        <span class="hljs-keyword">if</span> (diff &lt; minn) {
+            minn = diff;
+            index = i;
+        }
+    }
+    <span class="hljs-keyword">return</span> index;
+}
+</code></pre>
 <h3 id="reference">Reference</h3>
 <ul>
 <li><p><a href="https://www.bilibili.com/video/BV1pi4y1j7si?p=2" target="_blank">STUACM-&#x7B97;&#x6CD5;&#x5165;&#x95E8;-&#x524D;&#x7F00;&#x548C;&#x4E0E;&#x5DEE;&#x5206;(&#x542B;&#x4E8C;&#x7EF4;)</a></p>
@@ -1401,7 +1448,7 @@ a_i-a</em>{i-1},\quad i\in [2,n]\
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-04-25T14:08:03.253Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-01T13:41:08.124Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-05-05T00:17:17.905Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-05T00:32:01.923Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
