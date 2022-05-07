@@ -2,8 +2,6 @@ package com.frankcooper.bank._701_1000;
 
 import java.util.*;
 
-import org.junit.Assert;
-
 public class _933 {
 
     static class _1st {
@@ -60,6 +58,37 @@ public class _933 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        class RecentCounter {
+
+            ArrayList<Integer> requests;
+
+            public RecentCounter() {
+                requests = new ArrayList<>();
+            }
+
+            public int ping(int t) {
+                requests.add(t);
+                int prev = binarySearch(requests, t - 3000);
+                return requests.size() - prev;
+            }
+
+            public int binarySearch(ArrayList<Integer> requests, int target) {
+                int left = 0;
+                int right = requests.size();
+                // [left, right)
+                while (left < right) {
+                    int mid = left + (right - left) / 2;
+                    if (requests.get(mid) >= target) {
+                        right = mid;
+                    } else {
+                        left = mid + 1;
+                    }
+                }
+                return left;
+            }
+        }
+
     }
 
     static class _4th {

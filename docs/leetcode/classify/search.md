@@ -1232,6 +1232,91 @@ public List<Integer> lexicalOrder(int n) {
 
 
 
+## [433. 最小基因变化](https://leetcode-cn.com/problems/minimum-genetic-mutation/)
+
+### 方法1:BFS
+
+```java
+Set<String> bankSet;
+
+public int minMutation(String start, String end, String[] bank) {
+    bankSet = new HashSet<>(Arrays.asList(bank));
+    if (!bankSet.contains(end)) return -1;
+    int step = 0;
+    Queue<String> q = new LinkedList<>();
+    q.offer(start);
+    while (!q.isEmpty()) {
+        int size = q.size();
+        for (int i = 0; i < size; i++) {
+            String u = q.poll();
+            List<String> vs = transform(u);
+            for (String v : vs) {
+                if (v.equals(end)) return step;
+                q.offer(v);
+            }
+        }
+        step++;
+    }
+    return -1;
+}
+
+private List<String> transform(String src) {
+    List<String> res = new ArrayList<>();
+    char[] gen = {'A', 'C', 'G', 'T'};
+    for (int i = 0; i < src.length(); i++) {
+        char c = src.charAt(i);
+        for (int j = 0; j < gen.length; j++) {
+            if (gen[j] == c) continue;
+            String s = src.substring(0, i) + gen[j] + src.substring(i + 1);
+            if (!bankSet.contains(s)) continue;
+            res.add(s);
+        }
+    }
+    return res;
+}
+```
+
+### 方法2:回溯
+
+```java
+int minStep = Integer.MAX_VALUE;//最小的步数
+Set<String> bankSet;
+Set<String> pathSet;
+
+
+public int minMutation(String start, String end, String[] bank) {
+    bankSet = new HashSet<>(Arrays.asList(bank));
+    pathSet = new HashSet<>();
+    if (!bankSet.contains(end)) return -1;
+    backtracing(start, end, 0);
+    return minStep == Integer.MAX_VALUE ? -1 : minStep;
+}
+
+private void backtracing(String start, String end, int step) {
+    //找到了end基因，开始更新最小步数
+    if (start.equals(end)) {
+        minStep = Math.min(step, minStep);
+        return;
+    }
+    //遍历可能的基因库
+    for (String str : bankSet) {
+        int diff = 0;//不同基因的数量
+        for (int i = 0; i < str.length(); i++) {
+            if (start.charAt(i) != str.charAt(i)) {
+                diff++;
+                if (diff > 1) break;
+            }
+        }
+        //基因的变化是1且当前的基因没有出现在pathSet中，可以进入下一层
+        if (diff == 1 && !pathSet.contains(str)) {
+            pathSet.add(str);//添加
+            backtracing(str, end, step + 1);//步数+1
+            pathSet.remove(str);//回溯
+        }
+    }
+}
+```
+
 
 
 
