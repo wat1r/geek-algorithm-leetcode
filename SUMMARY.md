@@ -20,6 +20,7 @@
 * LeetCode-PART2
   
   * [单调栈](/docs/leetcode/classify/monotonic_stack.md)
+  * [线段树与树状数组](/docs/leetcode/classify/segment_tree.md)
   * [搜索](/docs/leetcode/classify/search.md)
   * [图论](/docs/leetcode/classify/graph.md)
   * [动态规划](/docs/leetcode/classify/dynamic_programing.md)
@@ -27,10 +28,8 @@
   * [位运算](/docs/leetcode/classify/bit.md)
   * [数学](/docs/leetcode/classify/math.md)
   * [计算几何](/docs/leetcode/classify/computational_geometry.md)
-  
   * [扫描线](/docs/leetcode/classify/sweep_line.md)
   * [随机化](/docs/leetcode/classify/randomization.md)
-  
   * [剑指Offer(leetcode)](/docs/leetcode/swordoffer/swordoffer.md)
   
 * 比赛

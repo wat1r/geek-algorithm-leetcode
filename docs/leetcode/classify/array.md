@@ -269,6 +269,86 @@ public boolean containsDuplicate(int[] nums) {
 
 
 
+## [442. 数组中重复的数据](https://leetcode-cn.com/problems/find-all-duplicates-in-an-array/)
+
+### 方法1:标记
+
+#### 思路
+
+我们也可以给`nums[i]` 加上「负号」表示数` i+1` 已经出现过一次。具体地，我们首先对数组进行一次遍历。当遍历到位置 `i` 时，我们考虑 `nums[nums[i]−1]` 的正负性：
+
+- 如果 `nums[nums[i]−1]` 是正数，说明`nums[i] `还没有出现过，我们将 `nums[nums[i]−1]`加上负号；
+- 如果 `nums[nums[i]−1]`是负数，说明 `nums[i] `已经出现过一次，我们将  放入答案。
+
+#### 细节
+
+- 由于`nums[i] ` 本身可能已经为负数，因此在将`nums[i] `作为下标或者放入答案时，需要取绝对值。
+
+```java
+        public List<Integer> findDuplicates(int[] nums) {
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                int x = Math.abs(nums[i]);
+                if (nums[x - 1] > 0) {
+                    nums[x - 1] = -nums[x - 1];
+                } else {
+                    res.add(x);
+                }
+            }
+            return res;
+        }
+```
+
+### 方法2:交换
+
+```java
+        public List<Integer> findDuplicates(int[] nums) {
+            for (int i = 0; i < nums.length; i++) {
+                while (nums[i] != nums[nums[i] - 1]) {
+                    int t = nums[i];
+                    nums[i] = nums[nums[i] - 1];
+                    nums[t - 1] = t;
+                }
+            }
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] != i + 1) res.add(nums[i]);
+            }
+            return res;
+        }
+```
+
+
+
+
+
+## [448. 找到所有数组中消失的数字](https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/)
+
+- 将442题的方法2修改下
+
+```java
+        public List<Integer> findDisappearedNumbers(int[] nums) {
+            for (int i = 0; i < nums.length; i++) {
+                while (nums[i] != nums[nums[i] - 1]) {
+                    int t = nums[i];
+                    nums[i] = nums[nums[i] - 1];
+                    nums[t - 1] = t;
+                }
+            }
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] != i + 1) res.add(i + 1);//缺失的数是i+1
+            }
+            return res;
+        }
+```
+
+
+
+
+
+
+
 
 
 

@@ -311,7 +311,7 @@ public class _307 {
     }
 
 
-    class _4th {
+    static class _4th {
 
         class NumArray {
 
@@ -370,6 +370,58 @@ public class _307 {
                 return sum;
             }
         }
+    }
+
+
+    //树状数组 BinaryIndexedTree
+    static class _5th {
+
+        class NumArray {
+
+            int[] tree;
+            int n;
+            int[] nums;
+
+            public NumArray(int[] nums) {
+                n = nums.length;
+                tree = new int[n + 1];
+                this.nums = nums;
+                for (int i = 0; i < n; i++) add(i + 1, nums[i]);
+
+            }
+
+            public void update(int index, int val) {
+                // 原有的值是 nums[i]，要使得修改为 val，需要增加 val - nums[i]
+                add(index + 1, val - nums[index]);
+                nums[index] = val;
+            }
+
+            public int sumRange(int left, int right) {
+                return query(right + 1) - query(left);
+            }
+
+
+            private int query(int x) {
+                int sum = 0;
+                for (int i = x; i > 0; i -= lowbit(i)) sum += tree[i];
+                return sum;
+            }
+
+
+            private void add(int x, int v) {
+                for (int i = x; i <= n; i += lowbit(i)) {
+                    tree[i] += v;
+                }
+            }
+
+
+            private int lowbit(int x) {
+                return -x & x;
+            }
+
+
+        }
+
     }
 
 }
