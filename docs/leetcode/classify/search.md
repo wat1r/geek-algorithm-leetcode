@@ -1620,6 +1620,67 @@ private boolean inArea(int r, int c) {
 
 
 
+
+
+## [面试题 08.09. 括号](https://leetcode.cn/problems/bracket-lcci/)
+
+```java
+List<String> res = new ArrayList<>();
+int n;
+
+public List<String> generateParenthesis(int n) {
+    this.n = n;
+    dfs("", 0, 0);
+    return res;
+}
+
+//传StringBuilder 不可以
+public void dfs(String s, int left, int right) {
+    if (left == n && right == n) {
+        res.add(s);
+        return;
+    }
+    //left ++  ++left 均不可以
+    if (left < n) dfs(s + "(", left + 1, right);
+    //right < left
+    if (right < left) dfs(s + ")", left, right + 1);
+}
+```
+
+- 另
+
+```java
+        List<String> res = new ArrayList<>();
+        int n;
+
+        public List<String> generateParenthesis(int n) {
+            this.n = n;
+            dfs("", 0, 0);
+            return res;
+        }
+
+        //传StringBuilder 不可以
+        public void dfs(String s, int left, int right) {
+            if (left == n && right == n) {
+                res.add(s);
+                return;
+            }
+            if (left > n || right > n) return;
+            if (right > left) return;
+            dfs(s + "(", left + 1, right);
+            //right < left
+            dfs(s + ")", left, right + 1);
+        }
+```
+
+
+
+
+
+
+
+
+
 ### 搜索与图论问题合辑
 
 1.[搜索与图论之FloodFill](https://blog.csdn.net/wat1r/article/details/113702607)
