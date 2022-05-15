@@ -28,15 +28,15 @@ https://visualgo.net/en
 
 
 
->  黑小蜜蜂 黑大蜜蜂 小蜜蜂 大蜜蜂  绿努蜂 苏威拉西蜂 东方蜜蜂 西方蜜蜂 黑小蜂 黑大蜂 大蜜蜂蜂蜜小 绿努蜂  苏威拉西蜂
 
 
 
 
-
-
+347 TreeMap解答
 
 [715. Range模块，难度：困难](https://leetcode-cn.com/problems/range-module/)（可以采用TreeSet构建线段树，需要熟悉TreeSet在Java中相关接口的用法）
+
+731 TreeMap解答
 
 [732.我的日程安排表III ，难度：困难](https://leetcode-cn.com/problems/my-calendar-iii/) (可以采用TreeMap构建模拟化线段树，需要熟悉TreeMap在Java中相关接口的用法)
 
@@ -69,8 +69,12 @@ TreeSet
 状态压缩
 
 - [1349.参加考试的最大学生数](https://leetcode-cn.com/problems/maximum-students-taking-exam/)  HARD
-- [691.贴纸拼词](https://leetcode-cn.com/problems/stickers-to-spell-word/) HARD
+- [691.贴纸拼词](https://leetcode-cn.com/problems/stickers-to-spell-word/) HARD  已解决
 - [1125.最小的必要团队](https://leetcode-cn.com/problems/smallest-sufficient-team/)  HARD
+
+
+
+
 
 
 

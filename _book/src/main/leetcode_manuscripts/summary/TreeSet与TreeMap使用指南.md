@@ -77,8 +77,14 @@ TreeMap(SortedMap m)：由给定的有序map创建TreeMap，keys按照原顺序�
 - **`Object ceilingKey（Object key）`**：返回大于或等于给定键的最小键，如果没有这样的键则返回null。
 - **`Object higherKey（Object key）`：**返回严格大于指定键的最小键。
 - **`Map.Entry<K,V>	higherEntry(K key) `**一个键-值映射关系，它与严格大于给定键的最小键关联；如果不存在这样的键，则返回 null。
-- 
-   **`Map.Entry<K,V>	ceilingEntry(K key) `**一个键-值映射关系，它与大于等于给定键的最小键关联；如果不存在这样的键，则返回 null。
+- **`Map.Entry<K,V>	ceilingEntry(K key) `**一个键-值映射关系，它与大于等于给定键的最小键关联；如果不存在这样的键，则返回 null。
+- `K floorKey(K key);`:返回小于等于key的第一个键
+
+```java
+
+```
+
+
 
 #### 遍历方式
 
@@ -105,6 +111,76 @@ HashMap可实现快速存储和检索，但其缺点是其包含的元素是无�
 LinkedHashMap保留了HashMap的优势，且其包含的元素是有序的。它在有大量迭代的情况下表现更好。
 TreeMap能便捷的实现对其内部元素的各种排序，但其一般性能比前两种map差。
 LinkedHashMap映射减少了HashMap排序中的混乱，且不会导致TreeMap的性能损失。
+
+#### 接口
+
+```java
+public interface NavigableMap<K,V> extends SortedMap<K,V> {
+
+    //返回小于key的第一个元素：
+    Map.Entry<K,V> lowerEntry(K key);
+
+    //返回小于key的第一个键：
+    K lowerKey(K key);
+
+    //返回小于等于key的第一个元素：
+    Map.Entry<K,V> floorEntry(K key);
+
+    //返回小于等于key的第一个键：
+    K floorKey(K key);
+
+    //返回大于或者等于key的第一个元素：
+    Map.Entry<K,V> ceilingEntry(K key);
+
+    //返回大于或者等于key的第一个键：
+    K ceilingKey(K key);
+
+    //返回大于key的第一个元素：
+    Map.Entry<K,V> higherEntry(K key);
+
+    //返回大于key的第一个键：
+    K higherKey(K key);
+
+    //返回集合中第一个元素：
+    Map.Entry<K,V> firstEntry();
+
+    //返回集合中最后一个元素：
+    Map.Entry<K,V> lastEntry();
+
+    //返回集合中第一个元素，并从集合中删除：
+    Map.Entry<K,V> pollFirstEntry();
+
+    //返回集合中最后一个元素，并从集合中删除：
+    Map.Entry<K,V> pollLastEntry();
+
+    //返回倒序的Map集合：
+    java.util.NavigableMap<K,V> descendingMap();
+
+    NavigableSet<K> navigableKeySet();
+
+    //返回Map集合中倒序的Key组成的Set集合：
+    NavigableSet<K> descendingKeySet();
+
+    java.util.NavigableMap<K,V> subMap(K fromKey, boolean fromInclusive,
+                                       K toKey, boolean toInclusive);
+
+    java.util.NavigableMap<K,V> headMap(K toKey, boolean inclusive);
+
+    java.util.NavigableMap<K,V> tailMap(K fromKey, boolean inclusive);
+
+    SortedMap<K,V> subMap(K fromKey, K toKey);
+
+    SortedMap<K,V> headMap(K toKey);
+
+    SortedMap<K,V> tailMap(K fromKey);
+}
+```
+
+
+
+
+
+
 
 
 

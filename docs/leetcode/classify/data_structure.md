@@ -921,6 +921,12 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 
 ## 树
 
+- 前序遍历：根结点 ---> 左子树 ---> 右子树
+
+- 中序遍历：左子树---> 根结点 ---> 右子树
+
+- 后序遍历：左子树 ---> 右子树 ---> 根结点
+
 
 
 ## [96. 不同的二叉搜索树](https://leetcode-cn.com/problems/unique-binary-search-trees/)
@@ -1846,6 +1852,175 @@ LCA of 10 and 22 is 20
 - [Lowest Common Ancestor in a Binary Search Tree(二叉搜索树的最近公共祖先节点)](https://blog.csdn.net/wat1r/article/details/120959546)
 - [Lowest Common Ancestor in a Binary Tree | Set 2 (Using Parent Pointer)（二叉树的最近公共祖先节点（使用父节点））](https://blog.csdn.net/wat1r/article/details/120964544)
 - [【重温经典】二叉树的最近公共祖先](https://blog.csdn.net/wat1r/article/details/120301718)
+
+
+
+
+
+
+
+## [297. 二叉树的序列化与反序列化](https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/)
+
+```java
+        public class Codec {
+
+            // Encodes a tree to a single string.
+            public String serialize(TreeNode root) {
+                if (root == null) return "[]";
+                StringBuilder sb = new StringBuilder("[");
+                Queue<TreeNode> q = new LinkedList<>();
+                q.offer(root);
+                while (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    if (cur != null) {
+                        sb.append(cur.val).append(",");
+                        q.offer(cur.left);
+                        q.offer(cur.right);
+                    } else {
+                        sb.append("null").append(",");
+                    }
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                sb.append("]");
+                return sb.toString();
+            }
+
+            // Decodes your encoded data to tree.
+            public TreeNode deserialize(String data) {
+                if (data.equals("[]")) return null;
+                String[] arr = data.substring(1, data.length() - 1).split(",");
+                TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
+                Queue<TreeNode> q = new LinkedList<>();
+                q.offer(root);
+                int idx = 1;
+                while (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    if (!arr[idx].equals("null")) {
+                        cur.left = new TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.left);
+                    }
+                    idx++;
+                    if (!arr[idx].equals("null")) {
+                        cur.right = new TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.right);
+                    }
+                    idx++;
+                }
+                return root;
+            }
+        }
+```
+
+
+
+## [449. 序列化和反序列化二叉搜索树](https://leetcode.cn/problems/serialize-and-deserialize-bst/)
+
+```java
+      public class Codec {
+
+            // Encodes a tree to a single string.
+            public String serialize(TreeNode root) {
+                if (root == null) return "[]";
+                StringBuilder sb = new StringBuilder("[");
+                Queue<TreeNode> q = new LinkedList<>();
+                q.offer(root);
+                while (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    if (cur != null) {
+                        sb.append(cur.val).append(",");
+                        q.offer(cur.left);
+                        q.offer(cur.right);
+                    } else {
+                        sb.append("null").append(",");
+                    }
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                sb.append("]");
+                return sb.toString();
+            }
+
+            // Decodes your encoded data to tree.
+            public TreeNode deserialize(String data) {
+                if (data.equals("[]")) return null;
+                String[] arr = data.substring(1, data.length() - 1).split(",");
+                TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
+                Queue<TreeNode> q = new LinkedList<>();
+                q.offer(root);
+                int idx = 1;
+                while (!q.isEmpty()) {
+                    TreeNode cur = q.poll();
+                    if (!arr[idx].equals("null")) {
+                        cur.left = new TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.left);
+                    }
+                    idx++;
+                    if (!arr[idx].equals("null")) {
+                        cur.right = new TreeNode(Integer.parseInt(arr[idx]));
+                        q.offer(cur.right);
+                    }
+                    idx++;
+                }
+                return root;
+            }
+        }
+```
+
+
+
+### 方法2:找分割点
+
+```java
+        public static class Codec {
+
+
+            // Encodes a tree to a single string.
+            public String serialize(TreeNode root) {
+                StringBuilder sb = new StringBuilder();
+                dfs1(root, sb);
+                return sb.toString();
+            }
+
+
+            private void dfs1(TreeNode root, StringBuilder sb) {
+                if (root == null) {
+                    return;
+                }
+                sb.append(root.val).append(" ");
+                dfs1(root.left, sb);
+                dfs1(root.right, sb);
+            }
+
+            // Decodes your encoded data to tree.
+            public TreeNode deserialize(String data) {
+                if (data.length() == 0) return null;
+                String[] arr = data.split(" ");
+                List<Integer> list = new ArrayList<>();
+                for (int i = 0; i < arr.length; i++) {
+                    list.add(Integer.parseInt(arr[i]));
+                }
+                TreeNode root = dfs2(list, 0, list.size() - 1);
+                return root;
+            }
+
+
+            private TreeNode dfs2(List<Integer> list, int l, int r) {
+                if (l > r) return null;
+                TreeNode root = new TreeNode(list.get(l));
+                int k = l + 1;
+                while (k <= r && list.get(k) < list.get(l)) k++;
+                root.left = dfs2(list, l + 1, k - 1);
+                root.right = dfs2(list, k, r);
+                return root;
+            }
+
+        }
+```
+
+
+
+
+
+
 
 
 

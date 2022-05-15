@@ -147,6 +147,102 @@ public int largestPalindrome(int n) {
 
 
 
+
+
+## [812. 最大三角形面积](https://leetcode.cn/problems/largest-triangle-area/)
+
+- [三角形面积公式](https://baike.baidu.com/item/%E4%B8%89%E8%A7%92%E5%BD%A2%E9%9D%A2%E7%A7%AF%E5%85%AC%E5%BC%8F/8491990)
+
+### 方法1：海伦公式+暴力
+
+```java
+public double largestTriangleArea(int[][] points) {
+    int n = points.length;
+    double maxx = 0.0;
+    for (int i = 0; i < n; i++) {
+        int x1 = points[i][0], y1 = points[i][1];
+        for (int j = i + 1; j < n; j++) {
+            int x2 = points[j][0], y2 = points[j][1];
+            double a = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+            for (int k = j + 1; k < n; k++) {
+                int x3 = points[k][0], y3 = points[k][1];
+                double b = Math.sqrt((x1 - x3) * (x1 - x3) + (y1 - y3) * (y1 - y3));
+                double c = Math.sqrt((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3));
+                double s = (a + b + c) * 0.5;
+                //使用绝对值
+                //case：{{35, -23}, {-12, -48}, {-34, -40}, {21, -25}, {-35, -44}, {24, 1}, {16, -9}, {41, 4}, {-36, -49}, {42, -49}, {-37, -20}, {-35, 11}, {-2, -36}, {18, 21}, {18, 8}, {-24, 14}, {-23, -11}, {-8, 44}, {-19, -3}, {0, -10}, {-21, -4}, {23, 18}, {20, 11}, {-42, 24}, {6, -19}};
+                double t = Math.sqrt(s * Math.abs((s - a)) * Math.abs((s - b)) * Math.abs((s - c)));
+                maxx = Math.max(maxx, t);
+            }
+        }
+    }
+    return maxx;
+}
+```
+
+
+
+### 方法2：鞋带公式
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220515080716.png)
+
+```java
+public double largestTriangleArea(int[][] points) {
+    int n = points.length;
+    double maxx = 0.0;
+    for (int i = 0; i < n; i++) {
+        int x1 = points[i][0], y1 = points[i][1];
+        for (int j = i + 1; j < n; j++) {
+            int x2 = points[j][0], y2 = points[j][1];
+            for (int k = j + 1; k < n; k++) {
+                int x3 = points[k][0], y3 = points[k][1];
+                double t = 0.5 * Math.abs(x1 * y2 + x2 * y3 + x3 * y1 - y1 * x2 - y2 * x3 - y3 * x1);
+                maxx = Math.max(maxx, t);
+            }
+        }
+    }
+    return maxx;
+}
+```
+
+
+
+### 方法3：两边a,b,这两边夹角C
+
+```java
+        //精度问题
+        //case:{{2, 5}, {7, 7}, {10, 8}, {10, 10}, {1, 1}}
+        public double largestTriangleArea(int[][] points) {
+            int n = points.length;
+            double maxx = 0.0;
+            for (int i = 0; i < n; i++) {
+                int x1 = points[i][0], y1 = points[i][1];
+                for (int j = i + 1; j < n; j++) {
+                    int x2 = points[j][0], y2 = points[j][1];
+                    double a = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+                    for (int k = j + 1; k < n; k++) {
+                        int x3 = points[k][0], y3 = points[k][1];
+                        double b = Math.sqrt((x1 - x3) * (x1 - x3) + (y1 - y3) * (y1 - y3));
+                        double c = Math.sqrt((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3));
+                        double cos = Math.abs((a * a + b * b - c * c)) / (2 * a * b);
+                        double sin = Math.sqrt((double) 1 - cos * cos);
+                        double t = 0.5 * a * b * sin;
+                        maxx = Math.max(maxx, t);
+                    }
+                }
+            }
+            return maxx;
+        }
+```
+
+
+
+
+
+
+
+
+
 ## [908. 最小差值 I](https://leetcode-cn.com/problems/smallest-range-i/)
 
 - [链接](https://leetcode-cn.com/problems/smallest-range-i/solution/zui-xiao-chai-zhi-i-by-leetcode-solution-7lcl/)

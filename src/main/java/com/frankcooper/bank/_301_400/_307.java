@@ -424,4 +424,81 @@ public class _307 {
 
     }
 
+    static class _6th {
+        public static void main(String[] args) {
+
+        }
+
+
+        class NumArray {
+
+            int[] tree;
+            int n;
+
+
+            public NumArray(int[] nums) {
+                n = nums.length;
+                tree = new int[n * 4];
+                build(nums, 0, 0, n - 1);
+            }
+
+
+            public void update(int index, int val) {
+                update(0, 0, n - 1, index, val);
+            }
+
+            public int sumRange(int L, int R) {
+                return query(0, 0, n - 1, L, R);
+            }
+
+
+            private void build(int[] nums, int node, int start, int end) {
+                if (start == end) {
+                    tree[node] = nums[start];
+                    return;
+                }
+                int mid = start + (end - start) / 2;
+                int left_node = node * 2 + 1;
+                int right_node = node * 2 + 2;
+                build(nums, left_node, start, mid);
+                build(nums, right_node, mid + 1, end);
+                tree[node] = tree[left_node] + tree[right_node];
+            }
+
+            private void update(int node, int start, int end, int idx, int val) {
+                if (start == end) {
+                    tree[node] = val;
+                    return;
+                }
+                int mid = start + (end - start) / 2;
+                int left_node = node * 2 + 1;
+                int right_node = node * 2 + 2;
+                if (idx <= mid) {
+                    update(left_node, start, mid, idx, val);
+                } else {
+                    update(right_node, mid + 1, end, idx, val);
+                }
+                tree[node] = tree[left_node] + tree[right_node];
+            }
+
+            private int query(int node, int start, int end, int L, int R) {
+
+                if (R < start || L > end) {
+                    return 0;
+                } else if (L <= start && end <= R) {
+                    return tree[node];
+                } else if (start == end) {
+                    return tree[node];
+                }
+                int mid = start + (end - start) / 2;
+                int left_node = node * 2 + 1;
+                int right_node = node * 2 + 2;
+                int sum_left = query(left_node, start, mid, L, R);
+                int sum_right = query(right_node, mid + 1, end, L, R);
+                return sum_left + sum_right;
+            }
+        }
+
+    }
+
 }
