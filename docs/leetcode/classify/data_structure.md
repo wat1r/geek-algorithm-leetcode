@@ -2613,3 +2613,99 @@ private void pushLeft(Deque<TreeNode> stk, TreeNode root) {
 
 ```
 
+
+
+
+
+### 方法1：普通树+中序遍历
+
+- 没有使用到二叉搜索树的性质
+
+```java
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    Deque<TreeNode> stk = new ArrayDeque<>();
+    TreeNode prev = null, cur = root;
+    while (!stk.isEmpty() || cur != null) {
+        while (cur != null) {
+            stk.push(cur);
+            cur = cur.left;
+        }
+        cur = stk.pop();
+        if (prev == p) return cur;
+        prev = cur;
+        cur = cur.right;
+    }
+    return null;
+}
+```
+
+- 另：
+
+```java
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    boolean f = false;
+    Deque<TreeNode> stk = new ArrayDeque<>();
+    while (!stk.isEmpty() || root != null) {
+        while (root != null) {
+            stk.push(root);
+            root = root.left;
+        }
+        root = stk.pop();
+        if (f) return root;
+        if (root.val == p.val) f = true;
+        root = root.right;
+    }
+    return null;
+}
+```
+
+### 方法2：迭代+二分
+
+- 利用BST的性质
+
+```java
+        public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+            TreeNode res = null;
+            while (root != null) {
+                //当前节点的值比p节点的值大，在当前节点的左子树上找，当前节点有可能是p节点的下一个节点，保存该节点
+                if (root.val > p.val) {
+                    res = root;
+                    root = root.left;
+                } else {//当前节点的值比p节点的值小或者相等（说明当前节点不是p节点的后继），在当前节点的右子树上继续找
+                    root = root.right;
+                }
+            }
+            return res;
+        }
+```
+
+
+
+### 方法3：递归
+
+- 利用BST的性质
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220516074716.png)
+
+
+
+
+
+```java
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    if (root == null || p == null) {
+        return null;
+    }
+    //p节点的值比当前节点的值大或者相等，说明p节点的后继不可能在当前节点的左子树上（因为中序遍历的左子树的值比当前节点的值小）
+    //要设法去当前节点的右子树上找
+    if (root.val <= p.val) {
+        return inorderSuccessor(root.right, p);
+    } else {
+        //p节点的值比当前节点小了
+        //case1 left为null,说明在左子树上没找到，此时返回当前节点root
+        //case2 left不为null，说明找到了返回left
+        TreeNode left = inorderSuccessor(root.left, p);
+        return left == null ? root : left;
+    }
+}
+```

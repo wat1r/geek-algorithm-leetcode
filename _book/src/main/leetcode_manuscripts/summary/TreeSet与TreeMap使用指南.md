@@ -227,3 +227,4 @@ insort():
 ## Reference
 
 - https://www.jianshu.com/p/e11fe1760a3d
+- [【JDK源码剖析之红黑树TreeMap】子空kosora+七月在线](https://www.bilibili.com/video/BV1Jp411R7Sb?spm_id_from=333.337.search-card.all.click)

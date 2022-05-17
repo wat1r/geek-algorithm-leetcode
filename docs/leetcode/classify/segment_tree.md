@@ -440,3 +440,210 @@ class NumArray {
         }
 ```
 
+
+
+### 方法3:珂朵莉树
+
+- [算法学习笔记(15): 珂朵莉树](https://zhuanlan.zhihu.com/p/106353082)
+- [线段树的代替算法——珂朵莉树](https://www.codetd.com/article/13707910)
+
+```c++
+struct ChthollyNode {
+    int l, r;
+    mutable int v;
+    ChthollyNode(int l, int r, int v) : l(l), r(r), v(v) {}
+    bool operator<(const ChthollyNode &o) const {return l < o.l; }
+};
+class RangeModule {
+public:
+    std::set<ChthollyNode> tr;
+
+    std::set<ChthollyNode>::iterator split(int pos) {
+        auto it = tr.lower_bound(ChthollyNode(pos, 0, 0)); // 寻找左边大于等于pos的第一个节点
+        if (it != tr.end() && it -> l == pos) return it;
+        it--;
+        int l = it -> l, r = it -> r, v = it -> v;
+        tr.erase(it);
+        tr.insert(ChthollyNode(l, pos - 1, v));
+        return tr.insert(ChthollyNode(pos, r, v)).first;
+    }
+
+    void assign(int l, int r, int v) {
+        auto itr = split(r + 1);
+        auto itl = split(l);
+        tr.erase(itl, itr);
+        tr.insert(ChthollyNode(l, r, v));
+    }
+
+    bool check(int l, int r) {
+        auto itr = split(r + 1);
+        auto itl = split(l);
+        auto it = itl;
+        for (; it != itr; it++) {
+            if (it -> v == 0) return false;
+        }
+        return true;
+    }
+
+    RangeModule() {
+        tr.insert(ChthollyNode(1, 1e9, 0));
+    }
+    
+    void addRange(int left, int right) {
+        assign(left, right - 1, 1);
+    }
+    
+    bool queryRange(int left, int right) {
+        return check(left, right - 1);
+    }
+    
+    void removeRange(int left, int right) {
+        assign(left, right - 1, 0);
+    }
+};
+
+```
+
+
+
+
+
+## [2276. 统计区间中的整数数目](https://leetcode.cn/problems/count-integers-in-intervals/)
+
+
+
+### 方法1：TreeMap合并区间
+
+- 图2解释了合并多个区间，也就是while的条件
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220517224700.png)
+
+
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220517212100.png)
+
+```java
+class CountIntervals {
+            int sum;
+            //k : 每个区间的左端点，v:这个区间[l,r]
+            TreeMap<Integer, int[]> map;
+
+
+            public CountIntervals() {
+                sum = 0;
+                map = new TreeMap<>();
+            }
+            //返回小于等于key的第一个元素：
+            //    Map.Entry<K,V> floorEntry(K key);
+
+            public void add(int left, int right) {
+                //返回小于等于right的key的第一个元素
+                Map.Entry<Integer, int[]> e = map.floorEntry(right);
+                // l，r分别记录此次操作后最终的区间的 左边值、右边值
+                int l = left;
+                int r = right;
+                //当前的元素找到了，且元素的右区间比当前的[l,r]的左区间要大
+                while (e != null && e.getValue()[1] >= l) {
+                    // 删除区间，同时对sum做减法，e区间即将要被删除
+                    sum -= e.getValue()[1] - e.getValue()[0] + 1;
+                    //e 和 [l,r]来更新一个新的区间
+                    l = Math.min(l, e.getValue()[0]);
+                    r = Math.max(r, e.getValue()[1]);
+                    //移除e这个原来的区间
+                    map.remove(e.getKey());
+                    //继续找小于等于right的key的第一个元素
+                    e = map.floorEntry(right);
+                }
+                // 一次操作过后，添加最终的区间，对sum做加法
+                map.put(l, new int[]{l, r});
+                sum += r - l + 1;
+            }
+
+            public int count() {
+                return sum;
+            }
+
+        }
+```
+
+
+
+### 方法2：TreeSet合并区间
+
+思路来自风雨大佬
+
+```java
+static class CountIntervals {
+    TreeSet<Interval> set;
+    int nums;
+
+    public CountIntervals() {
+        set = new TreeSet<>();
+        nums = 0;
+    }
+
+    public void add(int left, int right) {
+        //tailSet()方法返回包含指定元素的指定元素（作为参数传递）之后的树集的所有元素。
+        //booleanValue参数是可选的。默认值为true。
+        //如果false作为a传递booleanValue，则该方法将返回指定后的所有元素，element而不包括指定的element
+        //起始需要找的区间，按[0,left]
+        //返回的是 比left 都要大的区间（这些区间的右端点比left更大）
+        Iterator<Interval> it = set.tailSet(new Interval(0, left), false).iterator();
+        while (it.hasNext()) {
+            Interval interval = it.next();
+            //当前的right比iterator中的左区间要小，说明
+            // current:[left,right] 与 iterator中的[left,right]没有相交叉的区间，可以提前退出了
+            if (right < interval.left) {
+                break;
+            }
+            //更新区间，左区间更左，右区间更右
+            left = Math.min(left, interval.left);
+            right = Math.max(right, interval.right);
+            //当前区间开始移除
+            it.remove();
+            //数量更新
+            nums -= (interval.right - interval.left + 1);
+        }
+        set.add(new Interval(left, right));
+        nums += right - left + 1;
+    }
+
+    public int count() {
+        return nums;
+    }
+}
+
+static class Interval implements Comparable<Interval> {
+    int left;
+    int right;
+
+    public Interval(int left, int right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    //按右区间从小到大排序，如果右区间相同则按左区间从小到大排序
+    public int compareTo(Interval that) {
+        if (this.right == that.right)
+            return this.left - that.left;
+        return this.right - that.right;
+    }
+
+    @Override
+    public String toString() {
+        return "Interval{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
+    }
+}
+```
+
+
+
+#### Reference
+
+- [TreeSet与TreeMap使用指南](https://blog.csdn.net/wat1r/article/details/124831320)
+
+
+
