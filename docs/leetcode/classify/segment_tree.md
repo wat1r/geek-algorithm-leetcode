@@ -184,6 +184,81 @@ class NumArray {
 
 
 
+### 方法3.线段树
+
+```java
+   class NumArray {
+            Node[] tr;
+
+            class Node {
+                int l, r, v;
+
+                public Node(int l, int r) {
+                    this.l = l;
+                    this.r = r;
+                }
+            }
+
+
+            void pushup(int u) {
+                tr[u].v = tr[u << 1].v + tr[u << 1 | 1].v;
+            }
+
+            void build(int u, int l, int r) {
+                tr[u] = new Node(l, r);
+                if (l == r) return;
+                int mid = l + r >> 1;
+                build(u << 1, l, mid);
+                build(u << 1 | 1, mid + 1, r);
+            }
+
+            void update(int u, int index, int value) {
+                if (tr[u].l == index && tr[u].r == index) {
+                    tr[u].v += value;
+                    return;
+                }
+                int mid = tr[u].l + tr[u].r >> 1;
+                if (index <= mid) update(u << 1, index, value);
+                else update(u << 1 | 1, index, value);
+                pushup(u);
+            }
+
+            int query(int u, int L, int R) {
+                if (L <= tr[u].l && tr[u].r <= R) return tr[u].v;
+                int mid = tr[u].l + tr[u].r >> 1;
+                int res = 0;
+                if (L <= mid) res += query(u << 1, L, R);
+                if (R > mid) res += query(u << 1 | 1, L, R);
+                return res;
+            }
+
+            int[] nums;
+
+            public NumArray(int[] nums) {
+                int N = nums.length;
+                this.nums = nums;
+                tr = new Node[4 * N];
+                build(1, 1, N);
+                for (int i = 0; i < N; i++) {
+                    update(1, i + 1, nums[i]);
+                }
+            }
+
+            public void update(int index, int val) {
+                update(1, index + 1, val - nums[index]);
+                nums[index] = val;
+            }
+
+            public int sumRange(int left, int right) {
+                return query(1, left + 1, right + 1);
+            }
+        }
+```
+
+
+
+
+
 
 
 
@@ -692,9 +767,206 @@ static class Interval implements Comparable<Interval> {
 
 
 
+### 一些代码
+
+```c++
+/*
+    动态开点线段树（带懒标记）by Mikasa Mikoto
+    step 1：init();
+    区间修改，区间查询
+    [l, r] 闭区间
+*/
+using TT = long long;
+static const int N = 5e5 + 10;
+static const TT M = 1e9 + 10;
+//节点定义，根据需要修改
+struct Node {
+    int l, r;
+    TT sum, lazy;
+} tr[N] {};
+static int idx , root;
+//节点初始化，根据需要修改
+inline int get_node() {
+    ++ idx;
+    tr[idx] = {};
+    return idx;
+}
+//上传，根据需要修改,传left, right备用
+inline void pushup(Node& u, Node& ls, Node& rs, TT left, TT right) {
+    //TT mid = (right - left) / 2 + left;
+    u.sum = ls.sum + rs.sum;
+}
+//下传，根据需要修改
+//下传操作函数：
+inline void eval(Node& u, TT left, TT right, TT lazy) {
+    u.sum += (right - left + 1) * lazy;
+    u.lazy += lazy;
+}
+//下传函数：
+inline void pushdown(Node& u, Node& ls, Node& rs, TT left, TT right) {
+    if(u.lazy) {
+        TT mid = (right - left) / 2 + left; 
+        eval(ls, left, mid, u.lazy);
+        eval(rs, mid + 1, right, u.lazy);
+        u.lazy = 0;
+    }
+}
+inline void pushup(int u, TT left, TT right) {
+    pushup(tr[u], tr[tr[u].l], tr[tr[u].r], left, right);
+}
+inline void pushdown(int u, TT left, TT right) {
+    if(!tr[u].l) tr[u].l = get_node();
+    if(!tr[u].r) tr[u].r = get_node();
+    pushdown(tr[u], tr[tr[u].l], tr[tr[u].r], left, right);
+}
+//区间修改，当前区间的懒标记表示其所有子节点需要操作的信息（不包括自身）
+void modify(int &u, TT l, TT r, TT L, TT R, TT d) {
+    if(!u) u = get_node();
+    if(r < L || l > R) return;
+    if(l >= L && r <= R) {
+        eval(tr[u], l, r, d);
+        return;
+    }
+    pushdown(u, l ,r);
+    TT mid = (r - l) / 2 + l;
+    if(L <= mid) modify(tr[u].l, l, mid, L, R, d);
+    if(R > mid) modify(tr[u].r, mid + 1, r, L, R, d);
+    pushup(u, l, r);
+}
+//区间查询，返Node类型，通常不需要改
+Node query(int u, TT l, TT r, TT L, TT R) {
+    if(r < L || l > R || !u) return tr[0];
+    if(l >= L && r <= R) return tr[u]; 
+    Node res;
+    pushdown(u, l, r);
+    TT mid = (r - l) / 2 + l;
+    if(R <= mid) res = query(tr[u].l, l, mid, L, R);
+    else if(L > mid) res = query(tr[u].r, mid + 1, r, L, R);
+    else {
+        auto left = query(tr[u].l, l, mid, L, R), right = query(tr[u].r, mid + 1, r, L, R);
+        pushup(res, left, right, l, r);
+    }
+    pushup(u, l, r);
+    return res;
+}
+void init() {
+    idx = 0;
+    //memset(tr, 0, sizeof tr);
+    root = get_node();
+}
+void modify(TT l, TT r, TT d) {modify(root, 0, M, l, r, d);}
+Node query(TT l, TT r) {return query(root, 0, M, l, r);}
+
+```
+
+- 
+
+```java
+#include<bits/stdc++.h>
+using namespace std;
+long long n,m;//n:长度 m: 询问 
+long long a[500001];
+struct Tree{
+    long long l,r;//l:左节点 r:右节点 
+    long long v,lazy;//v:当前节点的值 lazy:懒标记，记录改变的值，递归传值 
+}t[2000001];
+inline long long read(){
+    long long f=1,outt=0;char a=getchar();
+    while(a>'9'||a<'0'){if(a=='-')f=-1;a=getchar();}
+    while(a<='9'&&a>='0'){outt*=10;outt+=a-'0';a=getchar();}
+    return f*outt;
+}//读入优化 
+inline void eval(long long p,long long k){
+    t[p].lazy+=k;
+    t[p].v+=k*(t[p].r-t[p].l+1);
+} 
+inline void pushdown(long long p){
+    eval(p*2,t[p].lazy);
+    eval(p*2+1,t[p].lazy);
+    t[p].lazy=0;
+}
+void build(int p,int l,int r){
+    t[p].l=l;t[p].r=r;
+    if(l==r){
+        t[p].v=a[l];return;
+    }
+    long long mid=(l+r)/2;//中点 
+    build(p*2,l,mid);
+    build(p*2+1,mid+1,r);
+    t[p].v=t[p*2].v+t[p*2+1].v;
+}
+long long query(long long p,long long l){
+    if(t[p].l==l&&t[p].r==l)return t[p].v;
+    pushdown(p);
+    long long mid=(t[p].l+t[p].r)/2;
+    if(l<=mid)return query(p*2,l);
+    if(l>mid)return query(p*2+1,l);
+}
+void update(long long p,long long l,long long r,long long v){
+    if(t[p].l>=l&&t[p].r<=r){
+        t[p].v+=v*(t[p].r-t[p].l+1);
+        t[p].lazy+=v;
+        return;
+    }
+    pushdown(p);
+    long long mid=(t[p].r+t[p].l)/2;
+    if(l<=mid)update(p*2,l,r,v); 
+    if(r>mid) update(p*2+1,l,r,v);
+    t[p].v=t[p*2].v+t[p*2+1].v;
+}
+void change(long long p,int x,int v){//单点修改，不必在意，是区间修改的子问题，连标记都不用(而且本题不需要)
+    if(t[p].l==t[p].r){
+        t[p].v+=v;return;
+    }
+    int mid=(t[p].r+t[p].l)/2;
+    if(x<=mid)change(p*2,x,v);
+    else change(p*2+1,x,v);
+    t[p].v=t[p*2].v+t[p*2+1].v;
+}
+int main(){
+    n=read();m=read();//读入 
+    for(int i=1;i<=n;i++)
+        a[i]=read();
+    js(1,1,n);//建树 
+    for(int i=1;i<=m;i++){
+        long long pd=read();
+        if(pd==2){
+            long long ll=read();
+            printf("%lld\n",query(1,ll));//查询ll的值 
+        }
+        else 
+        if(pd==1){
+            long long ll=read(),rr=read(),x=read();
+            update(1,ll,rr,x);//修改从ll到rr的值加上x 
+        }
+        else
+        if(pd==3){
+            int k=read(),y=read();
+            change(1,k,y);
+        }
+    }
+    return 0; 
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
 权值线段树
 
 - P1908逆序对
+
+
+
+
 
 
 
@@ -711,3 +983,4 @@ static class Interval implements Comparable<Interval> {
 
 - [【neko】数据结构 线段树【算法编程#6】](https://www.bilibili.com/video/BV1yF411p7Bt?spm_id_from=333.337.search-card.all.click)
 - [什么是线段树](https://www.bilibili.com/video/BV1NS4y1S77N?spm_id_from=333.337.search-card.all.click)
+

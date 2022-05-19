@@ -501,4 +501,74 @@ public class _307 {
 
     }
 
+    static class _7th {
+
+        class NumArray {
+            Node[] tr;
+
+            class Node {
+                int l, r, v;
+
+                public Node(int l, int r) {
+                    this.l = l;
+                    this.r = r;
+                }
+            }
+
+
+            void pushup(int u) {
+                tr[u].v = tr[u << 1].v + tr[u << 1 | 1].v;
+            }
+
+            void build(int u, int l, int r) {
+                tr[u] = new Node(l, r);
+                if (l == r) return;
+                int mid = l + r >> 1;
+                build(u << 1, l, mid);
+                build(u << 1 | 1, mid + 1, r);
+            }
+
+            void update(int u, int index, int value) {
+                if (tr[u].l == index && tr[u].r == index) {
+                    tr[u].v += value;
+                    return;
+                }
+                int mid = tr[u].l + tr[u].r >> 1;
+                if (index <= mid) update(u << 1, index, value);
+                else update(u << 1 | 1, index, value);
+                pushup(u);
+            }
+
+            int query(int u, int L, int R) {
+                if (L <= tr[u].l && tr[u].r <= R) return tr[u].v;
+                int mid = tr[u].l + tr[u].r >> 1;
+                int res = 0;
+                if (L <= mid) res += query(u << 1, L, R);
+                if (R > mid) res += query(u << 1 | 1, L, R);
+                return res;
+            }
+
+            int[] nums;
+
+            public NumArray(int[] nums) {
+                int N = nums.length;
+                this.nums = nums;
+                tr = new Node[4 * N];
+                build(1, 1, N);
+                for (int i = 0; i < N; i++) {
+                    update(1, i + 1, nums[i]);
+                }
+            }
+
+            public void update(int index, int val) {
+                update(1, index + 1, val - nums[index]);
+                nums[index] = val;
+            }
+
+            public int sumRange(int left, int right) {
+                return query(1, left + 1, right + 1);
+            }
+        }
+    }
+
 }
