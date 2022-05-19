@@ -2,6 +2,115 @@
 
 > 
 
+
+
+
+
+## [453. 最小操作次数使数组元素相等](https://leetcode.cn/problems/minimum-moves-to-equal-array-elements/)
+
+### 方法1：找最小值
+
+```java
+public int minMoves(int[] nums) {
+    int minn = (int) 1e9 + 10;
+    for (int x : nums) minn = Math.min(minn, x);
+    int res = 0;
+    for (int x : nums) res += x - minn;
+    return res;
+}
+```
+
+
+
+
+
+
+
+## [462. 最少移动次数使数组元素相等 II](https://leetcode.cn/problems/minimum-moves-to-equal-array-elements-ii/)
+
+### 方法1：排序+找中位数
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220519080213.png)
+
+```java
+        //排序后求中位数
+        public int minMoves2(int[] nums) {
+            Arrays.sort(nums);
+            int res = 0, t = nums[nums.length / 2];
+            for (int i = 0; i < nums.length; i++) {
+                res += Math.abs(nums[i] - t);
+            }
+            return res;
+        }
+```
+
+### 方法2：排序+双指针
+
+- 设x在区间[a,b]范围内，将a变成x需要x-a步，将b变成x需要b-x步，总的步数是x-a+(b-x) = b-a即区间的差，x其实可以在这个区间内任意取
+
+```java
+public int minMoves2(int[] nums) {
+    Arrays.sort(nums);
+    int res = 0, t = nums[nums.length / 2];
+    for (int i = 0; i < nums.length; i++) {
+        res += Math.abs(nums[i] - t);
+    }
+    return res;
+}
+```
+
+### 方法3：快排+找中位数
+
+```java
+Random random = new Random();
+
+public int minMoves2(int[] nums) {
+    int n = nums.length;
+    int t = quickSelect(nums, 0, n - 1, n / 2);
+    int res = 0;
+    for (int i = 0; i < n; ++i) {
+        res += Math.abs(nums[i] - t);
+    }
+    return res;
+}
+
+//在[left,right]区间上找index下标的数
+public int quickSelect(int[] nums, int l, int r, int index) {
+    int p = randomPartition(nums, l, r);
+    if (p == index) {
+        return nums[p];
+    } else {
+        //p是分割点的下标，比index小，说明在右半部分找[p+1,right]
+        //否则在左半部分找[left, p-1]
+        return p < index ?
+                quickSelect(nums, p + 1, r, index)
+                : quickSelect(nums, l, p - 1, index);
+    }
+}
+
+public int randomPartition(int[] nums, int l, int r) {
+    int pivotIndex = random.nextInt(r - l + 1) + l;
+    swap(nums, pivotIndex, r);
+    int pivot = nums[r], i = l - 1;
+    for (int j = l; j < r; ++j) {
+        if (nums[j] <= pivot) {
+            ++i;
+            swap(nums, i, j);
+        }
+    }
+    swap(nums, i + 1, r);
+    return i + 1;
+}
+
+public void swap(int[] nums, int i, int j) {
+    int t = nums[i];
+    nums[i] = nums[j];
+    nums[j] = t;
+}
+```
+
+
+
 ## [912. 排序数组](https://leetcode-cn.com/problems/sort-an-array/)
 
 ### 方法1:快排

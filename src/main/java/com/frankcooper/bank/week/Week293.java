@@ -175,7 +175,32 @@ public class Week293 {
     }
 
     static class _4th_1 {
-        class CountIntervals {
+
+
+        public static void main(String[] args) {
+            _4th_1 handler = new _4th_1();
+            String[] ops = new String[]{"add", "add", "add", "add"};
+            //[805, 957] ->  {"15":[15,925],"805":[935,994],"995":[995,1000]}
+            int[][] vals = new int[][]{{15, 25}, {35, 84}, {95, 100}, {20, 40}};
+            CountIntervals ci = new CountIntervals();
+            for (int i = 0; i < ops.length; i++) {
+                String op = ops[i];
+                if (op.equals("add")) {
+                    int l = vals[i][0], r = vals[i][1];
+                    ci.add(l, r);
+                    System.out.printf("%d -> %s ->  %s\n", i, Arrays.toString(vals[i]), JSONObject.toJSON(ci.tm));
+                } else if (op.equals("count")) {
+                    System.out.println(ci.count());
+//                    if (ci.count() == 1640) {
+//                        System.out.printf("%d\n", i);
+//                    }
+                }
+            }
+
+        }
+
+
+        static class CountIntervals {
             TreeMap<Integer, Integer> tm;
             int sum;
 
@@ -382,6 +407,83 @@ public class Week293 {
                 return sum;
             }
 
+        }
+
+    }
+
+
+    static class _4th_4 {
+        public static void main(String[] args) {
+
+        }
+
+        static class CountIntervals {
+
+            TreeSet<int[]> ts;
+            int sum;
+
+            public CountIntervals() {
+                ts = new TreeSet<>((a, b) -> a[1] - b[1]);
+                sum = 0;
+            }
+
+            public void add(int left, int right) {
+                Iterator<int[]> it = ts.tailSet(new int[]{0, left}).iterator();
+                while (it.hasNext()) {
+                    int[] interval = it.next();
+                    if (right < interval[0]) {
+                        break;
+                    }
+                    left = Math.min(left, interval[0]);
+                    right = Math.max(right, interval[1]);
+                    it.remove();
+                    sum -= interval[1] - interval[0] + 1;
+                }
+                ts.add(new int[]{left, right});
+                sum += right - left + 1;
+            }
+
+            public int count() {
+                return sum;
+            }
+        }
+
+
+    }
+
+    //线段树，动态开点
+    static class _4th_5 {
+        class CountIntervals {
+            CountIntervals left, right;
+            int l, r, cnt;
+
+            public CountIntervals() {
+                l = 1;
+                r = (int) 1e9;
+            }
+
+            CountIntervals(int l, int r) {
+                this.l = l;
+                this.r = r;
+            }
+
+            public void add(int L, int R) { // 为方便区分变量名，将递归中始终不变的入参改为大写（视作常量）
+                if (cnt == r - l + 1) return; // 当前节点已被完整覆盖，无需执行任何操作
+                if (L <= l && r <= R) { // 当前节点已被区间 [L,R] 完整覆盖，不再继续递归
+                    cnt = r - l + 1;
+                    return;
+                }
+                int mid = (l + r) / 2;
+                if (left == null) left = new CountIntervals(l, mid); // 动态开点
+                if (right == null) right = new CountIntervals(mid + 1, r); // 动态开点
+                if (L <= mid) left.add(L, R);
+                if (mid < R) right.add(L, R);
+                cnt = left.cnt + right.cnt;
+            }
+
+            public int count() {
+                return cnt;
+            }
         }
 
     }

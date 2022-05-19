@@ -173,7 +173,7 @@ public class PrintUtils {
             int cur = s.charAt(i) - '0';
             ans |= cur << (n - 1 - i);
         }
-        Assert.assertEquals(s, Integer.toBinaryString(ans));
+//        Assert.assertEquals(s, Integer.toBinaryString(ans));
         System.out.println(ans);
         return ans;
 

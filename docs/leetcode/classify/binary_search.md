@@ -614,6 +614,39 @@ public int findRadius(int[] houses, int[] heaters) {
 
 
 
+## [668. 乘法表中第k小的数](https://leetcode.cn/problems/kth-smallest-number-in-multiplication-table/)
+
+```java
+public int findKthNumber(int m, int n, int k) {
+    int l = 1, r = m * n;
+    while (l < r) {
+        int mid = l + (r - l) / 2;//下取整
+        int count = check(m, n, mid);//当前小于等于（不大于）mid的数的个数
+        //count的数与k比较
+        if (count < k) {
+            l = mid + 1;
+        } else {
+            r = mid;
+        }
+    }
+    return l;
+}
+
+//返回m*n的乘法表中，小于等于（不大于）target的数的个数
+public int check(int m, int n, int target) {
+    int count = 0;
+    for (int i = 1; i <= m; i++) {
+        //每一行的个数都是n个，target/i 表示当前行强制匹配到第一行，与第一行的n进行同基准比较
+        count += Math.min(target / i, n);
+    }
+    return count;
+}
+```
+
+
+
+
+
 
 
 

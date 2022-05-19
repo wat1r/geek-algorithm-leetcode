@@ -508,6 +508,20 @@ public:
 
 
 
+
+
+## [850. 矩形面积 II](https://leetcode.cn/problems/rectangle-area-ii/)
+
+
+
+
+
+
+
+
+
+
+
 ## [2276. 统计区间中的整数数目](https://leetcode.cn/problems/count-integers-in-intervals/)
 
 
@@ -639,11 +653,61 @@ static class Interval implements Comparable<Interval> {
 }
 ```
 
+- 另一种写法
+
+```java
+        static class CountIntervals {
+
+            TreeSet<int[]> ts;
+            int sum;
+
+            public CountIntervals() {
+                ts = new TreeSet<>((a, b) -> a[1] - b[1]);
+                sum = 0;
+            }
+
+            public void add(int left, int right) {
+                Iterator<int[]> it = ts.tailSet(new int[]{0, left}).iterator();
+                while (it.hasNext()) {
+                    int[] interval = it.next();
+                    if (right < interval[0]) {
+                        break;
+                    }
+                    left = Math.min(left, interval[0]);
+                    right = Math.max(right, interval[1]);
+                    it.remove();
+                    sum -= interval[1] - interval[0] + 1;
+                }
+                ts.add(new int[]{left, right});
+                sum += right - left + 1;
+            }
+
+            public int count() {
+                return sum;
+            }
+        }
+```
+
+
+
+
+
+权值线段树
+
+- P1908逆序对
+
+
+
+
+
 
 
 #### Reference
 
 - [TreeSet与TreeMap使用指南](https://blog.csdn.net/wat1r/article/details/124831320)
 
+- [2020-05-17 绿校服权值线段树与动态开点](https://www.bilibili.com/video/BV1Zg4y1q7aY?spm_id_from=333.337.search-card.all.click)
+- [线段树专题](https://www.bilibili.com/video/BV1Si4y117dy/?spm_id_from=autoNext)
 
-
+- [【neko】数据结构 线段树【算法编程#6】](https://www.bilibili.com/video/BV1yF411p7Bt?spm_id_from=333.337.search-card.all.click)
+- [什么是线段树](https://www.bilibili.com/video/BV1NS4y1S77N?spm_id_from=333.337.search-card.all.click)
