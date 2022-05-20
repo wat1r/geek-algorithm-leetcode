@@ -277,14 +277,14 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3" >
             
-                <a href="computational_geometry.html">
+                <span>
             
                     
-                    计算几何
+                    LeetCode-PART2
             
-                </a>
+                </span>
             
 
             
@@ -304,7 +304,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="search.html">
+        <li class="chapter " data-level="1.3.2" data-path="segment_tree.html">
+            
+                <a href="segment_tree.html">
+            
+                    
+                    线段树与树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="search.html">
             
                 <a href="search.html">
             
@@ -317,7 +330,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="graph.html">
+        <li class="chapter " data-level="1.3.4" data-path="graph.html">
             
                 <a href="graph.html">
             
@@ -330,7 +343,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="dynamic_programing.html">
+        <li class="chapter " data-level="1.3.5" data-path="dynamic_programing.html">
             
                 <a href="dynamic_programing.html">
             
@@ -343,7 +356,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="game_problem.html">
+        <li class="chapter " data-level="1.3.6" data-path="game_problem.html">
             
                 <a href="game_problem.html">
             
@@ -356,7 +369,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.6" data-path="bit.html">
+        <li class="chapter " data-level="1.3.7" data-path="bit.html">
             
                 <a href="bit.html">
             
@@ -369,7 +382,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.7" data-path="math.html">
+        <li class="chapter " data-level="1.3.8" data-path="math.html">
             
                 <a href="math.html">
             
@@ -382,7 +395,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.8" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3.9" data-path="computational_geometry.html">
             
                 <a href="computational_geometry.html">
             
@@ -395,7 +408,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.9" data-path="sweep_line.html">
+        <li class="chapter " data-level="1.3.10" data-path="sweep_line.html">
             
                 <a href="sweep_line.html">
             
@@ -408,7 +421,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.10" data-path="randomization.html">
+        <li class="chapter " data-level="1.3.11" data-path="randomization.html">
             
                 <a href="randomization.html">
             
@@ -421,7 +434,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.11" data-path="../swordoffer/swordoffer.html">
+        <li class="chapter " data-level="1.3.12" data-path="../swordoffer/swordoffer.html">
             
                 <a href="../swordoffer/swordoffer.html">
             
@@ -1320,6 +1333,134 @@
         <span class="hljs-keyword">return</span> l;
     }
 </code></pre>
+<h2 id="436-&#x5BFB;&#x627E;&#x53F3;&#x533A;&#x95F4;"><a href="https://leetcode.cn/problems/find-right-interval/" target="_blank">436. &#x5BFB;&#x627E;&#x53F3;&#x533A;&#x95F4;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x4E8C;&#x5206;">&#x65B9;&#x6CD5;1:&#x4E8C;&#x5206;</h3>
+<pre><code class="lang-java">       <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findRightInterval(<span class="hljs-keyword">int</span>[][] intervals) {
+            <span class="hljs-keyword">int</span> n = intervals.length;
+            <span class="hljs-comment">//[0]&#x5B58;&#x50A8;&#x539F;&#x533A;&#x95F4;&#x7684;&#x5DE6;&#x7AEF;&#x70B9; [1]&#x5B58;&#x50A8;&#x539F;&#x533A;&#x95F4;&#x7684;&#x7D22;&#x5F15;</span>
+            <span class="hljs-keyword">int</span>[][] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n][<span class="hljs-number">2</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                arr[i][<span class="hljs-number">0</span>] = intervals[i][<span class="hljs-number">0</span>];
+                arr[i][<span class="hljs-number">1</span>] = i;
+            }
+            <span class="hljs-comment">//arr&#x6309;[0]&#x5373;&#x5DE6;&#x7AEF;&#x70B9;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;</span>
+            Arrays.sort(arr, (a, b) -&gt; a[<span class="hljs-number">0</span>] - b[<span class="hljs-number">0</span>]);
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> t = -<span class="hljs-number">1</span>;<span class="hljs-comment">//&#x7EC8;&#x503C;</span>
+                <span class="hljs-keyword">while</span> (l &lt; r) {
+                    <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;<span class="hljs-comment">//&#x4E0A;&#x53D6;&#x6574;</span>
+                    <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;[mid...r]&#x533A;&#x95F4;&#x6BD4;&#x5904;&#x7406;&#x533A;&#x95F4;&#x7684;&#x53F3;&#x7AEF;&#x70B9;&#x8981;&#x5927;&#xFF0C;&#x8BF4;&#x660E;mid&#x662F;&#x4E2A;&#x53EF;&#x80FD;&#x6700;&#x7EC8;&#x503C;&#xFF0C;mid&#x7684;&#x8FD9;&#x4E2A;&#x503C;&#x9700;&#x8981;&#x6682;&#x65F6;&#x4FDD;&#x7559;</span>
+                    <span class="hljs-keyword">if</span> (arr[mid][<span class="hljs-number">0</span>] &gt;= intervals[i][<span class="hljs-number">1</span>]) {
+                        r = mid;
+                        t = arr[i][<span class="hljs-number">1</span>];
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-comment">//[l...mid]&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x7684;&#x503C;&#x8981;&#x6BD4;&#x5904;&#x7406;&#x533A;&#x95F4;&#x7684;&#x53F3;&#x7AEF;&#x70B9;&#x5C0F;&#xFF0C;&#x8BF4;&#x660E;&#x8FD9;&#x4E00;&#x6BB5;&#x53EF;&#x4EE5;&#x5B8C;&#x6574;&#x7684;&#x6392;&#x9664;</span>
+                        l = mid + <span class="hljs-number">1</span>;
+                    }
+                }
+                <span class="hljs-comment">//&#x6700;&#x540E;&#x9700;&#x8981;&#x62E6;&#x622A;&#x4E0B;[l,r] &#x5373;[l]&#x8FD9;&#x4E2A;&#x503C;&#x662F;&#x4E0D;&#x662F;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x5F53;&#x524D;&#x533A;&#x95F4;&#x53F3;&#x7AEF;&#x70B9;</span>
+                <span class="hljs-keyword">if</span> (arr[l][<span class="hljs-number">0</span>] &gt;= intervals[i][<span class="hljs-number">1</span>]) res[i] = arr[l][<span class="hljs-number">1</span>];
+                <span class="hljs-keyword">else</span> res[i] = t;
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;</li>
+</ul>
+<pre><code class="lang-java">  <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findRightInterval(<span class="hljs-keyword">int</span>[][] intervals) {
+            <span class="hljs-keyword">int</span> n = intervals.length;
+            Map&lt;<span class="hljs-keyword">int</span>[], Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-comment">//&#x6392;&#x5E8F;&#x540E;&#x7684;idx&#x53D8;&#x6389;&#x4E86;&#xFF0C;&#x63D0;&#x524D;&#x5B58;&#x4E0B;&#x6765;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                map.put(intervals[i], i);
+            }
+            <span class="hljs-comment">//start&#x503C;&#x552F;&#x4E00;&#xFF0C;&#x6CA1;&#x6709;&#x91CD;&#x590D;&#xFF0C;&#x6309;start&#x6392;&#x5E8F;&#xFF0C;&#x4E8C;&#x5206;&#x65F6;&#x5355;&#x8C03;&#x6027;</span>
+            Arrays.sort(intervals, (a, b) -&gt; a[<span class="hljs-number">0</span>] - b[<span class="hljs-number">0</span>]);
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = n - <span class="hljs-number">1</span>, t = -<span class="hljs-number">1</span>;
+                <span class="hljs-keyword">while</span> (l &lt; r) {
+                    <span class="hljs-comment">//&#x4E0B;&#x53D6;&#x6574;&#xFF1A;&#x8981;&#x6C42;j&#x6700;&#x5C0F;&#x5316;</span>
+                    <span class="hljs-comment">//j&#x6EE1;&#x8DB3;&#x8981;&#x6C42;&#x65F6;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x7684;mid&#x662F;&#x53EF;&#x80FD;&#x7684;&#x503C;&#xFF0C;[l,mid]&#x662F;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x56E0;&#x4E3A;&#x8981;&#x786E;&#x5B9A;mid&#x662F;&#x5426;&#x662F;&#x6700;&#x5C0F;&#x5316;&#x7684;j</span>
+                    <span class="hljs-comment">//j&#x4E0D;&#x6EE1;&#x8DB3;&#x8981;&#x6C42;&#x65F6;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x7684;mid&#x4E00;&#x5B9A;&#x4E0D;&#x662F;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684; [mid+1,r]&#x662F;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x533A;&#x95F4;</span>
+                    <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+                    <span class="hljs-keyword">if</span> (intervals[mid][<span class="hljs-number">0</span>] &gt;= intervals[i][<span class="hljs-number">1</span>]) {
+                        r = mid;
+                    } <span class="hljs-keyword">else</span> {
+                        l = mid + <span class="hljs-number">1</span>;
+                    }
+                }
+                <span class="hljs-keyword">int</span> index = map.get(intervals[i]);
+                <span class="hljs-keyword">if</span> (intervals[l][<span class="hljs-number">0</span>] &gt;= intervals[i][<span class="hljs-number">1</span>]) {
+                    t = map.get(intervals[l]);
+                }
+                res[index] = t;
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x53CC;&#x6307;&#x9488;">&#x65B9;&#x6CD5;2&#xFF1A;&#x53CC;&#x6307;&#x9488;</h3>
+<blockquote>
+<p>&#x601D;&#x8DEF;&#x53C2;&#x8003;&#x5B98;&#x89E3;</p>
+</blockquote>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220520080256.png" alt=""></p>
+<pre><code class="lang-java">       <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findRightInterval(<span class="hljs-keyword">int</span>[][] intervals) {
+            <span class="hljs-keyword">int</span> n = intervals.length;
+            <span class="hljs-keyword">int</span>[][] start = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n][<span class="hljs-number">2</span>], end = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n][<span class="hljs-number">2</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                start[i][<span class="hljs-number">0</span>] = intervals[i][<span class="hljs-number">0</span>];
+                start[i][<span class="hljs-number">1</span>] = i;
+                end[i][<span class="hljs-number">0</span>] = intervals[i][<span class="hljs-number">1</span>];
+                end[i][<span class="hljs-number">1</span>] = i;
+            }
+            Arrays.sort(start, Comparator.comparingInt(o -&gt; o[<span class="hljs-number">0</span>]));
+            Arrays.sort(end, Comparator.comparingInt(o -&gt; o[<span class="hljs-number">0</span>]));
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">while</span> (j &lt; n &amp;&amp; end[i][<span class="hljs-number">0</span>] &gt; start[j][<span class="hljs-number">0</span>]) {
+                    j++;
+                }
+                res[end[i][<span class="hljs-number">1</span>]] = j &lt; n ? start[j][<span class="hljs-number">1</span>] : -<span class="hljs-number">1</span>;
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;treemap">&#x65B9;&#x6CD5;3&#xFF1A;TreeMap</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findRightInterval(<span class="hljs-keyword">int</span>[][] intervals) {
+            TreeMap&lt;Integer, Integer&gt; treeMap = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+            <span class="hljs-keyword">int</span> n = intervals.length;
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                treeMap.put(intervals[i][<span class="hljs-number">0</span>], i);
+            }
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5927;&#x4E8E;&#x6216;&#x7B49;&#x4E8E;&#x7ED9;&#x5B9A;&#x952E;&#x7684;&#x6700;&#x5C0F;&#x952E;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8FD9;&#x6837;&#x7684;&#x952E;&#x5219;&#x8FD4;&#x56DE;null&#x3002;</span>
+                Integer k = treeMap.ceilingKey(intervals[i][<span class="hljs-number">1</span>]);
+                res[i] = k == <span class="hljs-keyword">null</span> ? -<span class="hljs-number">1</span> : treeMap.get(k);
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;4&#xFF1A;treeset">&#x65B9;&#x6CD5;4&#xFF1A;TreeSet</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findRightInterval(<span class="hljs-keyword">int</span>[][] intervals) {
+            <span class="hljs-comment">//[0]&#x662F;&#x533A;&#x95F4;&#x7684;&#x5DE6;&#x7AEF;&#x70B9;&#xFF0C;[1]&#x662F;&#x533A;&#x95F4;&#x7684;&#x7D22;&#x5F15;,&#x6309;[0]&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;</span>
+            TreeSet&lt;<span class="hljs-keyword">int</span>[]&gt; ts = <span class="hljs-keyword">new</span> TreeSet&lt;&gt;((a, b) -&gt; a[<span class="hljs-number">0</span>] - b[<span class="hljs-number">0</span>]);
+            <span class="hljs-keyword">int</span> n = intervals.length;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                ts.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{intervals[i][<span class="hljs-number">0</span>], i});
+            }
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-comment">//&#x627E;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x5F53;&#x524D;&#x533A;&#x95F4;&#x7684;&#x53F3;&#x7AEF;&#x70B9;&#x7684;key</span>
+                <span class="hljs-keyword">int</span>[] t = ts.ceiling(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{intervals[i][<span class="hljs-number">1</span>], i});
+                res[i] = t == <span class="hljs-keyword">null</span> ? -<span class="hljs-number">1</span> : t[<span class="hljs-number">1</span>];
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
 <h2 id="475-&#x4F9B;&#x6696;&#x5668;"><a href="https://leetcode-cn.com/problems/heaters/" target="_blank">475. &#x4F9B;&#x6696;&#x5668;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1</h3>
 <pre><code class="lang-java"><span class="hljs-comment">//&#x8FD9;&#x4E2A;case&#x8868;&#x793A;&#x5728;1 2 3 4 &#x4F4D;&#x7F6E;&#x90FD;&#x6709;&#x70ED;&#x6C34;&#x5668; &#x4F46;&#x662F;&#x53EA;&#x6709;1&#x4F4D;&#x7F6E;&#x6709;&#x623F;&#x5B50;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;0</span>
@@ -1382,6 +1523,32 @@
       }
       <span class="hljs-keyword">return</span> res;
     }
+</code></pre>
+<h2 id="668-&#x4E58;&#x6CD5;&#x8868;&#x4E2D;&#x7B2C;k&#x5C0F;&#x7684;&#x6570;"><a href="https://leetcode.cn/problems/kth-smallest-number-in-multiplication-table/" target="_blank">668. &#x4E58;&#x6CD5;&#x8868;&#x4E2D;&#x7B2C;k&#x5C0F;&#x7684;&#x6570;</a></h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findKthNumber</span><span class="hljs-params">(<span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> l = <span class="hljs-number">1</span>, r = m * n;
+    <span class="hljs-keyword">while</span> (l &lt; r) {
+        <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;<span class="hljs-comment">//&#x4E0B;&#x53D6;&#x6574;</span>
+        <span class="hljs-keyword">int</span> count = check(m, n, mid);<span class="hljs-comment">//&#x5F53;&#x524D;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#xFF08;&#x4E0D;&#x5927;&#x4E8E;&#xFF09;mid&#x7684;&#x6570;&#x7684;&#x4E2A;&#x6570;</span>
+        <span class="hljs-comment">//count&#x7684;&#x6570;&#x4E0E;k&#x6BD4;&#x8F83;</span>
+        <span class="hljs-keyword">if</span> (count &lt; k) {
+            l = mid + <span class="hljs-number">1</span>;
+        } <span class="hljs-keyword">else</span> {
+            r = mid;
+        }
+    }
+    <span class="hljs-keyword">return</span> l;
+}
+
+<span class="hljs-comment">//&#x8FD4;&#x56DE;m*n&#x7684;&#x4E58;&#x6CD5;&#x8868;&#x4E2D;&#xFF0C;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#xFF08;&#x4E0D;&#x5927;&#x4E8E;&#xFF09;target&#x7684;&#x6570;&#x7684;&#x4E2A;&#x6570;</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++) {
+        <span class="hljs-comment">//&#x6BCF;&#x4E00;&#x884C;&#x7684;&#x4E2A;&#x6570;&#x90FD;&#x662F;n&#x4E2A;&#xFF0C;target/i &#x8868;&#x793A;&#x5F53;&#x524D;&#x884C;&#x5F3A;&#x5236;&#x5339;&#x914D;&#x5230;&#x7B2C;&#x4E00;&#x884C;&#xFF0C;&#x4E0E;&#x7B2C;&#x4E00;&#x884C;&#x7684;n&#x8FDB;&#x884C;&#x540C;&#x57FA;&#x51C6;&#x6BD4;&#x8F83;</span>
+        count += Math.min(target / i, n);
+    }
+    <span class="hljs-keyword">return</span> count;
+}
 </code></pre>
 <h2 id="704-&#x4E8C;&#x5206;&#x67E5;&#x627E;"><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank">704. &#x4E8C;&#x5206;&#x67E5;&#x627E;</a></h2>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target)</span> </span>{
@@ -1574,7 +1741,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.9","depth":2,"next":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-04-10T11:46:24.727Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-05T21:38:13.646Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.9","depth":2,"next":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-05-20T00:17:58.923Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

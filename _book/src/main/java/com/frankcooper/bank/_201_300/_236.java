@@ -16,8 +16,8 @@ _236 {
             TreeNode root = TreeNodeIOUtils.transform("[3,5,1,6,2,0,8,null,null,7,4]");
             TreeNode p = root.left;//5
             TreeNode q = root.right;//1
-            TreeNode ancestor = handler.lowestCommonAncestor(root, p, q);
-            System.out.printf("%d", ancestor.val);
+//            TreeNode ancestor = handler.lowestCommonAncestor(root, p, q);
+//            System.out.printf("%d", ancestor.val);
         }
 
 

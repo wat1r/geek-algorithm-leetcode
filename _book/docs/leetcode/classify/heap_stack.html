@@ -277,14 +277,14 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3" >
             
-                <a href="computational_geometry.html">
+                <span>
             
                     
-                    计算几何
+                    LeetCode-PART2
             
-                </a>
+                </span>
             
 
             
@@ -304,7 +304,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="search.html">
+        <li class="chapter " data-level="1.3.2" data-path="segment_tree.html">
+            
+                <a href="segment_tree.html">
+            
+                    
+                    线段树与树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="search.html">
             
                 <a href="search.html">
             
@@ -317,7 +330,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="graph.html">
+        <li class="chapter " data-level="1.3.4" data-path="graph.html">
             
                 <a href="graph.html">
             
@@ -330,7 +343,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="dynamic_programing.html">
+        <li class="chapter " data-level="1.3.5" data-path="dynamic_programing.html">
             
                 <a href="dynamic_programing.html">
             
@@ -343,7 +356,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="game_problem.html">
+        <li class="chapter " data-level="1.3.6" data-path="game_problem.html">
             
                 <a href="game_problem.html">
             
@@ -356,7 +369,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.6" data-path="bit.html">
+        <li class="chapter " data-level="1.3.7" data-path="bit.html">
             
                 <a href="bit.html">
             
@@ -369,7 +382,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.7" data-path="math.html">
+        <li class="chapter " data-level="1.3.8" data-path="math.html">
             
                 <a href="math.html">
             
@@ -382,7 +395,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.8" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3.9" data-path="computational_geometry.html">
             
                 <a href="computational_geometry.html">
             
@@ -395,7 +408,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.9" data-path="sweep_line.html">
+        <li class="chapter " data-level="1.3.10" data-path="sweep_line.html">
             
                 <a href="sweep_line.html">
             
@@ -408,7 +421,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.10" data-path="randomization.html">
+        <li class="chapter " data-level="1.3.11" data-path="randomization.html">
             
                 <a href="randomization.html">
             
@@ -421,7 +434,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.11" data-path="../swordoffer/swordoffer.html">
+        <li class="chapter " data-level="1.3.12" data-path="../swordoffer/swordoffer.html">
             
                 <a href="../swordoffer/swordoffer.html">
             
@@ -1248,6 +1261,62 @@
     <span class="hljs-keyword">return</span> stk.isEmpty();
 }
 </code></pre>
+<h2 id="678-&#x6709;&#x6548;&#x7684;&#x62EC;&#x53F7;&#x5B57;&#x7B26;&#x4E32;"><a href="https://leetcode.cn/problems/valid-parenthesis-string/" target="_blank">678. &#x6709;&#x6548;&#x7684;&#x62EC;&#x53F7;&#x5B57;&#x7B26;&#x4E32;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6808;">&#x65B9;&#x6CD5;1&#xFF1A;&#x6808;</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x9047;&#x5230;&#x5DE6;&#x62EC;&#x53F7;&#xFF0C;&#x76F4;&#x63A5;&#x8FDB;&#x6808;&#xFF0C;&#x8BB0;&#x5F55;&#x62EC;&#x53F7;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</span>
+<span class="hljs-comment">//&#x9047;&#x5230;&#x661F;&#x53F7;&#xFF0C;&#x76F4;&#x63A5;&#x8FDB;&#x6808;&#xFF0C;&#x8BB0;&#x5F55;&#x661F;&#x53F7;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</span>
+<span class="hljs-comment">//&#x9047;&#x5230;&#x53F3;&#x62EC;&#x53F7;&#xFF1A;</span>
+<span class="hljs-comment">//a: &#x5DE6;&#x62EC;&#x53F7;&#x6808;&#x91CC;&#x6709;&#x5143;&#x7D20;&#xFF0C;&#x76F4;&#x63A5;&#x51FA;&#x6808;&#x3002;</span>
+<span class="hljs-comment">//b: &#x5DE6;&#x62EC;&#x53F7;&#x6808;&#x91CC;&#x65E0;&#x5143;&#x7D20;&#xFF0C;*&#x6808;&#x91CC;&#x6709;&#x5143;&#x7D20;&#xFF0C;&#x76F4;&#x63A5;&#x51FA;&#x6808;&#x3002;&#x65E0;&#x5143;&#x7D20;&#x7684;&#x8BDD;&#x5C31;&#x5DF2;&#x7ECF;&#x5339;&#x914D;&#x5931;&#x8D25;&#x4E86;&#x3002;</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">checkValidString</span><span class="hljs-params">(String s)</span> </span>{
+    Deque&lt;Integer&gt; left = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    Deque&lt;Integer&gt; star = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">int</span> n = s.length();
+    <span class="hljs-keyword">char</span>[] ch = s.toCharArray();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (ch[i] == <span class="hljs-string">&apos;(&apos;</span>) left.push(i);
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ch[i] == <span class="hljs-string">&apos;*&apos;</span>) star.push(i);
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ch[i] == <span class="hljs-string">&apos;)&apos;</span>) {
+            <span class="hljs-keyword">if</span> (!left.isEmpty()) left.pop();
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!star.isEmpty()) star.pop();
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+    <span class="hljs-keyword">while</span> (!left.isEmpty()) {
+        <span class="hljs-keyword">int</span> leftPos = left.pop();<span class="hljs-comment">//&#x5DE6;&#x62EC;&#x53F7;&#x7684;&#x4F4D;&#x7F6E;</span>
+        <span class="hljs-keyword">if</span> (star.isEmpty()) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<span class="hljs-comment">//&#x6CA1;&#x6709;*&#x53F7;&#xFF0C;&#x8BF4;&#x660E;&#x4E0D;&#x591F;&#x4E86;</span>
+        <span class="hljs-keyword">int</span> starPos = star.pop();<span class="hljs-comment">//* &#x7684;&#x4F4D;&#x7F6E;</span>
+        <span class="hljs-keyword">if</span> (leftPos &gt; starPos) {<span class="hljs-comment">// * &#x7684;&#x4F4D;&#x7F6E;&#x4E0D;&#x5E94;&#x8BE5;&#x51FA;&#x73B0;&#x5728;&#x5F53;&#x524D;&#x7684;(&#x7684;&#x4F4D;&#x7F6E;&#x7684;&#x524D;&#x9762;</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;dp">&#x65B9;&#x6CD5;2&#xFF1A;DP</h3>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220509090924.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">checkValidString</span><span class="hljs-params">(String s)</span> </span>{
+    <span class="hljs-keyword">int</span> n = s.length();
+    <span class="hljs-comment">// f[i][j] &#x8868;&#x793A; &#x8003;&#x8651;&#x524D; i&#x4E2A;&#x5B57;&#x7B26;&#xFF08;&#x5B57;&#x7B26;&#x4E0B;&#x6807;&#x4ECE; 1 &#x5F00;&#x59CB;&#xFF09;&#xFF0C;&#x80FD;&#x5426;&#x4E0E; j &#x4E2A;&#x53F3;&#x62EC;&#x53F7;&#x5F62;&#x6210;&#x5408;&#x6CD5;&#x62EC;&#x53F7;&#x5E8F;&#x5217;&#x3002;</span>
+    <span class="hljs-keyword">boolean</span>[][] f = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[n + <span class="hljs-number">1</span>][n + <span class="hljs-number">1</span>];
+    f[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">char</span> c = s.charAt(i - <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= i; j++) {
+            <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;(&apos;</span>) {
+                <span class="hljs-keyword">if</span> (j - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span>) f[i][j] = f[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>];
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;)&apos;</span>) {
+                <span class="hljs-keyword">if</span> (j + <span class="hljs-number">1</span> &lt;= i) f[i][j] = f[i - <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>];
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;*&apos;</span>) {
+                f[i][j] = f[i - <span class="hljs-number">1</span>][j];
+                <span class="hljs-keyword">if</span> (j - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">0</span>) f[i][j] |= f[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>];
+                <span class="hljs-keyword">if</span> (j + <span class="hljs-number">1</span> &lt;= i) f[i][j] |= f[i - <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>];
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> f[n][<span class="hljs-number">0</span>];
+}
+</code></pre>
 <h2 id="682-&#x68D2;&#x7403;&#x6BD4;&#x8D5B;"><a href="https://leetcode-cn.com/problems/baseball-game/" target="_blank">682. &#x68D2;&#x7403;&#x6BD4;&#x8D5B;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x6808;">&#x65B9;&#x6CD5;1:&#x6808;</h3>
 <ul>
@@ -1338,7 +1407,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-05-02T01:30:55.766Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-05T21:38:13.646Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-05-09T12:10:00.027Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

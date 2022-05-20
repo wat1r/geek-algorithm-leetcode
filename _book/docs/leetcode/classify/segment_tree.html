@@ -1,0 +1,1848 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>线段树与树状数组 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="search.html" />
+    
+    
+    <link rel="prev" href="monotonic_stack.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    LeetCode-PART1
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="basic_skill.html">
+            
+                <a href="basic_skill.html">
+            
+                    
+                    基础与技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="data_structure.html">
+            
+                <a href="data_structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="heap_stack.html">
+            
+                <a href="heap_stack.html">
+            
+                    
+                    堆栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="array.html">
+            
+                <a href="array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="prefix_sum.html">
+            
+                <a href="prefix_sum.html">
+            
+                    
+                    前缀和与差分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="sorting.html">
+            
+                <a href="sorting.html">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="simulation.html">
+            
+                <a href="simulation.html">
+            
+                    
+                    模拟
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="string.html">
+            
+                <a href="string.html">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="binary_search.html">
+            
+                <a href="binary_search.html">
+            
+                    
+                    二分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="structure_design.html">
+            
+                <a href="structure_design.html">
+            
+                    
+                    结构设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="two_pointers.html">
+            
+                <a href="two_pointers.html">
+            
+                    
+                    双指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="sliding_window.html">
+            
+                <a href="sliding_window.html">
+            
+                    
+                    滑动窗口
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    LeetCode-PART2
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="monotonic_stack.html">
+            
+                <a href="monotonic_stack.html">
+            
+                    
+                    单调栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.2" data-path="segment_tree.html">
+            
+                <a href="segment_tree.html">
+            
+                    
+                    线段树与树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="search.html">
+            
+                <a href="search.html">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="graph.html">
+            
+                <a href="graph.html">
+            
+                    
+                    图论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="dynamic_programing.html">
+            
+                <a href="dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="game_problem.html">
+            
+                <a href="game_problem.html">
+            
+                    
+                    博弈问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="bit.html">
+            
+                <a href="bit.html">
+            
+                    
+                    位运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="math.html">
+            
+                <a href="math.html">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="computational_geometry.html">
+            
+                <a href="computational_geometry.html">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="sweep_line.html">
+            
+                <a href="sweep_line.html">
+            
+                    
+                    扫描线
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="randomization.html">
+            
+                <a href="randomization.html">
+            
+                    
+                    随机化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../swordoffer/swordoffer.html">
+            
+                <a href="../swordoffer/swordoffer.html">
+            
+                    
+                    剑指Offer(leetcode)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    比赛
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../contest/leetcode_weekly.html">
+            
+                <a href="../../contest/leetcode_weekly.html">
+            
+                    
+                    力扣周赛
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    剑指Offer-nowcoder
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../swordoffer/structure.html">
+            
+                <a href="../../swordoffer/structure.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../swordoffer/dynamic_programing.html">
+            
+                <a href="../../swordoffer/dynamic_programing.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    专栏
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../articles/data_structures/matrix/图解翻转矩阵问题.html">
+            
+                <a href="../../articles/data_structures/matrix/图解翻转矩阵问题.html">
+            
+                    
+                    图解翻转矩阵问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../../articles/algorithm/backtracing/图解回溯算法.html">
+            
+                <a href="../../articles/algorithm/backtracing/图解回溯算法.html">
+            
+                    
+                    图解回溯算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../../articles/data_structures/matrix/二维矩阵的常见转换技巧.html">
+            
+                <a href="../../articles/data_structures/matrix/二维矩阵的常见转换技巧.html">
+            
+                    
+                    二维矩阵的常见转换技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../../articles/data_structures/list/JAVA实现一个ArrayList.html">
+            
+                <a href="../../articles/data_structures/list/JAVA实现一个ArrayList.html">
+            
+                    
+                    JAVA实现一个ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484998&idx=1&sn=a9fbb88c41ef38182adf0e918c0b3159&chksm=e829a5e0df5e2cf639d027ce83077f7a4a3c24cac5ad4711067b0bdbb0d0d1326cb41b819c22#rd">
+            
+                    
+                    图解翻转矩阵问题
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484998&idx=1&sn=a9fbb88c41ef38182adf0e918c0b3159&chksm=e829a5e0df5e2cf639d027ce83077f7a4a3c24cac5ad4711067b0bdbb0d0d1326cb41b819c22#rd">
+            
+                    
+                    图解翻转矩阵问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484963&idx=1&sn=cd8ab109b3b6473d0aafce63faa9c434&chksm=e829a585df5e2c93d060e24784f25a62124dac43a2e484312a73f5911186b5164a55ebbef5c8#rd">
+            
+                    
+                    你手里的股票还好吗？学完这套股票买卖，准备抄底吗~
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" >
+            
+                <a target="_blank" href="https://blog.csdn.net/wat1r/article/details/113528460">
+            
+                    
+                    搜索与图论
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484963&idx=1&sn=cd8ab109b3b6473d0aafce63faa9c434&chksm=e829a585df5e2c93d060e24784f25a62124dac43a2e484312a73f5911186b5164a55ebbef5c8&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    你手里的股票还好吗？学完这套股票买卖，准备抄底吗~
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247485025&idx=1&sn=b8015ebc994a0980e9c6be3cddfa14ac&chksm=e829a5c7df5e2cd16ca6b289b0e3364b95eb9eb49dbf30dfa30594342ef26d4be8ca41b3e9e1&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】图解寻找两个正序数组的中位数及Follow Up
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484963&idx=1&sn=cd8ab109b3b6473d0aafce63faa9c434&chksm=e829a585df5e2c93d060e24784f25a62124dac43a2e484312a73f5911186b5164a55ebbef5c8&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    你手里的股票还好吗？学完这套股票买卖，准备抄底吗~
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484946&idx=1&sn=85711584d097ebebeb2723d3e2d4b0de&chksm=e829a5b4df5e2ca23acb5569985a37066fb056bd0948397793f0c3f3cfbae6ca94ad81599c02#rd">
+            
+                    
+                    重温经典之打家劫舍数题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484855&idx=1&sn=3818d5760f4512eca99cd82a3233eaa4&chksm=e829a611df5e2f0772fe8df1d285796eda32c14a55feec0d970644da8b34c8ec609bd0e74340#rd">
+            
+                    
+                    【重温经典】接雨水 I
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484817&idx=1&sn=3761e4097ce812219f2be441248dca80&chksm=e829a637df5e2f21009df78c53c1c872ab85cc30cd06e8f87e1fab1007009cf1c3985bb273f1#rd">
+            
+                    
+                    【重温经典】Pow(x, n)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484736&idx=1&sn=ff5e6cf657c9ca73d3e36fbfe9a1c378&chksm=e829a6e6df5e2ff038c305f17fb53c97c0c1c9887ed99e4eced8cbc1843bb69b7ed5d9c3e377#rd">
+            
+                    
+                    【重温经典】LRU 缓存机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484696&idx=1&sn=11f03d4edde5bdc347c346e7fcfdb680&chksm=e829a6bedf5e2fa8b08537ea6edbed54523e3c22ea13687ac91f82d75c3c45251fe892b40304&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】 完全平方数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484681&idx=1&sn=310103d92c60923bb48493714333857b&chksm=e829a6afdf5e2fb9633fa32cbd7e154bf03152f70d3542806fe92569a49d2d8c4e18bf00532f&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】二叉树的最近公共祖先
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484665&idx=1&sn=841fde0a4ec32f3c9a6e71abe87c44ad&chksm=e829a75fdf5e2e49bbfb9a012fa9afd1baa0393eddf4002f6d1ec06d4c2308f251436ab2db10&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】数据流的中位数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484641&idx=1&sn=16f1d1838171e93153245b64e2db0b08&chksm=e829a747df5e2e51bd9a0f792ba6a8e81f22d3a23b161d0c0fd78fc8e5c40b389984bd199732&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】滑动窗口最大值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484631&idx=1&sn=e722d187f7840386ffe9f3633882e959&chksm=e829a771df5e2e67131df305cde490287216641288518f308a941767d8fe6735f4833c86eb8c&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】二叉搜索树中第K小的元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484621&idx=1&sn=fdad90202cdb02cf68ba8f47fd35c737&chksm=e829a76bdf5e2e7da8f8f4480f2c06c8cc736f29514dde34a10823bccf6fbcdb7619baf7acb4&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】单词搜索II
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484615&idx=1&sn=5159d5b4740d03dad18c73ebc892c509&chksm=e829a761df5e2e777e8ed651bd8b91fcc3046c80ad2bf566c2db005a19e741cc8f7a864b40c3&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】单词拆分II
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484609&idx=1&sn=e9f81ce64ad96a100b8b75ea1ff825cb&chksm=e829a767df5e2e71b57ea042236546d935362624e984ad55db2c2dc651470bf93088face5661&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】鸡蛋掉落
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" >
+            
+                <a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzIyMjczODEyMQ==&mid=2247484559&idx=1&sn=043bf3349721f21ac2667c3153381e41&chksm=e829a729df5e2e3f27c71f555f2a0b173c1253a3b025af89f486ca79458a2b1ce6b0220d41c5&token=1049030446&lang=zh_CN#rd">
+            
+                    
+                    【重温经典】K个一组翻转链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >线段树与树状数组</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <blockquote>
+<p>&#x7EBF;&#x6BB5;&#x6811;&#x4E0E;&#x6811;&#x72B6;&#x6570;&#x7EC4;</p>
+</blockquote>
+<h2 id="&#x6811;&#x72B6;&#x6570;&#x7EC4;">&#x6811;&#x72B6;&#x6570;&#x7EC4;</h2>
+<ul>
+<li><a href="https://www.cnblogs.com/Last--Whisper/p/13823614.html" target="_blank">&#x94FE;&#x63A5;</a></li>
+</ul>
+<h3 id="&#x6A21;&#x677F;">&#x6A21;&#x677F;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BinaryIndexedTree</span> </span>{
+
+    <span class="hljs-keyword">int</span> N = <span class="hljs-number">10010</span>;
+    <span class="hljs-keyword">int</span>[] tree = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[N];
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        <span class="hljs-keyword">return</span> -x &amp; x;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = x; i &gt;= <span class="hljs-number">0</span>; i -= lowbit(i)) sum += tree[i];
+        <span class="hljs-keyword">return</span> sum;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> v)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = x; i &lt;= N; i += lowbit(i)) tree[i] += v;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+        <span class="hljs-keyword">return</span> query(r + <span class="hljs-number">1</span>) - query(l);
+    }
+
+}
+</code></pre>
+<h2 id="307-&#x533A;&#x57DF;&#x548C;&#x68C0;&#x7D22;---&#x6570;&#x7EC4;&#x53EF;&#x4FEE;&#x6539;"><a href="https://leetcode-cn.com/problems/range-sum-query-mutable/" target="_blank">307. &#x533A;&#x57DF;&#x548C;&#x68C0;&#x7D22; - &#x6570;&#x7EC4;&#x53EF;&#x4FEE;&#x6539;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6811;&#x72B6;&#x6570;&#x7EC4;">&#x65B9;&#x6CD5;1&#xFF1A;&#x6811;&#x72B6;&#x6570;&#x7EC4;</h3>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NumArray</span> </span>{
+
+    <span class="hljs-keyword">int</span>[] tree;
+    <span class="hljs-keyword">int</span> n;
+    <span class="hljs-keyword">int</span>[] nums;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">NumArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+        n = nums.length;
+        tree = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+        <span class="hljs-keyword">this</span>.nums = nums;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) add(i + <span class="hljs-number">1</span>, nums[i]);
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> val)</span> </span>{
+        <span class="hljs-comment">// &#x539F;&#x6709;&#x7684;&#x503C;&#x662F; nums[i]&#xFF0C;&#x8981;&#x4F7F;&#x5F97;&#x4FEE;&#x6539;&#x4E3A; val&#xFF0C;&#x9700;&#x8981;&#x589E;&#x52A0; val - nums[i]</span>
+        add(index + <span class="hljs-number">1</span>, val - nums[index]);
+        nums[index] = val;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+        <span class="hljs-keyword">return</span> query(right + <span class="hljs-number">1</span>) - query(left);
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = x; i &gt; <span class="hljs-number">0</span>; i -= lowbit(i)) sum += tree[i];
+        <span class="hljs-keyword">return</span> sum;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> v)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = x; i &lt;= n; i += lowbit(i)) {
+            tree[i] += v;
+        }
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        <span class="hljs-keyword">return</span> -x &amp; x;
+    }
+
+
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x7EBF;&#x6BB5;&#x6811;">&#x65B9;&#x6CD5;2&#xFF1A;&#x7EBF;&#x6BB5;&#x6811;</h3>
+<ul>
+<li>&#x53C2;&#x8003;&#x94FE;&#x63A5;&#xFF1A;<a href="https://blog.csdn.net/wat1r/article/details/124786384?spm=1001.2014.3001.5501" target="_blank">&#x6570;&#x636E;&#x7ED3;&#x6784;&#x8BBE;&#x8BA1;&#x4E4B;&#x7EBF;&#x6BB5;&#x6811;[White Rhinoceros]</a></li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NumArray</span> </span>{
+
+            <span class="hljs-keyword">int</span>[] tree;
+            <span class="hljs-keyword">int</span> n;
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">NumArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+                n = nums.length;
+                tree = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n * <span class="hljs-number">4</span>];
+                build(nums, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>);
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> val)</span> </span>{
+                update(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>, index, val);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>{
+                <span class="hljs-keyword">return</span> query(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>, L, R);
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+                <span class="hljs-keyword">if</span> (start == end) {
+                    tree[node] = nums[start];
+                    <span class="hljs-keyword">return</span>;
+                }
+                <span class="hljs-keyword">int</span> mid = start + (end - start) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">int</span> left_node = node * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> right_node = node * <span class="hljs-number">2</span> + <span class="hljs-number">2</span>;
+                build(nums, left_node, start, mid);
+                build(nums, right_node, mid + <span class="hljs-number">1</span>, end);
+                tree[node] = tree[left_node] + tree[right_node];
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end, <span class="hljs-keyword">int</span> idx, <span class="hljs-keyword">int</span> val)</span> </span>{
+                <span class="hljs-keyword">if</span> (start == end) {
+                    tree[node] = val;
+                    <span class="hljs-keyword">return</span>;
+                }
+                <span class="hljs-keyword">int</span> mid = start + (end - start) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">int</span> left_node = node * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> right_node = node * <span class="hljs-number">2</span> + <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">if</span> (idx &lt;= mid) {
+                    update(left_node, start, mid, idx, val);
+                } <span class="hljs-keyword">else</span> {
+                    update(right_node, mid + <span class="hljs-number">1</span>, end, idx, val);
+                }
+                tree[node] = tree[left_node] + tree[right_node];
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>{
+
+                <span class="hljs-keyword">if</span> (R &lt; start || L &gt; end) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (L &lt;= start &amp;&amp; end &lt;= R) {
+                    <span class="hljs-keyword">return</span> tree[node];
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (start == end) {
+                    <span class="hljs-keyword">return</span> tree[node];
+                }
+                <span class="hljs-keyword">int</span> mid = start + (end - start) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">int</span> left_node = node * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> right_node = node * <span class="hljs-number">2</span> + <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">int</span> sum_left = query(left_node, start, mid, L, R);
+                <span class="hljs-keyword">int</span> sum_right = query(right_node, mid + <span class="hljs-number">1</span>, end, L, R);
+                <span class="hljs-keyword">return</span> sum_left + sum_right;
+            }
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#x7EBF;&#x6BB5;&#x6811;">&#x65B9;&#x6CD5;3.&#x7EBF;&#x6BB5;&#x6811;</h3>
+<pre><code class="lang-java">   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NumArray</span> </span>{
+            Node[] tr;
+
+            <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>{
+                <span class="hljs-keyword">int</span> l, r, v;
+
+                <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Node</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+                    <span class="hljs-keyword">this</span>.l = l;
+                    <span class="hljs-keyword">this</span>.r = r;
+                }
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+                tr[u].v = tr[u &lt;&lt; <span class="hljs-number">1</span>].v + tr[u &lt;&lt; <span class="hljs-number">1</span> | <span class="hljs-number">1</span>].v;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+                tr[u] = <span class="hljs-keyword">new</span> Node(l, r);
+                <span class="hljs-keyword">if</span> (l == r) <span class="hljs-keyword">return</span>;
+                <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+                build(u &lt;&lt; <span class="hljs-number">1</span>, l, mid);
+                build(u &lt;&lt; <span class="hljs-number">1</span> | <span class="hljs-number">1</span>, mid + <span class="hljs-number">1</span>, r);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> value)</span> </span>{
+                <span class="hljs-keyword">if</span> (tr[u].l == index &amp;&amp; tr[u].r == index) {
+                    tr[u].v += value;
+                    <span class="hljs-keyword">return</span>;
+                }
+                <span class="hljs-keyword">int</span> mid = tr[u].l + tr[u].r &gt;&gt; <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (index &lt;= mid) update(u &lt;&lt; <span class="hljs-number">1</span>, index, value);
+                <span class="hljs-keyword">else</span> update(u &lt;&lt; <span class="hljs-number">1</span> | <span class="hljs-number">1</span>, index, value);
+                pushup(u);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>{
+                <span class="hljs-keyword">if</span> (L &lt;= tr[u].l &amp;&amp; tr[u].r &lt;= R) <span class="hljs-keyword">return</span> tr[u].v;
+                <span class="hljs-keyword">int</span> mid = tr[u].l + tr[u].r &gt;&gt; <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">if</span> (L &lt;= mid) res += query(u &lt;&lt; <span class="hljs-number">1</span>, L, R);
+                <span class="hljs-keyword">if</span> (R &gt; mid) res += query(u &lt;&lt; <span class="hljs-number">1</span> | <span class="hljs-number">1</span>, L, R);
+                <span class="hljs-keyword">return</span> res;
+            }
+
+            <span class="hljs-keyword">int</span>[] nums;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">NumArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+                <span class="hljs-keyword">int</span> N = nums.length;
+                <span class="hljs-keyword">this</span>.nums = nums;
+                tr = <span class="hljs-keyword">new</span> Node[<span class="hljs-number">4</span> * N];
+                build(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N);
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+                    update(<span class="hljs-number">1</span>, i + <span class="hljs-number">1</span>, nums[i]);
+                }
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span> val)</span> </span>{
+                update(<span class="hljs-number">1</span>, index + <span class="hljs-number">1</span>, val - nums[index]);
+                nums[index] = val;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+                <span class="hljs-keyword">return</span> query(<span class="hljs-number">1</span>, left + <span class="hljs-number">1</span>, right + <span class="hljs-number">1</span>);
+            }
+        }
+</code></pre>
+<h2 id="327-&#x533A;&#x95F4;&#x548C;&#x7684;&#x4E2A;&#x6570;"><a href="https://leetcode-cn.com/problems/count-of-range-sum/" target="_blank">327. &#x533A;&#x95F4;&#x548C;&#x7684;&#x4E2A;&#x6570;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6811;&#x72B6;&#x6570;&#x7EC4;">&#x65B9;&#x6CD5;1&#xFF1A;&#x6811;&#x72B6;&#x6570;&#x7EC4;</h3>
+<pre><code class="lang-java">
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">countRangeSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> lower, <span class="hljs-keyword">int</span> upper)</span> </span>{
+            <span class="hljs-keyword">int</span> n = nums.length;
+            <span class="hljs-keyword">long</span>[] preSum = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) preSum[i] = preSum[i - <span class="hljs-number">1</span>] + nums[i - <span class="hljs-number">1</span>];
+            Set&lt;Long&gt; set = <span class="hljs-keyword">new</span> TreeSet&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">long</span> x : preSum) {
+                set.add(x);
+                set.add(x - lower);
+                set.add(x - upper);
+            }
+            <span class="hljs-keyword">int</span> M = <span class="hljs-number">1</span>;
+            Map&lt;Long, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">long</span> x : set) {
+                map.put(x, M++);
+            }
+            BIT bit = <span class="hljs-keyword">new</span> BIT(M);
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">long</span> x : preSum) {
+                <span class="hljs-keyword">int</span> lo = map.get(x - upper), hi = map.get(x - lower);
+                <span class="hljs-keyword">int</span> index = map.get(x);
+                res += bit.query(hi) - bit.query(lo - <span class="hljs-number">1</span>);
+                bit.update(index, <span class="hljs-number">1</span>);
+            }
+            <span class="hljs-keyword">return</span> res;
+
+        }
+
+
+        <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BIT</span> </span>{
+            <span class="hljs-keyword">int</span>[] tree;
+            <span class="hljs-keyword">int</span> n;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BIT</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+                <span class="hljs-keyword">this</span>.n = n;
+                <span class="hljs-keyword">this</span>.tree = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">1</span>];
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+                <span class="hljs-keyword">return</span> x &amp; (-x);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> d)</span> </span>{
+                <span class="hljs-keyword">while</span> (x &lt;= n) {
+                    tree[x] += d;
+                    x += lowbit(x);
+                }
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+                <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">while</span> (x != <span class="hljs-number">0</span>) {
+                    ans += tree[x];
+                    x -= lowbit(x);
+                }
+                <span class="hljs-keyword">return</span> ans;
+            }
+        }
+</code></pre>
+<h2 id="715-range-&#x6A21;&#x5757;"><a href="https://leetcode.cn/problems/range-module/" target="_blank">715. Range &#x6A21;&#x5757;</a></h2>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220515213939.png" alt=""></p>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220515215407.png" alt=""></p>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;treemap">&#x65B9;&#x6CD5;1&#xFF1A;TreeMap</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+            _2nd handler = <span class="hljs-keyword">new</span> _2nd();
+            <span class="hljs-comment">//[&quot;RangeModule&quot;, &quot;addRange&quot;, &quot;removeRange&quot;, &quot;queryRange&quot;, &quot;queryRange&quot;, &quot;queryRange&quot;]</span>
+            <span class="hljs-comment">//[[], [10, 20], [14, 16], [10, 14], [13, 15], [16, 17]]</span>
+            <span class="hljs-comment">//&#x8F93;&#x51FA;</span>
+            <span class="hljs-comment">//[null, null, null, true, false, true]</span>
+            String[] ops = {<span class="hljs-string">&quot;RangeModule&quot;</span>, <span class="hljs-string">&quot;addRange&quot;</span>, <span class="hljs-string">&quot;removeRange&quot;</span>, <span class="hljs-string">&quot;queryRange&quot;</span>, <span class="hljs-string">&quot;queryRange&quot;</span>, <span class="hljs-string">&quot;queryRange&quot;</span>};
+            <span class="hljs-keyword">int</span>[][] vals = {{}, {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>}, {<span class="hljs-number">14</span>, <span class="hljs-number">16</span>}, {<span class="hljs-number">10</span>, <span class="hljs-number">14</span>}, {<span class="hljs-number">13</span>, <span class="hljs-number">15</span>}, {<span class="hljs-number">16</span>, <span class="hljs-number">17</span>}};
+            ops = <span class="hljs-keyword">new</span> String[]{<span class="hljs-string">&quot;RangeModule&quot;</span>, <span class="hljs-string">&quot;addRange&quot;</span>, <span class="hljs-string">&quot;addRange&quot;</span>, <span class="hljs-string">&quot;addRange&quot;</span>, <span class="hljs-string">&quot;addRange&quot;</span>};
+            vals = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[][]{{}, {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>}, {<span class="hljs-number">32</span>, <span class="hljs-number">40</span>}, {<span class="hljs-number">20</span>, <span class="hljs-number">30</span>}, {<span class="hljs-number">35</span>, <span class="hljs-number">50</span>}};
+            RangeModule rm = <span class="hljs-keyword">new</span> RangeModule();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ops.length; i++) {
+                String op = ops[i];
+                <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;RangeModule&quot;</span>)) {
+                    rm = <span class="hljs-keyword">new</span> RangeModule();
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;addRange&quot;</span>)) {
+                    <span class="hljs-keyword">int</span> left = vals[i][<span class="hljs-number">0</span>], right = vals[i][<span class="hljs-number">1</span>];
+                    rm.addRange(left, right);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;removeRange&quot;</span>)) {
+                    <span class="hljs-keyword">int</span> left = vals[i][<span class="hljs-number">0</span>], right = vals[i][<span class="hljs-number">1</span>];
+                    rm.removeRange(left, right);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op.equals(<span class="hljs-string">&quot;queryRange&quot;</span>)) {
+                    <span class="hljs-keyword">int</span> left = vals[i][<span class="hljs-number">0</span>], right = vals[i][<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">boolean</span> f = rm.queryRange(left, right);
+                }
+            }
+
+        }
+
+        <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RangeModule</span> </span>{
+
+            <span class="hljs-comment">//    &#x8FD4;&#x56DE;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;key&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x952E;&#xFF1A;</span>
+            <span class="hljs-comment">//    K floorKey(K key);</span>
+            <span class="hljs-comment">//    &#x8FD4;&#x56DE;&#x5927;&#x4E8E;&#x6216;&#x8005;&#x7B49;&#x4E8E;key&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x952E;&#xFF1A;</span>
+            <span class="hljs-comment">//    K ceilingKey(K key);</span>
+
+            <span class="hljs-comment">//k:left v:right range&#x7684;&#x5DE6;&#x53F3;&#x8FB9;&#x754C;</span>
+            TreeMap&lt;Integer, Integer&gt; map;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RangeModule</span><span class="hljs-params">()</span> </span>{
+                map = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+                <span class="hljs-keyword">if</span> (left &gt;= right) <span class="hljs-keyword">return</span>;
+                Integer start = map.floorKey(left);
+                <span class="hljs-keyword">if</span> (start == <span class="hljs-keyword">null</span>) start = map.ceilingKey(left);
+                <span class="hljs-keyword">while</span> (start != <span class="hljs-keyword">null</span> &amp;&amp; start &lt;= right) {
+                    <span class="hljs-keyword">int</span> end = map.get(start);
+                    <span class="hljs-keyword">if</span> (end &gt;= left) {<span class="hljs-comment">//&#x5B58;&#x5728;overlap</span>
+                        map.remove(start);
+                        <span class="hljs-keyword">if</span> (start &lt; left) left = start;
+                        <span class="hljs-keyword">if</span> (end &gt; right) right = end;
+                    }
+                    start = map.ceilingKey(end);
+                }
+                map.put(left, right);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">queryRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+                Integer start = map.floorKey(left);
+                <span class="hljs-keyword">if</span> (start == <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                }
+                <span class="hljs-keyword">return</span> map.get(start) &gt;= right;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+                <span class="hljs-keyword">if</span> (left &gt;= right) <span class="hljs-keyword">return</span>;
+                Integer start = map.floorKey(left);
+                <span class="hljs-keyword">if</span> (start == <span class="hljs-keyword">null</span>) start = map.ceilingKey(left);
+                <span class="hljs-keyword">while</span> (start != <span class="hljs-keyword">null</span> &amp;&amp; start &lt; right) {
+                    <span class="hljs-keyword">int</span> end = map.get(start);
+                    <span class="hljs-keyword">if</span> (end &gt;= left) {
+                        map.remove(start);
+                        <span class="hljs-keyword">if</span> (start &lt; left) map.put(start, left);
+                        <span class="hljs-keyword">if</span> (end &gt; right) map.put(right, end);
+                    }
+                    start = map.ceilingKey(end);
+                }
+            }
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;segment-tree">&#x65B9;&#x6CD5;2&#xFF1A;Segment Tree</h3>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RangeModule</span> </span>{
+
+            SegmentNode root;
+            <span class="hljs-keyword">int</span> max = (<span class="hljs-keyword">int</span>) Math.pow(<span class="hljs-number">10</span>, <span class="hljs-number">9</span>);
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RangeModule</span><span class="hljs-params">()</span> </span>{
+                root = <span class="hljs-keyword">new</span> SegmentNode(<span class="hljs-number">0</span>, max, <span class="hljs-keyword">false</span>);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+                update(root, l, r, <span class="hljs-keyword">true</span>);
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">update</span><span class="hljs-params">(SegmentNode node, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">boolean</span> state)</span> </span>{
+                <span class="hljs-keyword">if</span> (l &lt;= node.l &amp;&amp; node.r &lt;= r) {
+                    node.state = state;
+                    node.left = <span class="hljs-keyword">null</span>;
+                    node.right = <span class="hljs-keyword">null</span>;
+                    <span class="hljs-keyword">return</span> node.state;
+                }
+                <span class="hljs-keyword">if</span> (l &gt;= node.r || r &lt;= node.l) <span class="hljs-keyword">return</span> node.state;
+                <span class="hljs-keyword">int</span> mid = node.l + (node.r - node.l) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">if</span> (node.left == <span class="hljs-keyword">null</span>) {
+                    node.left = <span class="hljs-keyword">new</span> SegmentNode(node.l, mid, node.state);
+                    node.right = <span class="hljs-keyword">new</span> SegmentNode(mid, node.r, node.state);
+                }
+                <span class="hljs-keyword">boolean</span> lflag = update(node.left, l, r, state);
+                <span class="hljs-keyword">boolean</span> rflag = update(node.right, l, r, state);
+                node.state = lflag &amp;&amp; rflag;
+                <span class="hljs-keyword">return</span> node.state;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">queryRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+                <span class="hljs-keyword">return</span> query(root, l, r);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">query</span><span class="hljs-params">(SegmentNode node, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+                <span class="hljs-keyword">if</span> (l &gt;= node.r || r &lt;= node.l) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">if</span> ((l &lt;= node.l &amp;&amp; r &gt;= node.r) || node.left == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> node.state;
+                <span class="hljs-keyword">int</span> mid = node.l + (node.r - node.l) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">if</span> (r &lt;= mid) {
+                    <span class="hljs-keyword">return</span> query(node.left, l, r);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (l &gt;= mid) {
+                    <span class="hljs-keyword">return</span> query(node.right, l, r);
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">return</span> query(node.left, l, r) &amp;&amp; query(node.right, l, r);
+                }
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+                update(root, l, r, <span class="hljs-keyword">false</span>);
+            }
+
+
+        }
+
+
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SegmentNode</span> </span>{
+            <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> l;
+            <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> r;
+            <span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> state;
+            <span class="hljs-keyword">public</span> SegmentNode left;
+            <span class="hljs-keyword">public</span> SegmentNode right;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SegmentNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">boolean</span> state)</span> </span>{
+                <span class="hljs-keyword">this</span>.l = l;
+                <span class="hljs-keyword">this</span>.r = r;
+                <span class="hljs-keyword">this</span>.state = state;
+            }
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#x73C2;&#x6735;&#x8389;&#x6811;">&#x65B9;&#x6CD5;3:&#x73C2;&#x6735;&#x8389;&#x6811;</h3>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/106353082" target="_blank">&#x7B97;&#x6CD5;&#x5B66;&#x4E60;&#x7B14;&#x8BB0;(15): &#x73C2;&#x6735;&#x8389;&#x6811;</a></li>
+<li><a href="https://www.codetd.com/article/13707910" target="_blank">&#x7EBF;&#x6BB5;&#x6811;&#x7684;&#x4EE3;&#x66FF;&#x7B97;&#x6CD5;&#x2014;&#x2014;&#x73C2;&#x6735;&#x8389;&#x6811;</a></li>
+</ul>
+<pre><code class="lang-c++"><span class="hljs-keyword">struct</span> ChthollyNode {
+    <span class="hljs-keyword">int</span> l, r;
+    <span class="hljs-keyword">mutable</span> <span class="hljs-keyword">int</span> v;
+    ChthollyNode(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> v) : l(l), r(r), v(v) {}
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> ChthollyNode &amp;o) <span class="hljs-keyword">const</span> {<span class="hljs-keyword">return</span> l &lt; o.l; }
+};
+<span class="hljs-keyword">class</span> RangeModule {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">set</span>&lt;ChthollyNode&gt; tr;
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">set</span>&lt;ChthollyNode&gt;::<span class="hljs-function">iterator <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
+        <span class="hljs-keyword">auto</span> it = tr.lower_bound(ChthollyNode(pos, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)); <span class="hljs-comment">// &#x5BFB;&#x627E;&#x5DE6;&#x8FB9;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;pos&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x8282;&#x70B9;</span>
+        <span class="hljs-keyword">if</span> (it != tr.end() &amp;&amp; it -&gt; l == pos) <span class="hljs-keyword">return</span> it;
+        it--;
+        <span class="hljs-keyword">int</span> l = it -&gt; l, r = it -&gt; r, v = it -&gt; v;
+        tr.erase(it);
+        tr.insert(ChthollyNode(l, pos - <span class="hljs-number">1</span>, v));
+        <span class="hljs-keyword">return</span> tr.insert(ChthollyNode(pos, r, v)).first;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">assign</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> v)</span> </span>{
+        <span class="hljs-keyword">auto</span> itr = split(r + <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">auto</span> itl = split(l);
+        tr.erase(itl, itr);
+        tr.insert(ChthollyNode(l, r, v));
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+        <span class="hljs-keyword">auto</span> itr = split(r + <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">auto</span> itl = split(l);
+        <span class="hljs-keyword">auto</span> it = itl;
+        <span class="hljs-keyword">for</span> (; it != itr; it++) {
+            <span class="hljs-keyword">if</span> (it -&gt; v == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+
+    RangeModule() {
+        tr.insert(ChthollyNode(<span class="hljs-number">1</span>, <span class="hljs-number">1e9</span>, <span class="hljs-number">0</span>));
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+        assign(left, right - <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">queryRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+        <span class="hljs-keyword">return</span> check(left, right - <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">removeRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+        assign(left, right - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+    }
+};
+</code></pre>
+<h2 id="850-&#x77E9;&#x5F62;&#x9762;&#x79EF;-ii"><a href="https://leetcode.cn/problems/rectangle-area-ii/" target="_blank">850. &#x77E9;&#x5F62;&#x9762;&#x79EF; II</a></h2>
+<h2 id="2276-&#x7EDF;&#x8BA1;&#x533A;&#x95F4;&#x4E2D;&#x7684;&#x6574;&#x6570;&#x6570;&#x76EE;"><a href="https://leetcode.cn/problems/count-integers-in-intervals/" target="_blank">2276. &#x7EDF;&#x8BA1;&#x533A;&#x95F4;&#x4E2D;&#x7684;&#x6574;&#x6570;&#x6570;&#x76EE;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;treemap&#x5408;&#x5E76;&#x533A;&#x95F4;">&#x65B9;&#x6CD5;1&#xFF1A;TreeMap&#x5408;&#x5E76;&#x533A;&#x95F4;</h3>
+<ul>
+<li>&#x56FE;2&#x89E3;&#x91CA;&#x4E86;&#x5408;&#x5E76;&#x591A;&#x4E2A;&#x533A;&#x95F4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;while&#x7684;&#x6761;&#x4EF6;</li>
+</ul>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220517224700.png" alt=""></p>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220517212100.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CountIntervals</span> </span>{
+            <span class="hljs-keyword">int</span> sum;
+            <span class="hljs-comment">//k : &#x6BCF;&#x4E2A;&#x533A;&#x95F4;&#x7684;&#x5DE6;&#x7AEF;&#x70B9;&#xFF0C;v:&#x8FD9;&#x4E2A;&#x533A;&#x95F4;[l,r]</span>
+            TreeMap&lt;Integer, <span class="hljs-keyword">int</span>[]&gt; map;
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CountIntervals</span><span class="hljs-params">()</span> </span>{
+                sum = <span class="hljs-number">0</span>;
+                map = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+            }
+            <span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;key&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF1A;</span>
+            <span class="hljs-comment">//    Map.Entry&lt;K,V&gt; floorEntry(K key);</span>
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+                <span class="hljs-comment">//&#x8FD4;&#x56DE;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;right&#x7684;key&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;</span>
+                Map.Entry&lt;Integer, <span class="hljs-keyword">int</span>[]&gt; e = map.floorEntry(right);
+                <span class="hljs-comment">// l&#xFF0C;r&#x5206;&#x522B;&#x8BB0;&#x5F55;&#x6B64;&#x6B21;&#x64CD;&#x4F5C;&#x540E;&#x6700;&#x7EC8;&#x7684;&#x533A;&#x95F4;&#x7684; &#x5DE6;&#x8FB9;&#x503C;&#x3001;&#x53F3;&#x8FB9;&#x503C;</span>
+                <span class="hljs-keyword">int</span> l = left;
+                <span class="hljs-keyword">int</span> r = right;
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x5143;&#x7D20;&#x627E;&#x5230;&#x4E86;&#xFF0C;&#x4E14;&#x5143;&#x7D20;&#x7684;&#x53F3;&#x533A;&#x95F4;&#x6BD4;&#x5F53;&#x524D;&#x7684;[l,r]&#x7684;&#x5DE6;&#x533A;&#x95F4;&#x8981;&#x5927;</span>
+                <span class="hljs-keyword">while</span> (e != <span class="hljs-keyword">null</span> &amp;&amp; e.getValue()[<span class="hljs-number">1</span>] &gt;= l) {
+                    <span class="hljs-comment">// &#x5220;&#x9664;&#x533A;&#x95F4;&#xFF0C;&#x540C;&#x65F6;&#x5BF9;sum&#x505A;&#x51CF;&#x6CD5;&#xFF0C;e&#x533A;&#x95F4;&#x5373;&#x5C06;&#x8981;&#x88AB;&#x5220;&#x9664;</span>
+                    sum -= e.getValue()[<span class="hljs-number">1</span>] - e.getValue()[<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>;
+                    <span class="hljs-comment">//e &#x548C; [l,r]&#x6765;&#x66F4;&#x65B0;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x533A;&#x95F4;</span>
+                    l = Math.min(l, e.getValue()[<span class="hljs-number">0</span>]);
+                    r = Math.max(r, e.getValue()[<span class="hljs-number">1</span>]);
+                    <span class="hljs-comment">//&#x79FB;&#x9664;e&#x8FD9;&#x4E2A;&#x539F;&#x6765;&#x7684;&#x533A;&#x95F4;</span>
+                    map.remove(e.getKey());
+                    <span class="hljs-comment">//&#x7EE7;&#x7EED;&#x627E;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;right&#x7684;key&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;</span>
+                    e = map.floorEntry(right);
+                }
+                <span class="hljs-comment">// &#x4E00;&#x6B21;&#x64CD;&#x4F5C;&#x8FC7;&#x540E;&#xFF0C;&#x6DFB;&#x52A0;&#x6700;&#x7EC8;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x5BF9;sum&#x505A;&#x52A0;&#x6CD5;</span>
+                map.put(l, <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{l, r});
+                sum += r - l + <span class="hljs-number">1</span>;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">count</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">return</span> sum;
+            }
+
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;treeset&#x5408;&#x5E76;&#x533A;&#x95F4;">&#x65B9;&#x6CD5;2&#xFF1A;TreeSet&#x5408;&#x5E76;&#x533A;&#x95F4;</h3>
+<p>&#x601D;&#x8DEF;&#x6765;&#x81EA;&#x98CE;&#x96E8;&#x5927;&#x4F6C;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CountIntervals</span> </span>{
+    TreeSet&lt;Interval&gt; set;
+    <span class="hljs-keyword">int</span> nums;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CountIntervals</span><span class="hljs-params">()</span> </span>{
+        set = <span class="hljs-keyword">new</span> TreeSet&lt;&gt;();
+        nums = <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+        <span class="hljs-comment">//tailSet()&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x5305;&#x542B;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#x7684;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#xFF08;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#xFF09;&#x4E4B;&#x540E;&#x7684;&#x6811;&#x96C6;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;&#x3002;</span>
+        <span class="hljs-comment">//booleanValue&#x53C2;&#x6570;&#x662F;&#x53EF;&#x9009;&#x7684;&#x3002;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;true&#x3002;</span>
+        <span class="hljs-comment">//&#x5982;&#x679C;false&#x4F5C;&#x4E3A;a&#x4F20;&#x9012;booleanValue&#xFF0C;&#x5219;&#x8BE5;&#x65B9;&#x6CD5;&#x5C06;&#x8FD4;&#x56DE;&#x6307;&#x5B9A;&#x540E;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;&#xFF0C;element&#x800C;&#x4E0D;&#x5305;&#x62EC;&#x6307;&#x5B9A;&#x7684;element</span>
+        <span class="hljs-comment">//&#x8D77;&#x59CB;&#x9700;&#x8981;&#x627E;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x6309;[0,left]</span>
+        <span class="hljs-comment">//&#x8FD4;&#x56DE;&#x7684;&#x662F; &#x6BD4;left &#x90FD;&#x8981;&#x5927;&#x7684;&#x533A;&#x95F4;&#xFF08;&#x8FD9;&#x4E9B;&#x533A;&#x95F4;&#x7684;&#x53F3;&#x7AEF;&#x70B9;&#x6BD4;left&#x66F4;&#x5927;&#xFF09;</span>
+        Iterator&lt;Interval&gt; it = set.tailSet(<span class="hljs-keyword">new</span> Interval(<span class="hljs-number">0</span>, left), <span class="hljs-keyword">false</span>).iterator();
+        <span class="hljs-keyword">while</span> (it.hasNext()) {
+            Interval interval = it.next();
+            <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;right&#x6BD4;iterator&#x4E2D;&#x7684;&#x5DE6;&#x533A;&#x95F4;&#x8981;&#x5C0F;&#xFF0C;&#x8BF4;&#x660E;</span>
+            <span class="hljs-comment">// current:[left,right] &#x4E0E; iterator&#x4E2D;&#x7684;[left,right]&#x6CA1;&#x6709;&#x76F8;&#x4EA4;&#x53C9;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x63D0;&#x524D;&#x9000;&#x51FA;&#x4E86;</span>
+            <span class="hljs-keyword">if</span> (right &lt; interval.left) {
+                <span class="hljs-keyword">break</span>;
+            }
+            <span class="hljs-comment">//&#x66F4;&#x65B0;&#x533A;&#x95F4;&#xFF0C;&#x5DE6;&#x533A;&#x95F4;&#x66F4;&#x5DE6;&#xFF0C;&#x53F3;&#x533A;&#x95F4;&#x66F4;&#x53F3;</span>
+            left = Math.min(left, interval.left);
+            right = Math.max(right, interval.right);
+            <span class="hljs-comment">//&#x5F53;&#x524D;&#x533A;&#x95F4;&#x5F00;&#x59CB;&#x79FB;&#x9664;</span>
+            it.remove();
+            <span class="hljs-comment">//&#x6570;&#x91CF;&#x66F4;&#x65B0;</span>
+            nums -= (interval.right - interval.left + <span class="hljs-number">1</span>);
+        }
+        set.add(<span class="hljs-keyword">new</span> Interval(left, right));
+        nums += right - left + <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">count</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> nums;
+    }
+}
+
+<span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Interval</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">Interval</span>&gt; </span>{
+    <span class="hljs-keyword">int</span> left;
+    <span class="hljs-keyword">int</span> right;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Interval</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+        <span class="hljs-keyword">this</span>.left = left;
+        <span class="hljs-keyword">this</span>.right = right;
+    }
+
+    <span class="hljs-comment">//&#x6309;&#x53F3;&#x533A;&#x95F4;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;&#xFF0C;&#x5982;&#x679C;&#x53F3;&#x533A;&#x95F4;&#x76F8;&#x540C;&#x5219;&#x6309;&#x5DE6;&#x533A;&#x95F4;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compareTo</span><span class="hljs-params">(Interval that)</span> </span>{
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.right == that.right)
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.left - that.left;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.right - that.right;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Interval{&quot;</span> +
+                <span class="hljs-string">&quot;left=&quot;</span> + left +
+                <span class="hljs-string">&quot;, right=&quot;</span> + right +
+                <span class="hljs-string">&apos;}&apos;</span>;
+    }
+}
+</code></pre>
+<ul>
+<li>&#x53E6;&#x4E00;&#x79CD;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CountIntervals</span> </span>{
+
+            TreeSet&lt;<span class="hljs-keyword">int</span>[]&gt; ts;
+            <span class="hljs-keyword">int</span> sum;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CountIntervals</span><span class="hljs-params">()</span> </span>{
+                ts = <span class="hljs-keyword">new</span> TreeSet&lt;&gt;((a, b) -&gt; a[<span class="hljs-number">1</span>] - b[<span class="hljs-number">1</span>]);
+                sum = <span class="hljs-number">0</span>;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+                Iterator&lt;<span class="hljs-keyword">int</span>[]&gt; it = ts.tailSet(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">0</span>, left}).iterator();
+                <span class="hljs-keyword">while</span> (it.hasNext()) {
+                    <span class="hljs-keyword">int</span>[] interval = it.next();
+                    <span class="hljs-keyword">if</span> (right &lt; interval[<span class="hljs-number">0</span>]) {
+                        <span class="hljs-keyword">break</span>;
+                    }
+                    left = Math.min(left, interval[<span class="hljs-number">0</span>]);
+                    right = Math.max(right, interval[<span class="hljs-number">1</span>]);
+                    it.remove();
+                    sum -= interval[<span class="hljs-number">1</span>] - interval[<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>;
+                }
+                ts.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{left, right});
+                sum += right - left + <span class="hljs-number">1</span>;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">count</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">return</span> sum;
+            }
+        }
+</code></pre>
+<h3 id="&#x4E00;&#x4E9B;&#x4EE3;&#x7801;">&#x4E00;&#x4E9B;&#x4EE3;&#x7801;</h3>
+<pre><code class="lang-c++"><span class="hljs-comment">/*
+    &#x52A8;&#x6001;&#x5F00;&#x70B9;&#x7EBF;&#x6BB5;&#x6811;&#xFF08;&#x5E26;&#x61D2;&#x6807;&#x8BB0;&#xFF09;by Mikasa Mikoto
+    step 1&#xFF1A;init();
+    &#x533A;&#x95F4;&#x4FEE;&#x6539;&#xFF0C;&#x533A;&#x95F4;&#x67E5;&#x8BE2;
+    [l, r] &#x95ED;&#x533A;&#x95F4;
+*/</span>
+<span class="hljs-keyword">using</span> TT = <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>;
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">5e5</span> + <span class="hljs-number">10</span>;
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> TT M = <span class="hljs-number">1e9</span> + <span class="hljs-number">10</span>;
+<span class="hljs-comment">//&#x8282;&#x70B9;&#x5B9A;&#x4E49;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;</span>
+<span class="hljs-keyword">struct</span> Node {
+    <span class="hljs-keyword">int</span> l, r;
+    TT sum, lazy;
+} tr[N] {};
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> idx , root;
+<span class="hljs-comment">//&#x8282;&#x70B9;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_node</span><span class="hljs-params">()</span> </span>{
+    ++ idx;
+    tr[idx] = {};
+    <span class="hljs-keyword">return</span> idx;
+}
+<span class="hljs-comment">//&#x4E0A;&#x4F20;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;,&#x4F20;left, right&#x5907;&#x7528;</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(Node&amp; u, Node&amp; ls, Node&amp; rs, TT left, TT right)</span> </span>{
+    <span class="hljs-comment">//TT mid = (right - left) / 2 + left;</span>
+    u.sum = ls.sum + rs.sum;
+}
+<span class="hljs-comment">//&#x4E0B;&#x4F20;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;</span>
+<span class="hljs-comment">//&#x4E0B;&#x4F20;&#x64CD;&#x4F5C;&#x51FD;&#x6570;&#xFF1A;</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eval</span><span class="hljs-params">(Node&amp; u, TT left, TT right, TT lazy)</span> </span>{
+    u.sum += (right - left + <span class="hljs-number">1</span>) * lazy;
+    u.lazy += lazy;
+}
+<span class="hljs-comment">//&#x4E0B;&#x4F20;&#x51FD;&#x6570;&#xFF1A;</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(Node&amp; u, Node&amp; ls, Node&amp; rs, TT left, TT right)</span> </span>{
+    <span class="hljs-keyword">if</span>(u.lazy) {
+        TT mid = (right - left) / <span class="hljs-number">2</span> + left; 
+        eval(ls, left, mid, u.lazy);
+        eval(rs, mid + <span class="hljs-number">1</span>, right, u.lazy);
+        u.lazy = <span class="hljs-number">0</span>;
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT left, TT right)</span> </span>{
+    pushup(tr[u], tr[tr[u].l], tr[tr[u].r], left, right);
+}
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT left, TT right)</span> </span>{
+    <span class="hljs-keyword">if</span>(!tr[u].l) tr[u].l = get_node();
+    <span class="hljs-keyword">if</span>(!tr[u].r) tr[u].r = get_node();
+    pushdown(tr[u], tr[tr[u].l], tr[tr[u].r], left, right);
+}
+<span class="hljs-comment">//&#x533A;&#x95F4;&#x4FEE;&#x6539;&#xFF0C;&#x5F53;&#x524D;&#x533A;&#x95F4;&#x7684;&#x61D2;&#x6807;&#x8BB0;&#x8868;&#x793A;&#x5176;&#x6240;&#x6709;&#x5B50;&#x8282;&#x70B9;&#x9700;&#x8981;&#x64CD;&#x4F5C;&#x7684;&#x4FE1;&#x606F;&#xFF08;&#x4E0D;&#x5305;&#x62EC;&#x81EA;&#x8EAB;&#xFF09;</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;u, TT l, TT r, TT L, TT R, TT d)</span> </span>{
+    <span class="hljs-keyword">if</span>(!u) u = get_node();
+    <span class="hljs-keyword">if</span>(r &lt; L || l &gt; R) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span>(l &gt;= L &amp;&amp; r &lt;= R) {
+        eval(tr[u], l, r, d);
+        <span class="hljs-keyword">return</span>;
+    }
+    pushdown(u, l ,r);
+    TT mid = (r - l) / <span class="hljs-number">2</span> + l;
+    <span class="hljs-keyword">if</span>(L &lt;= mid) modify(tr[u].l, l, mid, L, R, d);
+    <span class="hljs-keyword">if</span>(R &gt; mid) modify(tr[u].r, mid + <span class="hljs-number">1</span>, r, L, R, d);
+    pushup(u, l, r);
+}
+<span class="hljs-comment">//&#x533A;&#x95F4;&#x67E5;&#x8BE2;&#xFF0C;&#x8FD4;Node&#x7C7B;&#x578B;&#xFF0C;&#x901A;&#x5E38;&#x4E0D;&#x9700;&#x8981;&#x6539;</span>
+<span class="hljs-function">Node <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT l, TT r, TT L, TT R)</span> </span>{
+    <span class="hljs-keyword">if</span>(r &lt; L || l &gt; R || !u) <span class="hljs-keyword">return</span> tr[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">if</span>(l &gt;= L &amp;&amp; r &lt;= R) <span class="hljs-keyword">return</span> tr[u]; 
+    Node res;
+    pushdown(u, l, r);
+    TT mid = (r - l) / <span class="hljs-number">2</span> + l;
+    <span class="hljs-keyword">if</span>(R &lt;= mid) res = query(tr[u].l, l, mid, L, R);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(L &gt; mid) res = query(tr[u].r, mid + <span class="hljs-number">1</span>, r, L, R);
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">auto</span> left = query(tr[u].l, l, mid, L, R), right = query(tr[u].r, mid + <span class="hljs-number">1</span>, r, L, R);
+        pushup(res, left, right, l, r);
+    }
+    pushup(u, l, r);
+    <span class="hljs-keyword">return</span> res;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+    idx = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//memset(tr, 0, sizeof tr);</span>
+    root = get_node();
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modify</span><span class="hljs-params">(TT l, TT r, TT d)</span> </span>{modify(root, <span class="hljs-number">0</span>, M, l, r, d);}
+<span class="hljs-function">Node <span class="hljs-title">query</span><span class="hljs-params">(TT l, TT r)</span> </span>{<span class="hljs-keyword">return</span> query(root, <span class="hljs-number">0</span>, M, l, r);}
+</code></pre>
+<ul>
+<li><p>```java</p>
+<h1 id="include">include<bits stdc++.h=""></bits></h1>
+<p>using namespace std;
+long long n,m;//n:&#x957F;&#x5EA6; m: &#x8BE2;&#x95EE; 
+long long a[500001];
+struct Tree{
+  long long l,r;//l:&#x5DE6;&#x8282;&#x70B9; r:&#x53F3;&#x8282;&#x70B9; 
+  long long v,lazy;//v:&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x503C; lazy:&#x61D2;&#x6807;&#x8BB0;&#xFF0C;&#x8BB0;&#x5F55;&#x6539;&#x53D8;&#x7684;&#x503C;&#xFF0C;&#x9012;&#x5F52;&#x4F20;&#x503C; 
+}t[2000001];
+inline long long read(){
+  long long f=1,outt=0;char a=getchar();
+  while(a&gt;&apos;9&apos;||a&lt;&apos;0&apos;){if(a==&apos;-&apos;)f=-1;a=getchar();}
+  while(a&lt;=&apos;9&apos;&amp;&amp;a&gt;=&apos;0&apos;){outt<em>=10;outt+=a-&apos;0&apos;;a=getchar();}
+  return f</em>outt;
+}//&#x8BFB;&#x5165;&#x4F18;&#x5316; 
+inline void eval(long long p,long long k){
+  t[p].lazy+=k;
+  t[p].v+=k<em>(t[p].r-t[p].l+1);
+} 
+inline void pushdown(long long p){
+  eval(p</em>2,t[p].lazy);
+  eval(p*2+1,t[p].lazy);
+  t[p].lazy=0;
+}
+void build(int p,int l,int r){
+  t[p].l=l;t[p].r=r;
+  if(l==r){</p>
+<pre><code>  t[p].v=a[l];return;
+</code></pre><p>  }
+  long long mid=(l+r)/2;//&#x4E2D;&#x70B9; 
+  build(p<em>2,l,mid);
+  build(p</em>2+1,mid+1,r);
+  t[p].v=t[p<em>2].v+t[p</em>2+1].v;
+}
+long long query(long long p,long long l){
+  if(t[p].l==l&amp;&amp;t[p].r==l)return t[p].v;
+  pushdown(p);
+  long long mid=(t[p].l+t[p].r)/2;
+  if(l&lt;=mid)return query(p<em>2,l);
+  if(l&gt;mid)return query(p</em>2+1,l);
+}
+void update(long long p,long long l,long long r,long long v){
+  if(t[p].l&gt;=l&amp;&amp;t[p].r&lt;=r){</p>
+<pre><code>  t[p].v+=v*(t[p].r-t[p].l+1);
+  t[p].lazy+=v;
+  return;
+</code></pre><p>  }
+  pushdown(p);
+  long long mid=(t[p].r+t[p].l)/2;
+  if(l&lt;=mid)update(p<em>2,l,r,v); 
+  if(r&gt;mid) update(p</em>2+1,l,r,v);
+  t[p].v=t[p<em>2].v+t[p</em>2+1].v;
+}
+void change(long long p,int x,int v){//&#x5355;&#x70B9;&#x4FEE;&#x6539;&#xFF0C;&#x4E0D;&#x5FC5;&#x5728;&#x610F;&#xFF0C;&#x662F;&#x533A;&#x95F4;&#x4FEE;&#x6539;&#x7684;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x8FDE;&#x6807;&#x8BB0;&#x90FD;&#x4E0D;&#x7528;(&#x800C;&#x4E14;&#x672C;&#x9898;&#x4E0D;&#x9700;&#x8981;)
+  if(t[p].l==t[p].r){</p>
+<pre><code>  t[p].v+=v;return;
+</code></pre><p>  }
+  int mid=(t[p].r+t[p].l)/2;
+  if(x&lt;=mid)change(p<em>2,x,v);
+  else change(p</em>2+1,x,v);
+  t[p].v=t[p<em>2].v+t[p</em>2+1].v;
+}
+int main(){
+  n=read();m=read();//&#x8BFB;&#x5165; 
+  for(int i=1;i&lt;=n;i++)</p>
+<pre><code>  a[i]=read();
+</code></pre><p>  js(1,1,n);//&#x5EFA;&#x6811; 
+  for(int i=1;i&lt;=m;i++){</p>
+<pre><code>  long long pd=read();
+  if(pd==2){
+      long long ll=read();
+      printf(&quot;%lld\n&quot;,query(1,ll));//&#x67E5;&#x8BE2;ll&#x7684;&#x503C; 
+  }
+  else 
+  if(pd==1){
+      long long ll=read(),rr=read(),x=read();
+      update(1,ll,rr,x);//&#x4FEE;&#x6539;&#x4ECE;ll&#x5230;rr&#x7684;&#x503C;&#x52A0;&#x4E0A;x 
+  }
+  else
+  if(pd==3){
+      int k=read(),y=read();
+      change(1,k,y);
+  }
+</code></pre><p>  }
+  return 0; 
+}</p>
+</li>
+</ul>
+<p>```</p>
+<p>&#x6743;&#x503C;&#x7EBF;&#x6BB5;&#x6811;</p>
+<ul>
+<li>P1908&#x9006;&#x5E8F;&#x5BF9;</li>
+</ul>
+<h4 id="reference">Reference</h4>
+<ul>
+<li><p><a href="https://blog.csdn.net/wat1r/article/details/124831320" target="_blank">TreeSet&#x4E0E;TreeMap&#x4F7F;&#x7528;&#x6307;&#x5357;</a></p>
+</li>
+<li><p><a href="https://www.bilibili.com/video/BV1Zg4y1q7aY?spm_id_from=333.337.search-card.all.click" target="_blank">2020-05-17 &#x7EFF;&#x6821;&#x670D;&#x6743;&#x503C;&#x7EBF;&#x6BB5;&#x6811;&#x4E0E;&#x52A8;&#x6001;&#x5F00;&#x70B9;</a></p>
+</li>
+<li><p><a href="https://www.bilibili.com/video/BV1Si4y117dy/?spm_id_from=autoNext" target="_blank">&#x7EBF;&#x6BB5;&#x6811;&#x4E13;&#x9898;</a></p>
+</li>
+<li><p><a href="https://www.bilibili.com/video/BV1yF411p7Bt?spm_id_from=333.337.search-card.all.click" target="_blank">&#x3010;neko&#x3011;&#x6570;&#x636E;&#x7ED3;&#x6784; &#x7EBF;&#x6BB5;&#x6811;&#x3010;&#x7B97;&#x6CD5;&#x7F16;&#x7A0B;#6&#x3011;</a></p>
+</li>
+<li><a href="https://www.bilibili.com/video/BV1NS4y1S77N?spm_id_from=333.337.search-card.all.click" target="_blank">&#x4EC0;&#x4E48;&#x662F;&#x7EBF;&#x6BB5;&#x6811;</a></li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="monotonic_stack.html" class="navigation navigation-prev " aria-label="Previous page: 单调栈">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="search.html" class="navigation navigation-next " aria-label="Next page: 搜索">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"next":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"previous":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/segment_tree.md","mtime":"2022-05-19T14:26:07.879Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

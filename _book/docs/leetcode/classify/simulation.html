@@ -277,14 +277,14 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3" >
             
-                <a href="computational_geometry.html">
+                <span>
             
                     
-                    计算几何
+                    LeetCode-PART2
             
-                </a>
+                </span>
             
 
             
@@ -304,7 +304,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="search.html">
+        <li class="chapter " data-level="1.3.2" data-path="segment_tree.html">
+            
+                <a href="segment_tree.html">
+            
+                    
+                    线段树与树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="search.html">
             
                 <a href="search.html">
             
@@ -317,7 +330,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="graph.html">
+        <li class="chapter " data-level="1.3.4" data-path="graph.html">
             
                 <a href="graph.html">
             
@@ -330,7 +343,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="dynamic_programing.html">
+        <li class="chapter " data-level="1.3.5" data-path="dynamic_programing.html">
             
                 <a href="dynamic_programing.html">
             
@@ -343,7 +356,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="game_problem.html">
+        <li class="chapter " data-level="1.3.6" data-path="game_problem.html">
             
                 <a href="game_problem.html">
             
@@ -356,7 +369,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.6" data-path="bit.html">
+        <li class="chapter " data-level="1.3.7" data-path="bit.html">
             
                 <a href="bit.html">
             
@@ -369,7 +382,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.7" data-path="math.html">
+        <li class="chapter " data-level="1.3.8" data-path="math.html">
             
                 <a href="math.html">
             
@@ -382,7 +395,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.8" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3.9" data-path="computational_geometry.html">
             
                 <a href="computational_geometry.html">
             
@@ -395,7 +408,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.9" data-path="sweep_line.html">
+        <li class="chapter " data-level="1.3.10" data-path="sweep_line.html">
             
                 <a href="sweep_line.html">
             
@@ -408,7 +421,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.10" data-path="randomization.html">
+        <li class="chapter " data-level="1.3.11" data-path="randomization.html">
             
                 <a href="randomization.html">
             
@@ -421,7 +434,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.11" data-path="../swordoffer/swordoffer.html">
+        <li class="chapter " data-level="1.3.12" data-path="../swordoffer/swordoffer.html">
             
                 <a href="../swordoffer/swordoffer.html">
             
@@ -1040,6 +1053,106 @@
             <span class="hljs-keyword">return</span> s.length() == goal.length() &amp;&amp; (s + s).contains(goal);
         }
 </code></pre>
+<h2 id="953-&#x9A8C;&#x8BC1;&#x5916;&#x661F;&#x8BED;&#x8BCD;&#x5178;"><a href="https://leetcode.cn/problems/verifying-an-alien-dictionary/" target="_blank">953. &#x9A8C;&#x8BC1;&#x5916;&#x661F;&#x8BED;&#x8BCD;&#x5178;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isAlienSorted</span><span class="hljs-params">(String[] words, String order)</span> </span>{
+    Map&lt;Character, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; order.length(); i++) {
+        map.put(order.charAt(i), i);
+    }
+    String[] targets = <span class="hljs-keyword">new</span> String[words.length];
+    <span class="hljs-keyword">int</span> idx = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (String word : words) {
+        String t = <span class="hljs-string">&quot;&quot;</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; word.length(); i++) {
+            t += (<span class="hljs-keyword">char</span>) (map.get(word.charAt(i)) + <span class="hljs-string">&apos;a&apos;</span>);
+        }
+        targets[idx++] = t;
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; targets.length - <span class="hljs-number">1</span>; i++) {
+        <span class="hljs-keyword">if</span> (targets[i].compareTo(targets[i + <span class="hljs-number">1</span>]) &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2">&#x65B9;&#x6CD5;2</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isAlienSorted</span><span class="hljs-params">(String[] words, String order)</span> </span>{
+    Map&lt;Character, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; order.length(); i++) {
+        map.put(order.charAt(i), i);
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; words.length - <span class="hljs-number">1</span>; i++) {
+        String prev = words[i], cur = words[i + <span class="hljs-number">1</span>];
+        <span class="hljs-keyword">boolean</span> nonEqual = <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">int</span> len = Math.min(prev.length(), cur.length());
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++) {
+            <span class="hljs-keyword">if</span> (map.get(prev.charAt(j)) &gt; map.get(cur.charAt(j))) {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (map.get(prev.charAt(j)) &lt; map.get(cur.charAt(j))) {
+                nonEqual = <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+        <span class="hljs-keyword">if</span> (!nonEqual &amp;&amp; prev.length() &gt; cur.length()) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3">&#x65B9;&#x6CD5;3</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isAlienSorted</span><span class="hljs-params">(String[] words, String order)</span> </span>{
+            <span class="hljs-keyword">int</span>[] dict = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">26</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; order.length(); i++) {
+                dict[order.charAt(i) - <span class="hljs-string">&apos;a&apos;</span>] = i;
+            }
+            String[] mirror = words.clone();
+            Arrays.sort(mirror, (a, b) -&gt; {
+                <span class="hljs-keyword">int</span> m = a.length(), n = b.length();
+                <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">while</span> (i &lt; m &amp;&amp; j &lt; n) {
+                    <span class="hljs-keyword">char</span> ac = a.charAt(i), bc = b.charAt(j);
+                    <span class="hljs-keyword">if</span> (ac != bc) <span class="hljs-keyword">return</span> dict[ac - <span class="hljs-string">&apos;a&apos;</span>] - dict[bc - <span class="hljs-string">&apos;a&apos;</span>];
+                    i++;
+                    j++;
+                }
+                <span class="hljs-keyword">if</span> (i &lt; m) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (j &lt; n) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+                <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            });
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; words.length; i++) {
+                <span class="hljs-keyword">if</span> (!mirror[i].equals(words[i])) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;4">&#x65B9;&#x6CD5;4</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span>[] dict = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">26</span>];
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">check</span><span class="hljs-params">(String a, String b)</span> </span>{
+    <span class="hljs-keyword">int</span> m = a.length(), n = b.length();
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (i &lt; m &amp;&amp; j &lt; n) {
+        <span class="hljs-keyword">int</span> ac = a.charAt(i) - <span class="hljs-string">&apos;a&apos;</span>, bc = b.charAt(j) - <span class="hljs-string">&apos;a&apos;</span>;
+        <span class="hljs-keyword">if</span> (ac != bc) <span class="hljs-keyword">return</span> dict[ac] - dict[bc];
+        i++;
+        j++;
+    }
+    <span class="hljs-keyword">if</span> (i &lt; m) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">if</span> (j &lt; n) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isAlienSorted</span><span class="hljs-params">(String[] words, String order)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i++) dict[order.charAt(i) - <span class="hljs-string">&apos;a&apos;</span>] = i;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; words.length; i++) {
+        <span class="hljs-keyword">if</span> (check(words[i - <span class="hljs-number">1</span>], words[i]) &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</code></pre>
 <h2 id="2028-&#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;"><a href="https://leetcode-cn.com/problems/find-missing-observations/" target="_blank">2028. &#x627E;&#x51FA;&#x7F3A;&#x5931;&#x7684;&#x89C2;&#x6D4B;&#x6570;&#x636E;</a></h2>
 <pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] missingRolls(<span class="hljs-keyword">int</span>[] rolls, <span class="hljs-keyword">int</span> mean, <span class="hljs-keyword">int</span> n) {
             <span class="hljs-keyword">int</span> m = rolls.length;
@@ -1112,7 +1225,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.7","depth":2,"next":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-04-06T23:33:31.415Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-05T21:38:13.646Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"模拟","level":"1.2.7","depth":2,"next":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"previous":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/simulation.md","mtime":"2022-05-18T00:26:56.292Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

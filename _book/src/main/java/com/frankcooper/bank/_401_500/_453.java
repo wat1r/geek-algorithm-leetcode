@@ -27,6 +27,14 @@ public class _453 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int minMoves(int[] nums) {
+            int minn = (int) 1e9 + 10;
+            for (int x : nums) minn = Math.min(minn, x);
+            int res = 0;
+            for (int x : nums) res += x - minn;
+            return res;
+        }
     }
 
 

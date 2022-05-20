@@ -277,14 +277,14 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3" >
             
-                <a href="computational_geometry.html">
+                <span>
             
                     
-                    计算几何
+                    LeetCode-PART2
             
-                </a>
+                </span>
             
 
             
@@ -304,7 +304,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="search.html">
+        <li class="chapter " data-level="1.3.2" data-path="segment_tree.html">
+            
+                <a href="segment_tree.html">
+            
+                    
+                    线段树与树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="search.html">
             
                 <a href="search.html">
             
@@ -317,7 +330,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="graph.html">
+        <li class="chapter " data-level="1.3.4" data-path="graph.html">
             
                 <a href="graph.html">
             
@@ -330,7 +343,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.4" data-path="dynamic_programing.html">
+        <li class="chapter " data-level="1.3.5" data-path="dynamic_programing.html">
             
                 <a href="dynamic_programing.html">
             
@@ -343,7 +356,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.5" data-path="game_problem.html">
+        <li class="chapter " data-level="1.3.6" data-path="game_problem.html">
             
                 <a href="game_problem.html">
             
@@ -356,7 +369,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.6" data-path="bit.html">
+        <li class="chapter " data-level="1.3.7" data-path="bit.html">
             
                 <a href="bit.html">
             
@@ -369,7 +382,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.7" data-path="math.html">
+        <li class="chapter " data-level="1.3.8" data-path="math.html">
             
                 <a href="math.html">
             
@@ -382,7 +395,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.8" data-path="computational_geometry.html">
+        <li class="chapter " data-level="1.3.9" data-path="computational_geometry.html">
             
                 <a href="computational_geometry.html">
             
@@ -395,7 +408,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.9" data-path="sweep_line.html">
+        <li class="chapter " data-level="1.3.10" data-path="sweep_line.html">
             
                 <a href="sweep_line.html">
             
@@ -408,7 +421,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.10" data-path="randomization.html">
+        <li class="chapter " data-level="1.3.11" data-path="randomization.html">
             
                 <a href="randomization.html">
             
@@ -421,7 +434,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.11" data-path="../swordoffer/swordoffer.html">
+        <li class="chapter " data-level="1.3.12" data-path="../swordoffer/swordoffer.html">
             
                 <a href="../swordoffer/swordoffer.html">
             
@@ -1112,6 +1125,66 @@
     <span class="hljs-keyword">return</span> Arrays.stream(nums).anyMatch(num -&gt; !seen.add(num));
 }
 </code></pre>
+<h2 id="442-&#x6570;&#x7EC4;&#x4E2D;&#x91CD;&#x590D;&#x7684;&#x6570;&#x636E;"><a href="https://leetcode-cn.com/problems/find-all-duplicates-in-an-array/" target="_blank">442. &#x6570;&#x7EC4;&#x4E2D;&#x91CD;&#x590D;&#x7684;&#x6570;&#x636E;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x6807;&#x8BB0;">&#x65B9;&#x6CD5;1:&#x6807;&#x8BB0;</h3>
+<h4 id="&#x601D;&#x8DEF;">&#x601D;&#x8DEF;</h4>
+<p>&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x7ED9;<code>nums[i]</code> &#x52A0;&#x4E0A;&#x300C;&#x8D1F;&#x53F7;&#x300D;&#x8868;&#x793A;&#x6570;<code>i+1</code> &#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x8FC7;&#x4E00;&#x6B21;&#x3002;&#x5177;&#x4F53;&#x5730;&#xFF0C;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x5BF9;&#x6570;&#x7EC4;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x904D;&#x5386;&#x3002;&#x5F53;&#x904D;&#x5386;&#x5230;&#x4F4D;&#x7F6E; <code>i</code> &#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x8003;&#x8651; <code>nums[nums[i]&#x2212;1]</code> &#x7684;&#x6B63;&#x8D1F;&#x6027;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C; <code>nums[nums[i]&#x2212;1]</code> &#x662F;&#x6B63;&#x6570;&#xFF0C;&#x8BF4;&#x660E;<code>nums[i]</code>&#x8FD8;&#x6CA1;&#x6709;&#x51FA;&#x73B0;&#x8FC7;&#xFF0C;&#x6211;&#x4EEC;&#x5C06; <code>nums[nums[i]&#x2212;1]</code>&#x52A0;&#x4E0A;&#x8D1F;&#x53F7;&#xFF1B;</li>
+<li>&#x5982;&#x679C; <code>nums[nums[i]&#x2212;1]</code>&#x662F;&#x8D1F;&#x6570;&#xFF0C;&#x8BF4;&#x660E; <code>nums[i]</code>&#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x8FC7;&#x4E00;&#x6B21;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;  &#x653E;&#x5165;&#x7B54;&#x6848;&#x3002;</li>
+</ul>
+<h4 id="&#x7EC6;&#x8282;">&#x7EC6;&#x8282;</h4>
+<ul>
+<li>&#x7531;&#x4E8E;<code>nums[i]</code> &#x672C;&#x8EAB;&#x53EF;&#x80FD;&#x5DF2;&#x7ECF;&#x4E3A;&#x8D1F;&#x6570;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x5C06;<code>nums[i]</code>&#x4F5C;&#x4E3A;&#x4E0B;&#x6807;&#x6216;&#x8005;&#x653E;&#x5165;&#x7B54;&#x6848;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x53D6;&#x7EDD;&#x5BF9;&#x503C;&#x3002;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">findDuplicates</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">int</span> x = Math.abs(nums[i]);
+                <span class="hljs-keyword">if</span> (nums[x - <span class="hljs-number">1</span>] &gt; <span class="hljs-number">0</span>) {
+                    nums[x - <span class="hljs-number">1</span>] = -nums[x - <span class="hljs-number">1</span>];
+                } <span class="hljs-keyword">else</span> {
+                    res.add(x);
+                }
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#x4EA4;&#x6362;">&#x65B9;&#x6CD5;2:&#x4EA4;&#x6362;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">findDuplicates</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">while</span> (nums[i] != nums[nums[i] - <span class="hljs-number">1</span>]) {
+                    <span class="hljs-keyword">int</span> t = nums[i];
+                    nums[i] = nums[nums[i] - <span class="hljs-number">1</span>];
+                    nums[t - <span class="hljs-number">1</span>] = t;
+                }
+            }
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">if</span> (nums[i] != i + <span class="hljs-number">1</span>) res.add(nums[i]);
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h2 id="448-&#x627E;&#x5230;&#x6240;&#x6709;&#x6570;&#x7EC4;&#x4E2D;&#x6D88;&#x5931;&#x7684;&#x6570;&#x5B57;"><a href="https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/" target="_blank">448. &#x627E;&#x5230;&#x6240;&#x6709;&#x6570;&#x7EC4;&#x4E2D;&#x6D88;&#x5931;&#x7684;&#x6570;&#x5B57;</a></h2>
+<ul>
+<li>&#x5C06;442&#x9898;&#x7684;&#x65B9;&#x6CD5;2&#x4FEE;&#x6539;&#x4E0B;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Integer&gt; <span class="hljs-title">findDisappearedNumbers</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">while</span> (nums[i] != nums[nums[i] - <span class="hljs-number">1</span>]) {
+                    <span class="hljs-keyword">int</span> t = nums[i];
+                    nums[i] = nums[nums[i] - <span class="hljs-number">1</span>];
+                    nums[t - <span class="hljs-number">1</span>] = t;
+                }
+            }
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+                <span class="hljs-keyword">if</span> (nums[i] != i + <span class="hljs-number">1</span>) res.add(i + <span class="hljs-number">1</span>);<span class="hljs-comment">//&#x7F3A;&#x5931;&#x7684;&#x6570;&#x662F;i+1</span>
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
 <h2 id="599-&#x4E24;&#x4E2A;&#x5217;&#x8868;&#x7684;&#x6700;&#x5C0F;&#x7D22;&#x5F15;&#x603B;&#x548C;"><a href="https://leetcode-cn.com/problems/minimum-index-sum-of-two-lists/" target="_blank">599. &#x4E24;&#x4E2A;&#x5217;&#x8868;&#x7684;&#x6700;&#x5C0F;&#x7D22;&#x5F15;&#x603B;&#x548C;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> String[] findRestaurant(String[] list1, String[] list2) {
     <span class="hljs-comment">//map k:list1&#x7684;string v:string&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x56E0;&#x4E3A;&#x9898;&#x76EE;&#x4E2D;&#x6CA1;&#x6709;&#x6307;&#x51FA;&#x6765;list1&#x7684;string&#x662F;&#x5426;&#x6709;&#x91CD;&#x590D;&#xFF0C;&#x5FFD;&#x7565;&#x4E86;&#x91CD;&#x590D;&#x7684;&#x60C5;&#x51B5;</span>
@@ -1186,7 +1259,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数组","level":"1.2.4","depth":2,"next":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"previous":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/array.md","mtime":"2022-04-08T14:13:49.714Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-05T21:38:13.646Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数组","level":"1.2.4","depth":2,"next":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"previous":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/array.md","mtime":"2022-05-08T01:23:29.085Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

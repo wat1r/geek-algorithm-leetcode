@@ -35,6 +35,17 @@ public class _942 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int[] diStringMatch(String s) {
+            int n = s.length(), l = 0, r = n, index = 0;
+            int[] res = new int[n + 1];
+            for (char c : s.toCharArray()) {
+                if (c == 'D') res[index++] = r--;
+                if (c == 'I') res[index++] = l++;
+            }
+            res[index] = l;
+            return res;
+        }
     }
 
 

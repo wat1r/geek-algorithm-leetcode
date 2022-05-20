@@ -1,5 +1,369 @@
 # TreeSet与TreeMap使用指南
 
+## 1.TreeSet
+
+#### 将元素插入TreeSet
+
+- add() - 将指定的元素插入集合
+- addAll() - 将指定集合的所有元素插入集合
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+
+        TreeSet<Integer> evenNumbers = new TreeSet<>();
+
+        // 使用 the add() 方法
+        evenNumbers.add(2);
+        evenNumbers.add(4);
+        evenNumbers.add(6);
+        System.out.println("TreeSet: " + evenNumbers);
+
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(1);
+
+        // 使用 the addAll() 方法
+        numbers.addAll(evenNumbers);
+        System.out.println("新的TreeSet: " + numbers);
+    }
+}
+```
+
+**输出结果**
+
+```
+TreeSet: [2, 4, 6]
+新的TreeSet: [1, 2, 4, 6]
+```
+
+#### 访问TreeSet元素
+
+要访问树集的元素，我们可以使用iterator()方法。为了使用这种方法，我们必须导入java.util.Iterator包。例如，
+
+```java
+import java.util.TreeSet;
+import java.util.Iterator;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 调用 iterator() 方法
+        Iterator<Integer> iterate = numbers.iterator();
+        System.out.print("TreeSet使用迭代器: ");
+        //访问元素
+        while(iterate.hasNext()) {
+            System.out.print(iterate.next());
+            System.out.print(", ");
+        }
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 5, 6]
+TreeSet使用迭代器: 2, 5, 6,
+```
+
+### 删除元素
+
+- remove() - 从集合中删除指定的元素
+- removeAll() - 从集合中删除所有元素
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用remove() 方法
+        boolean value1 = numbers.remove(5);
+        System.out.println("5被删除了? " + value1);
+
+        // 使用removeAll() 方法
+        boolean value2 = numbers.removeAll(numbers);
+        System.out.println("是否删除了所有元素? " + value2);
+    }
+}
+```
+
+**输出结果**
+
+```
+TreeSet: [2, 5, 6]
+5被删除了? true
+是否删除了所有元素? true
+```
+
+### 导航方法
+
+因为TreeSet类实现了NavigableSet，所以它提供了各种方法来导航树集的元素。
+
+#### 1. first()和last()方法
+
+- first() - 返回集合的第一个元素
+- last() - 返回集合的最后一个元素
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用 first() 方法
+        int first = numbers.first();
+        System.out.println("第一个数字: " + first);
+
+        // 使用 last() 方法
+        int last = numbers.last();
+        System.out.println("最后一个数字: " + last);
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 5, 6]
+第一个数字: 2
+最后一个数字: 6
+```
+
+#### 2. ceiling()，floor()，higher()和lower()方法
+
+- **higher(element)** - 返回大于指定元素(element)的最小元素。
+- **lower(element)** - 返回小于指定元素(element)的最大元素。
+- **ceiling(element)** - 返回大于指定元素(element)的那些元素中的最小元素。如果传递的元素(element)存在于树集中，则返回作为参数传递的元素(element)。
+- **floor(element)** - 返回小于指定元素(element)的元素中最大的元素。如果传递的元素(element)存在于树集中，则返回作为参数传递的元素(element)。
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(4);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用 higher()
+        System.out.println("使用 higher: " + numbers.higher(4));
+
+        // 使用 lower()
+        System.out.println("使用 lower: " + numbers.lower(4));
+
+        // 使用 ceiling()
+        System.out.println("使用 ceiling: " + numbers.ceiling(4));
+
+        // 使用 floor()
+        System.out.println("使用 floor: " + numbers.floor(3));
+
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 4, 5, 6]
+使用 higher: 5
+使用 lower: 2
+使用 ceiling: 4
+使用 floor: 2
+```
+
+#### 3. pollfirst()和pollLast()方法
+
+- pollFirst() - 返回并从集合中删除第一个元素
+- pollLast() - 返回并从集合中删除最后一个元素
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(4);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用 pollFirst()
+        System.out.println("删除第一个元素: " + numbers.pollFirst());
+
+        // 使用 pollLast()
+        System.out.println("删除最后一个元素: " + numbers.pollLast());
+
+        System.out.println("新的TreeSet: " + numbers);
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 4, 5, 6]
+删除第一个元素: 2
+删除最后一个元素: 6
+新的TreeSet: [4, 5]
+```
+
+#### 4. headSet()，tailSet()和subSet()方法
+
+##### headSet(element,booleanValue)
+
+headSet()方法返回指定元素（作为参数传递）之前的树集的所有元素。
+
+booleanValue参数是可选的。默认值为false。
+
+如果booleanValue的值为true，则该方法返回指定元素之前的所有元素，包括指定元素。
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(4);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用 headSet()使用默认的布尔值
+        System.out.println("使用不带布尔值的headSet: " + numbers.headSet(5));
+
+        // 使用 headSet()使用指定的布尔值
+        System.out.println("将headSet与布尔值一起使用: " + numbers.headSet(5, true));
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 4, 5, 6]
+使用不带布尔值的headSet: [2, 4]
+将headSet与布尔值一起使用: [2, 4, 5]
+```
+
+##### tailSet(element,booleanValue)
+
+tailSet()方法返回包含指定元素的指定元素（作为参数传递）之后的树集的所有元素。
+
+booleanValue参数是可选的。默认值为true。
+
+如果false作为a传递booleanValue，则该方法将返回指定后的所有元素，element而不包括指定的element。
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(4);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用 tailSet()使用默认的布尔值
+        System.out.println("tailSet()使用默认的布尔值: " + numbers.tailSet(4));
+
+        // 使用 tailSet() with specified boolean value
+        System.out.println("tailSet()带有布尔值: " + numbers.tailSet(4, false));
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 4, 5, 6]
+使用 tailSet()使用默认的布尔值: [4, 5, 6]
+tailSet()带有布尔值: [5, 6]
+```
+
+##### subSet(e1,bv1,e2,bv2)
+
+subSet()方法返回e1和e2之间的所有元素，包括e1。
+
+bv1和bv2是可选参数。  bv1的默认值为true，bv2的默认值为false。
+
+如果将false作为bv1传递，则该方法返回e1和e2之间的所有元素，而不包括e1。
+
+如果将true作为bv2传递，则该方法返回e1和e2之间的所有元素，包括e1。
+
+例如，
+
+```java
+import java.util.TreeSet;
+
+class Main {
+    public static void main(String[] args) {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        numbers.add(2);
+        numbers.add(5);
+        numbers.add(4);
+        numbers.add(6);
+        System.out.println("TreeSet: " + numbers);
+
+        // 使用 subSet() with default boolean value
+        System.out.println("subSet()使用默认布尔值: " + numbers.subSet(4, 6));
+
+        // 使用 subSet() 使用指定的布尔值
+        System.out.println("subSet()使用指定的布尔值: " + numbers.subSet(4, false, 6, true));
+    }
+}
+```
+
+**输出结果**
+
+```java
+TreeSet: [2, 4, 5, 6]
+subSet()使用默认布尔值: [4, 5]
+subSet()使用指定的布尔值: [5, 6]
+```
+
+
+
+
+
 
 
 
@@ -77,14 +441,8 @@ TreeMap(SortedMap m)：由给定的有序map创建TreeMap，keys按照原顺序�
 - **`Object ceilingKey（Object key）`**：返回大于或等于给定键的最小键，如果没有这样的键则返回null。
 - **`Object higherKey（Object key）`：**返回严格大于指定键的最小键。
 - **`Map.Entry<K,V>	higherEntry(K key) `**一个键-值映射关系，它与严格大于给定键的最小键关联；如果不存在这样的键，则返回 null。
-- **`Map.Entry<K,V>	ceilingEntry(K key) `**一个键-值映射关系，它与大于等于给定键的最小键关联；如果不存在这样的键，则返回 null。
-- `K floorKey(K key);`:返回小于等于key的第一个键
-
-```java
-
-```
-
-
+- 
+   **`Map.Entry<K,V>	ceilingEntry(K key) `**一个键-值映射关系，它与大于等于给定键的最小键关联；如果不存在这样的键，则返回 null。
 
 #### 遍历方式
 
@@ -111,76 +469,6 @@ HashMap可实现快速存储和检索，但其缺点是其包含的元素是无�
 LinkedHashMap保留了HashMap的优势，且其包含的元素是有序的。它在有大量迭代的情况下表现更好。
 TreeMap能便捷的实现对其内部元素的各种排序，但其一般性能比前两种map差。
 LinkedHashMap映射减少了HashMap排序中的混乱，且不会导致TreeMap的性能损失。
-
-#### 接口
-
-```java
-public interface NavigableMap<K,V> extends SortedMap<K,V> {
-
-    //返回小于key的第一个元素：
-    Map.Entry<K,V> lowerEntry(K key);
-
-    //返回小于key的第一个键：
-    K lowerKey(K key);
-
-    //返回小于等于key的第一个元素：
-    Map.Entry<K,V> floorEntry(K key);
-
-    //返回小于等于key的第一个键：
-    K floorKey(K key);
-
-    //返回大于或者等于key的第一个元素：
-    Map.Entry<K,V> ceilingEntry(K key);
-
-    //返回大于或者等于key的第一个键：
-    K ceilingKey(K key);
-
-    //返回大于key的第一个元素：
-    Map.Entry<K,V> higherEntry(K key);
-
-    //返回大于key的第一个键：
-    K higherKey(K key);
-
-    //返回集合中第一个元素：
-    Map.Entry<K,V> firstEntry();
-
-    //返回集合中最后一个元素：
-    Map.Entry<K,V> lastEntry();
-
-    //返回集合中第一个元素，并从集合中删除：
-    Map.Entry<K,V> pollFirstEntry();
-
-    //返回集合中最后一个元素，并从集合中删除：
-    Map.Entry<K,V> pollLastEntry();
-
-    //返回倒序的Map集合：
-    java.util.NavigableMap<K,V> descendingMap();
-
-    NavigableSet<K> navigableKeySet();
-
-    //返回Map集合中倒序的Key组成的Set集合：
-    NavigableSet<K> descendingKeySet();
-
-    java.util.NavigableMap<K,V> subMap(K fromKey, boolean fromInclusive,
-                                       K toKey, boolean toInclusive);
-
-    java.util.NavigableMap<K,V> headMap(K toKey, boolean inclusive);
-
-    java.util.NavigableMap<K,V> tailMap(K fromKey, boolean inclusive);
-
-    SortedMap<K,V> subMap(K fromKey, K toKey);
-
-    SortedMap<K,V> headMap(K toKey);
-
-    SortedMap<K,V> tailMap(K fromKey);
-}
-```
-
-
-
-
-
-
 
 
 
@@ -227,4 +515,6 @@ insort():
 ## Reference
 
 - https://www.jianshu.com/p/e11fe1760a3d
-- [【JDK源码剖析之红黑树TreeMap】子空kosora+七月在线](https://www.bilibili.com/video/BV1Jp411R7Sb?spm_id_from=333.337.search-card.all.click)
+
+- [TreeSet与TreeMap使用指南](https://blog.csdn.net/wat1r/article/details/124831320)
+

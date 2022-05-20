@@ -311,7 +311,7 @@ public class _307 {
     }
 
 
-    class _4th {
+    static class _4th {
 
         class NumArray {
 
@@ -368,6 +368,205 @@ public class _307 {
                     j /= 2;
                 }
                 return sum;
+            }
+        }
+    }
+
+
+    //树状数组 BinaryIndexedTree
+    static class _5th {
+
+        class NumArray {
+
+            int[] tree;
+            int n;
+            int[] nums;
+
+            public NumArray(int[] nums) {
+                n = nums.length;
+                tree = new int[n + 1];
+                this.nums = nums;
+                for (int i = 0; i < n; i++) add(i + 1, nums[i]);
+
+            }
+
+            public void update(int index, int val) {
+                // 原有的值是 nums[i]，要使得修改为 val，需要增加 val - nums[i]
+                add(index + 1, val - nums[index]);
+                nums[index] = val;
+            }
+
+            public int sumRange(int left, int right) {
+                return query(right + 1) - query(left);
+            }
+
+
+            private int query(int x) {
+                int sum = 0;
+                for (int i = x; i > 0; i -= lowbit(i)) sum += tree[i];
+                return sum;
+            }
+
+
+            private void add(int x, int v) {
+                for (int i = x; i <= n; i += lowbit(i)) {
+                    tree[i] += v;
+                }
+            }
+
+
+            private int lowbit(int x) {
+                return -x & x;
+            }
+
+
+        }
+
+    }
+
+    static class _6th {
+        public static void main(String[] args) {
+
+        }
+
+
+        class NumArray {
+
+            int[] tree;
+            int n;
+
+
+            public NumArray(int[] nums) {
+                n = nums.length;
+                tree = new int[n * 4];
+                build(nums, 0, 0, n - 1);
+            }
+
+
+            public void update(int index, int val) {
+                update(0, 0, n - 1, index, val);
+            }
+
+            public int sumRange(int L, int R) {
+                return query(0, 0, n - 1, L, R);
+            }
+
+
+            private void build(int[] nums, int node, int start, int end) {
+                if (start == end) {
+                    tree[node] = nums[start];
+                    return;
+                }
+                int mid = start + (end - start) / 2;
+                int left_node = node * 2 + 1;
+                int right_node = node * 2 + 2;
+                build(nums, left_node, start, mid);
+                build(nums, right_node, mid + 1, end);
+                tree[node] = tree[left_node] + tree[right_node];
+            }
+
+            private void update(int node, int start, int end, int idx, int val) {
+                if (start == end) {
+                    tree[node] = val;
+                    return;
+                }
+                int mid = start + (end - start) / 2;
+                int left_node = node * 2 + 1;
+                int right_node = node * 2 + 2;
+                if (idx <= mid) {
+                    update(left_node, start, mid, idx, val);
+                } else {
+                    update(right_node, mid + 1, end, idx, val);
+                }
+                tree[node] = tree[left_node] + tree[right_node];
+            }
+
+            private int query(int node, int start, int end, int L, int R) {
+
+                if (R < start || L > end) {
+                    return 0;
+                } else if (L <= start && end <= R) {
+                    return tree[node];
+                } else if (start == end) {
+                    return tree[node];
+                }
+                int mid = start + (end - start) / 2;
+                int left_node = node * 2 + 1;
+                int right_node = node * 2 + 2;
+                int sum_left = query(left_node, start, mid, L, R);
+                int sum_right = query(right_node, mid + 1, end, L, R);
+                return sum_left + sum_right;
+            }
+        }
+
+    }
+
+    static class _7th {
+
+        class NumArray {
+            Node[] tr;
+
+            class Node {
+                int l, r, v;
+
+                public Node(int l, int r) {
+                    this.l = l;
+                    this.r = r;
+                }
+            }
+
+
+            void pushup(int u) {
+                tr[u].v = tr[u << 1].v + tr[u << 1 | 1].v;
+            }
+
+            void build(int u, int l, int r) {
+                tr[u] = new Node(l, r);
+                if (l == r) return;
+                int mid = l + r >> 1;
+                build(u << 1, l, mid);
+                build(u << 1 | 1, mid + 1, r);
+            }
+
+            void update(int u, int index, int value) {
+                if (tr[u].l == index && tr[u].r == index) {
+                    tr[u].v += value;
+                    return;
+                }
+                int mid = tr[u].l + tr[u].r >> 1;
+                if (index <= mid) update(u << 1, index, value);
+                else update(u << 1 | 1, index, value);
+                pushup(u);
+            }
+
+            int query(int u, int L, int R) {
+                if (L <= tr[u].l && tr[u].r <= R) return tr[u].v;
+                int mid = tr[u].l + tr[u].r >> 1;
+                int res = 0;
+                if (L <= mid) res += query(u << 1, L, R);
+                if (R > mid) res += query(u << 1 | 1, L, R);
+                return res;
+            }
+
+            int[] nums;
+
+            public NumArray(int[] nums) {
+                int N = nums.length;
+                this.nums = nums;
+                tr = new Node[4 * N];
+                build(1, 1, N);
+                for (int i = 0; i < N; i++) {
+                    update(1, i + 1, nums[i]);
+                }
+            }
+
+            public void update(int index, int val) {
+                update(1, index + 1, val - nums[index]);
+                nums[index] = val;
+            }
+
+            public int sumRange(int left, int right) {
+                return query(1, left + 1, right + 1);
             }
         }
     }
