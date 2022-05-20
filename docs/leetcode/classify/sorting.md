@@ -6,6 +6,34 @@
 
 
 
+## [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
+
+```java
+    public int[][] merge(int[][] intervals) {
+        List<int[]> list = new ArrayList<>();
+        Arrays.sort(intervals,(a,b)->a[0]-b[0]);
+        int i = 0, n = intervals.length;
+        while(i< n ){
+            int l = intervals[i][0] ,r = intervals[i][1];
+            while(i < n-1 && r >=intervals[i+1][0]){
+                r = Math.max(r,intervals[i+1][1]);
+                i++;
+            }
+            list.add(new int[]{l,r});
+            i++;
+        }
+        return list.toArray(new int[0][]);
+    }
+```
+
+
+
+
+
+
+
+
+
 ## [453. 最小操作次数使数组元素相等](https://leetcode.cn/problems/minimum-moves-to-equal-array-elements/)
 
 ### 方法1：找最小值

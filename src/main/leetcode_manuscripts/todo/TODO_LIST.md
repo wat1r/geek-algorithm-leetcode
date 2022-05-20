@@ -50,6 +50,22 @@ https://visualgo.net/en
 
 
 
+218 天际线  线段树+离散化
+
+https://cloud.tencent.com/developer/article/1586833
+
+
+
+[线段树：权值？合并？动态开点？都没听说过](https://github.tiankonguse.com/blog/2021/09/20/segment-merge.html)
+
+
+
+493
+
+https://zhuanlan.zhihu.com/p/128736979
+
+
+
 
 
 TreeSet
