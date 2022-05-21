@@ -86,6 +86,7 @@ public class _729 {
             }
 
 
+
             public MyCalendar() {
 
             }
@@ -159,6 +160,83 @@ public class _729 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            String[] ops = {"MyCalendar", "book", "book", "book"};
+            int[][] vals = {{}, {10, 20}, {15, 25}, {20, 30}};
+            MyCalendar calendar = new MyCalendar();
+            for (int i = 0; i < ops.length; i++) {
+                String op = ops[i];
+                if (op.equals("book")) {
+                    System.out.printf("%s -> %s\n", Arrays.toString(vals[i]), calendar.book(vals[i][0], vals[i][1]));
+                }
+            }
+        }
+
+
+        static class MyCalendar {
+
+            class Node {
+                int start, end;//区间
+                Node leftNode, rightNode;//左右孩子节点
+
+                public Node(int s, int e) {
+                    start = s;
+                    end = e;
+                }
+            }
+
+            Node root;
+
+
+            public MyCalendar() {
+                root = new Node(0, 0);
+            }
+
+            //每次从根节点去找
+            public boolean book(int start, int end) {
+                return update(root, start, end);
+            }
+
+
+            /**
+             * @param root  树的根节点
+             * @param start 待插入的区间的左端点
+             * @param end   待插入的区间的右端点
+             * @return
+             */
+            private boolean update(Node root, int start, int end) {
+                //case1:
+                //[start...end]
+                //              [root_start.....root.end]
+                //case2:
+                //                                        [start...end]
+                //              [root_start.....root.end]
+                //case3.1:
+                //                         [start...end]
+                //              [root_start.....root.end]
+                //case3.2:
+                //          [start...end]
+                //              [root_start.....root.end]
+                Node cur = root;
+                while (true) {
+                    if (end <= cur.start) {
+                        if (cur.leftNode == null) {
+                            cur.leftNode = new Node(start, end);
+                            return true;
+                        }
+                        cur = cur.leftNode;
+                    } else if (start >= cur.end) {
+                        if (cur.rightNode == null) {
+                            cur.rightNode = new Node(start, end);
+                            return true;
+                        }
+                        cur = cur.rightNode;
+                    } else {
+                        return false;
+                    }
+                }
+            }
         }
     }
+
+
 }

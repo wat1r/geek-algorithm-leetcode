@@ -724,9 +724,252 @@ class MyCalendar {
         }
 ```
 
+#### 方法4：建树
+
+```java
+        static class MyCalendar {
+
+            class Node {
+                int start, end;//区间
+                Node leftNode, rightNode;//左右孩子节点
+
+                public Node(int s, int e) {
+                    start = s;
+                    end = e;
+                }
+            }
+
+            Node root;
+
+
+            public MyCalendar() {
+                root = new Node(0, 0);
+            }
+
+            //每次从根节点去找
+            public boolean book(int start, int end) {
+                return update(root, start, end);
+            }
+
+
+            /**
+             * @param root  树的根节点
+             * @param start 待插入的区间的左端点
+             * @param end   待插入的区间的右端点
+             * @return
+             */
+            private boolean update(Node root, int start, int end) {
+                //case1:
+                //[start...end]
+                //              [root_start.....root.end]
+                //case2:
+                //                                        [start...end]
+                //              [root_start.....root.end]
+                //case3.1:
+                //                         [start...end]
+                //              [root_start.....root.end]
+                //case3.2:
+                //          [start...end]
+                //              [root_start.....root.end]
+                Node cur = root;
+                while (true) {
+                    if (end <= cur.start) {
+                        if (cur.leftNode == null) {
+                            cur.leftNode = new Node(start, end);
+                            return true;
+                        }
+                        cur = cur.leftNode;
+                    } else if (start >= cur.end) {
+                        if (cur.rightNode == null) {
+                            cur.rightNode = new Node(start, end);
+                            return true;
+                        }
+                        cur = cur.rightNode;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+```
 
 
 
+
+
+## [731. 我的日程安排表 II](https://leetcode.cn/problems/my-calendar-ii/)
+
+### 方法1：暴力
+
+
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220521110550.png)
+
+
+
+```java
+static class MyCalendarTwo {
+
+    List<int[]> calendar;//维护是当前的预订区间
+    List<int[]> overlaps;//维护的重叠的区间也就是说2个calendar区间中都出现了这个区间
+
+
+    public MyCalendarTwo() {
+        calendar = new ArrayList<>();
+        overlaps = new ArrayList<>();
+    }
+
+    public boolean book(int start, int end) {
+        //overlaps的区间与[start,end]有交集，说明当前的是三重预订，返回false
+        for (int[] item : overlaps) {
+            if (start < item[1] && end > item[0]) return false;
+        }
+        //遍历calendar 找重叠区间
+        for (int[] item : calendar) {
+            if (start < item[1] && end > item[0]) {
+                overlaps.add(new int[]{Math.max(start, item[0]), Math.min(item[1], end)});
+            }
+        }
+
+        calendar.add(new int[]{start, end});
+        return true;
+    }
+}
+```
+
+
+
+
+
+
+
+### 方法2：TreeMap
+
+> 有点差分的思想
+
+```java
+static class MyCalendarTwo {
+    TreeMap<Integer, Integer> map;
+
+
+    public MyCalendarTwo() {
+        map = new TreeMap<>();
+    }
+
+    public boolean book(int start, int end) {
+        //思路有点类似差分数组，相当于[start,end)这个区间内的元素出现了一次，都+1
+        map.put(start, map.getOrDefault(start, 0) + 1);
+        map.put(end, map.getOrDefault(end, 0) - 1);
+        int count = 0;
+        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+            count += e.getValue();
+            //大于等于3次的预订次数的区间，需要恢复
+            if (count >= 3) {
+                map.put(start, map.getOrDefault(start, 0) - 1);
+                if (map.get(start) == 0) {
+                    map.remove(start);//这一步不移除的也不影响程序正确性
+                }
+                map.put(end, map.getOrDefault(end, 0) + 1);
+                if (map.get(end) == 0) {
+                    map.remove(end);
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+
+
+### 方法3：动态开点+懒标记线段树
+
+```java
+class MyCalendarTwo {
+
+    //然一个比较实用的估点方式可以「尽可能的多开点数」，利用题目给定的空间上界和我们创建的自定义类
+    // （结构体）的大小，尽可能的多开（ Java 的 128M 可以开到 5 * 10^6 以上）。
+
+    class Node {
+        int ls, rs;//分别代表当前节点的左右子节点在线段树数组 tr 中的下标
+        int lazy;//懒标记
+        int maxx;//当前区间的最大值
+    }
+
+    int N = (int) 1e9 + 10;
+    int cnt = 1;//动态开点的下标
+    int M = 120010;
+    Node[] tr = new Node[M];
+
+    //l,r 为当前节点存储的区间 L,R表示要修改的前，这个区间不会变，设置成大写
+    void update(int u, int l, int r, int L, int R, int v) {
+        //[l,r]区间被[L,R]覆盖
+        if (L <= l && r <= R) {
+            tr[u].maxx += v;
+            tr[u].lazy += v;
+            return;
+        }
+        lazyCreate(u);
+        pushdown(u);
+        int mid = l + r >> 1;
+        if (L <= mid) update(tr[u].ls, l, mid, L, R, v);
+        if (R > mid) update(tr[u].rs, mid + 1, r, L, R, v);
+        pushup(u);
+    }
+
+    int query(int u, int l, int r, int L, int R) {
+        if (L <= l && r <= R) return tr[u].maxx;
+        lazyCreate(u);
+        pushdown(u);
+        int mid = l + r >> 1;
+        int res = 0;
+        if (L <= mid) res = Math.max(res, query(tr[u].ls, l, mid, L, R));
+        if (R > mid) res = Math.max(res, query(tr[u].rs, mid + 1, r, L, R));
+        return res;
+    }
+
+    void lazyCreate(int u) {
+        if (tr[u] == null) {
+            tr[u] = new Node();
+        }
+        if (tr[u].ls == 0) {
+            tr[u].ls = ++cnt;
+            tr[tr[u].ls] = new Node();
+        }
+        if (tr[u].rs == 0) {
+            tr[u].rs = ++cnt;
+            tr[tr[u].rs] = new Node();
+        }
+
+    }
+
+
+    void pushup(int u) {
+        tr[u].maxx = Math.max(tr[tr[u].ls].maxx, tr[tr[u].rs].maxx);
+    }
+
+    void pushdown(int u) {
+        tr[tr[u].ls].lazy += tr[u].lazy;
+        tr[tr[u].rs].lazy += tr[u].lazy;
+        tr[tr[u].ls].maxx += tr[u].lazy;
+        tr[tr[u].rs].maxx += tr[u].lazy;
+        tr[u].lazy = 0;
+    }
+
+
+    public MyCalendarTwo() {
+
+    }
+
+    public boolean book(int start, int end) {
+        int res = query(1, 1, N + 1, start + 1, end);
+        if (res >= 2) return false;
+        update(1, 1, N + 1, start + 1, end, 1);
+        return true;
+    }
+}
+```
 
 
 
@@ -1136,4 +1379,5 @@ int main(){
 
 - [【neko】数据结构 线段树【算法编程#6】](https://www.bilibili.com/video/BV1yF411p7Bt?spm_id_from=333.337.search-card.all.click)
 - [什么是线段树](https://www.bilibili.com/video/BV1NS4y1S77N?spm_id_from=333.337.search-card.all.click)
+- [P3372 【模板】线段树 1 题解](https://www.luogu.com.cn/problem/solution/P3372)
 
