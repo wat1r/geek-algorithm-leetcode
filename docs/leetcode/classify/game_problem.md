@@ -4,6 +4,16 @@
 
 
 
+
+
+## [464. 我能赢吗](https://leetcode.cn/problems/can-i-win/)
+
+
+
+
+
+
+
 ## [2038. 如果相邻两个颜色均相同则删除当前颜色](https://leetcode-cn.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/)
 
 ![](/imgs/leetcode/classify/image-20220322080710354.png)
