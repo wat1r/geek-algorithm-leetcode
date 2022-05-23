@@ -399,6 +399,26 @@ public int[] dailyTemperatures(int[] T) {
 
 
 
+## [907. 子数组的最小值之和](https://leetcode.cn/problems/sum-of-subarray-minimums/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## [1019. 链表中的下一个更大节点](https://leetcode-cn.com/problems/next-greater-node-in-linked-list/)
 
 ```java
@@ -420,6 +440,10 @@ public int[] nextLargerNodes(ListNode head) {
     return res;
 }
 ```
+
+## [1856. 子数组最小乘积的最大值](https://leetcode.cn/problems/maximum-subarray-min-product/)
+
+
 
 
 
@@ -493,3 +517,10 @@ public int[] nextLargerNodes(ListNode head) {
 
     }
 ```
+
+
+
+
+
+## [2104. 子数组范围和](https://leetcode.cn/problems/sum-of-subarray-ranges/)
+

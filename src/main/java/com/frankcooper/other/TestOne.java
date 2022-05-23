@@ -47,29 +47,29 @@ public class TestOne {
             c >>= 1;
             f++;
         }
-        int base = 38;//000000100110
-        System.out.println(d);
-        int e = d | base;
-        System.out.println(e);
-        PrintUtils.toBinaryString(e, 20);
-
-
-        int result = PrintUtils.transformBinStr2Int("000000100110");
-        System.out.println(result);
-        int a = 0;
-        int i = 0;
-        int j = 0;
-        while (base > 0) {
-            a |= ((base & 1) << j);
-            i++;
-            base >>= 1;
-            j++;
-            if (i % 2 == 0) {
-                System.out.println(a);
-                a = 0;
-                j = 0;
-            }
-        }
+//        int base = 38;//000000100110
+//        System.out.println(d);
+//        int e = d | base;
+//        System.out.println(e);
+//        PrintUtils.toBinaryString(e, 20);
+//
+//
+//        int result = PrintUtils.transformBinStr2Int("000000100110");
+//        System.out.println(result);
+//        int a = 0;
+//        int i = 0;
+//        int j = 0;
+//        while (base > 0) {
+//            a |= ((base & 1) << j);
+//            i++;
+//            base >>= 1;
+//            j++;
+//            if (i % 2 == 0) {
+//                System.out.println(a);
+//                a = 0;
+//                j = 0;
+//            }
+//        }
 
 
         int bit = 0;
@@ -79,5 +79,13 @@ public class TestOne {
 
 //        PrintUtils.toBinaryString()
 
+        test1();
     }
+
+
+    private static void test1() {
+        int state = 29;
+        PrintUtils.toBinaryString(state, 8);
+    }
+
 }
