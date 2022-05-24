@@ -89,7 +89,6 @@ TreeSet
 状态压缩
 
 - [1349.参加考试的最大学生数](https://leetcode-cn.com/problems/maximum-students-taking-exam/)  HARD
-- [691.贴纸拼词](https://leetcode-cn.com/problems/stickers-to-spell-word/) HARD 
 - [1125.最小的必要团队](https://leetcode-cn.com/problems/smallest-sufficient-team/)  HARD
 
 

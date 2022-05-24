@@ -1,6 +1,6 @@
 package com.frankcooper.bank._501_600;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.Stack;
 
 public class _503 {
@@ -53,5 +53,24 @@ public class _503 {
         }
 
 
+    }
+
+    static class _1st_1 {
+        public int[] nextGreaterElements(int[] nums) {
+            Deque<Integer> stk = new ArrayDeque<>();
+            int n = nums.length;
+            int[] res = new int[n];
+            Arrays.fill(res, -1);
+            for (int i = 0; i < 2 * n; i++) {
+                int t = nums[i % n];
+                while (!stk.isEmpty() && nums[stk.peek()] < t) {
+                    res[stk.pop()] = t;
+                }
+                if (i < n) {
+                    stk.push(i);
+                }
+            }
+            return res;
+        }
     }
 }

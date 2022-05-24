@@ -328,6 +328,63 @@ public String removeDuplicateLetters(String s) {
         }
 ```
 
+
+
+## [496. 下一个更大元素 I](https://leetcode.cn/problems/next-greater-element-i/)
+
+```java
+        public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+            int[] res = new int[nums1.length];
+            Stack<Integer> stk = new Stack<>();
+            //k:nums2的当前元素，v:当前元素的next greater element
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int x : nums2) {
+                while (!stk.isEmpty() && stk.peek() < x) {
+                    map.put(stk.pop(), x);
+                }
+                stk.push(x);
+            }
+            //如果当前元素没有NGE，返回-1
+            for (int i = 0; i < nums1.length; i++) {
+                res[i] = map.getOrDefault(nums1[i], -1);
+            }
+            return res;
+        }
+```
+
+
+
+## [503. 下一个更大元素 II](https://leetcode.cn/problems/next-greater-element-ii/)
+
+### 方法1：单调栈+倍增数组
+
+```java
+public int[] nextGreaterElements(int[] nums) {
+    Deque<Integer> stk = new ArrayDeque<>();
+    int n = nums.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    for (int i = 0; i < 2 * n; i++) {
+        int t = nums[i % n];
+        while (!stk.isEmpty() && nums[stk.peek()] < t) {
+            res[stk.pop()] = t;
+        }
+        if (i < n) {
+            stk.push(i);
+        }
+    }
+    return res;
+}
+```
+
+
+
+
+
+
+
+
+
 ## [654. 最大二叉树](https://leetcode-cn.com/problems/maximum-binary-tree/)
 
 ```java
@@ -568,6 +625,51 @@ public int[] nextLargerNodes(ListNode head) {
 ```
 
 ## [1856. 子数组最小乘积的最大值](https://leetcode.cn/problems/maximum-subarray-min-product/)
+
+### 方法1
+
+```java
+        //AC
+        public int maxSumMinProduct(int[] nums) {
+            int MOD = (int) 1e9 + 7;
+            int n = nums.length;
+            long[] s = new long[n + 1];
+            for (int i = 0; i < n; i++) {
+                s[i + 1] = s[i] + nums[i];
+            }
+            int[] left = new int[n], right = new int[n];
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() && nums[stk.peek()] > nums[i]) {
+                    stk.pop();
+                }
+                left[i] = stk.isEmpty() ? -1 : stk.peek();
+                stk.push(i);
+            }
+            stk.clear();
+            for (int i = n - 1; i >= 0; --i) {
+                while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
+                    stk.pop();
+                }
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                int l = left[i], r = right[i];
+                res = Math.max(res, 1L * (s[r] - s[l + 1]) * nums[i]);
+            }
+            return (int) (res % MOD);
+        }
+```
+
+
+
+
+
+
+
+
 
 
 

@@ -90,5 +90,24 @@ public class _496 {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
+
+        public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+
+            //k : 当前的元素， v 当前元素的下一个更大的元素 即NGE
+            Map<Integer, Integer> map = new HashMap<>();
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < nums2.length; i++) {
+                while (!stk.isEmpty() && nums2[i] > stk.peek()) {
+                    map.put(stk.pop(), nums2[i]);
+                }
+                stk.push(nums2[i]);
+            }
+            int[] res = new int[nums1.length];
+            for (int i = 0; i < nums1.length; i++) {
+                res[i] = map.getOrDefault(nums1[i], -1);
+            }
+            return res;
+
+        }
     }
 }

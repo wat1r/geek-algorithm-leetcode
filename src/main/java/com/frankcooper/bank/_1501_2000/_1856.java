@@ -1,0 +1,122 @@
+package com.frankcooper.bank._1501_2000;
+
+import java.util.*;
+
+import org.junit.Assert;
+
+public class _1856 {
+
+    static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums = new int[]{1, 2, 3, 2};
+            handler.maxSumMinProduct(nums);
+
+        }
+
+
+        //AC
+        public int maxSumMinProduct(int[] nums) {
+            int MOD = (int) 1e9 + 7;
+            int n = nums.length;
+            long[] s = new long[n + 1];
+            for (int i = 0; i < n; i++) {
+                s[i + 1] = s[i] + nums[i];
+            }
+            int[] left = new int[n], right = new int[n];
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() && nums[stk.peek()] > nums[i]) {
+                    stk.pop();
+                }
+                left[i] = stk.isEmpty() ? -1 : stk.peek();
+                stk.push(i);
+            }
+            stk.clear();
+            for (int i = n - 1; i >= 0; --i) {
+                while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
+                    stk.pop();
+                }
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                int l = left[i], r = right[i];
+                res = Math.max(res, 1L * (s[r] - s[l + 1]) * nums[i]);
+            }
+            return (int) (res % MOD);
+        }
+
+
+    }
+
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            int[] nums = new int[]{1, 2, 3, 2};
+            handler.maxSumMinProduct(nums);
+        }
+
+        public int maxSumMinProduct(int[] nums) {
+            int n = nums.length;
+
+            // 数组前缀和
+            long[] pre = new long[n + 1];  // 存储下标“之前”的元素和
+            pre[0] = nums[0];
+            for (int i = 1; i <= n; i++) {
+                pre[i] = pre[i - 1] + nums[i - 1];
+            }
+
+            // 单递增调栈
+            Stack<Integer> stack = new Stack<>();
+            // 求元素右边第一个比其小的
+            int[] rightLower = new int[n];
+            Arrays.fill(rightLower, n);  // 默认为n，即没发现
+            for (int i = 0; i < n; i++) {
+                // 单调递增栈
+                while (!stack.isEmpty() && nums[stack.peek()] > nums[i]) {
+                    int t = stack.pop();
+                    rightLower[t] = i;
+                }
+                stack.push(i);
+            }
+            // 求元素左边第一个比其小的
+            int[] leftLower = new int[n];
+            Arrays.fill(leftLower, -1);  // 默认为-1，即没发现
+            for (int i = n - 1; i >= 0; i--) {
+                while (!stack.isEmpty() && nums[stack.peek()] > nums[i]) {
+                    int t = stack.pop();
+                    leftLower[t] = i;
+                }
+                stack.push(i);
+            }
+
+            // 在前缀和及单调栈基础上，求最终解
+            long ans = 0;
+            for (int i = 0; i < n; i++) {
+                int r = rightLower[i];
+                int l = leftLower[i] + 1;
+                long t = pre[r] - pre[l];
+                ans = Math.max(ans, t * nums[i]);
+            }
+            long mod = (long) 1e9 + 7;
+            return (int) (ans % mod);
+        }
+
+
+    }
+
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+        }
+    }
+
+    static class _4th {
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+        }
+    }
+}
