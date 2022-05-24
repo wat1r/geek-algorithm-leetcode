@@ -79,6 +79,7 @@ public class Week294 {
         }
     }
 
+    //MLE
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
@@ -107,6 +108,38 @@ public class Week294 {
                 }
             }
             return (int) res % MOD;
+        }
+    }
+
+    static class _4th_1 {
+
+
+        public int totalStrength(int[] strength) {
+            int MOD = (int) 1e9 + 7;
+            int n = strength.length;
+            int[] left = new int[n], right = new int[n];
+            Arrays.fill(right, n);
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() && strength[stk.peek()] >= strength[i]) {
+                    right[stk.pop()] = i;
+                }
+                left[i] = stk.isEmpty() ? -1 : stk.peek();
+                stk.push(i);
+            }
+            long sum = 0;
+            long[] preSum = new long[n + 2];
+            for (int i = 1; i <= n; i++) {
+                sum += strength[i - 1];
+                preSum[i + 1] = (int) ((preSum[i] + sum) % MOD);
+            }
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                int l = left[i] + 1, r = right[i] - 1;
+                long tot = ((long) (i - l + 1) * (preSum[r + 2] - preSum[i + 1]) - (long) (r - i + 1) * (preSum[i + 1] - preSum[l])) % MOD;
+                res = (res + strength[i] * tot) % MOD;
+            }
+            return (int) (res + MOD) % MOD;
         }
     }
 }

@@ -15,21 +15,21 @@ public class _907 {
         }
 
 
-        int MOD = 1000000007;
+        int MOD = (int) 1e9 + 7;
 
         public int sumSubarrayMins(int[] A) {
             Stack<Pair> stack = new Stack<>();
-            int res = 0, tmp = 0;
+            int res = 0, t = 0;
             for (int i = 0; i < A.length; i++) {
                 int count = 1;
                 while (!stack.empty() && stack.peek().val >= A[i]) {
-                    Pair pop = stack.pop();
-                    count += pop.count;
-                    tmp -= pop.val * pop.count;
+                    Pair pair = stack.pop();
+                    count += pair.count;
+                    t -= pair.val * pair.count;
                 }
                 stack.push(new Pair(A[i], count));
-                tmp += A[i] * count;
-                res += tmp;
+                t += A[i] * count;
+                res += t;
                 res %= MOD;
             }
             return res;
@@ -43,7 +43,6 @@ public class _907 {
                 this.val = val;
                 this.count = count;
             }
-
 
         }
     }
@@ -170,5 +169,60 @@ public class _907 {
         }
     }
 
+
+    static class _3rd_1 {
+        public int sumSubarrayMins(int[] arr) {
+            int MOD = (int) 1e9 + 7;
+            int n = arr.length;
+            long sum = 0;
+            Stack<Integer> stk = new Stack<>();
+            int j, k;
+            for (int i = 0; i <= n; i++) {
+                while (!stk.isEmpty() && arr[stk.peek()] > (i == n ? Integer.MIN_VALUE : arr[i])) {
+                    j = stk.pop();
+                    k = stk.isEmpty() ? -1 : stk.peek();
+                    sum += (long) arr[j] * (i - j) * (j - k);
+                }
+                stk.push(i);
+            }
+            return (int) (sum % MOD);
+        }
+    }
+
+    static class _3rd_2 {
+        public int sumSubarrayMins(int[] nums) {
+            int MOD = (int) 1e9 + 7;
+            int n = nums.length;
+            Deque<Integer> stk = new ArrayDeque<>();
+            int[] left = new int[n], right = new int[n];
+            //找到左侧第一个比nums[i]小的下标，维护一个单调递增栈
+            for (int i = 0; i < n; i++) {
+                //栈顶元素不小于(即大于等于)当前元素，此时有递减的趋势，弹出栈顶元素
+                while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
+                    stk.pop();
+                }
+                left[i] = stk.isEmpty() ? -1 : stk.peek();
+                stk.push(i);
+
+            }
+            stk.clear();
+            //栈顶元素大于(此处没有等于，此处与上一处只能一处有等于，防止重复计算)当前元素，此时有递减的趋势，弹出栈顶元素
+            for (int i = n - 1; i >= 0; --i) {
+                while (!stk.isEmpty() && nums[stk.peek()] > nums[i]) {
+                    stk.pop();
+                }
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                res += 1L * (i - left[i]) * (right[i] - i) * nums[i];
+                res %= MOD;
+            }
+            return (int) res;
+
+        }
+    }
 
 }

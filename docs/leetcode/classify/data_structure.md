@@ -2474,6 +2474,54 @@ public TreeNode getNext(Deque<TreeNode> q, boolean f) {
 }
 ```
 
+## [965. 单值二叉树](https://leetcode.cn/problems/univalued-binary-tree/)
+
+### 方法1：递归
+
+```java
+public boolean isUnivalTree(TreeNode root) {
+    if (root == null) return false;
+    return dfs(root, root.val);
+}
+
+private boolean dfs(TreeNode root, int val) {
+    if (root == null) return true;
+    if (root.val != val) return false;
+    return dfs(root.left, val) && dfs(root.right, val);
+}
+```
+
+- 不带`helper`函数：
+
+```java
+public boolean isUnivalTree(TreeNode root) {
+    if (root == null) return true;
+    if (root.left != null && root.left.val != root.val) return false;
+    if (root.right != null && root.right.val != root.val) return false;
+    return isUnivalTree(root.left) && isUnivalTree(root.right);
+}
+```
+
+### 方法2：迭代
+
+```java
+        public boolean isUnivalTree(TreeNode root) {
+            Queue<TreeNode> q = new LinkedList<>();
+            q.offer(root);
+            while (!q.isEmpty()) {
+                TreeNode cur = q.poll();
+                if (cur.val != root.val) return false;
+                if (cur.left != null) q.offer(cur.left);
+                if (cur.right != null) q.offer(cur.right);
+            }
+            return true;
+        }
+```
+
+
+
+
+
 
 
 
