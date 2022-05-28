@@ -1425,6 +1425,52 @@ public int format(boolean[] vis) {
 
 
 
+## [467. 环绕字符串中唯一的子字符串](https://leetcode.cn/problems/unique-substrings-in-wraparound-string/)
+
+
+
+```java
+      //需要知道的性质：
+        //性质1：
+        //  以字母结尾的唯一子字符串的最大数目等于以该字母结尾的最大连续子字符串的长度。例如“abcd”，
+        // 以“d”结尾的唯一子字符串的最大数目是4，显然它们是“abcd”、“bcd”、“cd”和“d”。
+        //性质2：
+        //如果有重叠，我们只需要考虑最长的一个，因为它覆盖了所有可能的子字符串。示例：“abcdbcd”，
+        // 以“d”结尾的唯一子字符串的最大数目为4，并且由第二个“bcd”部分形成的所有子字符串都已包含在4个子字符串中。
+        public int findSubstringInWraproundString(String p) {
+            char[] ch = (" " + p).toCharArray();
+            //dp[k] 表示 p 中以字符字符 k+'a' 结尾且在 s 中的子串的最长长度
+            int[] dp = new int[26];
+            int count = 1;
+            for (int i = 1; i < ch.length; i++) {
+                int k = ch[i] - 'a';
+                if (check(ch[i - 1], ch[i])) {
+                    count++;
+                } else {
+                    count = 1;
+                }
+                dp[k] = Math.max(dp[k], count);
+
+            }
+            int res = 0;
+            for (int x : dp) res += x;
+            return res;
+        }
+
+        private boolean check(char prev, char cur) {
+            if (prev == 'z' && cur == 'a') return true;
+            return cur - prev == 1;
+        }
+```
+
+
+
+
+
+
+
+
+
 ## [509. 斐波那契数](https://leetcode-cn.com/problems/fibonacci-number/)
 
 #### 方法1:暴力递归

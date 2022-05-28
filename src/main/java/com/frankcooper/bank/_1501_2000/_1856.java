@@ -111,12 +111,84 @@ public class _1856 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int[] nums = new int[]{1, 2, 3, 2};
+            Assert.assertEquals(14, handler.maxSumMinProduct(nums));
         }
+
+        public int maxSumMinProduct(int[] nums) {
+            int MOD = (int) 1e9 + 7;
+            int n = nums.length;
+            // left 是严格定义的，left[i] 是左侧最近的严格小于 nums[i] 的元素下标
+            // right 是非严格定义的，right[i] 是右侧最近的小于等于 nums[i] 的元素下标
+            int[] left = new int[n], right = new int[n];
+            Arrays.fill(right, n - 1);
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
+                    right[stk.pop()] = i - 1;
+                }
+                if (!stk.isEmpty()) {
+                    left[i] = stk.peek() + 1;
+                }
+                stk.push(i);
+            }
+            long[] pre = new long[n + 1];
+            for (int i = 0; i < n; i++) {
+                pre[i + 1] = pre[i] + nums[i];
+            }
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                res = Math.max(res, 1L * (pre[right[i] + 1] - pre[left[i]]) * nums[i]);
+            }
+            return (int) (res % MOD);
+        }
+
     }
 
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            int[] nums = new int[]{1, 2, 3, 2};
+            Assert.assertEquals(14, handler.maxSumMinProduct(nums));
         }
+
+        public int maxSumMinProduct(int[] src) {
+            int MOD = (int) 1e9 + 7;
+            //设置前后两个哨兵 0 0
+            int[] nums = new int[src.length + 2];
+            for (int i = 0; i < src.length; i++) {
+                nums[i + 1] = src[i];
+            }
+            int n = nums.length;
+            long[] pre = new long[n + 1];
+            for (int i = 0; i < n; i++) {
+                pre[i + 1] = pre[i] + nums[i];
+            }
+            Deque<Integer> stk = new ArrayDeque<>();
+            //右边第一个比它小的元素的下标
+            int[] right = new int[n];
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() && nums[i] < nums[stk.peek()]) {
+                    right[stk.pop()] = i;
+                }
+                stk.push(i);
+            }
+            stk.clear();
+            //左边第一个比它小的元素的下标
+            int[] left = new int[n];
+            for (int i = n - 1; i >= 0; --i) {
+                while (!stk.isEmpty() && nums[i] < nums[stk.peek()]) {
+                    left[stk.pop()] = i;
+                }
+                stk.push(i);
+            }
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                int l = left[i], r = right[i];
+                res = Math.max(res, nums[i] * (pre[r] - pre[l + 1]));
+            }
+            return (int) (res % MOD);
+        }
+
     }
 }

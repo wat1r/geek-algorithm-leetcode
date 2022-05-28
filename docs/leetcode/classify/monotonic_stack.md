@@ -328,6 +328,41 @@ public String removeDuplicateLetters(String s) {
         }
 ```
 
+另
+
+```java
+        public String removeKdigits(String num, int k) {
+            Deque<Character> stk = new ArrayDeque<>();
+            char[] ch = num.toCharArray();
+            for (int i = 0; i < ch.length; i++) {
+                while (!stk.isEmpty() && stk.peek() > ch[i] && k > 0) {
+                    stk.pop();
+                    k--;
+                }
+                stk.push(ch[i]);
+            }
+            while (k-- > 0) stk.pop();
+            StringBuilder sb = new StringBuilder();
+            while (!stk.isEmpty()) sb.append(stk.pop());
+            StringBuilder res = new StringBuilder();
+            boolean headZero = true;
+            for (char c : sb.reverse().toString().toCharArray()) {
+                if (c == '0' && headZero) {
+                    continue;
+                }
+                res.append(c);
+                headZero = false;
+            }
+            return res.toString().equals("") ? "0" : res.toString();
+        }
+```
+
+
+
+
+
+
+
 
 
 ## [496. 下一个更大元素 I](https://leetcode.cn/problems/next-greater-element-i/)
@@ -375,6 +410,27 @@ public int[] nextGreaterElements(int[] nums) {
     }
     return res;
 }
+```
+
+另，数组模拟栈
+
+```java
+        public int[] nextGreaterElements(int[] nums) {
+            int n = nums.length;
+            int[] ans = new int[n];
+            Arrays.fill(ans, -1);
+            // 使用数组模拟栈，bottom 代表栈底，top 代表栈顶
+            int[] d = new int[n * 2];
+            int bottom = 0, top = -1;
+            for (int i = 0; i < n * 2; i++) {
+                while (bottom <= top && nums[i % n] > nums[d[top]]) {
+                    int u = d[top--];
+                    ans[u] = nums[i % n];
+                }
+                d[++top] = i % n;
+            }
+            return ans;
+        }
 ```
 
 
@@ -664,6 +720,83 @@ public int[] nextLargerNodes(ListNode head) {
 ```
 
 
+
+- 另，设置哨兵
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220528194208.png)
+
+```java
+public int maxSumMinProduct(int[] src) {
+    int MOD = (int) 1e9 + 7;
+    //设置前后两个哨兵 0 0 
+    int[] nums = new int[src.length + 2];
+    for (int i = 0; i < src.length; i++) {
+        nums[i + 1] = src[i];
+    }
+    int n = nums.length;
+    long[] pre = new long[n + 1];
+    for (int i = 0; i < n; i++) {
+        pre[i + 1] = pre[i] + nums[i];
+    }
+    Deque<Integer> stk = new ArrayDeque<>();
+    //右边第一个比它小的元素的下标
+    int[] right = new int[n];
+    for (int i = 0; i < n; i++) {
+        while (!stk.isEmpty() && nums[i] < nums[stk.peek()]) {
+            right[stk.pop()] = i;
+        }
+        stk.push(i);
+    }
+    stk.clear();
+    //左边第一个比它小的元素的下标
+    int[] left = new int[n];
+    for (int i = n - 1; i >= 0; --i) {
+        while (!stk.isEmpty() && nums[i] < nums[stk.peek()]) {
+            left[stk.pop()] = i;
+        }
+        stk.push(i);
+    }
+    long res = 0;
+    for (int i = 0; i < n; i++) {
+        int l = left[i], r = right[i];
+        res = Math.max(res, nums[i] * (pre[r] - pre[l + 1]));
+    }
+    return (int) (res % MOD);
+}
+```
+
+### 方法2：一次单调栈操作
+
+```java
+
+        public int maxSumMinProduct(int[] nums) {
+            int MOD = (int) 1e9 + 7;
+            int n = nums.length;
+            // left 是严格定义的，left[i] 是左侧最近的严格小于 nums[i] 的元素下标
+            // right 是非严格定义的，right[i] 是右侧最近的小于等于 nums[i] 的元素下标
+            int[] left = new int[n], right = new int[n];
+            Arrays.fill(right, n - 1);
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
+                    right[stk.pop()] = i - 1;
+                }
+                if (!stk.isEmpty()) {
+                    left[i] = stk.peek() + 1;
+                }
+                stk.push(i);
+            }
+            long[] pre = new long[n + 1];
+            for (int i = 0; i < n; i++) {
+                pre[i + 1] = pre[i] + nums[i];
+            }
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                res = Math.max(res, 1L * (pre[right[i] + 1] - pre[left[i]]) * nums[i]);
+            }
+            return (int) (res % MOD);
+        }
+```
 
 
 

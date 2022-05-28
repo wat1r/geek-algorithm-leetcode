@@ -523,3 +523,123 @@ public int calPoints(String[] ops) {
 
 
 
+## [856. 括号的分数](https://leetcode.cn/problems/score-of-parentheses/)
+
+
+
+#### 解释
+
+```java
+[(]                # 遇到 ( 往栈添加
+[(, (]             # 继续添加
+[(, 1]             # 遇到 ） 合成一个1
+[(, 1, (]          # 遇到 ( 往栈添加
+[(, 1, (, (]       # 继续添加
+[(, 1, (, 1]       # 遇到 ） 合成一个1
+[(, 1, 2]          # 遇到 ） ，结构就是（1）， 所以计算的话是 1 * 2
+[6]                # 遇到 ） ，结构是（1，2）， 所以计算的话是 （1 + 2） * 2
+```
+
+
+
+```java
+       public int scoreOfParentheses(String s) {
+            Deque<Character> stk = new ArrayDeque<>();
+            for (char c : s.toCharArray()) {
+                //遇到 ( 时向 入栈
+                if (c == '(') stk.push(c);
+                    //雨大 ) 时 判断栈顶是不是 （
+                else if (c == ')') {
+                    //栈顶是 （  合并为1
+                    if (stk.peek() == '(') {
+                        stk.pop();
+                        stk.push('1');
+                    } else {//栈顶不是 （ 而是数字 累加
+                        char b = stk.pop();
+                        int t = 0;
+                        while (b != '(') {
+                            t += b - '0';
+                            b = stk.pop();
+                        }
+                        //注意char 和 int类型的转换
+                        stk.push((char) ('0' + 2 * t));
+                    }
+                }
+            }
+            int res = 0;
+            while (!stk.isEmpty()) res += stk.pop() - '0';
+            return res;
+        }
+```
+
+另
+
+```java
+     public int scoreOfParentheses(String s) {
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (char c : s.toCharArray()) {
+                //stk中存储Integer 使用-1来标记
+                if (c == '(') stk.push(-1);
+                else if (c == ')') {
+                    if (stk.peek() == -1) {
+                        stk.pop();
+                        stk.push(1);
+                    } else {
+                        int t = 0;
+                        while (stk.peek() != -1) {
+                            t += stk.pop();
+                        }
+                        stk.push(2 * t);
+                    }
+                }
+            }
+            int res = 0;
+            while (!stk.isEmpty()) res += stk.pop();
+            return res;
+        }
+```
+
+- 官解，很棒的思路
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220528110823.png)
+
+```java
+        public int scoreOfParentheses(String S) {
+            Stack<Integer> stack = new Stack();
+            stack.push(0); // The score of the current frame
+            for (char c : S.toCharArray()) {
+                if (c == '(')
+                    stack.push(0);
+                else {
+                    int v = stack.pop();
+                    int w = stack.pop();
+                    stack.push(w + Math.max(2 * v, 1));
+                }
+            }
+            return stack.pop();
+        }
+```
+
+- 另
+
+事实上，只有 () 会对字符串 S 贡献实质的分数，其它的括号只会将分数乘二或者将分数累加。因此，我们可以找到每一个 () 对应的深度 x，那么答案就是 2^x 的累加和。
+
+```java
+        public int scoreOfParentheses(String S) {
+            int res = 0, balance = 0;
+            for (int i = 0; i < S.length(); i++) {
+                if (S.charAt(i) == '(') {
+                    balance++;
+                } else {
+                    balance--;
+                    if (S.charAt(i - 1) == '(') {
+                        res += 1 << balance;
+                    }
+                }
+            }
+            return res;
+        }
+```
+
+
+
