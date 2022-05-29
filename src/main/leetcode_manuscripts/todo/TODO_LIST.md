@@ -12,6 +12,14 @@
 
 
 
+### 最小表示法
+
+https://blog.csdn.net/weixin_42638946/article/details/120584614
+
+LeetCode 796 899
+
+洛谷1386
+
 
 
 

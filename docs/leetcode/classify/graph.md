@@ -419,6 +419,272 @@ public int bfs(int sx, int sy, int tx, int ty) {
 
 
 
+## [1293. 网格中的最短路径](https://leetcode.cn/problems/shortest-path-in-a-grid-with-obstacles-elimination/)
+
+### 方法1：BFS
+
+```java
+     int m, n;
+        //右 下 左 上
+        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+        //我们还可以对搜索空间进行优化。注意到题目中 k 的上限为 m * n，但考虑一条从 (0, 0) 向下走到 (m - 1, 0) 再向右走到
+        // (m - 1, n - 1) 的路径，它经过了 m + n - 1 个位置，其中起点 (0, 0) 和终点 (m - 1, n - 1) 没有障碍物，
+        // 那么这条路径上最多只会有 m + n - 3 个障碍物。因此我们可以将 k 的值设置为 m + n - 3 与其本身的较小值
+        // min(k, m + n - 3)，将广度优先搜索的时间复杂度从 O(MNK) 降低至 (MN∗min(M+N,K))
+
+        public int shortestPath(int[][] grid, int k) {
+            m = grid.length;
+            n = grid[0].length;
+            //case ->
+            //[[0]]
+            //1
+            if (m == 1 && n == 1) return 0;
+//            if ( k >= m + n - 3){
+//                return m + n - 2;
+//            }
+//            k = Math.min(k, m + n - 3);
+            boolean[][][] vis = new boolean[m][n][k + 1];
+            Queue<Position> q = new LinkedList<>();
+            //标记访问的状态
+            q.offer(new Position(0, 0, k));
+            vis[0][0][k] = true;
+            int steps = 0;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                steps++;
+                for (int i = 0; i < size; i++) {
+                    Position p = q.poll();
+                    for (int[] d : dirs) {
+                        int nx = p.x + d[0], ny = p.y + d[1];
+                        if (nx >= m || nx < 0 || ny >= n || ny < 0) {
+                            continue;
+                        }
+                        if (grid[nx][ny] == 0 && !vis[nx][ny][p.count]) {
+                            if (nx == m - 1 && ny == n - 1) {
+                                return steps;
+                            }
+                            q.offer(new Position(nx, ny, p.count));
+                            vis[nx][ny][p.count] = true;
+                        } else if (grid[nx][ny] == 1 && p.count > 0 && !vis[nx][ny][p.count - 1]) {
+                            q.offer(new Position(nx, ny, p.count - 1));
+                            vis[nx][ny][p.count - 1] = true;
+                        }
+
+                    }
+                }
+            }
+            return -1;
+        }
+
+        class Position {
+            int x, y;
+            int count;//当前状态下还可以经过多少个障碍物，此数量为非负
+
+            public Position(int x, int y, int count) {
+                this.x = x;
+                this.y = y;
+                this.count = count;
+            }
+        }
+```
+
+## [1368. 使网格图至少有一条有效路径的最小代价](https://leetcode.cn/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/)
+
+### 方法1：01广度优先搜索
+
+```java
+int m, n;
+int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+public int minCost(int[][] grid) {
+    m = grid.length;
+    n = grid[0].length;
+    int[] dist = new int[m * n];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[0] = 0;
+    boolean[] vis = new boolean[m * n];
+    Deque<Integer> deque = new ArrayDeque<>();
+    deque.offerFirst(0);
+    while (!deque.isEmpty()) {
+        int cur_pos = deque.pollFirst();
+        if (vis[cur_pos]) {
+            continue;
+        }
+        vis[cur_pos] = true;
+        int x = cur_pos / n, y = cur_pos % n;
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dirs[i][0], ny = y + dirs[i][1];
+            int new_pos = nx * n + ny;
+            //1:右 2:左 3:下 4:上
+            //当前的[x,y]的值如果是符合1 2 3 4 的值，则不需要修改，也就是 0
+            int new_dist = dist[cur_pos] + (grid[x][y] == i + 1 ? 0 : 1);
+            if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
+                continue;
+            }
+            if (new_dist < dist[new_pos]) {
+                dist[new_pos] = new_dist;
+                //01广度优先搜索，将0的那个点加入到队首，1的那个点加入到对尾
+                if (grid[x][y] == i + 1) {
+                    deque.offerFirst(new_pos);
+                } else {
+                    deque.offerLast(new_pos);
+                }
+            }
+        }
+    }
+    return dist[m * n - 1];
+}
+```
+
+- 另，不适用vis标记数组
+
+```java
+    int m, n;
+        int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        public int minCost(int[][] grid) {
+            m = grid.length;
+            n = grid[0].length;
+            int[] dist = new int[m * n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            dist[0] = 0;
+            Deque<Integer> deque = new ArrayDeque<>();
+            deque.offerFirst(0);
+            while (!deque.isEmpty()) {
+                int cur_pos = deque.pollFirst();
+                int x = cur_pos / n, y = cur_pos % n;
+                for (int i = 0; i < 4; i++) {
+                    int nx = x + dirs[i][0], ny = y + dirs[i][1];
+                    int new_pos = nx * n + ny;
+                    //1:右 2:左 3:下 4:上
+                    //当前的[x,y]的值如果是符合1 2 3 4 的值，则不需要修改，也就是 0
+                    int new_dist = dist[cur_pos] + (grid[x][y] == i + 1 ? 0 : 1);
+                    if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
+                        continue;
+                    }
+                    if (new_dist < dist[new_pos]) {
+                        dist[new_pos] = new_dist;
+                        //01广度优先搜索，将0的那个点加入到队首，1的那个点加入到对尾
+                        if (grid[x][y] == i + 1) {
+                            deque.offerFirst(new_pos);
+                        } else {
+                            deque.offerLast(new_pos);
+                        }
+                    }
+                }
+            }
+            return dist[m * n - 1];
+        }
+```
+
+
+
+### 方法2:Dijkstra
+
+```java
+        class Point {
+            int dist;
+            int r;
+            int c;
+
+            Point() {
+            }
+
+            Point(int dist, int r, int c) {
+                this.dist = dist;
+                this.r = r;
+                this.c = c;
+            }
+        }
+
+        int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        public int minCost(int[][] grid) {
+            int m = grid.length;
+            int n = grid[0].length;
+            boolean[][] vis = new boolean[m][n];
+            int[][] dist = new int[m][n];
+            for (int r = 0; r < m; r++) {
+                Arrays.fill(dist[r], Integer.MAX_VALUE);
+            }
+            //按距离排序
+            PriorityQueue<Point> pq = new PriorityQueue<>((o1, o2) -> o1.dist - o2.dist);
+            pq.offer(new Point(0, 0, 0));
+            dist[0][0] = 0;
+            while (!pq.isEmpty()) {
+                Point cur = pq.poll();
+                int d = cur.dist, r = cur.r, c = cur.c;
+                if (vis[r][c]) {
+                    continue;
+                }
+                vis[r][c] = true;
+                for (int k = 0; k < 4; k++) {
+                    int nr = r + dirs[k][0], nc = c + dirs[k][1];
+                    int cost = (k + 1 == grid[r][c] ? 0 : 1);
+                    if (0 <= nr && nr < m && 0 <= nc && nc < n && dist[r][c] + cost < dist[nr][nc]) {
+                        dist[nr][nc] = dist[r][c] + cost;
+                        pq.offer(new Point(dist[nr][nc], nr, nc));
+                    }
+                }
+            }
+            return dist[m - 1][n - 1];
+        }
+```
+
+
+
+### 方法3：Dijkstra
+
+```java
+   int m, n;
+        int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+
+        public int minCost(int[][] grid) {
+            m = grid.length;
+            n = grid[0].length;
+            int[] dist = new int[m * n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            boolean[] vis = new boolean[m * n];
+            dist[0] = 0;
+            PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> dist[a] - dist[b]);
+            pq.offer(0);
+            while (!pq.isEmpty()) {
+                //当前点位置
+                int cur_pos = pq.poll();
+                if (vis[cur_pos]) {
+                    continue;
+                }
+                vis[cur_pos] = true;
+                //当前点的位置转化成坐标
+                int x = cur_pos / n, y = cur_pos % n;
+                for (int i = 0; i < 4; i++) {
+                    int nx = x + dirs[i][0], ny = y + dirs[i][1];
+                    if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
+                        continue;
+                    }
+                    int new_pos = nx * n + ny;
+                    int new_dist = dist[cur_pos] + (grid[x][y] == i + 1 ? 0 : 1);
+                    if (new_dist < dist[new_pos]) {
+                        dist[new_pos] = new_dist;
+                        pq.offer(new_pos);
+                    }
+                }
+            }
+            return dist[m * n - 1];
+        }
+
+```
+
+
+
+
+
+
+
+
+
 ## [2039. 网络空闲的时刻](https://leetcode-cn.com/problems/the-time-when-the-network-becomes-idle/)
 
 ![](/imgs/leetcode/classify/image-20220320105254556.png)
@@ -618,3 +884,145 @@ public int countHighestScoreNodes(int[] parents) {
     return cnt;
 }
 ```
+
+
+
+
+
+## [6081. 到达角落需要移除障碍物的最小数目](https://leetcode.cn/problems/minimum-obstacle-removal-to-reach-corner/)
+
+### 方法1：01-BFS
+
+```java
+        int m, n;
+        int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        public int minimumObstacles(int[][] grid) {
+            m = grid.length;
+            n = grid[0].length;
+            int[] dist = new int[m * n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            dist[0] = 0;
+            boolean[] vis = new boolean[m * n];
+            Deque<Integer> deque = new ArrayDeque<>();
+            deque.offerFirst(0);
+            while (!deque.isEmpty()) {
+                int cur_pos = deque.pollFirst();
+                if (vis[cur_pos]) {
+                    continue;
+                }
+                vis[cur_pos] = true;
+                int x = cur_pos / n, y = cur_pos % n;
+                for (int i = 0; i < 4; i++) {
+                    int nx = x + dirs[i][0], ny = y + dirs[i][1];
+                    int new_pos = nx * n + ny;
+                    if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
+                        continue;
+                    }
+                    int g = grid[x][y];
+                    if (dist[cur_pos] + g < dist[new_pos]) {
+                        dist[new_pos] = dist[cur_pos] + g;
+                        //01广度优先搜索，将0的那个点加入到队首，1的那个点加入到对尾
+                        if (g == 0) {
+                            deque.offerFirst(new_pos);
+                        } else {
+                            deque.offerLast(new_pos);
+                        }
+                    }
+                }
+            }
+            return dist[m * n - 1];
+        }
+```
+
+- 另 ，数组写法，不转换坐标
+
+```java
+        int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        public int minimumObstacles(int[][] grid) {
+            int m = grid.length;
+            int n = grid[0].length;
+            int[][] dis = new int[m][n];
+            for (int i = 0; i < m; i++) {
+                Arrays.fill(dis[i], Integer.MAX_VALUE);
+            }
+            dis[0][0] = 0;
+            Deque<int[]> q = new ArrayDeque<>();
+            q.addFirst(new int[]{0, 0});
+            while (!q.isEmpty()) {
+                int[] p = q.pollFirst();
+                int x = p[0], y = p[1];
+                for (int[] d : dirs) {
+                    int nx = x + d[0], ny = y + d[1];
+                    if (0 <= nx && nx < m && 0 <= ny && ny < n) {
+                        int g = grid[nx][ny];
+                        if (dis[x][y] + g < dis[nx][ny]) {
+                            dis[nx][ny] = dis[x][y] + g;
+                            if (g == 0) q.addFirst(new int[]{nx, ny});
+                            else q.addLast(new int[]{nx, ny});
+                        }
+                    }
+                }
+            }
+            return dis[m - 1][n - 1];
+        }
+```
+
+### 方法2:01BFS
+
+```java
+      class Point {
+            int value;
+            int pos;
+
+            Point() {
+            }
+
+            public Point(int value, int pos) {
+                this.value = value;
+                this.pos = pos;
+            }
+        }
+
+        int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+        public int minimumObstacles(int[][] grid) {
+            int m = grid.length;
+            int n = grid[0].length;
+            int[][] dist = new int[m][n];
+            for (int r = 0; r < m; r++) {
+                Arrays.fill(dist[r], Integer.MAX_VALUE);
+            }
+            //按value 从小到大排序
+            PriorityQueue<Point> pq = new PriorityQueue<>((o1, o2) -> o1.value - o2.value);
+            pq.offer(new Point(grid[0][0], 0));
+            dist[0][0] = 0;
+            while (!pq.isEmpty()) {
+                Point cur = pq.poll();
+                int r = cur.pos / n, c = cur.pos % n;
+                int value = cur.value;
+                if (dist[r][c] < value) {
+                    continue;
+                }
+                if (r == m - 1 && c == n - 1) {
+                    return value;
+                }
+                for (int k = 0; k < 4; k++) {
+                    int nr = r + dirs[k][0], nc = c + dirs[k][1];
+                    int cost = (k + 1 == grid[r][c] ? 0 : 1);
+                    if (0 <= nr && nr < m && 0 <= nc && nc < n) {
+                        int next_value = grid[nr][nc] + value;
+                        if (dist[nr][nc] > next_value) {
+                            dist[nr][nc] = next_value;
+                            pq.offer(new Point(next_value, nr * n + nc));
+                        }
+                    }
+                }
+            }
+            return dist[m - 1][n - 1];
+        }
+```
+
+
+
