@@ -77,13 +77,105 @@ public class Week295 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int[] nums = new int[]{5, 3, 4, 4, 7, 3, 6, 11, 8, 5, 11};
+            handler.totalSteps(nums);
+        }
+
+
+        public int totalSteps(int[] nums) {
+            int res = 0;
+            //[0]是当前元素，[1]是删除时刻的最大值
+            Deque<int[]> stk = new ArrayDeque<>();
+            for (int x : nums) {
+                int maxT = 0;
+                while (!stk.isEmpty() && stk.peek()[0] <= x) {
+                    maxT = Math.max(maxT, stk.peek()[1]);
+                    stk.pop();
+                }
+                if (!stk.isEmpty()) maxT++;
+                res = Math.max(res, maxT);
+                stk.push(new int[]{x, maxT});
+            }
+            return res;
         }
 
 
     }
 
+    static class _3rd_0 {
+        int totalSteps(int[] nums) {
+            // 单调栈
+            // 1. 每个元素一定时被左侧第一个更大的元素消除的
+            // 2. 设 x 消除 y，也就是 [x] .... [y]，那么
+            //    中间的 .... 一定先被消除，再 +1 次消除（x 消除 y）
+            // 3. 那么，x 被消除所需轮数就是 [....] 中的最大消除轮数 + 1
+            int res = 0;
+            int[] f = new int[nums.length];
+            Deque<Integer> st = new ArrayDeque<>();
+            for (int i = 0; i < nums.length; ++i) {
+                int cur = 0;
+                while (!st.isEmpty() && nums[st.peek()] <= nums[i]) {
+                    cur = Math.max(cur, f[st.peek()]);
+                    st.pop();
+                }
+                if (!st.isEmpty()) {
+                    res = Math.max(res, cur + 1);
+                    f[i] = cur + 1;
+                }
+                st.push(i);
+            }
+            return res;
+        }
+    }
+
+
+    static class _3rd_1 {
+        public static void main(String[] args) {
+            _3rd_1 handler = new _3rd_1();
+            int[] nums = new int[]{5, 3, 4, 4, 7, 3, 6, 11, 8, 5, 11};
+            handler.totalSteps(nums);
+        }
+
+
+        //https://leetcode.cn/problems/steps-to-make-array-non-decreasing/solution/by-newhar-6k75/
+        public int totalSteps(int[] _nums) {
+            int[] nums = new int[_nums.length + 1];
+            System.arraycopy(_nums, 0, nums, 0, _nums.length);
+            nums[nums.length - 1] = (int) 1e9 + 8;
+            int n = nums.length;
+            int[] ne = new int[n], rem = new int[n];
+            for (int i = 0; i < n; i++) {
+                ne[i] = i + 1;//ne[i]存储是当前元素的相邻的元素的下标（后一个）
+                rem[i] = 1;//初始化为1
+            }
+            List<Integer> v = new ArrayList<>();
+            for (int i = n - 2; i >= 0; --i) {
+                if (nums[i] > nums[i + 1]) {//从后向前遍历，前一个元素比后一个元素要大，记录大的元素的下标
+                    v.add(i);
+                }
+            }
+            for (int op = 0; ; op++) {
+                List<Integer> v2 = new ArrayList<>();
+                for (int i : v) {
+                    if (rem[i] != 0 && nums[i] > nums[ne[i]]) {
+                        rem[ne[i]] = 0;
+                        ne[i] = ne[ne[i]];
+                        v2.add(i);
+                    }
+                }
+                if (!v2.isEmpty()) {
+                    List<Integer> t = v;
+                    v = v2;
+                    v2 = t;
+                } else {
+                    return op;
+                }
+            }
+        }
+    }
 
     //UC
+    //类似https://leetcode.cn/problems/6UEx57/ LCP56
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
