@@ -75,4 +75,40 @@ public class _796 {
         }
 
     }
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            String s = "abcde", goal = "cdeab";
+            handler.rotateString(s, goal);
+        }
+
+
+        //最小表示法
+        public boolean rotateString(String s, String goal) {
+            if (s.length() != goal.length()) return false;
+            return getMin(s).equals(getMin(goal));
+        }
+
+
+        public String getMin(String s) {
+            int n = s.length();
+            s = s + s;
+            int i = 0, j = 1, k = 0;
+            while (i < n && j < n) {
+                for (k = 0; k < n && s.charAt(i + k) == s.charAt(j + k); k++) ;
+                if (s.charAt(i + k) > s.charAt(j + k)) {
+                    i = i + k + 1;
+                } else {
+                    j = j + k + 1;
+                }
+                if (i == j) {
+                    j++;
+                }
+            }
+            int t = Math.min(i, j);
+            return s.substring(t, t + n);
+        }
+
+    }
 }
