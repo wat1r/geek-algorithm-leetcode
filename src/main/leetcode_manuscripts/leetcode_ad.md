@@ -145,6 +145,8 @@ csdn上公众号的图片地址
 
 ### 更多阅读
 
+- [LeetCode题解导航](https://blog.csdn.net/wat1r/article/details/125035834)
+
 - 算法题解的链接地址： [gitbook](https://cnwangzhou.gitbook.io/algorithm/)
 
 - [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，进群一起交流~
