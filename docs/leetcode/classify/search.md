@@ -1433,9 +1433,163 @@ public int openLock(String[] deadends, String target) {
 
 
 
+## [473. 火柴拼正方形](https://leetcode.cn/problems/matchsticks-to-square/)
 
+### 方法1：回溯
 
+```java
+boolean[] vis;
+int[] matchsticks;
+int maxLen;
+int n;
 
+public boolean makesquare(int[] matchsticks) {
+    n = matchsticks.length;
+    int sum = 0;
+    for (int x : matchsticks) sum += x;
+    if (sum % 4 != 0) return false;
+    maxLen = sum / 4;//正方形边长
+    vis = new boolean[n];//每个火柴的访问情况
+    this.matchsticks = matchsticks;
+    return dfs(0, 0, 0);
+}
+
+//squareIndex:当前处理到的边的编号，从0~3 index:当前处理的matchsticks的哪根火柴，curLen 当前这条边所积累的边长
+public boolean dfs(int squareIndex, int index, int curLen) {
+    if (squareIndex == 4) return true;
+    if (curLen == maxLen) {
+        return dfs(squareIndex + 1, 0, 0);
+    }
+    //遍历每一根火柴
+    for (int i = index; i < n; i++) {
+        //当前的火车没有被使用过且当前的边长+即将被使用的火柴的长度，不会越界，这根火柴可以被使用
+        if (!vis[i] && curLen + matchsticks[i] <= maxLen) {
+            vis[i] = true;//标记
+            //如果当前的火柴可以使用，那就进入到下一根火车
+            if (dfs(squareIndex, i + 1, curLen + matchsticks[i])) {
+                return true;
+            }
+            vis[i] = false;//回溯
+        }
+    }
+    return false;
+}
+```
+
+- 另，逆序排序写法
+
+```java
+int n;
+int[] matchsticks;
+int maxLen;
+
+public boolean makesquare(int[] matchsticks) {
+    n = matchsticks.length;
+    int sum = 0;
+    for (int x : matchsticks) sum += x;
+    if (sum % 4 != 0) return false;
+    this.matchsticks = matchsticks;
+    maxLen = sum / 4;//正方形边长
+    int[] sides = new int[4];//4条边的长度
+    //逆序排序，不排序会超时
+    this.matchsticks = IntStream.of(matchsticks)          // 变为 IntStream
+            .boxed()           // 装盒变为 Stream<Integer>
+            .sorted(Comparator.reverseOrder()) // 按自然序相反排序
+            .mapToInt(Integer::intValue)       // 变为 IntStream
+            .toArray();        // 又变回 int[]
+    return dfs(0, sides);
+}
+
+public boolean dfs(int index, int[] sides) {
+    if (index == matchsticks.length) {
+        return true;
+    }
+    for (int i = 0; i < sides.length; i++) {
+        sides[i] += matchsticks[index];
+        if (sides[i] <= maxLen && dfs(index + 1, sides)) {
+            return true;
+        }
+        sides[i] -= matchsticks[index];
+    }
+    return false;
+}
+```
+
+- 另
+
+```java
+int n;
+int[] matchsticks;
+int maxLen;
+
+public boolean makesquare(int[] matchsticks) {
+    n = matchsticks.length;
+    int sum = 0;
+    for (int x : matchsticks) sum += x;
+    if (sum % 4 != 0) return false;
+    this.matchsticks = matchsticks;
+    maxLen = sum / 4;//正方形边长
+    int[] sides = new int[4];//4条边的长度
+    //逆序排序，不排序会超时
+    this.matchsticks = IntStream.of(matchsticks)          // 变为 IntStream
+            .boxed()           // 装盒变为 Stream<Integer>
+            .sorted(Comparator.reverseOrder()) // 按自然序相反排序
+            .mapToInt(Integer::intValue)       // 变为 IntStream
+            .toArray();        // 又变回 int[]
+    return dfs(0, sides);
+}
+
+private boolean dfs(int index, int[] sides) {
+    if (index >= matchsticks.length) {
+        if (sides[0] == maxLen && sides[1] == maxLen && sides[2] == maxLen) {
+            return true;
+        }
+    }
+    for (int i = 0; i < sides.length; i++) {
+        if (sides[i] + matchsticks[index] > maxLen) {
+            continue;
+        }
+        sides[i] += matchsticks[index];
+        if (dfs(index + 1, sides)) {
+            return true;
+        }
+        sides[i] -= matchsticks[index];
+    }
+    return false;
+}
+```
+
+### 方法2：动态规划+状态压缩
+
+> 思路来自官解
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220601082607.png)
+
+```java
+      public boolean makesquare(int[] matchsticks) {
+            int totalLen = Arrays.stream(matchsticks).sum();
+            if (totalLen % 4 != 0) {
+                return false;
+            }
+            int len = totalLen / 4, n = matchsticks.length;
+            int[] dp = new int[1 << n];
+            Arrays.fill(dp, -1);
+            dp[0] = 0;
+            for (int s = 1; s < (1 << n); s++) {
+                for (int k = 0; k < n; k++) {
+                    if ((s & (1 << k)) == 0) {
+                        continue;
+                    }
+                    int s1 = s & ~(1 << k);
+                    if (dp[s1] >= 0 && dp[s1] + matchsticks[k] <= len) {
+                        dp[s] = (dp[s1] + matchsticks[k]) % len;
+                        break;
+                    }
+                }
+            }
+            return dp[(1 << n) - 1] == 0;
+        }
+```
 
 
 

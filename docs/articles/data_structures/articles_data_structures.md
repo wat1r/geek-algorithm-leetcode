@@ -199,9 +199,130 @@ static class Main {
 
 
 
+## 字典树
+
+- 208. 实现 Trie (前缀树) —— 中等
+- 211. 添加与搜索单词 - 数据结构设计 —— 中等
+- 421. 数组中两个数的最大异或值 —— 中等
+- 648. 单词替换 —— 中等
+- 676. 实现一个魔法字典 —— 中等
+- 692. 前K个高频单词 —— 中等
+- 212. 单词搜索 II —— 困难
+- 336. 回文对 —— 困难
 
 
 
+
+
+
+
+
+
+
+
+
+
+## 最大异或对
+
+ [1707. 与数组中元素的最大异或值](https://leetcode.cn/problems/maximum-xor-with-an-element-from-array/)
+
+### [421. 数组中两个数的最大异或值](https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/)
+
+```java
+public int findMaximumXOR(int[] nums) {
+    for (int x : nums) insert(x);
+    int maxx = 0;
+    for (int x : nums) {
+        maxx = Math.max(maxx, query(x));
+    }
+    return maxx;
+}
+
+
+Trie root = new Trie();
+
+public void insert(int x) {
+    Trie cur = root;
+    for (int i = 30; i >= 0; i--) {
+        int u = x >> i & 1;//找打二进制的第i位上判断是0还是1
+        if (cur.children[u] == null) {
+            cur.children[u] = new Trie();
+        }
+        cur = cur.children[u];
+    }
+}
+
+
+public int query(int x) {
+    Trie cur = root;
+    int res = 0;
+    for (int i = 30; i >= 0; i--) {
+        int u = x >> i & 1;//找打二进制的第i位上判断是0还是1
+        if (cur.children[u ^ 1] != null) {//如果当前位u的另外一个分支可以走的，那就走这个分支
+            res += (1 << i);//相当于当前的值左移i位叠加到res上
+            cur = cur.children[u ^ 1];
+        } else {//另外一个分支是空，只能和当前的分支一起前行
+            cur = cur.children[u];
+        }
+    }
+    return res;
+}
+
+
+class Trie {
+    Trie[] children = new Trie[2];
+}
+```
+
+
+
+### [剑指 Offer II 067. 最大的异或](https://leetcode.cn/problems/ms70jA/)
+
+```java
+public int findMaximumXOR(int[] nums) {
+    for (int x : nums) insert(x);
+    int maxx = 0;
+    for (int x : nums) {
+        maxx = Math.max(maxx, query(x));
+    }
+    return maxx;
+}
+
+
+Trie root = new Trie();
+
+public void insert(int x) {
+    Trie cur = root;
+    for (int i = 30; i >= 0; i--) {
+        int u = x >> i & 1;//找打二进制的第i位上判断是0还是1
+        if (cur.children[u] == null) {
+            cur.children[u] = new Trie();
+        }
+        cur = cur.children[u];
+    }
+}
+
+
+public int query(int x) {
+    Trie cur = root;
+    int res = 0;
+    for (int i = 30; i >= 0; i--) {
+        int u = x >> i & 1;//找打二进制的第i位上判断是0还是1
+        if (cur.children[u ^ 1] != null) {//如果当前位u的另外一个分支可以走的，那就走这个分支
+            res += (1 << i);//相当于当前的值左移i位叠加到res上
+            cur = cur.children[u ^ 1];
+        } else {//另外一个分支是空，只能和当前的分支一起前行
+            cur = cur.children[u];
+        }
+    }
+    return res;
+}
+
+
+class Trie {
+    Trie[] children = new Trie[2];
+}
+```
 
 
 
