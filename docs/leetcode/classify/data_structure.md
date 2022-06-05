@@ -2250,6 +2250,58 @@ public List<List<Integer>> levelOrder(Node root) {
 
 
 
+## [450. 删除二叉搜索树中的节点](https://leetcode.cn/problems/delete-node-in-a-bst/)
+
+### 方法1：递归+分情况讨论
+
+- 当前节点的值比目标值小，说明目标节点在右子树上，删除后的结果挂在当前节点的右孩子上
+- 当前节点的值比目标值大，说明目标节点在左子树上，删除后的结果挂在当前节点的左孩子上
+- 如果当前节点与目标值相同，说明当前节点为目标节点，要删除当前节点，分为以下三种情况：
+  - 其无左子树：其右子树顶替其位置，删除了该节点
+  - 其无右子树：其左子树顶替其位置，删除了该节点
+  - 其左右子节点都有：其左子树转移到其右子树的最左节点的左子树上，然后右子树顶替其位置，由此删除了该节点。
+
+![](https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220602075355.png)
+
+
+
+```java
+       public TreeNode deleteNode(TreeNode root, int key) {
+            if (root == null) return null;//节点为空，返回
+            //根据二叉树的性质分 <  > =
+            if (root.val < key) root.right = deleteNode(root.right, key);
+            else if (root.val > key) root.left = deleteNode(root.left, key);
+            else {
+                //当前节点的左子树为空，返回当前的右子树
+                if (root.left == null) return root.right;
+                //当前节点的右子树为空，返回当前的左子树
+                if (root.right == null) return root.left;
+                //左右子树都不为空，找到右孩子的最左节点 记为p
+                TreeNode node = root.right;
+                while (node.left != null) {
+                    node = node.left;
+                }
+                //将当前节点在左子树挂在p的孩子上
+                node.left = root.left;
+                //当前节点的右子树替换掉当前节点，完成当前节点的删除
+                root = root.right;
+            }
+            return root;
+        }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## [543. 二叉树的直径](https://leetcode-cn.com/problems/diameter-of-binary-tree/)
 
 ### 方法1:DFS

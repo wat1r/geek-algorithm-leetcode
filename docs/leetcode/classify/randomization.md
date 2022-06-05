@@ -153,6 +153,72 @@ class Solution {
 
 
 
+## [478. 在圆内随机生成点](https://leetcode.cn/problems/generate-random-point-in-a-circle/)
+
+### 方法1：拒绝采样
+
+```java
+        class Solution {
+
+            double sx, sy;
+            double sr;
+
+            public Solution(double radius, double x_center, double y_center) {
+                sx = x_center;
+                sy = y_center;
+                sr = radius;
+            }
+
+            public double[] randPoint() {
+                Random random = new Random();
+                while (true) {
+                    double tx = random.nextDouble() * 2 * sr - sr, ty = random.nextDouble() * 2 * sr - sr;
+                    if (tx * tx + ty * ty <= sr * sr) {
+                        return new double[]{sx + tx, sy + ty};
+                    }
+                }
+            }
+        }
+```
+
+### 方法2：极坐标
+
+ρ= random ∗r
+
+极坐标的的角度也是随机的 θ = 2∗π∗random
+
+x = x\_center + ρ * cos(θ)
+
+y = y\_center + ρ * sin(θ)
+
+- [Explanation with Graphs why using Math.sqrt()](https://leetcode.com/problems/generate-random-point-in-a-circle/discuss/155650/Explanation-with-Graphs-why-using-Math.sqrt())
+
+```java
+        class Solution {
+
+            double sx, sy;
+            double sr;
+
+
+            public Solution(double radius, double x_center, double y_center) {
+                sx = x_center;
+                sy = y_center;
+                sr = radius;
+            }
+
+            public double[] randPoint() {
+                Random random = new Random();
+                double l = Math.sqrt(random.nextDouble()) * sr;
+                double d = random.nextDouble() * 2 * Math.PI;
+                double tx = sx + l * Math.cos(d);
+                double ty = sy + l * Math.sin(d);
+                return new double[]{tx, ty};
+            }
+        }
+```
+
+
+
 
 
 

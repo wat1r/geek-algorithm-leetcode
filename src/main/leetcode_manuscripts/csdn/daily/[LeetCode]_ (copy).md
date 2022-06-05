@@ -4,113 +4,107 @@
 
 ### 题目
 
-[1293. 网格中的最短路径](https://leetcode.cn/problems/shortest-path-in-a-grid-with-obstacles-elimination/)
+[478. 在圆内随机生成点](https://leetcode.cn/problems/generate-random-point-in-a-circle/)
 
 ```java
-1293. 网格中的最短路径
-给你一个 m * n 的网格，其中每个单元格不是 0（空）就是 1（障碍物）。每一步，您都可以在空白单元格中上、下、左、右移动。
+478. 在圆内随机生成点
+给定圆的半径和圆心的位置，实现函数 randPoint ，在圆中产生均匀随机点。
 
-如果您 最多 可以消除 k 个障碍物，请找出从左上角 (0, 0) 到右下角 (m-1, n-1) 的最短路径，并返回通过该路径所需的步数。如果找不到这样的路径，则返回 -1 。
+实现 Solution 类:
 
+Solution(double radius, double x_center, double y_center) 用圆的半径 radius 和圆心的位置 (x_center, y_center) 初始化对象
+randPoint() 返回圆内的一个随机点。圆周上的一点被认为在圆内。答案作为数组返回 [x, y] 。
  
 
 示例 1：
 
-
-
-输入： grid = [[0,0,0],[1,1,0],[0,0,0],[0,1,1],[0,0,0]], k = 1
-输出：6
-解释：
-不消除任何障碍的最短路径是 10。
-消除位置 (3,2) 处的障碍后，最短路径是 6 。该路径是 (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) -> (3,2) -> (4,2).
-示例 2：
-
-
-
-输入：grid = [[0,1,1],[1,1,1],[1,0,0]], k = 1
-输出：-1
-解释：我们至少需要消除两个障碍才能找到这样的路径。
+输入: 
+["Solution","randPoint","randPoint","randPoint"]
+[[1.0, 0.0, 0.0], [], [], []]
+输出: [null, [-0.02493, -0.38077], [0.82314, 0.38945], [0.36572, 0.17248]]
+解释:
+Solution solution = new Solution(1.0, 0.0, 0.0);
+solution.randPoint ();//返回[-0.02493，-0.38077]
+solution.randPoint ();//返回[0.82314,0.38945]
+solution.randPoint ();//返回[0.36572,0.17248]
  
 
 提示：
 
-grid.length == m
-grid[0].length == n
-1 <= m, n <= 40
-1 <= k <= m*n
-grid[i][j] 是 0 或 1
-grid[0][0] == grid[m-1][n-1] == 0
+0 < radius <= 108
+-107 <= x_center, y_center <= 107
+randPoint 最多被调用 3 * 104 次
 ```
+
+
 
 ### 解法
 
-### 方法1：BFS
+### 方法1：拒绝采样
 
 ```java
-     int m, n;
-        //右 下 左 上
-        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        class Solution {
 
-        //我们还可以对搜索空间进行优化。注意到题目中 k 的上限为 m * n，但考虑一条从 (0, 0) 向下走到 (m - 1, 0) 再向右走到
-        // (m - 1, n - 1) 的路径，它经过了 m + n - 1 个位置，其中起点 (0, 0) 和终点 (m - 1, n - 1) 没有障碍物，
-        // 那么这条路径上最多只会有 m + n - 3 个障碍物。因此我们可以将 k 的值设置为 m + n - 3 与其本身的较小值
-        // min(k, m + n - 3)，将广度优先搜索的时间复杂度从 O(MNK) 降低至 (MN∗min(M+N,K))
+            double sx, sy;
+            double sr;
 
-        public int shortestPath(int[][] grid, int k) {
-            m = grid.length;
-            n = grid[0].length;
-            //case ->
-            //[[0]]
-            //1
-            if (m == 1 && n == 1) return 0;
-//            if ( k >= m + n - 3){
-//                return m + n - 2;
-//            }
-//            k = Math.min(k, m + n - 3);
-            boolean[][][] vis = new boolean[m][n][k + 1];
-            Queue<Position> q = new LinkedList<>();
-            //标记访问的状态
-            q.offer(new Position(0, 0, k));
-            vis[0][0][k] = true;
-            int steps = 0;
-            while (!q.isEmpty()) {
-                int size = q.size();
-                steps++;
-                for (int i = 0; i < size; i++) {
-                    Position p = q.poll();
-                    for (int[] d : dirs) {
-                        int nx = p.x + d[0], ny = p.y + d[1];
-                        if (nx >= m || nx < 0 || ny >= n || ny < 0) {
-                            continue;
-                        }
-                        if (grid[nx][ny] == 0 && !vis[nx][ny][p.count]) {
-                            if (nx == m - 1 && ny == n - 1) {
-                                return steps;
-                            }
-                            q.offer(new Position(nx, ny, p.count));
-                            vis[nx][ny][p.count] = true;
-                        } else if (grid[nx][ny] == 1 && p.count > 0 && !vis[nx][ny][p.count - 1]) {
-                            q.offer(new Position(nx, ny, p.count - 1));
-                            vis[nx][ny][p.count - 1] = true;
-                        }
+            public Solution(double radius, double x_center, double y_center) {
+                sx = x_center;
+                sy = y_center;
+                sr = radius;
+            }
 
+            public double[] randPoint() {
+                Random random = new Random();
+                while (true) {
+                    double tx = random.nextDouble() * 2 * sr - sr, ty = random.nextDouble() * 2 * sr - sr;
+                    if (tx * tx + ty * ty <= sr * sr) {
+                        return new double[]{sx + tx, sy + ty};
                     }
                 }
             }
-            return -1;
         }
+```
 
-        class Position {
-            int x, y;
-            int count;//当前状态下还可以经过多少个障碍物，此数量为非负
+### 方法2：极坐标
 
-            public Position(int x, int y, int count) {
-                this.x = x;
-                this.y = y;
-                this.count = count;
+ρ= random ∗r
+
+极坐标的的角度也是随机的 θ = 2∗π∗random
+
+x = x\_center + ρ * cos(θ)
+
+y = y\_center + ρ * sin(θ)
+
+- [Explanation with Graphs why using Math.sqrt()](https://leetcode.com/problems/generate-random-point-in-a-circle/discuss/155650/Explanation-with-Graphs-why-using-Math.sqrt())
+
+```java
+        class Solution {
+
+            double sx, sy;
+            double sr;
+
+
+            public Solution(double radius, double x_center, double y_center) {
+                sx = x_center;
+                sy = y_center;
+                sr = radius;
+            }
+
+            public double[] randPoint() {
+                Random random = new Random();
+                double l = Math.sqrt(random.nextDouble()) * sr;
+                double d = random.nextDouble() * 2 * Math.PI;
+                double tx = sx + l * Math.cos(d);
+                double ty = sy + l * Math.sin(d);
+                return new double[]{tx, ty};
             }
         }
 ```
+
+
+
+
 
 
 
