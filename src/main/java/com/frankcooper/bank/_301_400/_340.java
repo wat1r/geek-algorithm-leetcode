@@ -67,6 +67,9 @@ public class _340 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+
+
     }
 
     static class _4th {
