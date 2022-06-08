@@ -866,6 +866,72 @@ public char nextGreatestLetter(char[] le, char ta) {
 
 
 
+## [875. 爱吃香蕉的珂珂](https://leetcode.cn/problems/koko-eating-bananas/)
+
+### 方法1:二分
+
+```java
+ public int minEatingSpeed(int[] piles, int h) {
+            int l = 0, r = 1_000_000_000;
+            while (l < r) {
+                int m = l + (r - l) / 2;
+                if (!possible(piles, h, m)) {
+                    l = m + 1;
+                } else {
+                    r = m;
+                }
+            }
+            return l;
+        }
+
+
+        private boolean possible(int[] piles, int h, int t) {
+              if (t == 0) return false;
+            for (int i = 0; i < piles.length; i++) {
+                h -= piles[i] % t == 0 ? piles[i] / t : piles[i] / t + 1;
+                if (h < 0) return false;
+            }
+            return true;
+        }
+```
+
+- 另
+
+```java
+        public int minEatingSpeed(int[] piles, int h) {
+            int r = 0;
+            for (int x : piles) r = Math.max(r, x);
+            int l = 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+//                System.out.printf("%d\n", mid);
+                if (check(piles, mid, h)) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            return l;
+        }
+
+        private boolean check(int[] piles, int k, int h) {
+            int times = 0;
+            for (int i = 0; i < piles.length; i++) {
+                times += (piles[i] % k == 0 ? 0 : 1) + piles[i] / k;
+                if (times > h) return false;
+            }
+            return true;
+        }
+```
+
+
+
+
+
+
+
+
+
 ## [6040. 花园的最大总美丽值](https://leetcode-cn.com/problems/maximum-total-beauty-of-the-gardens/)
 
 

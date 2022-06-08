@@ -71,6 +71,31 @@ public class _875 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public int minEatingSpeed(int[] piles, int h) {
+            int r = 0;
+            for (int x : piles) r = Math.max(r, x);
+            int l = 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+//                System.out.printf("%d\n", mid);
+                if (check(piles, mid, h)) {
+                    r = mid;
+                } else {
+                    l = mid + 1;
+                }
+            }
+            return l;
+        }
+
+        private boolean check(int[] piles, int k, int h) {
+            int times = 0;
+            for (int i = 0; i < piles.length; i++) {
+                times += (piles[i] % k == 0 ? 0 : 1) + piles[i] / k;
+                if (times > h) return false;
+            }
+            return true;
+        }
     }
 
 
@@ -78,5 +103,23 @@ public class _875 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        public int minEatingSpeed(int[] piles, int h) {
+            int l = 1, r = (int) 1e9;
+            while (l < r) {
+                int mid = l + r >> 1;
+                if (check(piles, mid, h)) r = mid;
+                else l = mid + 1;
+            }
+            return r;
+        }
+
+        boolean check(int[] p, int k, int h) {
+            int time = 0;
+//            for (int x : p) ans += Math.ceil(x * 1.0 / k);
+            for (int x : p) time += (x - 1) / k + 1;
+            return time <= h;
+        }
+
     }
 }
