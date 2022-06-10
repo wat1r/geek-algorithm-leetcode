@@ -39,8 +39,8 @@ public class _6 {
                     else r -= 2;
                 } else if (r == -1) {
                     flag = -flag;
-                    if(numRows == 1) r+=1;
-                    else r+=2;
+                    if (numRows == 1) r += 1;
+                    else r += 2;
                 }
 
                 sb[r].append(s.charAt(i++));
@@ -57,6 +57,30 @@ public class _6 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+        }
+
+        public String convert(String s, int numRows) {
+
+            StringBuilder[] sb = new StringBuilder[numRows];
+            for (int k = 0; k < numRows; k++) sb[k] = new StringBuilder();
+            int r = 0, i = 0;
+            int flag = 1;
+            while (i < s.length()) {
+                if (r == numRows) {
+                    flag = -flag;
+                    if (numRows == 1) r -= 1;
+                    else r -= 2;
+                } else if (r == -1) {
+                    flag = -flag;
+                    if (numRows == 1) r += 1;
+                    else r += 2;
+                }
+                sb[r].append(s.charAt(i++));
+                r += flag;
+            }
+            StringBuilder res = new StringBuilder();
+            for (int k = 0; k < numRows; k++) res.append(sb[k]);
+            return res.toString();
         }
     }
 
