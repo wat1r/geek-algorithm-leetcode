@@ -2738,6 +2738,42 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
 }
 </code></pre>
 <h4 id="follow-up&#xFF1A;2&#x6309;&#x5947;&#x5076;&#x5C42;&#x6570;&#x952F;&#x9F7F;&#x5C42;&#x5E8F;&#x904D;&#x5386;&#x5982;&#x4F55;&#x505A;&#xFF1F;">Follow Up&#xFF1A;2.&#x6309;&#x5947;&#x5076;&#x5C42;&#x6570;&#x952F;&#x9F7F;&#x5C42;&#x5E8F;&#x904D;&#x5386;&#x5982;&#x4F55;&#x505A;&#xFF1F;</h4>
+<h2 id="450-&#x5220;&#x9664;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#x7684;&#x8282;&#x70B9;"><a href="https://leetcode.cn/problems/delete-node-in-a-bst/" target="_blank">450. &#x5220;&#x9664;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#x7684;&#x8282;&#x70B9;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;&#x5206;&#x60C5;&#x51B5;&#x8BA8;&#x8BBA;">&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;+&#x5206;&#x60C5;&#x51B5;&#x8BA8;&#x8BBA;</h3>
+<ul>
+<li>&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x503C;&#x6BD4;&#x76EE;&#x6807;&#x503C;&#x5C0F;&#xFF0C;&#x8BF4;&#x660E;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x5728;&#x53F3;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x5220;&#x9664;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x6302;&#x5728;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x53F3;&#x5B69;&#x5B50;&#x4E0A;</li>
+<li>&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x503C;&#x6BD4;&#x76EE;&#x6807;&#x503C;&#x5927;&#xFF0C;&#x8BF4;&#x660E;&#x76EE;&#x6807;&#x8282;&#x70B9;&#x5728;&#x5DE6;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x5220;&#x9664;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x6302;&#x5728;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x5B69;&#x5B50;&#x4E0A;</li>
+<li>&#x5982;&#x679C;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x4E0E;&#x76EE;&#x6807;&#x503C;&#x76F8;&#x540C;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x4E3A;&#x76EE;&#x6807;&#x8282;&#x70B9;&#xFF0C;&#x8981;&#x5220;&#x9664;&#x5F53;&#x524D;&#x8282;&#x70B9;&#xFF0C;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;<ul>
+<li>&#x5176;&#x65E0;&#x5DE6;&#x5B50;&#x6811;&#xFF1A;&#x5176;&#x53F3;&#x5B50;&#x6811;&#x9876;&#x66FF;&#x5176;&#x4F4D;&#x7F6E;&#xFF0C;&#x5220;&#x9664;&#x4E86;&#x8BE5;&#x8282;&#x70B9;</li>
+<li>&#x5176;&#x65E0;&#x53F3;&#x5B50;&#x6811;&#xFF1A;&#x5176;&#x5DE6;&#x5B50;&#x6811;&#x9876;&#x66FF;&#x5176;&#x4F4D;&#x7F6E;&#xFF0C;&#x5220;&#x9664;&#x4E86;&#x8BE5;&#x8282;&#x70B9;</li>
+<li>&#x5176;&#x5DE6;&#x53F3;&#x5B50;&#x8282;&#x70B9;&#x90FD;&#x6709;&#xFF1A;&#x5176;&#x5DE6;&#x5B50;&#x6811;&#x8F6C;&#x79FB;&#x5230;&#x5176;&#x53F3;&#x5B50;&#x6811;&#x7684;&#x6700;&#x5DE6;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x5B50;&#x6811;&#x4E0A;&#xFF0C;&#x7136;&#x540E;&#x53F3;&#x5B50;&#x6811;&#x9876;&#x66FF;&#x5176;&#x4F4D;&#x7F6E;&#xFF0C;&#x7531;&#x6B64;&#x5220;&#x9664;&#x4E86;&#x8BE5;&#x8282;&#x70B9;&#x3002;</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220602075355.png" alt=""></p>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> key)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<span class="hljs-comment">//&#x8282;&#x70B9;&#x4E3A;&#x7A7A;&#xFF0C;&#x8FD4;&#x56DE;</span>
+            <span class="hljs-comment">//&#x6839;&#x636E;&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x6027;&#x8D28;&#x5206; &lt;  &gt; =</span>
+            <span class="hljs-keyword">if</span> (root.val &lt; key) root.right = deleteNode(root.right, key);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root.val &gt; key) root.left = deleteNode(root.left, key);
+            <span class="hljs-keyword">else</span> {
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;&#xFF0C;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x7684;&#x53F3;&#x5B50;&#x6811;</span>
+                <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root.right;
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x53F3;&#x5B50;&#x6811;&#x4E3A;&#x7A7A;&#xFF0C;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x7684;&#x5DE6;&#x5B50;&#x6811;</span>
+                <span class="hljs-keyword">if</span> (root.right == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> root.left;
+                <span class="hljs-comment">//&#x5DE6;&#x53F3;&#x5B50;&#x6811;&#x90FD;&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x627E;&#x5230;&#x53F3;&#x5B69;&#x5B50;&#x7684;&#x6700;&#x5DE6;&#x8282;&#x70B9; &#x8BB0;&#x4E3A;p</span>
+                TreeNode node = root.right;
+                <span class="hljs-keyword">while</span> (node.left != <span class="hljs-keyword">null</span>) {
+                    node = node.left;
+                }
+                <span class="hljs-comment">//&#x5C06;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x5728;&#x5DE6;&#x5B50;&#x6811;&#x6302;&#x5728;p&#x7684;&#x5B69;&#x5B50;&#x4E0A;</span>
+                node.left = root.left;
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x53F3;&#x5B50;&#x6811;&#x66FF;&#x6362;&#x6389;&#x5F53;&#x524D;&#x8282;&#x70B9;&#xFF0C;&#x5B8C;&#x6210;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x5220;&#x9664;</span>
+                root = root.right;
+            }
+            <span class="hljs-keyword">return</span> root;
+        }
+</code></pre>
 <h2 id="543-&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;"><a href="https://leetcode-cn.com/problems/diameter-of-binary-tree/" target="_blank">543. &#x4E8C;&#x53C9;&#x6811;&#x7684;&#x76F4;&#x5F84;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1dfs">&#x65B9;&#x6CD5;1:DFS</h3>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
@@ -2906,6 +2942,129 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     }
     <span class="hljs-keyword">return</span> q.peekLast();
 }
+</code></pre>
+<h2 id="965-&#x5355;&#x503C;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode.cn/problems/univalued-binary-tree/" target="_blank">965. &#x5355;&#x503C;&#x4E8C;&#x53C9;&#x6811;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isUnivalTree</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">return</span> dfs(root, root.val);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">if</span> (root.val != val) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">return</span> dfs(root.left, val) &amp;&amp; dfs(root.right, val);
+}
+</code></pre>
+<ul>
+<li>&#x4E0D;&#x5E26;<code>helper</code>&#x51FD;&#x6570;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isUnivalTree</span><span class="hljs-params">(TreeNode root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">if</span> (root.left != <span class="hljs-keyword">null</span> &amp;&amp; root.left.val != root.val) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">if</span> (root.right != <span class="hljs-keyword">null</span> &amp;&amp; root.right.val != root.val) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    <span class="hljs-keyword">return</span> isUnivalTree(root.left) &amp;&amp; isUnivalTree(root.right);
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;2&#xFF1A;&#x8FED;&#x4EE3;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isUnivalTree</span><span class="hljs-params">(TreeNode root)</span> </span>{
+            Queue&lt;TreeNode&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+            q.offer(root);
+            <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+                TreeNode cur = q.poll();
+                <span class="hljs-keyword">if</span> (cur.val != root.val) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                <span class="hljs-keyword">if</span> (cur.left != <span class="hljs-keyword">null</span>) q.offer(cur.left);
+                <span class="hljs-keyword">if</span> (cur.right != <span class="hljs-keyword">null</span>) q.offer(cur.right);
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<h2 id="1022-&#x4ECE;&#x6839;&#x5230;&#x53F6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x4E4B;&#x548C;"><a href="https://leetcode.cn/problems/sum-of-root-to-leaf-binary-numbers/" target="_blank">1022. &#x4ECE;&#x6839;&#x5230;&#x53F6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x4E4B;&#x548C;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java">  <span class="hljs-keyword">int</span> res;
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumRootToLeaf</span><span class="hljs-params">(TreeNode root)</span> </span>{
+            dfs(root, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+            <span class="hljs-keyword">return</span> res;
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, List&lt;Integer&gt; paths)</span> </span>{
+            paths.add(root.val);
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) {
+                res += cal(paths);
+                <span class="hljs-keyword">return</span>;
+            }
+            <span class="hljs-keyword">if</span> (root.left != <span class="hljs-keyword">null</span>) {
+                dfs(root.left, paths);
+                paths.remove(paths.size() - <span class="hljs-number">1</span>);
+            }
+            <span class="hljs-keyword">if</span> (root.right != <span class="hljs-keyword">null</span>) {
+                dfs(root.right, paths);
+                paths.remove(paths.size() - <span class="hljs-number">1</span>);
+            }
+
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">cal</span><span class="hljs-params">(List&lt;Integer&gt; paths)</span> </span>{
+            <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>, n = paths.size();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                t |= paths.get(i) &lt;&lt; (n - i - <span class="hljs-number">1</span>);
+            }
+            <span class="hljs-keyword">return</span> t;
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;2&#xFF1A;&#x9012;&#x5F52;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumRootToLeaf</span><span class="hljs-params">(TreeNode root)</span> </span>{
+            <span class="hljs-keyword">return</span> dfs(root, <span class="hljs-number">0</span>);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root, <span class="hljs-keyword">int</span> res)</span> </span>{
+            <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+            <span class="hljs-comment">//res&#x5DE6;&#x79FB;&#x4E00;&#x4F4D;&#xFF0C;&#x8BA9;&#x51FA;&#x4F4E;&#x4F4D;&#x7ED9;root.val</span>
+            res = res &lt;&lt; <span class="hljs-number">1</span> | root.val;
+            <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">return</span> res;
+            }
+            <span class="hljs-keyword">return</span> dfs(root.left, res) + dfs(root.right, res);
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;&#x8FED;&#x4EE3;">&#x65B9;&#x6CD5;3&#xFF1A;&#x8FED;&#x4EE3;</h3>
+<blockquote>
+<p>&#x8FED;&#x4EE3;&#x7684;&#x601D;&#x8DEF;&#x4E0D;&#x5982;&#x9012;&#x5F52;&#x597D;&#x5199;</p>
+</blockquote>
+<pre><code class="lang-java">
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumRootToLeaf</span><span class="hljs-params">(TreeNode root)</span> </span>{
+            Deque&lt;TreeNode&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>, res = <span class="hljs-number">0</span>;
+            <span class="hljs-comment">//prev&#x8BB0;&#x5F55;&#x4E0A;&#x4E00;&#x8F6E;&#x8BBF;&#x95EE;&#x8FC7;&#x7684;&#x8282;&#x70B9;</span>
+            TreeNode prev = <span class="hljs-keyword">null</span>;
+            <span class="hljs-keyword">while</span> (!stk.isEmpty() || root != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">while</span> (root != <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-comment">//&#x8BA1;&#x7B97;</span>
+                    t = t &lt;&lt; <span class="hljs-number">1</span> | root.val;
+                    <span class="hljs-comment">//&#x5DE6;&#x5B69;&#x5B50;&#x4E00;&#x76F4;&#x8FDB;&#x6808;&#xFF0C;&#x76F4;&#x5230;&#x6CA1;&#x6709;&#x5DE6;&#x5B69;&#x5B50;</span>
+                    stk.push(root);
+                    root = root.left;
+                }
+                <span class="hljs-comment">//&#x770B;&#x4E0B;&#x5F53;&#x524D;&#x6808;&#x9876;&#x7684;&#x8282;&#x70B9;</span>
+                root = stk.peek();
+                <span class="hljs-comment">//</span>
+                <span class="hljs-keyword">if</span> (root.right == <span class="hljs-keyword">null</span> || root.right == prev) {
+                    <span class="hljs-comment">//&#x6536;&#x96C6;&#x7684;&#x6761;&#x4EF6;</span>
+                    <span class="hljs-keyword">if</span> (root.left == <span class="hljs-keyword">null</span> &amp;&amp; root.right == <span class="hljs-keyword">null</span>) {
+                        res += t;
+                    }
+                    <span class="hljs-comment">//&#x6062;&#x590D;&#xFF0C;&#x5F39;&#x51FA;&#xFF0C;&#x8BB0;&#x5F55;prev</span>
+                    t &gt;&gt;= <span class="hljs-number">1</span>;
+                    stk.pop();
+                    prev = root;
+                    root = <span class="hljs-keyword">null</span>;<span class="hljs-comment">//&#x6807;&#x8BB0;</span>
+                } <span class="hljs-keyword">else</span> {
+                    root = root.right;
+                }
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
 </code></pre>
 <h2 id="1305-&#x4E24;&#x68F5;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;"><a href="https://leetcode-cn.com/problems/all-elements-in-two-binary-search-trees/" target="_blank">1305. &#x4E24;&#x68F5;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5143;&#x7D20;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x4E2D;&#x5E8F;&#x5F52;&#x5E76;">&#x65B9;&#x6CD5;1&#xFF1A;&#x4E2D;&#x5E8F;+&#x5F52;&#x5E76;</h3>
@@ -3154,7 +3313,7 @@ LCA of <span class="hljs-number">10</span> and <span class="hljs-number">22</spa
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-05-15T23:48:17.562Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数据结构","level":"1.2.2","depth":2,"next":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"previous":{"title":"基础与技巧","level":"1.2.1","depth":2,"path":"docs/leetcode/classify/basic_skill.md","ref":"docs/leetcode/classify/basic_skill.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/data_structure.md","mtime":"2022-06-09T12:55:54.836Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

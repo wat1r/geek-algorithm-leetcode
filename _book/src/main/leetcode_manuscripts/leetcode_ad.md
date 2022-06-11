@@ -115,10 +115,37 @@
 
 
 
+csdn上公众号的图片地址
+
+> 长按或扫码关注我的公众号:「**阿飞算法**」，一起加油、一起学习进步！
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/93c951cd922f410594447355c6f82b2e.png)
+
+
+
+
+
+
+
+
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/0fadbbfa21be4e3e89fadff7764012cd.png)
+
+
+
+
+
+更加详细的位操作技巧，阅读[**位运算操作常见技巧**](https://blog.csdn.net/wat1r/article/details/114298873)（100+收藏，5K阅读）
+
+
+
+
+
 
 
 ### 更多阅读
 
+- [LeetCode题解导航](https://blog.csdn.net/wat1r/article/details/125035834)
 - 算法题解的链接地址： [gitbook](https://cnwangzhou.gitbook.io/algorithm/)
-
+- [CSDN 个人主页](https://blog.csdn.net/wat1r)
 - [个人主页【阿飞算法】](https://blog.csdn.net/wat1r/article/details/117533156) 加我好友，进群一起交流~

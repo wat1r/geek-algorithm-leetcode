@@ -1364,6 +1364,107 @@
     <span class="hljs-keyword">return</span> res;
 }
 </code></pre>
+<h2 id="856-&#x62EC;&#x53F7;&#x7684;&#x5206;&#x6570;"><a href="https://leetcode.cn/problems/score-of-parentheses/" target="_blank">856. &#x62EC;&#x53F7;&#x7684;&#x5206;&#x6570;</a></h2>
+<h4 id="&#x89E3;&#x91CA;">&#x89E3;&#x91CA;</h4>
+<pre><code class="lang-java">[(]                # &#x9047;&#x5230; ( &#x5F80;&#x6808;&#x6DFB;&#x52A0;
+[(, (]             # &#x7EE7;&#x7EED;&#x6DFB;&#x52A0;
+[(, 1]             # &#x9047;&#x5230; &#xFF09; &#x5408;&#x6210;&#x4E00;&#x4E2A;1
+[(, 1, (]          # &#x9047;&#x5230; ( &#x5F80;&#x6808;&#x6DFB;&#x52A0;
+[(, 1, (, (]       # &#x7EE7;&#x7EED;&#x6DFB;&#x52A0;
+[(, 1, (, 1]       # &#x9047;&#x5230; &#xFF09; &#x5408;&#x6210;&#x4E00;&#x4E2A;1
+[(, 1, 2]          # &#x9047;&#x5230; &#xFF09; &#xFF0C;&#x7ED3;&#x6784;&#x5C31;&#x662F;&#xFF08;1&#xFF09;&#xFF0C; &#x6240;&#x4EE5;&#x8BA1;&#x7B97;&#x7684;&#x8BDD;&#x662F; 1 * 2
+[6]                # &#x9047;&#x5230; &#xFF09; &#xFF0C;&#x7ED3;&#x6784;&#x662F;&#xFF08;1&#xFF0C;2&#xFF09;&#xFF0C; &#x6240;&#x4EE5;&#x8BA1;&#x7B97;&#x7684;&#x8BDD;&#x662F; &#xFF08;1 + 2&#xFF09; * 2
+</code></pre>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">scoreOfParentheses</span><span class="hljs-params">(String s)</span> </span>{
+            Deque&lt;Character&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+                <span class="hljs-comment">//&#x9047;&#x5230; ( &#x65F6;&#x5411; &#x5165;&#x6808;</span>
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;(&apos;</span>) stk.push(c);
+                    <span class="hljs-comment">//&#x96E8;&#x5927; ) &#x65F6; &#x5224;&#x65AD;&#x6808;&#x9876;&#x662F;&#x4E0D;&#x662F; &#xFF08;</span>
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;)&apos;</span>) {
+                    <span class="hljs-comment">//&#x6808;&#x9876;&#x662F; &#xFF08;  &#x5408;&#x5E76;&#x4E3A;1</span>
+                    <span class="hljs-keyword">if</span> (stk.peek() == <span class="hljs-string">&apos;(&apos;</span>) {
+                        stk.pop();
+                        stk.push(<span class="hljs-string">&apos;1&apos;</span>);
+                    } <span class="hljs-keyword">else</span> {<span class="hljs-comment">//&#x6808;&#x9876;&#x4E0D;&#x662F; &#xFF08; &#x800C;&#x662F;&#x6570;&#x5B57; &#x7D2F;&#x52A0;</span>
+                        <span class="hljs-keyword">char</span> b = stk.pop();
+                        <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;
+                        <span class="hljs-keyword">while</span> (b != <span class="hljs-string">&apos;(&apos;</span>) {
+                            t += b - <span class="hljs-string">&apos;0&apos;</span>;
+                            b = stk.pop();
+                        }
+                        <span class="hljs-comment">//&#x6CE8;&#x610F;char &#x548C; int&#x7C7B;&#x578B;&#x7684;&#x8F6C;&#x6362;</span>
+                        stk.push((<span class="hljs-keyword">char</span>) (<span class="hljs-string">&apos;0&apos;</span> + <span class="hljs-number">2</span> * t));
+                    }
+                }
+            }
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (!stk.isEmpty()) res += stk.pop() - <span class="hljs-string">&apos;0&apos;</span>;
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<p>&#x53E6;</p>
+<pre><code class="lang-java">     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">scoreOfParentheses</span><span class="hljs-params">(String s)</span> </span>{
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s.toCharArray()) {
+                <span class="hljs-comment">//stk&#x4E2D;&#x5B58;&#x50A8;Integer &#x4F7F;&#x7528;-1&#x6765;&#x6807;&#x8BB0;</span>
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;(&apos;</span>) stk.push(-<span class="hljs-number">1</span>);
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;)&apos;</span>) {
+                    <span class="hljs-keyword">if</span> (stk.peek() == -<span class="hljs-number">1</span>) {
+                        stk.pop();
+                        stk.push(<span class="hljs-number">1</span>);
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;
+                        <span class="hljs-keyword">while</span> (stk.peek() != -<span class="hljs-number">1</span>) {
+                            t += stk.pop();
+                        }
+                        stk.push(<span class="hljs-number">2</span> * t);
+                    }
+                }
+            }
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (!stk.isEmpty()) res += stk.pop();
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<ul>
+<li>&#x5B98;&#x89E3;&#xFF0C;&#x5F88;&#x68D2;&#x7684;&#x601D;&#x8DEF;</li>
+</ul>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220528110823.png" alt=""></p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">scoreOfParentheses</span><span class="hljs-params">(String S)</span> </span>{
+            Stack&lt;Integer&gt; stack = <span class="hljs-keyword">new</span> Stack();
+            stack.push(<span class="hljs-number">0</span>); <span class="hljs-comment">// The score of the current frame</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : S.toCharArray()) {
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;(&apos;</span>)
+                    stack.push(<span class="hljs-number">0</span>);
+                <span class="hljs-keyword">else</span> {
+                    <span class="hljs-keyword">int</span> v = stack.pop();
+                    <span class="hljs-keyword">int</span> w = stack.pop();
+                    stack.push(w + Math.max(<span class="hljs-number">2</span> * v, <span class="hljs-number">1</span>));
+                }
+            }
+            <span class="hljs-keyword">return</span> stack.pop();
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;</li>
+</ul>
+<p>&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x53EA;&#x6709; () &#x4F1A;&#x5BF9;&#x5B57;&#x7B26;&#x4E32; S &#x8D21;&#x732E;&#x5B9E;&#x8D28;&#x7684;&#x5206;&#x6570;&#xFF0C;&#x5176;&#x5B83;&#x7684;&#x62EC;&#x53F7;&#x53EA;&#x4F1A;&#x5C06;&#x5206;&#x6570;&#x4E58;&#x4E8C;&#x6216;&#x8005;&#x5C06;&#x5206;&#x6570;&#x7D2F;&#x52A0;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x6BCF;&#x4E00;&#x4E2A; () &#x5BF9;&#x5E94;&#x7684;&#x6DF1;&#x5EA6; x&#xFF0C;&#x90A3;&#x4E48;&#x7B54;&#x6848;&#x5C31;&#x662F; 2^x &#x7684;&#x7D2F;&#x52A0;&#x548C;&#x3002;</p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">scoreOfParentheses</span><span class="hljs-params">(String S)</span> </span>{
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, balance = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; S.length(); i++) {
+                <span class="hljs-keyword">if</span> (S.charAt(i) == <span class="hljs-string">&apos;(&apos;</span>) {
+                    balance++;
+                } <span class="hljs-keyword">else</span> {
+                    balance--;
+                    <span class="hljs-keyword">if</span> (S.charAt(i - <span class="hljs-number">1</span>) == <span class="hljs-string">&apos;(&apos;</span>) {
+                        res += <span class="hljs-number">1</span> &lt;&lt; balance;
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -1407,7 +1508,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-05-09T12:10:00.027Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"堆栈","level":"1.2.3","depth":2,"next":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"previous":{"title":"数据结构","level":"1.2.2","depth":2,"path":"docs/leetcode/classify/data_structure.md","ref":"docs/leetcode/classify/data_structure.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/heap_stack.md","mtime":"2022-05-28T03:15:03.252Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

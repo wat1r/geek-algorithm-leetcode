@@ -15,7 +15,7 @@ public class _316 {
         public static void main(String[] args) {
             _1st handler = new _1st();
             String s = "bcabc";
-//            s = "cbacdcbc";
+            s = "cbacdcbc";
             handler.removeDuplicateLetters(s);
         }
 

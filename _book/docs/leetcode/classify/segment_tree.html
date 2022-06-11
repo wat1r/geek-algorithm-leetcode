@@ -1421,6 +1421,461 @@
     }
 };
 </code></pre>
+<h2 id="729-&#x6211;&#x7684;&#x65E5;&#x7A0B;&#x5B89;&#x6392;&#x8868;-i"><a href="https://leetcode.cn/problems/my-calendar-i/" target="_blank">729. &#x6211;&#x7684;&#x65E5;&#x7A0B;&#x5B89;&#x6392;&#x8868; I</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x7EBF;&#x6BB5;&#x6811;">&#x65B9;&#x6CD5;1&#xFF1A;&#x7EBF;&#x6BB5;&#x6811;</h3>
+<blockquote>
+<p>&#x52A8;&#x6001;&#x5F00;&#x70B9;&#xFF0C;&#x61D2;&#x6807;&#x8BB0;&#xFF0C;<a href="https://leetcode.cn/problems/my-calendar-i/solution/by-ac_oier-1znx/" target="_blank">&#x94FE;&#x63A5;</a></p>
+</blockquote>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendar</span> </span>{
+
+            <span class="hljs-comment">//&#x7136;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x5B9E;&#x7528;&#x7684;&#x4F30;&#x70B9;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x300C;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x591A;&#x5F00;&#x70B9;&#x6570;&#x300D;&#xFF0C;&#x5229;&#x7528;&#x9898;&#x76EE;&#x7ED9;&#x5B9A;&#x7684;&#x7A7A;&#x95F4;&#x4E0A;&#x754C;&#x548C;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;</span>
+            <span class="hljs-comment">// &#xFF08;&#x7ED3;&#x6784;&#x4F53;&#xFF09;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x591A;&#x5F00;&#xFF08; Java &#x7684; 128M &#x53EF;&#x4EE5;&#x5F00;&#x5230; 5 * 10^6 &#x4EE5;&#x4E0A;&#xFF09;&#x3002;</span>
+
+
+            <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>{
+                <span class="hljs-keyword">int</span> ls, rs;<span class="hljs-comment">//&#x5206;&#x522B;&#x4EE3;&#x8868;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x8282;&#x70B9;&#x5728;&#x7EBF;&#x6BB5;&#x6811;&#x6570;&#x7EC4; tr &#x4E2D;&#x7684;&#x4E0B;&#x6807;</span>
+                <span class="hljs-keyword">int</span> lazy;<span class="hljs-comment">//&#x61D2;&#x6807;&#x8BB0;</span>
+                <span class="hljs-keyword">int</span> val;<span class="hljs-comment">//&#x5F53;&#x524D;&#x8282;&#x70B9;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#x6570;</span>
+            }
+
+            <span class="hljs-keyword">int</span> N = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">10</span>;
+            <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;<span class="hljs-comment">//&#x52A8;&#x6001;&#x5F00;&#x70B9;&#x7684;&#x4E0B;&#x6807;</span>
+            <span class="hljs-keyword">int</span> M = <span class="hljs-number">120010</span>;
+            Node[] tr = <span class="hljs-keyword">new</span> Node[M];
+
+            <span class="hljs-comment">//</span>
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R, <span class="hljs-keyword">int</span> v)</span> </span>{
+                <span class="hljs-comment">//[l,r]&#x533A;&#x95F4;&#x88AB;[L,R]&#x8986;&#x76D6;</span>
+                <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) {
+                    tr[u].val += (r - l + <span class="hljs-number">1</span>) * v;
+                    tr[u].lazy += v;
+                    <span class="hljs-keyword">return</span>;
+                }
+                lazyCreate(u);
+                pushdown(u, r - l + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (L &lt;= mid) update(tr[u].ls, l, mid, L, R, v);
+                <span class="hljs-keyword">if</span> (R &gt; mid) update(tr[u].rs, mid + <span class="hljs-number">1</span>, r, L, R, v);
+                pushup(u);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>{
+                <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) <span class="hljs-keyword">return</span> tr[u].val;
+                lazyCreate(u);
+                pushdown(u, r - l + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">if</span> (L &lt;= mid) res = query(tr[u].ls, l, mid, L, R);
+                <span class="hljs-keyword">if</span> (R &gt; mid) res += query(tr[u].rs, mid + <span class="hljs-number">1</span>, r, L, R);
+                <span class="hljs-keyword">return</span> res;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lazyCreate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+                <span class="hljs-keyword">if</span> (tr[u] == <span class="hljs-keyword">null</span>) {
+                    tr[u] = <span class="hljs-keyword">new</span> Node();
+                }
+                <span class="hljs-keyword">if</span> (tr[u].ls == <span class="hljs-number">0</span>) {
+                    tr[u].ls = ++cnt;
+                    tr[tr[u].ls] = <span class="hljs-keyword">new</span> Node();
+                }
+                <span class="hljs-keyword">if</span> (tr[u].rs == <span class="hljs-number">0</span>) {
+                    tr[u].rs = ++cnt;
+                    tr[tr[u].rs] = <span class="hljs-keyword">new</span> Node();
+                }
+
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+                tr[u].val = tr[tr[u].ls].val + tr[tr[u].rs].val;
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> len)</span> </span>{
+                tr[tr[u].ls].lazy += tr[u].lazy;
+                tr[tr[u].rs].lazy += tr[u].lazy;
+                tr[tr[u].ls].val += (len - len / <span class="hljs-number">2</span>) * tr[u].lazy;
+                tr[tr[u].rs].val += len / <span class="hljs-number">2</span> * tr[u].lazy;
+                tr[u].lazy = <span class="hljs-number">0</span>;
+            }
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendar</span><span class="hljs-params">()</span> </span>{
+
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+                <span class="hljs-keyword">int</span> res = query(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>, start + <span class="hljs-number">1</span>, end);
+                <span class="hljs-keyword">if</span> (res &gt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                update(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>, start + <span class="hljs-number">1</span>, end, <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            }
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;treemap">&#x65B9;&#x6CD5;2&#xFF1A;TreeMap</h3>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendar</span> </span>{
+
+    TreeMap&lt;Integer,Integer&gt; tm;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendar</span><span class="hljs-params">()</span> </span>{
+        tm =<span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+        Integer prev = tm.floorKey(start);
+        Integer next = tm.ceilingKey(start);
+        <span class="hljs-keyword">if</span>( ( prev== <span class="hljs-keyword">null</span> || tm.get(prev) &lt;= start) &amp;&amp; (next ==<span class="hljs-keyword">null</span> || end &lt;= next) ){
+            tm.put(start,end);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;treeset">&#x65B9;&#x6CD5;3&#xFF1A;TreeSet</h3>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendar</span> </span>{
+
+            TreeSet&lt;<span class="hljs-keyword">int</span>[]&gt; ts;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendar</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-comment">//&#x6309;&#x533A;&#x95F4;&#x7684;&#x5DE6;&#x8FB9;&#x754C;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;</span>
+                ts = <span class="hljs-keyword">new</span> TreeSet&lt;&gt;((a, b) -&gt; a[<span class="hljs-number">0</span>] - b[<span class="hljs-number">0</span>]);
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+                <span class="hljs-keyword">int</span>[] prev = ts.floor(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{start, end});
+                <span class="hljs-keyword">int</span>[] next = ts.ceiling(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{start, end});
+                <span class="hljs-keyword">if</span> ((prev == <span class="hljs-keyword">null</span> || prev[<span class="hljs-number">1</span>] &lt;= start) &amp;&amp; (next == <span class="hljs-keyword">null</span> || end &lt;= next[<span class="hljs-number">0</span>])) {
+                    ts.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{start, end});
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+        }
+</code></pre>
+<h4 id="&#x65B9;&#x6CD5;4&#xFF1A;&#x5EFA;&#x6811;">&#x65B9;&#x6CD5;4&#xFF1A;&#x5EFA;&#x6811;</h4>
+<pre><code class="lang-java">        <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendar</span> </span>{
+
+            <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>{
+                <span class="hljs-keyword">int</span> start, end;<span class="hljs-comment">//&#x533A;&#x95F4;</span>
+                Node leftNode, rightNode;<span class="hljs-comment">//&#x5DE6;&#x53F3;&#x5B69;&#x5B50;&#x8282;&#x70B9;</span>
+
+                <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Node</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> e)</span> </span>{
+                    start = s;
+                    end = e;
+                }
+            }
+
+            Node root;
+
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendar</span><span class="hljs-params">()</span> </span>{
+                root = <span class="hljs-keyword">new</span> Node(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+            }
+
+            <span class="hljs-comment">//&#x6BCF;&#x6B21;&#x4ECE;&#x6839;&#x8282;&#x70B9;&#x53BB;&#x627E;</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+                <span class="hljs-keyword">return</span> update(root, start, end);
+            }
+
+
+            <span class="hljs-comment">/**
+             * <span class="hljs-doctag">@param</span> root  &#x6811;&#x7684;&#x6839;&#x8282;&#x70B9;
+             * <span class="hljs-doctag">@param</span> start &#x5F85;&#x63D2;&#x5165;&#x7684;&#x533A;&#x95F4;&#x7684;&#x5DE6;&#x7AEF;&#x70B9;
+             * <span class="hljs-doctag">@param</span> end   &#x5F85;&#x63D2;&#x5165;&#x7684;&#x533A;&#x95F4;&#x7684;&#x53F3;&#x7AEF;&#x70B9;
+             * <span class="hljs-doctag">@return</span>
+             */</span>
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">update</span><span class="hljs-params">(Node root, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+                <span class="hljs-comment">//case1:</span>
+                <span class="hljs-comment">//[start...end]</span>
+                <span class="hljs-comment">//              [root_start.....root.end]</span>
+                <span class="hljs-comment">//case2:</span>
+                <span class="hljs-comment">//                                        [start...end]</span>
+                <span class="hljs-comment">//              [root_start.....root.end]</span>
+                <span class="hljs-comment">//case3.1:</span>
+                <span class="hljs-comment">//                         [start...end]</span>
+                <span class="hljs-comment">//              [root_start.....root.end]</span>
+                <span class="hljs-comment">//case3.2:</span>
+                <span class="hljs-comment">//          [start...end]</span>
+                <span class="hljs-comment">//              [root_start.....root.end]</span>
+                Node cur = root;
+                <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+                    <span class="hljs-keyword">if</span> (end &lt;= cur.start) {
+                        <span class="hljs-keyword">if</span> (cur.leftNode == <span class="hljs-keyword">null</span>) {
+                            cur.leftNode = <span class="hljs-keyword">new</span> Node(start, end);
+                            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+                        }
+                        cur = cur.leftNode;
+                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (start &gt;= cur.end) {
+                        <span class="hljs-keyword">if</span> (cur.rightNode == <span class="hljs-keyword">null</span>) {
+                            cur.rightNode = <span class="hljs-keyword">new</span> Node(start, end);
+                            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+                        }
+                        cur = cur.rightNode;
+                    } <span class="hljs-keyword">else</span> {
+                        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+                    }
+                }
+            }
+        }
+</code></pre>
+<h2 id="731-&#x6211;&#x7684;&#x65E5;&#x7A0B;&#x5B89;&#x6392;&#x8868;-ii"><a href="https://leetcode.cn/problems/my-calendar-ii/" target="_blank">731. &#x6211;&#x7684;&#x65E5;&#x7A0B;&#x5B89;&#x6392;&#x8868; II</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x66B4;&#x529B;">&#x65B9;&#x6CD5;1&#xFF1A;&#x66B4;&#x529B;</h3>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220521110550.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendarTwo</span> </span>{
+
+    List&lt;<span class="hljs-keyword">int</span>[]&gt; calendar;<span class="hljs-comment">//&#x7EF4;&#x62A4;&#x662F;&#x5F53;&#x524D;&#x7684;&#x9884;&#x8BA2;&#x533A;&#x95F4;</span>
+    List&lt;<span class="hljs-keyword">int</span>[]&gt; overlaps;<span class="hljs-comment">//&#x7EF4;&#x62A4;&#x7684;&#x91CD;&#x53E0;&#x7684;&#x533A;&#x95F4;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;2&#x4E2A;calendar&#x533A;&#x95F4;&#x4E2D;&#x90FD;&#x51FA;&#x73B0;&#x4E86;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;</span>
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendarTwo</span><span class="hljs-params">()</span> </span>{
+        calendar = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        overlaps = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+        <span class="hljs-comment">//overlaps&#x7684;&#x533A;&#x95F4;&#x4E0E;[start,end]&#x6709;&#x4EA4;&#x96C6;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x7684;&#x662F;&#x4E09;&#x91CD;&#x9884;&#x8BA2;&#xFF0C;&#x8FD4;&#x56DE;false</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] item : overlaps) {
+            <span class="hljs-keyword">if</span> (start &lt; item[<span class="hljs-number">1</span>] &amp;&amp; end &gt; item[<span class="hljs-number">0</span>]) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+        <span class="hljs-comment">//&#x904D;&#x5386;calendar &#x627E;&#x91CD;&#x53E0;&#x533A;&#x95F4;</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] item : calendar) {
+            <span class="hljs-keyword">if</span> (start &lt; item[<span class="hljs-number">1</span>] &amp;&amp; end &gt; item[<span class="hljs-number">0</span>]) {
+                overlaps.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{Math.max(start, item[<span class="hljs-number">0</span>]), Math.min(item[<span class="hljs-number">1</span>], end)});
+            }
+        }
+
+        calendar.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{start, end});
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;treemap">&#x65B9;&#x6CD5;2&#xFF1A;TreeMap</h3>
+<blockquote>
+<p>&#x6709;&#x70B9;&#x5DEE;&#x5206;&#x7684;&#x601D;&#x60F3;</p>
+</blockquote>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendarTwo</span> </span>{
+    TreeMap&lt;Integer, Integer&gt; map;
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendarTwo</span><span class="hljs-params">()</span> </span>{
+        map = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+        <span class="hljs-comment">//&#x601D;&#x8DEF;&#x6709;&#x70B9;&#x7C7B;&#x4F3C;&#x5DEE;&#x5206;&#x6570;&#x7EC4;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;[start,end)&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x5185;&#x7684;&#x5143;&#x7D20;&#x51FA;&#x73B0;&#x4E86;&#x4E00;&#x6B21;&#xFF0C;&#x90FD;+1</span>
+        map.put(start, map.getOrDefault(start, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+        map.put(end, map.getOrDefault(end, <span class="hljs-number">0</span>) - <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (Map.Entry&lt;Integer, Integer&gt; e : map.entrySet()) {
+            count += e.getValue();
+            <span class="hljs-comment">//&#x5927;&#x4E8E;&#x7B49;&#x4E8E;3&#x6B21;&#x7684;&#x9884;&#x8BA2;&#x6B21;&#x6570;&#x7684;&#x533A;&#x95F4;&#xFF0C;&#x9700;&#x8981;&#x6062;&#x590D;</span>
+            <span class="hljs-keyword">if</span> (count &gt;= <span class="hljs-number">3</span>) {
+                map.put(start, map.getOrDefault(start, <span class="hljs-number">0</span>) - <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span> (map.get(start) == <span class="hljs-number">0</span>) {
+                    map.remove(start);<span class="hljs-comment">//&#x8FD9;&#x4E00;&#x6B65;&#x4E0D;&#x79FB;&#x9664;&#x7684;&#x4E5F;&#x4E0D;&#x5F71;&#x54CD;&#x7A0B;&#x5E8F;&#x6B63;&#x786E;&#x6027;</span>
+                }
+                map.put(end, map.getOrDefault(end, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">if</span> (map.get(end) == <span class="hljs-number">0</span>) {
+                    map.remove(end);
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;&#x52A8;&#x6001;&#x5F00;&#x70B9;&#x61D2;&#x6807;&#x8BB0;&#x7EBF;&#x6BB5;&#x6811;">&#x65B9;&#x6CD5;3&#xFF1A;&#x52A8;&#x6001;&#x5F00;&#x70B9;+&#x61D2;&#x6807;&#x8BB0;&#x7EBF;&#x6BB5;&#x6811;</h3>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendarTwo</span> </span>{
+
+    <span class="hljs-comment">//&#x7136;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x5B9E;&#x7528;&#x7684;&#x4F30;&#x70B9;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x300C;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x591A;&#x5F00;&#x70B9;&#x6570;&#x300D;&#xFF0C;&#x5229;&#x7528;&#x9898;&#x76EE;&#x7ED9;&#x5B9A;&#x7684;&#x7A7A;&#x95F4;&#x4E0A;&#x754C;&#x548C;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;</span>
+    <span class="hljs-comment">// &#xFF08;&#x7ED3;&#x6784;&#x4F53;&#xFF09;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x591A;&#x5F00;&#xFF08; Java &#x7684; 128M &#x53EF;&#x4EE5;&#x5F00;&#x5230; 5 * 10^6 &#x4EE5;&#x4E0A;&#xFF09;&#x3002;</span>
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>{
+        <span class="hljs-keyword">int</span> ls, rs;<span class="hljs-comment">//&#x5206;&#x522B;&#x4EE3;&#x8868;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x8282;&#x70B9;&#x5728;&#x7EBF;&#x6BB5;&#x6811;&#x6570;&#x7EC4; tr &#x4E2D;&#x7684;&#x4E0B;&#x6807;</span>
+        <span class="hljs-keyword">int</span> lazy;<span class="hljs-comment">//&#x61D2;&#x6807;&#x8BB0;</span>
+        <span class="hljs-keyword">int</span> maxx;<span class="hljs-comment">//&#x5F53;&#x524D;&#x533A;&#x95F4;&#x7684;&#x6700;&#x5927;&#x503C;</span>
+    }
+
+    <span class="hljs-keyword">int</span> N = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;<span class="hljs-comment">//&#x52A8;&#x6001;&#x5F00;&#x70B9;&#x7684;&#x4E0B;&#x6807;</span>
+    <span class="hljs-keyword">int</span> M = <span class="hljs-number">120010</span>;
+    Node[] tr = <span class="hljs-keyword">new</span> Node[M];
+
+    <span class="hljs-comment">//l,r &#x4E3A;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x5B58;&#x50A8;&#x7684;&#x533A;&#x95F4; L,R&#x8868;&#x793A;&#x8981;&#x4FEE;&#x6539;&#x7684;&#x524D;&#xFF0C;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x4E0D;&#x4F1A;&#x53D8;&#xFF0C;&#x8BBE;&#x7F6E;&#x6210;&#x5927;&#x5199;</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R, <span class="hljs-keyword">int</span> v)</span> </span>{
+        <span class="hljs-comment">//[l,r]&#x533A;&#x95F4;&#x88AB;[L,R]&#x8986;&#x76D6;</span>
+        <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) {
+            tr[u].maxx += v;
+            tr[u].lazy += v;
+            <span class="hljs-keyword">return</span>;
+        }
+        lazyCreate(u);
+        pushdown(u);
+        <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (L &lt;= mid) update(tr[u].ls, l, mid, L, R, v);
+        <span class="hljs-keyword">if</span> (R &gt; mid) update(tr[u].rs, mid + <span class="hljs-number">1</span>, r, L, R, v);
+        pushup(u);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>{
+        <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) <span class="hljs-keyword">return</span> tr[u].maxx;
+        lazyCreate(u);
+        pushdown(u);
+        <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (L &lt;= mid) res = Math.max(res, query(tr[u].ls, l, mid, L, R));
+        <span class="hljs-keyword">if</span> (R &gt; mid) res = Math.max(res, query(tr[u].rs, mid + <span class="hljs-number">1</span>, r, L, R));
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lazyCreate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+        <span class="hljs-keyword">if</span> (tr[u] == <span class="hljs-keyword">null</span>) {
+            tr[u] = <span class="hljs-keyword">new</span> Node();
+        }
+        <span class="hljs-keyword">if</span> (tr[u].ls == <span class="hljs-number">0</span>) {
+            tr[u].ls = ++cnt;
+            tr[tr[u].ls] = <span class="hljs-keyword">new</span> Node();
+        }
+        <span class="hljs-keyword">if</span> (tr[u].rs == <span class="hljs-number">0</span>) {
+            tr[u].rs = ++cnt;
+            tr[tr[u].rs] = <span class="hljs-keyword">new</span> Node();
+        }
+
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+        tr[u].maxx = Math.max(tr[tr[u].ls].maxx, tr[tr[u].rs].maxx);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+        tr[tr[u].ls].lazy += tr[u].lazy;
+        tr[tr[u].rs].lazy += tr[u].lazy;
+        tr[tr[u].ls].maxx += tr[u].lazy;
+        tr[tr[u].rs].maxx += tr[u].lazy;
+        tr[u].lazy = <span class="hljs-number">0</span>;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendarTwo</span><span class="hljs-params">()</span> </span>{
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+        <span class="hljs-keyword">int</span> res = query(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>, start + <span class="hljs-number">1</span>, end);
+        <span class="hljs-keyword">if</span> (res &gt;= <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        update(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>, start + <span class="hljs-number">1</span>, end, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+}
+</code></pre>
+<h2 id="732-&#x6211;&#x7684;&#x65E5;&#x7A0B;&#x5B89;&#x6392;&#x8868;-iii"><a href="https://leetcode.cn/problems/my-calendar-iii/" target="_blank">732. &#x6211;&#x7684;&#x65E5;&#x7A0B;&#x5B89;&#x6392;&#x8868; III</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;treemap">&#x65B9;&#x6CD5;1&#xFF1A;TreeMap</h3>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendarThree</span> </span>{
+
+    TreeMap&lt;Integer, Integer&gt; tm;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendarThree</span><span class="hljs-params">()</span> </span>{
+        tm = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+        tm.put(start, tm.getOrDefault(start, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+        tm.put(end, tm.getOrDefault(end, <span class="hljs-number">0</span>) - <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">int</span> maxx = <span class="hljs-number">0</span>, count = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> t : tm.keySet()) {
+            count += tm.get(t);
+            maxx = Math.max(maxx, count);
+        }
+        <span class="hljs-keyword">return</span> maxx;
+    }
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x7EBF;&#x6BB5;&#x6811;">&#x65B9;&#x6CD5;2&#xFF1A;&#x7EBF;&#x6BB5;&#x6811;</h3>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCalendarThree</span> </span>{
+
+    <span class="hljs-comment">//&#x7136;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x5B9E;&#x7528;&#x7684;&#x4F30;&#x70B9;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x300C;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x591A;&#x5F00;&#x70B9;&#x6570;&#x300D;&#xFF0C;&#x5229;&#x7528;&#x9898;&#x76EE;&#x7ED9;&#x5B9A;&#x7684;&#x7A7A;&#x95F4;&#x4E0A;&#x754C;&#x548C;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;</span>
+    <span class="hljs-comment">// &#xFF08;&#x7ED3;&#x6784;&#x4F53;&#xFF09;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5C3D;&#x53EF;&#x80FD;&#x7684;&#x591A;&#x5F00;&#xFF08; Java &#x7684; 128M &#x53EF;&#x4EE5;&#x5F00;&#x5230; 5 * 10^6 &#x4EE5;&#x4E0A;&#xFF09;&#x3002;</span>
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>{
+        <span class="hljs-keyword">int</span> ls, rs;<span class="hljs-comment">//&#x5206;&#x522B;&#x4EE3;&#x8868;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x7684;&#x5DE6;&#x53F3;&#x5B50;&#x8282;&#x70B9;&#x5728;&#x7EBF;&#x6BB5;&#x6811;&#x6570;&#x7EC4; tr &#x4E2D;&#x7684;&#x4E0B;&#x6807;</span>
+        <span class="hljs-keyword">int</span> lazy;<span class="hljs-comment">//&#x61D2;&#x6807;&#x8BB0;</span>
+        <span class="hljs-keyword">int</span> maxx;<span class="hljs-comment">//&#x5F53;&#x524D;&#x533A;&#x95F4;&#x7684;&#x6700;&#x5927;&#x503C;</span>
+    }
+
+    <span class="hljs-keyword">int</span> N = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;<span class="hljs-comment">//&#x52A8;&#x6001;&#x5F00;&#x70B9;&#x7684;&#x4E0B;&#x6807;</span>
+    <span class="hljs-keyword">int</span> M = <span class="hljs-number">120010</span>;
+    Node[] tr = <span class="hljs-keyword">new</span> Node[M];
+
+    <span class="hljs-comment">//l,r &#x4E3A;&#x5F53;&#x524D;&#x8282;&#x70B9;&#x5B58;&#x50A8;&#x7684;&#x533A;&#x95F4; L,R&#x8868;&#x793A;&#x8981;&#x4FEE;&#x6539;&#x7684;&#x524D;&#xFF0C;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x4E0D;&#x4F1A;&#x53D8;&#xFF0C;&#x8BBE;&#x7F6E;&#x6210;&#x5927;&#x5199;</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R, <span class="hljs-keyword">int</span> v)</span> </span>{
+        <span class="hljs-comment">//[l,r]&#x533A;&#x95F4;&#x88AB;[L,R]&#x8986;&#x76D6;</span>
+        <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) {
+            tr[u].maxx += v;
+            tr[u].lazy += v;
+            <span class="hljs-keyword">return</span>;
+        }
+        lazyCreate(u);
+        pushdown(u);
+        <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (L &lt;= mid) update(tr[u].ls, l, mid, L, R, v);
+        <span class="hljs-keyword">if</span> (R &gt; mid) update(tr[u].rs, mid + <span class="hljs-number">1</span>, r, L, R, v);
+        pushup(u);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> L, <span class="hljs-keyword">int</span> R)</span> </span>{
+        <span class="hljs-keyword">if</span> (L &lt;= l &amp;&amp; r &lt;= R) <span class="hljs-keyword">return</span> tr[u].maxx;
+        lazyCreate(u);
+        pushdown(u);
+        <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">if</span> (L &lt;= mid) res = Math.max(res, query(tr[u].ls, l, mid, L, R));
+        <span class="hljs-keyword">if</span> (R &gt; mid) res = Math.max(res, query(tr[u].rs, mid + <span class="hljs-number">1</span>, r, L, R));
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lazyCreate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+        <span class="hljs-keyword">if</span> (tr[u] == <span class="hljs-keyword">null</span>) {
+            tr[u] = <span class="hljs-keyword">new</span> Node();
+        }
+        <span class="hljs-keyword">if</span> (tr[u].ls == <span class="hljs-number">0</span>) {
+            tr[u].ls = ++cnt;
+            tr[tr[u].ls] = <span class="hljs-keyword">new</span> Node();
+        }
+        <span class="hljs-keyword">if</span> (tr[u].rs == <span class="hljs-number">0</span>) {
+            tr[u].rs = ++cnt;
+            tr[tr[u].rs] = <span class="hljs-keyword">new</span> Node();
+        }
+
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+        tr[u].maxx = Math.max(tr[tr[u].ls].maxx, tr[tr[u].rs].maxx);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+        tr[tr[u].ls].lazy += tr[u].lazy;
+        tr[tr[u].rs].lazy += tr[u].lazy;
+        tr[tr[u].ls].maxx += tr[u].lazy;
+        tr[tr[u].rs].maxx += tr[u].lazy;
+        tr[u].lazy = <span class="hljs-number">0</span>;
+    }
+
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyCalendarThree</span><span class="hljs-params">()</span> </span>{
+
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">book</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+        update(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>, start + <span class="hljs-number">1</span>, end, <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">int</span> res = query(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, N + <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">return</span> res;
+    }
+}
+</code></pre>
 <h2 id="850-&#x77E9;&#x5F62;&#x9762;&#x79EF;-ii"><a href="https://leetcode.cn/problems/rectangle-area-ii/" target="_blank">850. &#x77E9;&#x5F62;&#x9762;&#x79EF; II</a></h2>
 <h2 id="2276-&#x7EDF;&#x8BA1;&#x533A;&#x95F4;&#x4E2D;&#x7684;&#x6574;&#x6570;&#x6570;&#x76EE;"><a href="https://leetcode.cn/problems/count-integers-in-intervals/" target="_blank">2276. &#x7EDF;&#x8BA1;&#x533A;&#x95F4;&#x4E2D;&#x7684;&#x6574;&#x6570;&#x6570;&#x76EE;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#xFF1A;treemap&#x5408;&#x5E76;&#x533A;&#x95F4;">&#x65B9;&#x6CD5;1&#xFF1A;TreeMap&#x5408;&#x5E76;&#x533A;&#x95F4;</h3>
@@ -1573,40 +2028,40 @@
         }
 </code></pre>
 <h3 id="&#x4E00;&#x4E9B;&#x4EE3;&#x7801;">&#x4E00;&#x4E9B;&#x4EE3;&#x7801;</h3>
-<pre><code class="lang-c++"><span class="hljs-comment">/*
+<pre><code class="lang-java"><span class="hljs-comment">/*
     &#x52A8;&#x6001;&#x5F00;&#x70B9;&#x7EBF;&#x6BB5;&#x6811;&#xFF08;&#x5E26;&#x61D2;&#x6807;&#x8BB0;&#xFF09;by Mikasa Mikoto
     step 1&#xFF1A;init();
     &#x533A;&#x95F4;&#x4FEE;&#x6539;&#xFF0C;&#x533A;&#x95F4;&#x67E5;&#x8BE2;
     [l, r] &#x95ED;&#x533A;&#x95F4;
 */</span>
-<span class="hljs-keyword">using</span> TT = <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>;
+using TT = <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>;
 <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">5e5</span> + <span class="hljs-number">10</span>;
 <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> TT M = <span class="hljs-number">1e9</span> + <span class="hljs-number">10</span>;
 <span class="hljs-comment">//&#x8282;&#x70B9;&#x5B9A;&#x4E49;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;</span>
-<span class="hljs-keyword">struct</span> Node {
+struct Node {
     <span class="hljs-keyword">int</span> l, r;
     TT sum, lazy;
 } tr[N] {};
 <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> idx , root;
 <span class="hljs-comment">//&#x8282;&#x70B9;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;</span>
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_node</span><span class="hljs-params">()</span> </span>{
+<span class="hljs-function">inline <span class="hljs-keyword">int</span> <span class="hljs-title">get_node</span><span class="hljs-params">()</span> </span>{
     ++ idx;
     tr[idx] = {};
     <span class="hljs-keyword">return</span> idx;
 }
 <span class="hljs-comment">//&#x4E0A;&#x4F20;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;,&#x4F20;left, right&#x5907;&#x7528;</span>
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(Node&amp; u, Node&amp; ls, Node&amp; rs, TT left, TT right)</span> </span>{
+<span class="hljs-function">inline <span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(Node&amp; u, Node&amp; ls, Node&amp; rs, TT left, TT right)</span> </span>{
     <span class="hljs-comment">//TT mid = (right - left) / 2 + left;</span>
     u.sum = ls.sum + rs.sum;
 }
 <span class="hljs-comment">//&#x4E0B;&#x4F20;&#xFF0C;&#x6839;&#x636E;&#x9700;&#x8981;&#x4FEE;&#x6539;</span>
 <span class="hljs-comment">//&#x4E0B;&#x4F20;&#x64CD;&#x4F5C;&#x51FD;&#x6570;&#xFF1A;</span>
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eval</span><span class="hljs-params">(Node&amp; u, TT left, TT right, TT lazy)</span> </span>{
+<span class="hljs-function">inline <span class="hljs-keyword">void</span> <span class="hljs-title">eval</span><span class="hljs-params">(Node&amp; u, TT left, TT right, TT lazy)</span> </span>{
     u.sum += (right - left + <span class="hljs-number">1</span>) * lazy;
     u.lazy += lazy;
 }
 <span class="hljs-comment">//&#x4E0B;&#x4F20;&#x51FD;&#x6570;&#xFF1A;</span>
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(Node&amp; u, Node&amp; ls, Node&amp; rs, TT left, TT right)</span> </span>{
+<span class="hljs-function">inline <span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(Node&amp; u, Node&amp; ls, Node&amp; rs, TT left, TT right)</span> </span>{
     <span class="hljs-keyword">if</span>(u.lazy) {
         TT mid = (right - left) / <span class="hljs-number">2</span> + left; 
         eval(ls, left, mid, u.lazy);
@@ -1614,10 +2069,10 @@
         u.lazy = <span class="hljs-number">0</span>;
     }
 }
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT left, TT right)</span> </span>{
+<span class="hljs-function">inline <span class="hljs-keyword">void</span> <span class="hljs-title">pushup</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT left, TT right)</span> </span>{
     pushup(tr[u], tr[tr[u].l], tr[tr[u].r], left, right);
 }
-<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT left, TT right)</span> </span>{
+<span class="hljs-function">inline <span class="hljs-keyword">void</span> <span class="hljs-title">pushdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, TT left, TT right)</span> </span>{
     <span class="hljs-keyword">if</span>(!tr[u].l) tr[u].l = get_node();
     <span class="hljs-keyword">if</span>(!tr[u].r) tr[u].r = get_node();
     pushdown(tr[u], tr[tr[u].l], tr[tr[u].r], left, right);
@@ -1646,7 +2101,7 @@
     <span class="hljs-keyword">if</span>(R &lt;= mid) res = query(tr[u].l, l, mid, L, R);
     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(L &gt; mid) res = query(tr[u].r, mid + <span class="hljs-number">1</span>, r, L, R);
     <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">auto</span> left = query(tr[u].l, l, mid, L, R), right = query(tr[u].r, mid + <span class="hljs-number">1</span>, r, L, R);
+        auto left = query(tr[u].l, l, mid, L, R), right = query(tr[u].r, mid + <span class="hljs-number">1</span>, r, L, R);
         pushup(res, left, right, l, r);
     }
     pushup(u, l, r);
@@ -1765,6 +2220,7 @@ int main(){
 <li><p><a href="https://www.bilibili.com/video/BV1yF411p7Bt?spm_id_from=333.337.search-card.all.click" target="_blank">&#x3010;neko&#x3011;&#x6570;&#x636E;&#x7ED3;&#x6784; &#x7EBF;&#x6BB5;&#x6811;&#x3010;&#x7B97;&#x6CD5;&#x7F16;&#x7A0B;#6&#x3011;</a></p>
 </li>
 <li><a href="https://www.bilibili.com/video/BV1NS4y1S77N?spm_id_from=333.337.search-card.all.click" target="_blank">&#x4EC0;&#x4E48;&#x662F;&#x7EBF;&#x6BB5;&#x6811;</a></li>
+<li><a href="https://www.luogu.com.cn/problem/solution/P3372" target="_blank">P3372 &#x3010;&#x6A21;&#x677F;&#x3011;&#x7EBF;&#x6BB5;&#x6811; 1 &#x9898;&#x89E3;</a></li>
 </ul>
 
                                 
@@ -1809,7 +2265,7 @@ int main(){
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"next":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"previous":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/segment_tree.md","mtime":"2022-05-19T14:26:07.879Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"next":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"previous":{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/segment_tree.md","mtime":"2022-05-21T13:12:44.424Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

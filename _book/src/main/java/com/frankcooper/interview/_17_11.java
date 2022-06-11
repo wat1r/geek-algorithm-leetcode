@@ -65,6 +65,22 @@ public class _17_11 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        public int findClosest(String[] words, String word1, String word2) {
+            int j = 0, k = 0;
+            int dist = 100010;
+            for (int i = 0; i < words.length; i++) {
+                if (word1.equals(words[i])) {
+                    j = i;
+                } else if (word2.equals(words[i])) {
+                    k = i;
+                }
+                if (j > 0 && k > 0) {
+                    dist = Math.min(dist, Math.abs(j - k));
+                }
+            }
+            return dist;
+        }
     }
 
     static class _4th {

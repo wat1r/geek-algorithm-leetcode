@@ -138,4 +138,32 @@ public class _402 {
     }
 
 
+    static class _2nd_1 {
+        public String removeKdigits(String num, int k) {
+            Deque<Character> stk = new ArrayDeque<>();
+            char[] ch = num.toCharArray();
+            for (int i = 0; i < ch.length; i++) {
+                while (!stk.isEmpty() && stk.peek() > ch[i] && k > 0) {
+                    stk.pop();
+                    k--;
+                }
+                stk.push(ch[i]);
+            }
+            while (k-- > 0) stk.pop();
+            StringBuilder sb = new StringBuilder();
+            while (!stk.isEmpty()) sb.append(stk.pop());
+            StringBuilder res = new StringBuilder();
+            boolean headZero = true;
+            for (char c : sb.reverse().toString().toCharArray()) {
+                if (c == '0' && headZero) {
+                    continue;
+                }
+                res.append(c);
+                headZero = false;
+            }
+            return res.toString().equals("") ? "0" : res.toString();
+        }
+    }
+
+
 }

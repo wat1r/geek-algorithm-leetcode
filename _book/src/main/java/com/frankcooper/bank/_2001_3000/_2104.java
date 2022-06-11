@@ -1,7 +1,9 @@
 package com.frankcooper.bank._2001_3000;
 
-/*import java.util.*;
-import org.junit.Assert;*/
+import java.util.*;
+
+import org.junit.Assert;
+
 public class _2104 {
 
     static class _1st {
@@ -14,6 +16,7 @@ public class _2104 {
 
         /**
          * 暴力双层循环
+         *
          * @param nums
          * @return
          */
@@ -38,14 +41,102 @@ public class _2104 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int[] nums = {1, 2, 3};
+            handler.subArrayRanges(nums);
         }
+
+        int n;
+
+        public long subArrayRanges(int[] nums) {
+            n = nums.length;
+            // min[i] 为 nums[i] 作为区间最小值的次数；max[i] 为 nums[i] 作为区间最大值的次数
+            long[] min = getCnt(nums, true), max = getCnt(nums, false);
+            long ans = 0;
+            for (int i = 0; i < n; i++) ans += (max[i] - min[i]) * nums[i];
+            return ans;
+        }
+
+        long[] getCnt(int[] nums, boolean isMin) {
+            int[] left = new int[n], right = new int[n];
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                while (!stk.isEmpty() &&
+                        (isMin ? nums[stk.peek()] >= nums[i] : nums[stk.peek()] <= nums[i]))
+                    stk.pop();
+                left[i] = stk.isEmpty() ? -1 : stk.peek();
+                stk.push(i);
+            }
+            stk.clear();
+            for (int i = n - 1; i >= 0; i--) {
+                while (!stk.isEmpty() &&
+                        (isMin ? nums[stk.peek()] > nums[i] : nums[stk.peek()] < nums[i]))
+                    stk.pop();
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+            long[] ans = new long[n];
+            for (int i = 0; i < n; i++) ans[i] = (i - left[i]) * 1L * (right[i] - i);
+            return ans;
+        }
+
     }
 
 
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int[] nums = {1, 2, 3};
+            handler.subArrayRanges(nums);
         }
+
+        public long subArrayRanges(int[] nums) {
+            int n = nums.length;
+            //计算nums[i]在 nums中 作为最大值和最小值 所出现的最大区间大小
+            //换言之，需要找到nums[i] 作为最大值，找到左边第一个比nums[i]小的索引j 找到右边第一个比nums[i]小的索引k 区间范围为[k-j]
+            //同理，需要找到nums[i] 作为最小值，找到左边第一个比nums[i]大的索引j 找到右边第一个比nums[i]大的索引k 区间范围为[k-j]
+            //这里因为做了两遍的比较，需要特别注意 在 严格相等的时候，只能取一边，另外一边如果重复取，则会重复
+            long[] maxx = getCnt(nums, false);
+            long[] minn = getCnt(nums, true);
+            long res = 0;
+            //计算当前元素作为最大值和最小值时，出现的次数，计算出「贡献值」
+            for (int i = 0; i < n; i++) {
+                res += nums[i] * (maxx[i] - minn[i]);
+            }
+            return res;
+        }
+
+        public long[] getCnt(int[] nums, boolean flag) {
+            int n = nums.length;
+            int[] left = new int[n], right = new int[n];
+            Deque<Integer> stk = new ArrayDeque<>();
+            for (int i = 0; i < n; i++) {
+                //为true时维持单调递增栈，遇到非严格递减趋势时，弹出栈顶元素「下标」
+                //这时候找的是左边比小于等于nums[i]的索引，如果左边没有符合条件的下标则设置为-1，即索引0往左的一个位置
+                while (!stk.isEmpty() && (flag ? nums[stk.peek()] >= nums[i] : nums[stk.peek()] <= nums[i])) {
+                    stk.pop();
+                }
+                left[i] = stk.isEmpty() ? -1 : stk.peek();
+                stk.push(i);
+            }
+            stk.clear();
+            //为true时维持单调递增栈，遇到非严格递减趋势时，弹出栈顶元素「下标」
+            //这时候找的是右边比小于(此处没有等于)nums[i]的索引，如果左边没有符合条件的下标则设置为n，即索引「len(nums)」往右的一个位置
+            for (int i = n - 1; i >= 0; i--) {
+                while (!stk.isEmpty() && (flag ? nums[stk.peek()] > nums[i] : nums[stk.peek()] < nums[i])) {
+                    stk.pop();
+                }
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+            long[] res = new long[n];
+            //左侧有 (i - left[i]) 和选择，右侧有(right[i] - i)个选择
+            //根据乘法原理,(i - left[i])*(right[i] - i)
+            for (int i = 0; i < n; i++) {
+                res[i] = 1L * (i - left[i]) * (right[i] - i);
+            }
+            return res;
+        }
+
     }
 
     static class _4th {

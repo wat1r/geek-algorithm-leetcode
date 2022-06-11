@@ -920,6 +920,146 @@
                                 <h1 id="&#x6392;&#x5E8F;">&#x6392;&#x5E8F;</h1>
 <blockquote>
 </blockquote>
+<h2 id="56-&#x5408;&#x5E76;&#x533A;&#x95F4;"><a href="https://leetcode.cn/problems/merge-intervals/" target="_blank">56. &#x5408;&#x5E76;&#x533A;&#x95F4;</a></h2>
+<pre><code class="lang-java">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[][] merge(<span class="hljs-keyword">int</span>[][] intervals) {
+        List&lt;<span class="hljs-keyword">int</span>[]&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        Arrays.sort(intervals,(a,b)-&gt;a[<span class="hljs-number">0</span>]-b[<span class="hljs-number">0</span>]);
+        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, n = intervals.length;
+        <span class="hljs-keyword">while</span>(i&lt; n ){
+            <span class="hljs-keyword">int</span> l = intervals[i][<span class="hljs-number">0</span>] ,r = intervals[i][<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">while</span>(i &lt; n-<span class="hljs-number">1</span> &amp;&amp; r &gt;=intervals[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]){
+                r = Math.max(r,intervals[i+<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]);
+                i++;
+            }
+            list.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{l,r});
+            i++;
+        }
+        <span class="hljs-keyword">return</span> list.toArray(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">0</span>][]);
+    }
+</code></pre>
+<h2 id="347-&#x524D;-k-&#x4E2A;&#x9AD8;&#x9891;&#x5143;&#x7D20;"><a href="https://leetcode.cn/problems/top-k-frequent-elements/" target="_blank">347. &#x524D; K &#x4E2A;&#x9AD8;&#x9891;&#x5143;&#x7D20;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;hashmap&#x6876;&#x6392;">&#x65B9;&#x6CD5;1&#xFF1A;HashMap+&#x6876;&#x6392;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] topKFrequent(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k) {
+    <span class="hljs-comment">//k:nums&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#xFF0C;v:nums&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+    Map&lt;Integer, Integer&gt; freqMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : nums) {
+        freqMap.put(x, freqMap.getOrDefault(x, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-comment">//bucket[freq]&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;&#xFF0C;&#x54EA;&#x4E9B;&#x6570;&#x51FA;&#x73B0;&#x4E86;freq&#x6B21;</span>
+    List&lt;Integer&gt;[] bucket = <span class="hljs-keyword">new</span> List[nums.length + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : freqMap.keySet()) {
+        <span class="hljs-keyword">int</span> freq = freqMap.get(x);
+        <span class="hljs-keyword">if</span> (bucket[freq] == <span class="hljs-keyword">null</span>) bucket[freq] = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        bucket[freq].add(x);
+    }
+    List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-comment">//&#x4ECE;&#x9AD8;&#x5230;&#x4F4E;freq&#x5F00;&#x59CB;&#x6536;&#x96C6;res</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = bucket.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) {
+        <span class="hljs-keyword">if</span> (bucket[i] != <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; bucket[i].size() &amp;&amp; res.size() &lt; k; j++) {
+                res.add(bucket[i].get(j));
+            }
+        }
+    }
+    <span class="hljs-keyword">int</span>[] ans = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[res.size()];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; res.size(); i++) ans[i] = res.get(i);
+    <span class="hljs-keyword">return</span> ans;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;hashmap&#x5927;&#x6839;&#x5806;">&#x65B9;&#x6CD5;2&#xFF1A;HashMap+&#x5927;&#x6839;&#x5806;</h3>
+<pre><code class="lang-java"> <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] topKFrequent(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k) {
+            <span class="hljs-comment">//k:nums&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#xFF0C;v:nums&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+            Map&lt;Integer, Integer&gt; freqMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : nums) {
+                freqMap.put(x, freqMap.getOrDefault(x, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+            }
+            <span class="hljs-comment">//&#x505A;&#x4E00;&#x4E2A;&#x5927;&#x6839;&#x5806;</span>
+            PriorityQueue&lt;Map.Entry&lt;Integer, Integer&gt;&gt; pq = <span class="hljs-keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; o2.getValue() - o1.getValue());
+            <span class="hljs-keyword">for</span> (Map.Entry&lt;Integer, Integer&gt; e : freqMap.entrySet()) {
+                pq.offer(e);
+            }
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">while</span> (res.size() &lt; k) {
+                res.add(pq.poll().getKey());
+            }
+            <span class="hljs-keyword">int</span>[] ans = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[res.size()];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; res.size(); i++) ans[i] = res.get(i);
+            <span class="hljs-keyword">return</span> ans;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;hashmaptreemap">&#x65B9;&#x6CD5;3&#xFF1A;HashMap+TreeMap</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] topKFrequent(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k) {
+            <span class="hljs-comment">//k:nums&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#xFF0C;v:nums&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+            Map&lt;Integer, Integer&gt; freqMap = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : nums) {
+                freqMap.put(x, freqMap.getOrDefault(x, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+            }
+            TreeMap&lt;Integer, List&lt;Integer&gt;&gt; treeMap = <span class="hljs-keyword">new</span> TreeMap&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : freqMap.keySet()) {
+                <span class="hljs-keyword">int</span> freq = freqMap.get(x);
+                treeMap.putIfAbsent(freq, <span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+                treeMap.get(freq).add(x);
+            }
+            List&lt;Integer&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+            <span class="hljs-keyword">while</span> (res.size() &lt; k) {
+                Map.Entry&lt;Integer, List&lt;Integer&gt;&gt; e = treeMap.pollLastEntry();
+                res.addAll(e.getValue());
+            }
+            <span class="hljs-keyword">int</span>[] ans = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[res.size()];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; res.size(); i++) ans[i] = res.get(i);
+            <span class="hljs-keyword">return</span> ans;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;4&#xFF1A;&#x5FEB;&#x901F;&#x6392;&#x5E8F;">&#x65B9;&#x6CD5;4&#xFF1A;&#x5FEB;&#x901F;&#x6392;&#x5E8F;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] topKFrequent(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> k) {
+    <span class="hljs-comment">//k: &#x5143;&#x7D20;num v:&#x51FA;&#x73B0;&#x7684;&#x9891;&#x6B21;</span>
+    Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : nums) map.put(x, map.getOrDefault(x, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+    List&lt;<span class="hljs-keyword">int</span>[]&gt; freqList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">for</span> (Map.Entry&lt;Integer, Integer&gt; e : map.entrySet()) {
+        <span class="hljs-keyword">int</span> num = e.getKey(), freq = e.getValue();
+        freqList.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{num, freq});
+    }
+    <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[k];
+    quickSort(freqList, <span class="hljs-number">0</span>, freqList.size() - <span class="hljs-number">1</span>, res, <span class="hljs-number">0</span>, k);
+    <span class="hljs-keyword">return</span> res;
+
+}
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> freqList &#x9891;&#x6B21;&#x7684;list [0]&#x4E3A;num [1]&#x4E3A;freq
+ * <span class="hljs-doctag">@param</span> start    list&#x7684;&#x5F00;&#x59CB;&#x4F4D;&#x7F6E;
+ * <span class="hljs-doctag">@param</span> end      list&#x7684;&#x7ED3;&#x675F;&#x4F4D;&#x7F6E;
+ * <span class="hljs-doctag">@param</span> res      &#x7ED3;&#x679C;&#x6570;&#x7EC4;
+ * <span class="hljs-doctag">@param</span> resIndex &#x7ED3;&#x679C;&#x6570;&#x7EC4;&#x7684;&#x5F53;&#x524D;&#x5F85;&#x6DFB;&#x52A0;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;
+ * <span class="hljs-doctag">@param</span> k        k
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">quickSort</span><span class="hljs-params">(List&lt;<span class="hljs-keyword">int</span>[]&gt; freqList, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end,
+                       <span class="hljs-keyword">int</span>[] res, <span class="hljs-keyword">int</span> resIndex, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> pivotIndex = (<span class="hljs-keyword">int</span>) (Math.random() * (end - start + <span class="hljs-number">1</span>)) + start;<span class="hljs-comment">//&#x968F;&#x673A;&#x9009;&#x62E9;&#x54E8;&#x5175;</span>
+    Collections.swap(freqList, start, pivotIndex);<span class="hljs-comment">//&#x4EA4;&#x6362;&#x54E8;&#x5175;&#x4E0E;start&#x7684;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">int</span> pivotFreq = freqList.get(start)[<span class="hljs-number">1</span>];<span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x9891;&#x6B21;</span>
+    <span class="hljs-keyword">int</span> index = start;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start + <span class="hljs-number">1</span>; i &lt;= end; i++) {
+        <span class="hljs-keyword">if</span> (freqList.get(i)[<span class="hljs-number">1</span>] &gt;= pivotFreq) {<span class="hljs-comment">//&#x5C06;&#x9891;&#x6B21;&#x9AD8;&#x7684;&#x653E;&#x5728;&#x5DE6;&#x4FA7;&#xFF0C;&#x9891;&#x6B21;&#x4F4E;&#x7684;&#x653E;&#x5728;&#x53F3;&#x4FA7;</span>
+            Collections.swap(freqList, index + <span class="hljs-number">1</span>, i);
+            index++;
+        }
+    }
+    Collections.swap(freqList, start, index);<span class="hljs-comment">//&#x5C06;&#x54E8;&#x5175;&#x7684;&#x4F4D;&#x7F6E;&#x653E;&#x7F6E;&#x5728;&#x6B63;&#x786E;&#x7684;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">if</span> (index - start &gt;= k) {<span class="hljs-comment">//[start...index]&#x6BB5;&#x7684;&#x5143;&#x7D20;&#x6BD4;k&#x591A;&#xFF0C;&#x9700;&#x8981;&#x5728;[start...index]&#x6BB5;&#x7EE7;&#x7EED;&#x7F29;&#x5C0F;&#x8303;&#x56F4;</span>
+        quickSort(freqList, start, index - <span class="hljs-number">1</span>, res, resIndex, k);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt;= index; i++) {<span class="hljs-comment">//&#x5DE6;&#x4FA7;&#x90E8;&#x5206;&#x5373;[start...index]&#x90FD;&#x662F;&#x9700;&#x8981;&#x7684;&#xFF0C;&#x5F00;&#x59CB;&#x6536;&#x96C6;</span>
+            res[resIndex++] = freqList.get(i)[<span class="hljs-number">0</span>];
+        }
+        <span class="hljs-keyword">if</span> (index - start + <span class="hljs-number">1</span> &lt; k) { <span class="hljs-comment">// &#x5F53;pivot&#x548C;&#x8D77;&#x70B9;&#x95F4;&#x7684;&#x4E2A;&#x6570;&#x5C0F;&#x4E8E;k&#x65F6;&#xFF0C;&#x5219;&#x4ECE;pivot&#x5230;end&#x518D;&#x7EE7;&#x7EED;&#x627E;&#x5269;&#x4E0B;&#x7684;&#x524D;&#xFF08;k - &#xFF08;pivot - start + 1&#xFF09;&#xFF09;&#x5927;&#x7684;&#x5143;&#x7D20;</span>
+            quickSort(freqList, index + <span class="hljs-number">1</span>, end, res, resIndex, k - (index - start + <span class="hljs-number">1</span>));
+        }
+    }
+
+}
+</code></pre>
 <h2 id="453-&#x6700;&#x5C0F;&#x64CD;&#x4F5C;&#x6B21;&#x6570;&#x4F7F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#x76F8;&#x7B49;"><a href="https://leetcode.cn/problems/minimum-moves-to-equal-array-elements/" target="_blank">453. &#x6700;&#x5C0F;&#x64CD;&#x4F5C;&#x6B21;&#x6570;&#x4F7F;&#x6570;&#x7EC4;&#x5143;&#x7D20;&#x76F8;&#x7B49;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x627E;&#x6700;&#x5C0F;&#x503C;">&#x65B9;&#x6CD5;1&#xFF1A;&#x627E;&#x6700;&#x5C0F;&#x503C;</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minMoves</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
@@ -1115,7 +1255,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"排序","level":"1.2.6","depth":2,"next":{"title":"模拟","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"previous":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sorting.md","mtime":"2022-05-19T13:51:30.846Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"排序","level":"1.2.6","depth":2,"next":{"title":"模拟","level":"1.2.7","depth":2,"path":"docs/leetcode/classify/simulation.md","ref":"docs/leetcode/classify/simulation.md","articles":[]},"previous":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sorting.md","mtime":"2022-06-08T12:58:18.682Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

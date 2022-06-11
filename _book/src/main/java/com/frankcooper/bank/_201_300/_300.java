@@ -84,6 +84,7 @@ public class _300 {
 
         }
 
+        //
         public int lengthOfLIS(int[] nums) {
             int[] tails = new int[nums.length];
             int res = 0;
@@ -125,5 +126,34 @@ public class _300 {
             return res;
         }
 
+    }
+
+
+    static class _3rd_1 {
+        public static void main(String[] args) {
+            _3rd_1 handler = new _3rd_1();
+            int[] nums = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
+            handler.lengthOfLIS(nums);
+        }
+
+
+        public int lengthOfLIS(int[] nums) {
+            int n = nums.length;
+            int[] tails = new int[n];
+            int index = 0;
+            for (int x : nums) {
+                //下标从0 到index 之间
+                int i = 0, j = index;
+                while (i < j) {
+                    int mid = i + (j - i) / 2;
+                    if (tails[mid] < x) i = mid + 1;
+                    else j = mid;
+                }
+                tails[i] = x;//返回的时候i = j
+                //tails是严格单调递增的，所以如果找到边界 j 还是在index位置，说明需要扩充index
+                if (index == j) index++;
+            }
+            return index;
+        }
     }
 }

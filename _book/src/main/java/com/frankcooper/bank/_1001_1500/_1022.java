@@ -2,6 +2,7 @@ package com.frankcooper.bank._1001_1500;
 
 import java.util.*;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
@@ -81,6 +82,40 @@ public class _1022 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+        int res;
+
+        public int sumRootToLeaf(TreeNode root) {
+            dfs(root, new ArrayList<>());
+            return res;
+        }
+
+
+        public void dfs(TreeNode root, List<Integer> paths) {
+            paths.add(root.val);
+            if (root.left == null && root.right == null) {
+                res += cal(paths);
+                return;
+            }
+            if (root.left != null) {
+                dfs(root.left, paths);
+                paths.remove(paths.size() - 1);
+            }
+            if (root.right != null) {
+                dfs(root.right, paths);
+                paths.remove(paths.size() - 1);
+            }
+
+        }
+
+        private int cal(List<Integer> paths) {
+            int t = 0, n = paths.size();
+            for (int i = 0; i < n; i++) {
+                t |= paths.get(i) << (n - i - 1);
+            }
+            return t;
+        }
     }
 
 
@@ -88,11 +123,62 @@ public class _1022 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        public int sumRootToLeaf(TreeNode root) {
+            return dfs(root, 0);
+        }
+
+        public int dfs(TreeNode root, int res) {
+            if (root == null) return 0;
+            //res左移一位，让出低位给root.val
+            res = res << 1 | root.val;
+            if (root.left == null && root.right == null) {
+                return res;
+            }
+            return dfs(root.left, res) + dfs(root.right, res);
+        }
     }
 
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            TreeNode root = TreeNodeIOUtils.transform("[1,0,1,0,1,0,1]");
+//            handler.sumRootToLeaf(root);
         }
+
+
+        public int sumRootToLeaf(TreeNode root) {
+            Deque<TreeNode> stk = new ArrayDeque<>();
+            int t = 0, res = 0;
+            //prev记录上一轮访问过的节点
+            TreeNode prev = null;
+            while (!stk.isEmpty() || root != null) {
+                while (root != null) {
+                    //计算
+                    t = t << 1 | root.val;
+                    //左孩子一直进栈，直到没有左孩子
+                    stk.push(root);
+                    root = root.left;
+                }
+                //看下当前栈顶的节点
+                root = stk.peek();
+                //
+                if (root.right == null || root.right == prev) {
+                    //收集的条件
+                    if (root.left == null && root.right == null) {
+                        res += t;
+                    }
+                    //恢复，弹出，记录prev
+                    t >>= 1;
+                    stk.pop();
+                    prev = root;
+                    root = null;//标记
+                } else {
+                    root = root.right;
+                }
+            }
+            return res;
+        }
+
     }
 }

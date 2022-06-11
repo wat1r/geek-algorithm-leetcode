@@ -1113,6 +1113,115 @@ $d[i</em>w+j]=max(right[i<em>w+j], left[(i</em>w+w+j-1])$
 =&gt;
 $d[m] = max(right[m], left[m+w-1])$</p>
 <p>&#x7ED3;&#x679C;&#x6570;&#x7EC4;$d[]$&#x200B;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x662F;:$d[n-w]=max(right[n-w], left[n-1])$&#x200B;</p>
+<h2 id="159&#x6700;&#x591A;&#x6709;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;">159.&#x6700;&#x591A;&#x6709;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;</h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;map&#x7EDF;&#x8BA1;&#x6570;&#x91CF;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;">&#x65B9;&#x6CD5;1&#xFF1A;Map&#x7EDF;&#x8BA1;&#x6570;&#x91CF;+&#x6ED1;&#x52A8;&#x7A97;&#x53E3;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLongestSubstringTwoDistinct</span><span class="hljs-params">(String s)</span> </span>{
+    <span class="hljs-keyword">return</span> helper(s, <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">helper</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    Map&lt;Character, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<span class="hljs-comment">//k:&#x5B57;&#x7B26;&#xFF0C;v:&#x5B57;&#x7B26;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+    <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5DE6;&#x8FB9;&#x7A97;&#x53E3;&#x7684;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+        <span class="hljs-keyword">char</span> c = s.charAt(i);
+        map.put(c, map.getOrDefault(c, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">while</span> (map.size() &gt; k) {<span class="hljs-comment">//&#x5B57;&#x7B26;&#x7684;&#x4E2A;&#x6570;&#x5DF2;&#x7ECF;&#x8D85;&#x8FC7;k&#x4E2A;&#x4E86;&#xFF0C;&#x5F00;&#x59CB;&#x7F29;&#x5C0F;&#x5DE6;&#x8FB9;&#x7A97;&#x53E3;</span>
+            <span class="hljs-keyword">char</span> lc = s.charAt(l++);<span class="hljs-comment">//left char</span>
+            <span class="hljs-keyword">int</span> t = map.get(lc) - <span class="hljs-number">1</span>;<span class="hljs-comment">//left char&#x7684;&#x6570;&#x91CF;</span>
+            <span class="hljs-keyword">if</span> (t == <span class="hljs-number">0</span>) {<span class="hljs-comment">//&#x6570;&#x91CF;&#x4E3A;0&#x7684;&#x65F6;&#x5019;&#xFF0C;key&#x88AB;&#x79FB;&#x9664;</span>
+                map.remove(lc);
+            } <span class="hljs-keyword">else</span> {
+                map.put(lc, t);<span class="hljs-comment">//-1&#x540E;&#x6570;&#x91CF;&#x518D;&#x6B21;&#x66F4;&#x65B0;&#x8FDB;&#x53BB;</span>
+            }
+        }
+        res = Math.max(res, i - l + <span class="hljs-number">1</span>);<span class="hljs-comment">//&#x8BA1;&#x7B97;&#x957F;&#x5EA6;</span>
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;map&#x6807;&#x8BB0;&#x4F4D;&#x7F6E;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;">&#x65B9;&#x6CD5;2&#xFF1A;Map&#x6807;&#x8BB0;&#x4F4D;&#x7F6E;+&#x6ED1;&#x52A8;&#x7A97;&#x53E3;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLongestSubstringTwoDistinct</span><span class="hljs-params">(String s)</span> </span>{
+    <span class="hljs-keyword">return</span> helper(s, <span class="hljs-number">2</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">helper</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    Map&lt;Character, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<span class="hljs-comment">//k:&#x5B57;&#x7B26;&#xFF0C;v:&#x8BE5;&#x5B57;&#x7B26;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x51FA;&#x73B0;&#x7684;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5DE6;&#x7A97;&#x53E3;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+        map.put(s.charAt(i), i);<span class="hljs-comment">//&#x5C06;&#x5F53;&#x524D;&#x5B57;&#x7B26;&#x548C;&#x5B57;&#x7B26;&#x7684;&#x4F4D;&#x7F6E;&#x5173;&#x7CFB;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;</span>
+        <span class="hljs-keyword">while</span> (map.size() &gt; k) {<span class="hljs-comment">//&#x603B;&#x7684;&#x5B57;&#x7B26;&#x5F00;&#x59CB;&#x8D85;&#x8FC7;k&#x4E2A;</span>
+            <span class="hljs-comment">//&#x5982;&#x679C; s[l]&#x7684; &#x4F4D;&#x7F6E;&#x548C;l &#x4E0D;&#x540C;&#xFF0C;&#x8BF4;&#x660E;&#x5728;[l+1 ... i ]&#x4E4B;&#x95F4;&#x53C8;&#x51FA;&#x73B0;&#x4E86;&#x5B57;&#x7B26;s[l]&#xFF0C;&#x8FD9;&#x662F;&#x4E0D;&#x80FD;&#x79FB;&#x9664;s[l],&#x53CD;&#x4E4B;&#x5219;&#x79FB;&#x9664;s[l]</span>
+            <span class="hljs-keyword">if</span> (map.get(s.charAt(l)) == l) map.remove(s.charAt(l));
+            ++l;
+        }
+        res = Math.max(res, i - l + <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;&#x6307;&#x9488;">&#x65B9;&#x6CD5;3&#xFF1A;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;+&#x6307;&#x9488;</h3>
+<pre><code class="lang-java">        <span class="hljs-comment">//1. &#x82E5;&#x5F53;&#x524D;&#x5B57;&#x7B26;&#x548C;&#x524D;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x76F8;&#x540C;&#xFF0C;&#x7EE7;&#x7EED;&#x5FAA;&#x73AF;&#x3002;</span>
+        <span class="hljs-comment">//2. &#x82E5;&#x4E0D;&#x540C;&#xFF0C;&#x770B;&#x5F53;&#x524D;&#x5B57;&#x7B26;&#x548C; right &#x6307;&#x7684;&#x5B57;&#x7B26;&#x662F;&#x5426;&#x76F8;&#x540C;</span>
+        <span class="hljs-comment">//    (1) &#x82E5;&#x76F8;&#x540C;&#xFF0C;left &#x4E0D;&#x53D8;&#xFF0C;&#x53F3;&#x8FB9;&#x8DF3;&#x5230; i - 1</span>
+        <span class="hljs-comment">//    (2) &#x82E5;&#x4E0D;&#x540C;&#xFF0C;&#x66F4;&#x65B0;&#x7ED3;&#x679C;&#xFF0C;left &#x53D8;&#x4E3A; right+1&#xFF0C;right &#x53D8;&#x4E3A; i - 1</span>
+        <span class="hljs-comment">//&#x6700;&#x540E;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5728;&#x5FAA;&#x73AF;&#x7ED3;&#x675F;&#x540E;&#xFF0C;&#x8FD8;&#x8981;&#x6BD4;&#x8F83;&#x7ED3;&#x679C; res &#x548C; s.size() - left &#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x8FD4;&#x56DE;&#x5927;&#x7684;&#xFF0C;&#x8FD9;&#x662F;&#x7531;&#x4E8E;&#x5982;&#x679C;&#x5B57;&#x7B26;&#x4E32;&#x662F; &quot;ecebaaa&quot;&#xFF0C;</span>
+        <span class="hljs-comment">// &#x90A3;&#x4E48;&#x5F53; left=3 &#x65F6;&#xFF0C;i=5,6 &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x90FD;&#x662F;&#x7EE7;&#x7EED;&#x5FAA;&#x73AF;&#xFF0C;&#x5F53;i&#x52A0;&#x5230;7&#x65F6;&#xFF0C;&#x8DF3;&#x51FA;&#x4E86;&#x5FAA;&#x73AF;&#xFF0C;&#x800C;&#x6B64;&#x65F6;&#x6B63;&#x786E;&#x7B54;&#x6848;&#x5E94;&#x4E3A; &quot;baaa&quot; &#x8FD9;4&#x4E2A;&#x5B57;&#x7B26;&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x7684;&#x7ED3;&#x679C; res &#x53EA;&#x66F4;&#x65B0;&#x5230;&#x4E86; &quot;ece&quot; &#x8FD9;3&#x4E2A;&#x5B57;&#x7B26;&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x540E;&#x8981;&#x5224;&#x65AD; s.size() - left &#x548C;&#x7ED3;&#x679C; res &#x7684;&#x5927;&#x5C0F;&#x3002;</span>
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLongestSubstringTwoDistinct</span><span class="hljs-params">(String s)</span> </span>{
+            <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = -<span class="hljs-number">1</span>, res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">char</span>[] ch = s.toCharArray();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; s.length(); ++i) {
+                <span class="hljs-keyword">if</span> (ch[i] == ch[i - <span class="hljs-number">1</span>]) <span class="hljs-keyword">continue</span>;
+                <span class="hljs-keyword">if</span> (right &gt;= <span class="hljs-number">0</span> &amp;&amp; ch[right] != ch[i]) {
+                    res = Math.max(res, i - left);
+                    left = right + <span class="hljs-number">1</span>;
+                }
+                right = i - <span class="hljs-number">1</span>;
+            }
+            <span class="hljs-keyword">return</span> Math.max(s.length() - left, res);
+        }
+</code></pre>
+<h2 id="340&#x6700;&#x591A;&#x6709;k&#x4E2A;&#x4E0D;&#x540C;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;">340.&#x6700;&#x591A;&#x6709;K&#x4E2A;&#x4E0D;&#x540C;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;</h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;map&#x7EDF;&#x8BA1;&#x6570;&#x91CF;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;">&#x65B9;&#x6CD5;1&#xFF1A;Map&#x7EDF;&#x8BA1;&#x6570;&#x91CF;+&#x6ED1;&#x52A8;&#x7A97;&#x53E3;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLongestSubstringKDistinct</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+            Map&lt;Character, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<span class="hljs-comment">//k:&#x5B57;&#x7B26;&#xFF0C;v:&#x5B57;&#x7B26;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;</span>
+            <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5DE6;&#x8FB9;&#x7A97;&#x53E3;&#x7684;&#x4F4D;&#x7F6E;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+                <span class="hljs-keyword">char</span> c = s.charAt(i);
+                map.put(c, map.getOrDefault(c, <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">while</span> (map.size() &gt; k) {<span class="hljs-comment">//&#x5B57;&#x7B26;&#x7684;&#x4E2A;&#x6570;&#x5DF2;&#x7ECF;&#x8D85;&#x8FC7;k&#x4E2A;&#x4E86;&#xFF0C;&#x5F00;&#x59CB;&#x7F29;&#x5C0F;&#x5DE6;&#x8FB9;&#x7A97;&#x53E3;</span>
+                    <span class="hljs-keyword">char</span> lc = s.charAt(l++);<span class="hljs-comment">//left char</span>
+                    <span class="hljs-keyword">int</span> t = map.get(lc) - <span class="hljs-number">1</span>;<span class="hljs-comment">//left char&#x7684;&#x6570;&#x91CF;</span>
+                    <span class="hljs-keyword">if</span> (t == <span class="hljs-number">0</span>) {<span class="hljs-comment">//&#x6570;&#x91CF;&#x4E3A;0&#x7684;&#x65F6;&#x5019;&#xFF0C;key&#x88AB;&#x79FB;&#x9664;</span>
+                        map.remove(lc);
+                    } <span class="hljs-keyword">else</span> {
+                        map.put(lc, t);<span class="hljs-comment">//-1&#x540E;&#x6570;&#x91CF;&#x518D;&#x6B21;&#x66F4;&#x65B0;&#x8FDB;&#x53BB;</span>
+                    }
+                }
+                res = Math.max(res, i - l + <span class="hljs-number">1</span>);<span class="hljs-comment">//&#x8BA1;&#x7B97;&#x957F;&#x5EA6;</span>
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;map&#x6807;&#x8BB0;&#x4F4D;&#x7F6E;&#x6ED1;&#x52A8;&#x7A97;&#x53E3;">&#x65B9;&#x6CD5;2&#xFF1A;Map&#x6807;&#x8BB0;&#x4F4D;&#x7F6E;+&#x6ED1;&#x52A8;&#x7A97;&#x53E3;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLongestSubstringKDistinct</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+    Map&lt;Character, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<span class="hljs-comment">//k:&#x5B57;&#x7B26;&#xFF0C;v:&#x8BE5;&#x5B57;&#x7B26;&#x6700;&#x8FD1;&#x4E00;&#x6B21;&#x51FA;&#x73B0;&#x7684;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x5DE6;&#x7A97;&#x53E3;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; s.length(); i++) {
+        map.put(s.charAt(i), i);<span class="hljs-comment">//&#x5C06;&#x5F53;&#x524D;&#x5B57;&#x7B26;&#x548C;&#x5B57;&#x7B26;&#x7684;&#x4F4D;&#x7F6E;&#x5173;&#x7CFB;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;</span>
+        <span class="hljs-keyword">while</span> (map.size() &gt; k) {<span class="hljs-comment">//&#x603B;&#x7684;&#x5B57;&#x7B26;&#x5F00;&#x59CB;&#x8D85;&#x8FC7;k&#x4E2A;</span>
+            <span class="hljs-comment">//&#x5982;&#x679C; s[l]&#x7684; &#x4F4D;&#x7F6E;&#x548C;l &#x4E0D;&#x540C;&#xFF0C;&#x8BF4;&#x660E;&#x5728;[l+1 ... i ]&#x4E4B;&#x95F4;&#x53C8;&#x51FA;&#x73B0;&#x4E86;&#x5B57;&#x7B26;s[l]&#xFF0C;&#x8FD9;&#x662F;&#x4E0D;&#x80FD;&#x79FB;&#x9664;s[l],&#x53CD;&#x4E4B;&#x5219;&#x79FB;&#x9664;s[l]</span>
+            <span class="hljs-keyword">if</span> (map.get(s.charAt(l)) == l) map.remove(s.charAt(l));
+            ++l;
+        }
+        res = Math.max(res, i - l + <span class="hljs-number">1</span>);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
 <h2 id="395-&#x81F3;&#x5C11;&#x6709;-k-&#x4E2A;&#x91CD;&#x590D;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;"><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank">395. &#x81F3;&#x5C11;&#x6709; K &#x4E2A;&#x91CD;&#x590D;&#x5B57;&#x7B26;&#x7684;&#x6700;&#x957F;&#x5B50;&#x4E32;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1:&#x9012;&#x5F52;</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">longestSubstring</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> k)</span> </span>{
@@ -1341,7 +1450,7 @@ $d[m] = max(right[m], left[m+w-1])$</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"滑动窗口","level":"1.2.12","depth":2,"next":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.8","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"计算几何","level":"1.3.9","depth":2,"path":"docs/leetcode/classify/computational_geometry.md","ref":"docs/leetcode/classify/computational_geometry.md","articles":[]},{"title":"扫描线","level":"1.3.10","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"随机化","level":"1.3.11","depth":2,"path":"docs/leetcode/classify/randomization.md","ref":"docs/leetcode/classify/randomization.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"previous":{"title":"双指针","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sliding_window.md","mtime":"2022-05-05T00:31:20.074Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"滑动窗口","level":"1.2.12","depth":2,"next":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.8","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"计算几何","level":"1.3.9","depth":2,"path":"docs/leetcode/classify/computational_geometry.md","ref":"docs/leetcode/classify/computational_geometry.md","articles":[]},{"title":"扫描线","level":"1.3.10","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"随机化","level":"1.3.11","depth":2,"path":"docs/leetcode/classify/randomization.md","ref":"docs/leetcode/classify/randomization.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"previous":{"title":"双指针","level":"1.2.11","depth":2,"path":"docs/leetcode/classify/two_pointers.md","ref":"docs/leetcode/classify/two_pointers.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/sliding_window.md","mtime":"2022-06-08T01:41:02.797Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

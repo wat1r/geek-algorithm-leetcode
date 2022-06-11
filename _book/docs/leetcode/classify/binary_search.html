@@ -1597,6 +1597,59 @@
          <span class="hljs-keyword">return</span> letters[l]&gt; target ? letters[l] : letters[<span class="hljs-number">0</span>];
     }
 </code></pre>
+<h2 id="875-&#x7231;&#x5403;&#x9999;&#x8549;&#x7684;&#x73C2;&#x73C2;"><a href="https://leetcode.cn/problems/koko-eating-bananas/" target="_blank">875. &#x7231;&#x5403;&#x9999;&#x8549;&#x7684;&#x73C2;&#x73C2;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#x4E8C;&#x5206;">&#x65B9;&#x6CD5;1:&#x4E8C;&#x5206;</h3>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minEatingSpeed</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] piles, <span class="hljs-keyword">int</span> h)</span> </span>{
+            <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = <span class="hljs-number">1_000_000_000</span>;
+            <span class="hljs-keyword">while</span> (l &lt; r) {
+                <span class="hljs-keyword">int</span> m = l + (r - l) / <span class="hljs-number">2</span>;
+                <span class="hljs-keyword">if</span> (!possible(piles, h, m)) {
+                    l = m + <span class="hljs-number">1</span>;
+                } <span class="hljs-keyword">else</span> {
+                    r = m;
+                }
+            }
+            <span class="hljs-keyword">return</span> l;
+        }
+
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">possible</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] piles, <span class="hljs-keyword">int</span> h, <span class="hljs-keyword">int</span> t)</span> </span>{
+              <span class="hljs-keyword">if</span> (t == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; piles.length; i++) {
+                h -= piles[i] % t == <span class="hljs-number">0</span> ? piles[i] / t : piles[i] / t + <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (h &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minEatingSpeed</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] piles, <span class="hljs-keyword">int</span> h)</span> </span>{
+            <span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : piles) r = Math.max(r, x);
+            <span class="hljs-keyword">int</span> l = <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">while</span> (l &lt; r) {
+                <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+<span class="hljs-comment">//                System.out.printf(&quot;%d\n&quot;, mid);</span>
+                <span class="hljs-keyword">if</span> (check(piles, mid, h)) {
+                    r = mid;
+                } <span class="hljs-keyword">else</span> {
+                    l = mid + <span class="hljs-number">1</span>;
+                }
+            }
+            <span class="hljs-keyword">return</span> l;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] piles, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> h)</span> </span>{
+            <span class="hljs-keyword">int</span> times = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; piles.length; i++) {
+                times += (piles[i] % k == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>) + piles[i] / k;
+                <span class="hljs-keyword">if</span> (times &gt; h) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+</code></pre>
 <h2 id="6040-&#x82B1;&#x56ED;&#x7684;&#x6700;&#x5927;&#x603B;&#x7F8E;&#x4E3D;&#x503C;"><a href="https://leetcode-cn.com/problems/maximum-total-beauty-of-the-gardens/" target="_blank">6040. &#x82B1;&#x56ED;&#x7684;&#x6700;&#x5927;&#x603B;&#x7F8E;&#x4E3D;&#x503C;</a></h2>
 <pre><code class="lang-java">    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_4th_2</span> </span>{
         <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
@@ -1741,7 +1794,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.9","depth":2,"next":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-05-20T00:17:58.923Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.9","depth":2,"next":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-06-07T00:32:09.670Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

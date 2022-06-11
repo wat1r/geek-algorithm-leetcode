@@ -23,3 +23,24 @@ public boolean checkValidString(String s) {
     return true;
 }
 ```
+
+
+
+
+
+## [1529. 最少的后缀翻转次数](https://leetcode.cn/problems/minimum-suffix-flips/)
+
+```java
+    public int minFlips(String target) {
+        int cnt = 0;
+        char c = '0';
+        for(int i =0;i< target.length();i++){
+            if(target.charAt(i)!=c){
+                cnt ++;
+                c = c=='0'?'1':'0';
+            }
+        }
+        return cnt;
+    }
+```
+

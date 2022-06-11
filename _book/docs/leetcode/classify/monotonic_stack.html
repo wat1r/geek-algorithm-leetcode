@@ -1184,6 +1184,203 @@
             <span class="hljs-keyword">return</span> res.toString().equals(<span class="hljs-string">&quot;&quot;</span>) ? <span class="hljs-string">&quot;0&quot;</span> : res.toString();
         }
 </code></pre>
+<p>&#x53E6;</p>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">removeKdigits</span><span class="hljs-params">(String num, <span class="hljs-keyword">int</span> k)</span> </span>{
+            Deque&lt;Character&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">char</span>[] ch = num.toCharArray();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ch.length; i++) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; stk.peek() &gt; ch[i] &amp;&amp; k &gt; <span class="hljs-number">0</span>) {
+                    stk.pop();
+                    k--;
+                }
+                stk.push(ch[i]);
+            }
+            <span class="hljs-keyword">while</span> (k-- &gt; <span class="hljs-number">0</span>) stk.pop();
+            StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();
+            <span class="hljs-keyword">while</span> (!stk.isEmpty()) sb.append(stk.pop());
+            StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+            <span class="hljs-keyword">boolean</span> headZero = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : sb.reverse().toString().toCharArray()) {
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;0&apos;</span> &amp;&amp; headZero) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+                res.append(c);
+                headZero = <span class="hljs-keyword">false</span>;
+            }
+            <span class="hljs-keyword">return</span> res.toString().equals(<span class="hljs-string">&quot;&quot;</span>) ? <span class="hljs-string">&quot;0&quot;</span> : res.toString();
+        }
+</code></pre>
+<h2 id="84-&#x67F1;&#x72B6;&#x56FE;&#x4E2D;&#x6700;&#x5927;&#x7684;&#x77E9;&#x5F62;"><a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/" target="_blank">84. &#x67F1;&#x72B6;&#x56FE;&#x4E2D;&#x6700;&#x5927;&#x7684;&#x77E9;&#x5F62;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x5355;&#x8C03;&#x6808;&#x54E8;&#x5175;">&#x65B9;&#x6CD5;1&#xFF1A;&#x5355;&#x8C03;&#x6808;+&#x54E8;&#x5175;</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largestRectangleArea</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] heights)</span> </span>{
+    <span class="hljs-keyword">int</span> n = heights.length;
+    <span class="hljs-keyword">int</span>[] nums = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">2</span>];
+    System.arraycopy(heights, <span class="hljs-number">0</span>, nums, <span class="hljs-number">1</span>, heights.length);
+    Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">int</span> maxArea = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+        <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;&#x67F1;&#x5B50;&#x7684;&#x9AD8;&#x5EA6;&#x6BD4;&#x6808;&#x9876;&#x7684;&#x67F1;&#x5B50;&#x7684;&#x9AD8;&#x5EA6;&#x4F4E;&#xFF0C;&#x8BA1;&#x7B97;&#x4EE5;&#x5F39;&#x51FA;&#x7684;&#x6808;&#x9876;&#x9AD8;&#x5EA6;&#x7684;&#x67F1;&#x5B50;&#x4E3A;&#x9AD8;&#x7684;&#x77E9;&#x5F62;&#x9762;&#x79EF;</span>
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt; nums[i]) {
+            <span class="hljs-keyword">int</span> h = nums[stk.pop()];
+            maxArea = Math.max(maxArea, h * (i - stk.peek() - <span class="hljs-number">1</span>));
+        }
+        stk.push(i);
+    }
+    <span class="hljs-keyword">return</span> maxArea;
+}
+</code></pre>
+<ul>
+<li>&#x53E6;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largestRectangleArea</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] heights)</span> </span>{
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x54E8;&#x5175;</span>
+            stk.push(-<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">int</span> maxArea = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; heights.length; i++) {
+                <span class="hljs-keyword">while</span> (stk.peek() != -<span class="hljs-number">1</span> &amp;&amp; heights[i] &lt; heights[stk.peek()]) {
+                    <span class="hljs-keyword">int</span> h = heights[stk.pop()];
+                    maxArea = Math.max(maxArea, h * (i - stk.peek() - <span class="hljs-number">1</span>));
+                }
+                stk.push(i);
+            }
+            <span class="hljs-comment">//[2,4]case</span>
+            <span class="hljs-comment">//&#x5982;&#x679C;&#x6808;&#x5185;&#x8FD8;&#x5B58;&#x5728;&#x5408;&#x6CD5;&#x7684;&#x4E0B;&#x6807;&#x6CA1;&#x6709;&#x51FA;&#x6808;&#xFF0C;&#x5219;&#x4EE5;&#x6570;&#x7EC4;&#x7684;&#x53F3;&#x8FB9;&#x754C;&#x4E3A;&#x754C;&#x9650;&#x8BA1;&#x7B97;&#x6700;&#x5927;&#x533A;&#x57DF;</span>
+            <span class="hljs-keyword">while</span> (stk.peek() != -<span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">int</span> h = heights[stk.pop()];
+                maxArea = Math.max(maxArea, h * (heights.length - stk.peek() - <span class="hljs-number">1</span>));
+            }
+            <span class="hljs-keyword">return</span> maxArea;
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largestRectangleArea</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] heights)</span> </span>{
+    Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-comment">//&#x6700;&#x672B;&#x5C3E;&#x6570;&#x8BBE;&#x7F6E;&#x4E3A;0&#xFF0C;&#x6B64;&#x524D;&#x7684;&#x67F1;&#x5B50;&#x7684;&#x9AD8;&#x5EA6;&#x90FD;&#x4F1A;&#x6BD4;&#x8FD9;&#x4E2A;&#x9AD8;</span>
+    <span class="hljs-keyword">int</span>[] nums = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[heights.length + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; heights.length; i++) nums[i] = heights[i];
+    <span class="hljs-keyword">int</span> maxArea = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.length; i++) {
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt; nums[i]) {
+            <span class="hljs-keyword">int</span> h = nums[stk.pop()];
+            <span class="hljs-comment">//&#x5982;&#x679C;&#x6808;&#x7A7A;&#x4E86;&#xFF0C;&#x5C31;&#x4EE5;&#x5F53;&#x524D;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;&#x4E3A;&#x5BBD;&#x5EA6; &#x5373; i -0 &#x6570;&#x7EC4;&#x7684;&#x5DE6;&#x8FB9;&#x754C;</span>
+            maxArea = Math.max(maxArea, h * (stk.isEmpty() ? i : i - stk.peek() - <span class="hljs-number">1</span>));
+        }
+        stk.push(i);
+    }
+    <span class="hljs-keyword">return</span> maxArea;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x53CC;&#x6307;&#x9488;">&#x65B9;&#x6CD5;2&#xFF1A;&#x53CC;&#x6307;&#x9488;</h3>
+<ul>
+<li>TLE</li>
+</ul>
+<pre><code class="lang-java">
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largestRectangleArea</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] heights)</span> </span>{
+            <span class="hljs-keyword">int</span> maxArea = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> n = heights.length;
+            <span class="hljs-keyword">int</span>[] nums = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n + <span class="hljs-number">2</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                nums[i + <span class="hljs-number">1</span>] = heights[i];
+            }
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; nums.length - <span class="hljs-number">1</span>; i++) {
+                <span class="hljs-keyword">int</span> l = i, r = i;
+                <span class="hljs-keyword">while</span> (l &gt;= <span class="hljs-number">0</span> &amp;&amp; nums[l] &gt;= nums[i]) l--;
+                <span class="hljs-keyword">while</span> (r &lt; nums.length &amp;&amp; nums[r] &gt;= nums[i]) r++;
+                maxArea = Math.max(maxArea, nums[i] * (r - l - <span class="hljs-number">1</span>));
+            }
+            <span class="hljs-keyword">return</span> maxArea;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;&#x8BA1;&#x7B97;&#x5DE6;&#x53F3;&#x7D22;&#x5F15;">&#x65B9;&#x6CD5;3&#xFF1A;&#x8BA1;&#x7B97;&#x5DE6;&#x53F3;&#x7D22;&#x5F15;</h3>
+<ul>
+<li>&#x7C7B;&#x4F3C;1856&#x3001;907&#x7B49;&#x9898;&#x7684;&#x505A;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largestRectangleArea</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] heights)</span> </span>{
+            <span class="hljs-keyword">int</span> n = heights.length;
+            <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-keyword">int</span>[] right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-comment">// &#x8BB0;&#x5F55;&#x5DE6;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x8BE5;&#x67F1;&#x5B50;&#x7684;&#x4E0B;&#x6807;</span>
+            left[<span class="hljs-number">0</span>] = -<span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">int</span> t = i - <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">while</span> (t &gt;= <span class="hljs-number">0</span> &amp;&amp; heights[t] &gt;= heights[i]) t = left[t];
+                left[i] = t;
+            }
+            <span class="hljs-comment">// &#x8BB0;&#x5F55;&#x6BCF;&#x4E2A;&#x67F1;&#x5B50; &#x53F3;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x8BE5;&#x67F1;&#x5B50;&#x7684;&#x4E0B;&#x6807;</span>
+            right[n - <span class="hljs-number">1</span>] = n;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">2</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+                <span class="hljs-keyword">int</span> t = i + <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">while</span> (t &lt; n &amp;&amp; heights[t] &gt;= heights[i]) t = right[t];
+                right[i] = t;
+            }
+            <span class="hljs-comment">// &#x8BA1;&#x7B97;</span>
+            <span class="hljs-keyword">int</span> maxArea = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">int</span> t = heights[i] * (right[i] - left[i] - <span class="hljs-number">1</span>);
+                maxArea = Math.max(t, maxArea);
+            }
+            <span class="hljs-keyword">return</span> maxArea;
+        }
+</code></pre>
+<h2 id="496-&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x5143;&#x7D20;-i"><a href="https://leetcode.cn/problems/next-greater-element-i/" target="_blank">496. &#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x5143;&#x7D20; I</a></h2>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] nextGreaterElement(<span class="hljs-keyword">int</span>[] nums1, <span class="hljs-keyword">int</span>[] nums2) {
+            <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[nums1.length];
+            Stack&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+            <span class="hljs-comment">//k:nums2&#x7684;&#x5F53;&#x524D;&#x5143;&#x7D20;&#xFF0C;v:&#x5F53;&#x524D;&#x5143;&#x7D20;&#x7684;next greater element</span>
+            Map&lt;Integer, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : nums2) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; stk.peek() &lt; x) {
+                    map.put(stk.pop(), x);
+                }
+                stk.push(x);
+            }
+            <span class="hljs-comment">//&#x5982;&#x679C;&#x5F53;&#x524D;&#x5143;&#x7D20;&#x6CA1;&#x6709;NGE&#xFF0C;&#x8FD4;&#x56DE;-1</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums1.length; i++) {
+                res[i] = map.getOrDefault(nums1[i], -<span class="hljs-number">1</span>);
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<h2 id="503-&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x5143;&#x7D20;-ii"><a href="https://leetcode.cn/problems/next-greater-element-ii/" target="_blank">503. &#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x5143;&#x7D20; II</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x5355;&#x8C03;&#x6808;&#x500D;&#x589E;&#x6570;&#x7EC4;">&#x65B9;&#x6CD5;1&#xFF1A;&#x5355;&#x8C03;&#x6808;+&#x500D;&#x589E;&#x6570;&#x7EC4;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] nextGreaterElements(<span class="hljs-keyword">int</span>[] nums) {
+    Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    Arrays.fill(res, -<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span> * n; i++) {
+        <span class="hljs-keyword">int</span> t = nums[i % n];
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &lt; t) {
+            res[stk.pop()] = t;
+        }
+        <span class="hljs-keyword">if</span> (i &lt; n) {
+            stk.push(i);
+        }
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<p>&#x53E6;&#xFF0C;&#x6570;&#x7EC4;&#x6A21;&#x62DF;&#x6808;</p>
+<pre><code class="lang-java">        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] nextGreaterElements(<span class="hljs-keyword">int</span>[] nums) {
+            <span class="hljs-keyword">int</span> n = nums.length;
+            <span class="hljs-keyword">int</span>[] ans = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            Arrays.fill(ans, -<span class="hljs-number">1</span>);
+            <span class="hljs-comment">// &#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x6A21;&#x62DF;&#x6808;&#xFF0C;bottom &#x4EE3;&#x8868;&#x6808;&#x5E95;&#xFF0C;top &#x4EE3;&#x8868;&#x6808;&#x9876;</span>
+            <span class="hljs-keyword">int</span>[] d = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n * <span class="hljs-number">2</span>];
+            <span class="hljs-keyword">int</span> bottom = <span class="hljs-number">0</span>, top = -<span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n * <span class="hljs-number">2</span>; i++) {
+                <span class="hljs-keyword">while</span> (bottom &lt;= top &amp;&amp; nums[i % n] &gt; nums[d[top]]) {
+                    <span class="hljs-keyword">int</span> u = d[top--];
+                    ans[u] = nums[i % n];
+                }
+                d[++top] = i % n;
+            }
+            <span class="hljs-keyword">return</span> ans;
+        }
+</code></pre>
 <h2 id="654-&#x6700;&#x5927;&#x4E8C;&#x53C9;&#x6811;"><a href="https://leetcode-cn.com/problems/maximum-binary-tree/" target="_blank">654. &#x6700;&#x5927;&#x4E8C;&#x53C9;&#x6811;</a></h2>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> TreeNode <span class="hljs-title">constructMaximumBinaryTree</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
     <span class="hljs-keyword">return</span> dfs(nums, <span class="hljs-number">0</span>, nums.length);
@@ -1240,6 +1437,123 @@
             <span class="hljs-keyword">return</span> res;
         }
 </code></pre>
+<h2 id="907-&#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5C0F;&#x503C;&#x4E4B;&#x548C;"><a href="https://leetcode.cn/problems/sum-of-subarray-minimums/" target="_blank">907. &#x5B50;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x5C0F;&#x503C;&#x4E4B;&#x548C;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumSubarrayMins</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr)</span> </span>{
+            <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+            <span class="hljs-keyword">int</span> n = arr.length;
+            <span class="hljs-keyword">long</span> sum = <span class="hljs-number">0</span>;
+            Stack&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+            <span class="hljs-keyword">int</span> j, k;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; arr[stk.peek()] &gt; (i == n ? Integer.MIN_VALUE : arr[i])) {
+                    j = stk.pop();
+                    k = stk.isEmpty() ? -<span class="hljs-number">1</span> : stk.peek();
+                    sum += (<span class="hljs-keyword">long</span>) arr[j] * (i - j) * (j - k);
+                }
+                stk.push(i);
+            }
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) (sum % MOD);
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;&#x5916;</li>
+</ul>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumSubarrayMins</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr)</span> </span>{
+            <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+            <span class="hljs-comment">//&#x5B58;&#x7684;&#x662F;&#x5F53;&#x524D;&#x5143;&#x7D20;&#x7684;&#x4E0B;&#x6807;&#x7D22;&#x5F15;</span>
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">int</span>[] A = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[arr.length + <span class="hljs-number">1</span>];
+            <span class="hljs-comment">//&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x4F5C;&#x4E3A;&#x54E8;&#x5175;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) A[i] = arr[i];
+<span class="hljs-comment">//            A[A.length-1] = 0;</span>
+            <span class="hljs-keyword">int</span> N = A.length;
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+                <span class="hljs-comment">//&#x904D;&#x5386;&#x5230;&#x7684;&#x5143;&#x7D20;&#x6BD4;&#x6808;&#x9876;&#x7684;&#x5143;&#x7D20;&#xFF08;&#x904D;&#x5386;&#x5230;&#x7684;&#x5143;&#x7D20;&#x6700;&#x8FD1;&#x7684;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF09;&#x8981;&#x5C0F;</span>
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; A[i] &lt;= A[stk.peek()]) {
+                    <span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x5F39;&#x51FA;&#x7684;&#x5143;&#x7D20;&#x662F;&#x5F53;&#x524D;&#x5143;&#x7D20;</span>
+                    <span class="hljs-keyword">int</span> index = stk.pop();
+                    <span class="hljs-comment">//&#x524D;&#x4E00;&#x4E2A;&#x5143;&#x7D20;</span>
+                    <span class="hljs-keyword">int</span> prev = -<span class="hljs-number">1</span>;
+                    <span class="hljs-keyword">if</span> (!stk.isEmpty()) prev = stk.peek();
+                    <span class="hljs-keyword">int</span> m = index - prev - <span class="hljs-number">1</span>;<span class="hljs-comment">//</span>
+                    <span class="hljs-keyword">int</span> n = i - index - <span class="hljs-number">1</span>;
+                    res += (<span class="hljs-keyword">long</span>) (A[index]) * (m + <span class="hljs-number">1</span>) * (n + <span class="hljs-number">1</span>) % MOD;
+                    res %= MOD;
+                }
+                stk.push(i);
+            }
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) res;
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x8BA1;&#x7B97;&#x5DE6;&#x53F3;&#x7684;&#x8D21;&#x732E;&#x503C;">&#x65B9;&#x6CD5;2&#xFF1A;&#x8BA1;&#x7B97;&#x5DE6;&#x53F3;&#x7684;&#x8D21;&#x732E;&#x503C;</h3>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumSubarrayMins</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+            <span class="hljs-keyword">int</span> n = nums.length;
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n], right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            <span class="hljs-comment">//&#x627E;&#x5230;&#x5DE6;&#x4FA7;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;nums[i]&#x5C0F;&#x7684;&#x4E0B;&#x6807;&#xFF0C;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x5355;&#x8C03;&#x9012;&#x589E;&#x6808;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-comment">//&#x6808;&#x9876;&#x5143;&#x7D20;&#x4E0D;&#x5C0F;&#x4E8E;(&#x5373;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;)&#x5F53;&#x524D;&#x5143;&#x7D20;&#xFF0C;&#x6B64;&#x65F6;&#x6709;&#x9012;&#x51CF;&#x7684;&#x8D8B;&#x52BF;&#xFF0C;&#x5F39;&#x51FA;&#x6808;&#x9876;&#x5143;&#x7D20;</span>
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt;= nums[i]) {
+                    stk.pop();
+                }
+                left[i] = stk.isEmpty() ? -<span class="hljs-number">1</span> : stk.peek();
+                stk.push(i);
+
+            }
+            stk.clear();
+            <span class="hljs-comment">//&#x6808;&#x9876;&#x5143;&#x7D20;&#x5927;&#x4E8E;(&#x6B64;&#x5904;&#x6CA1;&#x6709;&#x7B49;&#x4E8E;&#xFF0C;&#x6B64;&#x5904;&#x4E0E;&#x4E0A;&#x4E00;&#x5904;&#x53EA;&#x80FD;&#x4E00;&#x5904;&#x6709;&#x7B49;&#x4E8E;&#xFF0C;&#x9632;&#x6B62;&#x91CD;&#x590D;&#x8BA1;&#x7B97;)&#x5F53;&#x524D;&#x5143;&#x7D20;&#xFF0C;&#x6B64;&#x65F6;&#x6709;&#x9012;&#x51CF;&#x7684;&#x8D8B;&#x52BF;&#xFF0C;&#x5F39;&#x51FA;&#x6808;&#x9876;&#x5143;&#x7D20;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt; nums[i]) {
+                    stk.pop();
+                }
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                res += <span class="hljs-number">1L</span> * (i - left[i]) * (right[i] - i) * nums[i];
+                res %= MOD;
+            }
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) res;
+
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3">&#x65B9;&#x6CD5;3</h3>
+<pre><code class="lang-java">       <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sumSubarrayMins</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] A)</span> </span>{
+            Stack&lt;Pair&gt; stack = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+            <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, t = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; A.length; i++) {
+                <span class="hljs-keyword">int</span> count = <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">while</span> (!stack.empty() &amp;&amp; stack.peek().val &gt;= A[i]) {
+                    Pair pair = stack.pop();
+                    count += pair.count;
+                    t -= pair.val * pair.count;
+                }
+                stack.push(<span class="hljs-keyword">new</span> Pair(A[i], count));
+                t += A[i] * count;
+                res += t;
+                res %= MOD;
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pair</span> </span>{
+            <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> val;
+            <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> count;
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Pair</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val, <span class="hljs-keyword">int</span> count)</span> </span>{
+                <span class="hljs-keyword">this</span>.val = val;
+                <span class="hljs-keyword">this</span>.count = count;
+            }
+
+        }
+</code></pre>
 <h2 id="1019-&#x94FE;&#x8868;&#x4E2D;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x8282;&#x70B9;"><a href="https://leetcode-cn.com/problems/next-greater-node-in-linked-list/" target="_blank">1019. &#x94FE;&#x8868;&#x4E2D;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;&#x66F4;&#x5927;&#x8282;&#x70B9;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] nextLargerNodes(ListNode head) {
     List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
@@ -1258,6 +1572,113 @@
     }
     <span class="hljs-keyword">return</span> res;
 }
+</code></pre>
+<h2 id="1856-&#x5B50;&#x6570;&#x7EC4;&#x6700;&#x5C0F;&#x4E58;&#x79EF;&#x7684;&#x6700;&#x5927;&#x503C;"><a href="https://leetcode.cn/problems/maximum-subarray-min-product/" target="_blank">1856. &#x5B50;&#x6570;&#x7EC4;&#x6700;&#x5C0F;&#x4E58;&#x79EF;&#x7684;&#x6700;&#x5927;&#x503C;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1">&#x65B9;&#x6CD5;1</h3>
+<pre><code class="lang-java">        <span class="hljs-comment">//AC</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxSumMinProduct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+            <span class="hljs-keyword">int</span> n = nums.length;
+            <span class="hljs-keyword">long</span>[] s = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                s[i + <span class="hljs-number">1</span>] = s[i] + nums[i];
+            }
+            <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n], right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt; nums[i]) {
+                    stk.pop();
+                }
+                left[i] = stk.isEmpty() ? -<span class="hljs-number">1</span> : stk.peek();
+                stk.push(i);
+            }
+            stk.clear();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt;= nums[i]) {
+                    stk.pop();
+                }
+                right[i] = stk.isEmpty() ? n : stk.peek();
+                stk.push(i);
+            }
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">int</span> l = left[i], r = right[i];
+                res = Math.max(res, <span class="hljs-number">1L</span> * (s[r] - s[l + <span class="hljs-number">1</span>]) * nums[i]);
+            }
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) (res % MOD);
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;&#xFF0C;&#x8BBE;&#x7F6E;&#x54E8;&#x5175;</li>
+</ul>
+<p><img src="https://wat1r-1311637112.cos.ap-shanghai.myqcloud.com/imgs/20220528194208.png" alt=""></p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxSumMinProduct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] src)</span> </span>{
+    <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+    <span class="hljs-comment">//&#x8BBE;&#x7F6E;&#x524D;&#x540E;&#x4E24;&#x4E2A;&#x54E8;&#x5175; 0 0 </span>
+    <span class="hljs-keyword">int</span>[] nums = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[src.length + <span class="hljs-number">2</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; src.length; i++) {
+        nums[i + <span class="hljs-number">1</span>] = src[i];
+    }
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">long</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        pre[i + <span class="hljs-number">1</span>] = pre[i] + nums[i];
+    }
+    Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-comment">//&#x53F3;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;&#x5B83;&#x5C0F;&#x7684;&#x5143;&#x7D20;&#x7684;&#x4E0B;&#x6807;</span>
+    <span class="hljs-keyword">int</span>[] right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[i] &lt; nums[stk.peek()]) {
+            right[stk.pop()] = i;
+        }
+        stk.push(i);
+    }
+    stk.clear();
+    <span class="hljs-comment">//&#x5DE6;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;&#x5B83;&#x5C0F;&#x7684;&#x5143;&#x7D20;&#x7684;&#x4E0B;&#x6807;</span>
+    <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) {
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[i] &lt; nums[stk.peek()]) {
+            left[stk.pop()] = i;
+        }
+        stk.push(i);
+    }
+    <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">int</span> l = left[i], r = right[i];
+        res = Math.max(res, nums[i] * (pre[r] - pre[l + <span class="hljs-number">1</span>]));
+    }
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) (res % MOD);
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;&#x4E00;&#x6B21;&#x5355;&#x8C03;&#x6808;&#x64CD;&#x4F5C;">&#x65B9;&#x6CD5;2&#xFF1A;&#x4E00;&#x6B21;&#x5355;&#x8C03;&#x6808;&#x64CD;&#x4F5C;</h3>
+<pre><code class="lang-java">
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxSumMinProduct</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+            <span class="hljs-keyword">int</span> MOD = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+            <span class="hljs-keyword">int</span> n = nums.length;
+            <span class="hljs-comment">// left &#x662F;&#x4E25;&#x683C;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;left[i] &#x662F;&#x5DE6;&#x4FA7;&#x6700;&#x8FD1;&#x7684;&#x4E25;&#x683C;&#x5C0F;&#x4E8E; nums[i] &#x7684;&#x5143;&#x7D20;&#x4E0B;&#x6807;</span>
+            <span class="hljs-comment">// right &#x662F;&#x975E;&#x4E25;&#x683C;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;right[i] &#x662F;&#x53F3;&#x4FA7;&#x6700;&#x8FD1;&#x7684;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E; nums[i] &#x7684;&#x5143;&#x7D20;&#x4E0B;&#x6807;</span>
+            <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n], right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+            Arrays.fill(right, n - <span class="hljs-number">1</span>);
+            Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; nums[stk.peek()] &gt;= nums[i]) {
+                    right[stk.pop()] = i - <span class="hljs-number">1</span>;
+                }
+                <span class="hljs-keyword">if</span> (!stk.isEmpty()) {
+                    left[i] = stk.peek() + <span class="hljs-number">1</span>;
+                }
+                stk.push(i);
+            }
+            <span class="hljs-keyword">long</span>[] pre = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                pre[i + <span class="hljs-number">1</span>] = pre[i] + nums[i];
+            }
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                res = Math.max(res, <span class="hljs-number">1L</span> * (pre[right[i] + <span class="hljs-number">1</span>] - pre[left[i]]) * nums[i]);
+            }
+            <span class="hljs-keyword">return</span> (<span class="hljs-keyword">int</span>) (res % MOD);
+        }
 </code></pre>
 <h2 id="2030-&#x542B;&#x7279;&#x5B9A;&#x5B57;&#x6BCD;&#x7684;&#x6700;&#x5C0F;&#x5B50;&#x5E8F;&#x5217;"><a href="https://leetcode-cn.com/problems/smallest-k-length-subsequence-with-occurrences-of-a-letter/" target="_blank">2030. &#x542B;&#x7279;&#x5B9A;&#x5B57;&#x6BCD;&#x7684;&#x6700;&#x5C0F;&#x5B50;&#x5E8F;&#x5217;</a></h2>
 <pre><code class="lang-java">  <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_4th</span> </span>{
@@ -1323,6 +1744,59 @@
 
     }
 </code></pre>
+<h2 id="2104-&#x5B50;&#x6570;&#x7EC4;&#x8303;&#x56F4;&#x548C;"><a href="https://leetcode.cn/problems/sum-of-subarray-ranges/" target="_blank">2104. &#x5B50;&#x6570;&#x7EC4;&#x8303;&#x56F4;&#x548C;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x5355;&#x8C03;&#x6808;&#x8BA1;&#x7B97;&#x8D21;&#x732E;&#x503C;">&#x65B9;&#x6CD5;1&#xFF1A;&#x5355;&#x8C03;&#x6808;&#x8BA1;&#x7B97;&#x8D21;&#x732E;&#x503C;</h3>
+<ul>
+<li>&#x601D;&#x8DEF;&#x6765;&#x7740;leetcode&#x9AD8;&#x8D5E;&#x9898;&#x89E3;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> <span class="hljs-title">subArrayRanges</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-comment">//&#x8BA1;&#x7B97;nums[i]&#x5728; nums&#x4E2D; &#x4F5C;&#x4E3A;&#x6700;&#x5927;&#x503C;&#x548C;&#x6700;&#x5C0F;&#x503C; &#x6240;&#x51FA;&#x73B0;&#x7684;&#x6700;&#x5927;&#x533A;&#x95F4;&#x5927;&#x5C0F;</span>
+    <span class="hljs-comment">//&#x6362;&#x8A00;&#x4E4B;&#xFF0C;&#x9700;&#x8981;&#x627E;&#x5230;nums[i] &#x4F5C;&#x4E3A;&#x6700;&#x5927;&#x503C;&#xFF0C;&#x627E;&#x5230;&#x5DE6;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;nums[i]&#x5C0F;&#x7684;&#x7D22;&#x5F15;j &#x627E;&#x5230;&#x53F3;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;nums[i]&#x5C0F;&#x7684;&#x7D22;&#x5F15;k &#x533A;&#x95F4;&#x8303;&#x56F4;&#x4E3A;[k-j]</span>
+    <span class="hljs-comment">//&#x540C;&#x7406;&#xFF0C;&#x9700;&#x8981;&#x627E;&#x5230;nums[i] &#x4F5C;&#x4E3A;&#x6700;&#x5C0F;&#x503C;&#xFF0C;&#x627E;&#x5230;&#x5DE6;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;nums[i]&#x5927;&#x7684;&#x7D22;&#x5F15;j &#x627E;&#x5230;&#x53F3;&#x8FB9;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;nums[i]&#x5927;&#x7684;&#x7D22;&#x5F15;k &#x533A;&#x95F4;&#x8303;&#x56F4;&#x4E3A;[k-j]</span>
+    <span class="hljs-comment">//&#x8FD9;&#x91CC;&#x56E0;&#x4E3A;&#x505A;&#x4E86;&#x4E24;&#x904D;&#x7684;&#x6BD4;&#x8F83;&#xFF0C;&#x9700;&#x8981;&#x7279;&#x522B;&#x6CE8;&#x610F; &#x5728; &#x4E25;&#x683C;&#x76F8;&#x7B49;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EA;&#x80FD;&#x53D6;&#x4E00;&#x8FB9;&#xFF0C;&#x53E6;&#x5916;&#x4E00;&#x8FB9;&#x5982;&#x679C;&#x91CD;&#x590D;&#x53D6;&#xFF0C;&#x5219;&#x4F1A;&#x91CD;&#x590D;</span>
+    <span class="hljs-keyword">long</span>[] maxx = getCnt(nums, <span class="hljs-keyword">false</span>);
+    <span class="hljs-keyword">long</span>[] minn = getCnt(nums, <span class="hljs-keyword">true</span>);
+    <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//&#x8BA1;&#x7B97;&#x5F53;&#x524D;&#x5143;&#x7D20;&#x4F5C;&#x4E3A;&#x6700;&#x5927;&#x503C;&#x548C;&#x6700;&#x5C0F;&#x503C;&#x65F6;&#xFF0C;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;&#xFF0C;&#x8BA1;&#x7B97;&#x51FA;&#x300C;&#x8D21;&#x732E;&#x503C;&#x300D;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        res += nums[i] * (maxx[i] - minn[i]);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span>[] getCnt(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">boolean</span> flag) {
+    <span class="hljs-keyword">int</span> n = nums.length;
+    <span class="hljs-keyword">int</span>[] left = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n], right = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+    Deque&lt;Integer&gt; stk = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-comment">//&#x4E3A;true&#x65F6;&#x7EF4;&#x6301;&#x5355;&#x8C03;&#x9012;&#x589E;&#x6808;&#xFF0C;&#x9047;&#x5230;&#x975E;&#x4E25;&#x683C;&#x9012;&#x51CF;&#x8D8B;&#x52BF;&#x65F6;&#xFF0C;&#x5F39;&#x51FA;&#x6808;&#x9876;&#x5143;&#x7D20;&#x300C;&#x4E0B;&#x6807;&#x300D;</span>
+        <span class="hljs-comment">//&#x8FD9;&#x65F6;&#x5019;&#x627E;&#x7684;&#x662F;&#x5DE6;&#x8FB9;&#x6BD4;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;nums[i]&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x5982;&#x679C;&#x5DE6;&#x8FB9;&#x6CA1;&#x6709;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x4E0B;&#x6807;&#x5219;&#x8BBE;&#x7F6E;&#x4E3A;-1&#xFF0C;&#x5373;&#x7D22;&#x5F15;0&#x5F80;&#x5DE6;&#x7684;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;</span>
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; (flag ? nums[stk.peek()] &gt;= nums[i] : nums[stk.peek()] &lt;= nums[i])) {
+            stk.pop();
+        }
+        left[i] = stk.isEmpty() ? -<span class="hljs-number">1</span> : stk.peek();
+        stk.push(i);
+    }
+    stk.clear();
+    <span class="hljs-comment">//&#x4E3A;true&#x65F6;&#x7EF4;&#x6301;&#x5355;&#x8C03;&#x9012;&#x589E;&#x6808;&#xFF0C;&#x9047;&#x5230;&#x975E;&#x4E25;&#x683C;&#x9012;&#x51CF;&#x8D8B;&#x52BF;&#x65F6;&#xFF0C;&#x5F39;&#x51FA;&#x6808;&#x9876;&#x5143;&#x7D20;&#x300C;&#x4E0B;&#x6807;&#x300D;</span>
+    <span class="hljs-comment">//&#x8FD9;&#x65F6;&#x5019;&#x627E;&#x7684;&#x662F;&#x53F3;&#x8FB9;&#x6BD4;&#x5C0F;&#x4E8E;(&#x6B64;&#x5904;&#x6CA1;&#x6709;&#x7B49;&#x4E8E;)nums[i]&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x5982;&#x679C;&#x5DE6;&#x8FB9;&#x6CA1;&#x6709;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x4E0B;&#x6807;&#x5219;&#x8BBE;&#x7F6E;&#x4E3A;n&#xFF0C;&#x5373;&#x7D22;&#x5F15;&#x300C;len(nums)&#x300D;&#x5F80;&#x53F3;&#x7684;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">while</span> (!stk.isEmpty() &amp;&amp; (flag ? nums[stk.peek()] &gt; nums[i] : nums[stk.peek()] &lt; nums[i])) {
+            stk.pop();
+        }
+        right[i] = stk.isEmpty() ? n : stk.peek();
+        stk.push(i);
+    }
+    <span class="hljs-keyword">long</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n];
+    <span class="hljs-comment">//&#x5DE6;&#x4FA7;&#x6709; (i - left[i]) &#x548C;&#x9009;&#x62E9;&#xFF0C;&#x53F3;&#x4FA7;&#x6709;(right[i] - i)&#x4E2A;&#x9009;&#x62E9;</span>
+    <span class="hljs-comment">//&#x6839;&#x636E;&#x4E58;&#x6CD5;&#x539F;&#x7406;,(i - left[i])*(right[i] - i)</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        res[i] = <span class="hljs-number">1L</span> * (i - left[i]) * (right[i] - i);
+    }
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1362,7 +1836,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"单调栈","level":"1.3.1","depth":2,"next":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.8","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"计算几何","level":"1.3.9","depth":2,"path":"docs/leetcode/classify/computational_geometry.md","ref":"docs/leetcode/classify/computational_geometry.md","articles":[]},{"title":"扫描线","level":"1.3.10","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"随机化","level":"1.3.11","depth":2,"path":"docs/leetcode/classify/randomization.md","ref":"docs/leetcode/classify/randomization.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/monotonic_stack.md","mtime":"2022-04-14T13:33:23.084Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"单调栈","level":"1.3.1","depth":2,"next":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},"previous":{"title":"LeetCode-PART2","level":"1.3","depth":1,"ref":"","articles":[{"title":"单调栈","level":"1.3.1","depth":2,"path":"docs/leetcode/classify/monotonic_stack.md","ref":"docs/leetcode/classify/monotonic_stack.md","articles":[]},{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},{"title":"图论","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},{"title":"博弈问题","level":"1.3.6","depth":2,"path":"docs/leetcode/classify/game_problem.md","ref":"docs/leetcode/classify/game_problem.md","articles":[]},{"title":"位运算","level":"1.3.7","depth":2,"path":"docs/leetcode/classify/bit.md","ref":"docs/leetcode/classify/bit.md","articles":[]},{"title":"数学","level":"1.3.8","depth":2,"path":"docs/leetcode/classify/math.md","ref":"docs/leetcode/classify/math.md","articles":[]},{"title":"计算几何","level":"1.3.9","depth":2,"path":"docs/leetcode/classify/computational_geometry.md","ref":"docs/leetcode/classify/computational_geometry.md","articles":[]},{"title":"扫描线","level":"1.3.10","depth":2,"path":"docs/leetcode/classify/sweep_line.md","ref":"docs/leetcode/classify/sweep_line.md","articles":[]},{"title":"随机化","level":"1.3.11","depth":2,"path":"docs/leetcode/classify/randomization.md","ref":"docs/leetcode/classify/randomization.md","articles":[]},{"title":"剑指Offer(leetcode)","level":"1.3.12","depth":2,"path":"docs/leetcode/swordoffer/swordoffer.md","ref":"docs/leetcode/swordoffer/swordoffer.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/monotonic_stack.md","mtime":"2022-05-28T14:18:11.710Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

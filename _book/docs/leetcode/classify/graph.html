@@ -1120,6 +1120,385 @@ index&#x8BB0;&#x5F55;&#x52A0;&#x5165;&#x8DEF;&#x5F84;&#x7684;&#x6E38;&#x6807;
 }
 </code></pre>
 <h3 id="&#x65B9;&#x6CD5;2bfs&#x90BB;&#x63A5;&#x8868;">&#x65B9;&#x6CD5;2:BFS+&#x90BB;&#x63A5;&#x8868;</h3>
+<h2 id="675-&#x4E3A;&#x9AD8;&#x5C14;&#x592B;&#x6BD4;&#x8D5B;&#x780D;&#x6811;"><a href="https://leetcode.cn/problems/cut-off-trees-for-golf-event/" target="_blank">675. &#x4E3A;&#x9AD8;&#x5C14;&#x592B;&#x6BD4;&#x8D5B;&#x780D;&#x6811;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6392;&#x5E8F;bfs">&#x65B9;&#x6CD5;1&#xFF1A;&#x6392;&#x5E8F;+BFS</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x683C;&#x5B50;&#x7684;&#x8FB9;&#x754C; row, col</span>
+<span class="hljs-keyword">int</span> R, C;
+<span class="hljs-keyword">int</span>[][] dirs = {{-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}};
+List&lt;List&lt;Integer&gt;&gt; forest;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">cutOffTree</span><span class="hljs-params">(List&lt;List&lt;Integer&gt;&gt; forest)</span> </span>{
+    R = forest.size();
+    C = forest.get(<span class="hljs-number">0</span>).size();
+    <span class="hljs-keyword">this</span>.forest = forest;
+    List&lt;<span class="hljs-keyword">int</span>[]&gt; trees = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; r++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; c++) {
+            <span class="hljs-keyword">if</span> (forest.get(r).get(c) &gt; <span class="hljs-number">1</span>) {
+                trees.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{r, c});
+            }
+        }
+    }
+    <span class="hljs-comment">//&#x6392;&#x5E8F;&#x6309;&#x6811;&#x9AD8;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;</span>
+    Collections.sort(trees, (a, b) -&gt; forest.get(a[<span class="hljs-number">0</span>]).get(a[<span class="hljs-number">1</span>]) - forest.get(b[<span class="hljs-number">0</span>]).get(b[<span class="hljs-number">1</span>]));
+    <span class="hljs-comment">//source_x source_y &#x8D77;&#x59CB;&#x7684;&#x70B9;</span>
+    <span class="hljs-keyword">int</span> sx = <span class="hljs-number">0</span>, sy = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> tot = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x603B;&#x7684;&#x6B65;&#x6570;</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; trees.size(); i++) {
+        <span class="hljs-comment">//&#x8FD9;&#x4E00;&#x8F6E;&#x76EE;&#x6807;&#x5750;&#x6807; target_x target_y</span>
+        <span class="hljs-keyword">int</span> tx = trees.get(i)[<span class="hljs-number">0</span>], ty = trees.get(i)[<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">int</span> steps = bfs(sx, sy, tx, ty);
+        <span class="hljs-keyword">if</span> (steps == -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+        tot += steps;
+        sx = tx;
+        sy = ty;
+    }
+    <span class="hljs-keyword">return</span> tot;
+}
+
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@param</span> sx source_x
+ * <span class="hljs-doctag">@param</span> sy source_y
+ * <span class="hljs-doctag">@param</span> tx target_x
+ * <span class="hljs-doctag">@param</span> ty target_y
+ * <span class="hljs-doctag">@return</span>
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sx, <span class="hljs-keyword">int</span> sy, <span class="hljs-keyword">int</span> tx, <span class="hljs-keyword">int</span> ty)</span> </span>{
+    <span class="hljs-comment">//&#x5982;&#x679C;&#x6E90;&#x70B9;&#x548C;&#x76EE;&#x6807;&#x70B9;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x70B9;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x884C;&#x8D70;</span>
+    <span class="hljs-keyword">if</span> (sx == tx &amp;&amp; sy == ty) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    Queue&lt;<span class="hljs-keyword">int</span>[]&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+    <span class="hljs-keyword">int</span> step = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">//&#x8BBF;&#x95EE;&#x6570;&#x7EC4;</span>
+    <span class="hljs-keyword">boolean</span>[][] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[R][C];
+    q.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{sx, sy});
+    vis[sx][sy] = <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+        step++;
+        <span class="hljs-keyword">int</span> size = q.size();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+            <span class="hljs-keyword">int</span>[] p = q.poll();
+            <span class="hljs-comment">//current_x current_y</span>
+            <span class="hljs-keyword">int</span> cx = p[<span class="hljs-number">0</span>], cy = p[<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] d : dirs) {
+                <span class="hljs-comment">//neighbor_x neighbor_y</span>
+                <span class="hljs-keyword">int</span> nx = cx + d[<span class="hljs-number">0</span>], ny = cy + d[<span class="hljs-number">1</span>];
+                <span class="hljs-comment">//&#x5728;&#x8FB9;&#x754C;&#x8303;&#x56F4;&#x5185;&#x4E14;&#x6CA1;&#x6709;&#x88AB;&#x8BBF;&#x95EE;&#x8FC7; &#x5E76;&#x4E14;&#x662F;&#x6811;</span>
+                <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx &lt; R &amp;&amp; ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny &lt; C
+                        &amp;&amp; !vis[nx][ny] &amp;&amp; forest.get(nx).get(ny) &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">if</span> (nx == tx &amp;&amp; ny == ty) {
+                        <span class="hljs-keyword">return</span> step;
+                    }
+                    q.offer(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{nx, ny});
+                    vis[nx][ny] = <span class="hljs-keyword">true</span>;
+                }
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+}
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2&#xFF1A;dijkstra-&#x7B97;&#x6CD5;">&#x65B9;&#x6CD5;2&#xFF1A;Dijkstra &#x7B97;&#x6CD5;</h3>
+<pre><code class="lang-java"><span class="hljs-comment">//&#x683C;&#x5B50;&#x7684;&#x8FB9;&#x754C; row, col</span>
+<span class="hljs-keyword">int</span> R, C;
+<span class="hljs-keyword">int</span>[][] dirs = {{-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}};
+List&lt;List&lt;Integer&gt;&gt; forest;
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">cutOffTree</span><span class="hljs-params">(List&lt;List&lt;Integer&gt;&gt; forest)</span> </span>{
+    R = forest.size();
+    C = forest.get(<span class="hljs-number">0</span>).size();
+    <span class="hljs-keyword">this</span>.forest = forest;
+    List&lt;<span class="hljs-keyword">int</span>[]&gt; trees = <span class="hljs-keyword">new</span> ArrayList&lt;<span class="hljs-keyword">int</span>[]&gt;();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; R; ++r) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; C; ++c) {
+            <span class="hljs-keyword">if</span> (forest.get(r).get(c) &gt; <span class="hljs-number">1</span>) {
+                trees.add(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{r, c});
+            }
+        }
+    }
+    Collections.sort(trees, (a, b) -&gt; forest.get(a[<span class="hljs-number">0</span>]).get(a[<span class="hljs-number">1</span>]) - forest.get(b[<span class="hljs-number">0</span>]).get(b[<span class="hljs-number">1</span>]));
+
+    <span class="hljs-keyword">int</span> sx = <span class="hljs-number">0</span>, sy = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> tot = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; trees.size(); ++i) {
+        <span class="hljs-comment">//&#x8FD9;&#x4E00;&#x8F6E;&#x76EE;&#x6807;&#x5750;&#x6807; target_x target_y</span>
+        <span class="hljs-keyword">int</span> tx = trees.get(i)[<span class="hljs-number">0</span>], ty = trees.get(i)[<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">int</span> steps = bfs(sx, sy, tx, ty);
+        <span class="hljs-keyword">if</span> (steps == -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+        tot += steps;
+        sx = tx;
+        sy = ty;
+    }
+    <span class="hljs-keyword">return</span> tot;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sx, <span class="hljs-keyword">int</span> sy, <span class="hljs-keyword">int</span> tx, <span class="hljs-keyword">int</span> ty)</span> </span>{
+    <span class="hljs-keyword">if</span> (sx == tx &amp;&amp; sy == ty) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+
+    PriorityQueue&lt;<span class="hljs-keyword">int</span>[]&gt; pq = <span class="hljs-keyword">new</span> PriorityQueue&lt;<span class="hljs-keyword">int</span>[]&gt;((a, b) -&gt; a[<span class="hljs-number">0</span>] - b[<span class="hljs-number">0</span>]);
+    <span class="hljs-keyword">boolean</span>[][] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[R][C];
+    pq.offer(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">0</span>, sx * C + sy});
+    vis[sx][sy] = <span class="hljs-keyword">true</span>;
+    <span class="hljs-keyword">while</span> (!pq.isEmpty()) {
+        <span class="hljs-keyword">int</span>[] t = pq.poll();
+        <span class="hljs-keyword">int</span> dist = t[<span class="hljs-number">0</span>], loc = t[<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">4</span>; ++j) {
+            <span class="hljs-keyword">int</span> nx = loc / C + dirs[j][<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">int</span> ny = loc % C + dirs[j][<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx &lt; R &amp;&amp; ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny &lt; C
+                    &amp;&amp; !vis[nx][ny] &amp;&amp; forest.get(nx).get(ny) &gt; <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">if</span> (nx == tx &amp;&amp; ny == ty) {
+                    <span class="hljs-keyword">return</span> dist + <span class="hljs-number">1</span>;
+                }
+                pq.offer(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{dist + <span class="hljs-number">1</span>, nx * C + ny});
+                vis[nx][ny] = <span class="hljs-keyword">true</span>;
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+}
+</code></pre>
+<h2 id="1293-&#x7F51;&#x683C;&#x4E2D;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;"><a href="https://leetcode.cn/problems/shortest-path-in-a-grid-with-obstacles-elimination/" target="_blank">1293. &#x7F51;&#x683C;&#x4E2D;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;bfs">&#x65B9;&#x6CD5;1&#xFF1A;BFS</h3>
+<pre><code class="lang-java">     <span class="hljs-keyword">int</span> m, n;
+        <span class="hljs-comment">//&#x53F3; &#x4E0B; &#x5DE6; &#x4E0A;</span>
+        <span class="hljs-keyword">int</span>[][] dirs = {{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+        <span class="hljs-comment">//&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x5BF9;&#x641C;&#x7D22;&#x7A7A;&#x95F4;&#x8FDB;&#x884C;&#x4F18;&#x5316;&#x3002;&#x6CE8;&#x610F;&#x5230;&#x9898;&#x76EE;&#x4E2D; k &#x7684;&#x4E0A;&#x9650;&#x4E3A; m * n&#xFF0C;&#x4F46;&#x8003;&#x8651;&#x4E00;&#x6761;&#x4ECE; (0, 0) &#x5411;&#x4E0B;&#x8D70;&#x5230; (m - 1, 0) &#x518D;&#x5411;&#x53F3;&#x8D70;&#x5230;</span>
+        <span class="hljs-comment">// (m - 1, n - 1) &#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x5B83;&#x7ECF;&#x8FC7;&#x4E86; m + n - 1 &#x4E2A;&#x4F4D;&#x7F6E;&#xFF0C;&#x5176;&#x4E2D;&#x8D77;&#x70B9; (0, 0) &#x548C;&#x7EC8;&#x70B9; (m - 1, n - 1) &#x6CA1;&#x6709;&#x969C;&#x788D;&#x7269;&#xFF0C;</span>
+        <span class="hljs-comment">// &#x90A3;&#x4E48;&#x8FD9;&#x6761;&#x8DEF;&#x5F84;&#x4E0A;&#x6700;&#x591A;&#x53EA;&#x4F1A;&#x6709; m + n - 3 &#x4E2A;&#x969C;&#x788D;&#x7269;&#x3002;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06; k &#x7684;&#x503C;&#x8BBE;&#x7F6E;&#x4E3A; m + n - 3 &#x4E0E;&#x5176;&#x672C;&#x8EAB;&#x7684;&#x8F83;&#x5C0F;&#x503C;</span>
+        <span class="hljs-comment">// min(k, m + n - 3)&#xFF0C;&#x5C06;&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4ECE; O(MNK) &#x964D;&#x4F4E;&#x81F3; (MN&#x2217;min(M+N,K))</span>
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">shortestPath</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid, <span class="hljs-keyword">int</span> k)</span> </span>{
+            m = grid.length;
+            n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-comment">//case -&gt;</span>
+            <span class="hljs-comment">//[[0]]</span>
+            <span class="hljs-comment">//1</span>
+            <span class="hljs-keyword">if</span> (m == <span class="hljs-number">1</span> &amp;&amp; n == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+<span class="hljs-comment">//            if ( k &gt;= m + n - 3){</span>
+<span class="hljs-comment">//                return m + n - 2;</span>
+<span class="hljs-comment">//            }</span>
+<span class="hljs-comment">//            k = Math.min(k, m + n - 3);</span>
+            <span class="hljs-keyword">boolean</span>[][][] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[m][n][k + <span class="hljs-number">1</span>];
+            Queue&lt;Position&gt; q = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+            <span class="hljs-comment">//&#x6807;&#x8BB0;&#x8BBF;&#x95EE;&#x7684;&#x72B6;&#x6001;</span>
+            q.offer(<span class="hljs-keyword">new</span> Position(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, k));
+            vis[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>][k] = <span class="hljs-keyword">true</span>;
+            <span class="hljs-keyword">int</span> steps = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+                <span class="hljs-keyword">int</span> size = q.size();
+                steps++;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+                    Position p = q.poll();
+                    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] d : dirs) {
+                        <span class="hljs-keyword">int</span> nx = p.x + d[<span class="hljs-number">0</span>], ny = p.y + d[<span class="hljs-number">1</span>];
+                        <span class="hljs-keyword">if</span> (nx &gt;= m || nx &lt; <span class="hljs-number">0</span> || ny &gt;= n || ny &lt; <span class="hljs-number">0</span>) {
+                            <span class="hljs-keyword">continue</span>;
+                        }
+                        <span class="hljs-keyword">if</span> (grid[nx][ny] == <span class="hljs-number">0</span> &amp;&amp; !vis[nx][ny][p.count]) {
+                            <span class="hljs-keyword">if</span> (nx == m - <span class="hljs-number">1</span> &amp;&amp; ny == n - <span class="hljs-number">1</span>) {
+                                <span class="hljs-keyword">return</span> steps;
+                            }
+                            q.offer(<span class="hljs-keyword">new</span> Position(nx, ny, p.count));
+                            vis[nx][ny][p.count] = <span class="hljs-keyword">true</span>;
+                        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (grid[nx][ny] == <span class="hljs-number">1</span> &amp;&amp; p.count &gt; <span class="hljs-number">0</span> &amp;&amp; !vis[nx][ny][p.count - <span class="hljs-number">1</span>]) {
+                            q.offer(<span class="hljs-keyword">new</span> Position(nx, ny, p.count - <span class="hljs-number">1</span>));
+                            vis[nx][ny][p.count - <span class="hljs-number">1</span>] = <span class="hljs-keyword">true</span>;
+                        }
+
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+        }
+
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Position</span> </span>{
+            <span class="hljs-keyword">int</span> x, y;
+            <span class="hljs-keyword">int</span> count;<span class="hljs-comment">//&#x5F53;&#x524D;&#x72B6;&#x6001;&#x4E0B;&#x8FD8;&#x53EF;&#x4EE5;&#x7ECF;&#x8FC7;&#x591A;&#x5C11;&#x4E2A;&#x969C;&#x788D;&#x7269;&#xFF0C;&#x6B64;&#x6570;&#x91CF;&#x4E3A;&#x975E;&#x8D1F;</span>
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Position</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> count)</span> </span>{
+                <span class="hljs-keyword">this</span>.x = x;
+                <span class="hljs-keyword">this</span>.y = y;
+                <span class="hljs-keyword">this</span>.count = count;
+            }
+        }
+</code></pre>
+<h2 id="1368-&#x4F7F;&#x7F51;&#x683C;&#x56FE;&#x81F3;&#x5C11;&#x6709;&#x4E00;&#x6761;&#x6709;&#x6548;&#x8DEF;&#x5F84;&#x7684;&#x6700;&#x5C0F;&#x4EE3;&#x4EF7;"><a href="https://leetcode.cn/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/" target="_blank">1368. &#x4F7F;&#x7F51;&#x683C;&#x56FE;&#x81F3;&#x5C11;&#x6709;&#x4E00;&#x6761;&#x6709;&#x6548;&#x8DEF;&#x5F84;&#x7684;&#x6700;&#x5C0F;&#x4EE3;&#x4EF7;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;01&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;">&#x65B9;&#x6CD5;1&#xFF1A;01&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">int</span> m, n;
+<span class="hljs-keyword">int</span>[][] dirs = {{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minCost</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+    m = grid.length;
+    n = grid[<span class="hljs-number">0</span>].length;
+    <span class="hljs-keyword">int</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m * n];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">boolean</span>[] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[m * n];
+    Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    deque.offerFirst(<span class="hljs-number">0</span>);
+    <span class="hljs-keyword">while</span> (!deque.isEmpty()) {
+        <span class="hljs-keyword">int</span> cur_pos = deque.pollFirst();
+        <span class="hljs-keyword">if</span> (vis[cur_pos]) {
+            <span class="hljs-keyword">continue</span>;
+        }
+        vis[cur_pos] = <span class="hljs-keyword">true</span>;
+        <span class="hljs-keyword">int</span> x = cur_pos / n, y = cur_pos % n;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+            <span class="hljs-keyword">int</span> nx = x + dirs[i][<span class="hljs-number">0</span>], ny = y + dirs[i][<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">int</span> new_pos = nx * n + ny;
+            <span class="hljs-comment">//1:&#x53F3; 2:&#x5DE6; 3:&#x4E0B; 4:&#x4E0A;</span>
+            <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;[x,y]&#x7684;&#x503C;&#x5982;&#x679C;&#x662F;&#x7B26;&#x5408;1 2 3 4 &#x7684;&#x503C;&#xFF0C;&#x5219;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; 0</span>
+            <span class="hljs-keyword">int</span> new_dist = dist[cur_pos] + (grid[x][y] == i + <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span> (nx &lt; <span class="hljs-number">0</span> || nx &gt;= m || ny &lt; <span class="hljs-number">0</span> || ny &gt;= n) {
+                <span class="hljs-keyword">continue</span>;
+            }
+            <span class="hljs-keyword">if</span> (new_dist &lt; dist[new_pos]) {
+                dist[new_pos] = new_dist;
+                <span class="hljs-comment">//01&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;&#xFF0C;&#x5C06;0&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x961F;&#x9996;&#xFF0C;1&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x5BF9;&#x5C3E;</span>
+                <span class="hljs-keyword">if</span> (grid[x][y] == i + <span class="hljs-number">1</span>) {
+                    deque.offerFirst(new_pos);
+                } <span class="hljs-keyword">else</span> {
+                    deque.offerLast(new_pos);
+                }
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> dist[m * n - <span class="hljs-number">1</span>];
+}
+</code></pre>
+<ul>
+<li>&#x53E6;&#xFF0C;&#x4E0D;&#x9002;&#x7528;vis&#x6807;&#x8BB0;&#x6570;&#x7EC4;</li>
+</ul>
+<pre><code class="lang-java">    <span class="hljs-keyword">int</span> m, n;
+        <span class="hljs-keyword">int</span>[][] dirs = {{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minCost</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            m = grid.length;
+            n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">int</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m * n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+            Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            deque.offerFirst(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">while</span> (!deque.isEmpty()) {
+                <span class="hljs-keyword">int</span> cur_pos = deque.pollFirst();
+                <span class="hljs-keyword">int</span> x = cur_pos / n, y = cur_pos % n;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+                    <span class="hljs-keyword">int</span> nx = x + dirs[i][<span class="hljs-number">0</span>], ny = y + dirs[i][<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">int</span> new_pos = nx * n + ny;
+                    <span class="hljs-comment">//1:&#x53F3; 2:&#x5DE6; 3:&#x4E0B; 4:&#x4E0A;</span>
+                    <span class="hljs-comment">//&#x5F53;&#x524D;&#x7684;[x,y]&#x7684;&#x503C;&#x5982;&#x679C;&#x662F;&#x7B26;&#x5408;1 2 3 4 &#x7684;&#x503C;&#xFF0C;&#x5219;&#x4E0D;&#x9700;&#x8981;&#x4FEE;&#x6539;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; 0</span>
+                    <span class="hljs-keyword">int</span> new_dist = dist[cur_pos] + (grid[x][y] == i + <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+                    <span class="hljs-keyword">if</span> (nx &lt; <span class="hljs-number">0</span> || nx &gt;= m || ny &lt; <span class="hljs-number">0</span> || ny &gt;= n) {
+                        <span class="hljs-keyword">continue</span>;
+                    }
+                    <span class="hljs-keyword">if</span> (new_dist &lt; dist[new_pos]) {
+                        dist[new_pos] = new_dist;
+                        <span class="hljs-comment">//01&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;&#xFF0C;&#x5C06;0&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x961F;&#x9996;&#xFF0C;1&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x5BF9;&#x5C3E;</span>
+                        <span class="hljs-keyword">if</span> (grid[x][y] == i + <span class="hljs-number">1</span>) {
+                            deque.offerFirst(new_pos);
+                        } <span class="hljs-keyword">else</span> {
+                            deque.offerLast(new_pos);
+                        }
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> dist[m * n - <span class="hljs-number">1</span>];
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;2dijkstra">&#x65B9;&#x6CD5;2:Dijkstra</h3>
+<pre><code class="lang-java">        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span> </span>{
+            <span class="hljs-keyword">int</span> dist;
+            <span class="hljs-keyword">int</span> r;
+            <span class="hljs-keyword">int</span> c;
+
+            Point() {
+            }
+
+            Point(<span class="hljs-keyword">int</span> dist, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c) {
+                <span class="hljs-keyword">this</span>.dist = dist;
+                <span class="hljs-keyword">this</span>.r = r;
+                <span class="hljs-keyword">this</span>.c = c;
+            }
+        }
+
+        <span class="hljs-keyword">int</span>[][] dirs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[][]{{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minCost</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            <span class="hljs-keyword">int</span> m = grid.length;
+            <span class="hljs-keyword">int</span> n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">boolean</span>[][] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[m][n];
+            <span class="hljs-keyword">int</span>[][] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m][n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; m; r++) {
+                Arrays.fill(dist[r], Integer.MAX_VALUE);
+            }
+            <span class="hljs-comment">//&#x6309;&#x8DDD;&#x79BB;&#x6392;&#x5E8F;</span>
+            PriorityQueue&lt;Point&gt; pq = <span class="hljs-keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; o1.dist - o2.dist);
+            pq.offer(<span class="hljs-keyword">new</span> Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>));
+            dist[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (!pq.isEmpty()) {
+                Point cur = pq.poll();
+                <span class="hljs-keyword">int</span> d = cur.dist, r = cur.r, c = cur.c;
+                <span class="hljs-keyword">if</span> (vis[r][c]) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+                vis[r][c] = <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">4</span>; k++) {
+                    <span class="hljs-keyword">int</span> nr = r + dirs[k][<span class="hljs-number">0</span>], nc = c + dirs[k][<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">int</span> cost = (k + <span class="hljs-number">1</span> == grid[r][c] ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+                    <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &lt;= nr &amp;&amp; nr &lt; m &amp;&amp; <span class="hljs-number">0</span> &lt;= nc &amp;&amp; nc &lt; n &amp;&amp; dist[r][c] + cost &lt; dist[nr][nc]) {
+                        dist[nr][nc] = dist[r][c] + cost;
+                        pq.offer(<span class="hljs-keyword">new</span> Point(dist[nr][nc], nr, nc));
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> dist[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;3&#xFF1A;dijkstra">&#x65B9;&#x6CD5;3&#xFF1A;Dijkstra</h3>
+<pre><code class="lang-java">   <span class="hljs-keyword">int</span> m, n;
+        <span class="hljs-keyword">int</span>[][] dirs = {{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minCost</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            m = grid.length;
+            n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">int</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m * n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            <span class="hljs-keyword">boolean</span>[] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[m * n];
+            dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+            PriorityQueue&lt;Integer&gt; pq = <span class="hljs-keyword">new</span> PriorityQueue&lt;&gt;((a, b) -&gt; dist[a] - dist[b]);
+            pq.offer(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">while</span> (!pq.isEmpty()) {
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x70B9;&#x4F4D;&#x7F6E;</span>
+                <span class="hljs-keyword">int</span> cur_pos = pq.poll();
+                <span class="hljs-keyword">if</span> (vis[cur_pos]) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+                vis[cur_pos] = <span class="hljs-keyword">true</span>;
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x70B9;&#x7684;&#x4F4D;&#x7F6E;&#x8F6C;&#x5316;&#x6210;&#x5750;&#x6807;</span>
+                <span class="hljs-keyword">int</span> x = cur_pos / n, y = cur_pos % n;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+                    <span class="hljs-keyword">int</span> nx = x + dirs[i][<span class="hljs-number">0</span>], ny = y + dirs[i][<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">if</span> (nx &lt; <span class="hljs-number">0</span> || nx &gt;= m || ny &lt; <span class="hljs-number">0</span> || ny &gt;= n) {
+                        <span class="hljs-keyword">continue</span>;
+                    }
+                    <span class="hljs-keyword">int</span> new_pos = nx * n + ny;
+                    <span class="hljs-keyword">int</span> new_dist = dist[cur_pos] + (grid[x][y] == i + <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+                    <span class="hljs-keyword">if</span> (new_dist &lt; dist[new_pos]) {
+                        dist[new_pos] = new_dist;
+                        pq.offer(new_pos);
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> dist[m * n - <span class="hljs-number">1</span>];
+        }
+</code></pre>
 <h2 id="2039-&#x7F51;&#x7EDC;&#x7A7A;&#x95F2;&#x7684;&#x65F6;&#x523B;"><a href="https://leetcode-cn.com/problems/the-time-when-the-network-becomes-idle/" target="_blank">2039. &#x7F51;&#x7EDC;&#x7A7A;&#x95F2;&#x7684;&#x65F6;&#x523B;</a></h2>
 <p><img src="../../../imgs/leetcode/classify/image-20220320105254556.png" alt=""></p>
 <pre><code class="lang-java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> V = <span class="hljs-number">100_005</span>;<span class="hljs-comment">//&#x9876;&#x70B9;&#x6570;&#x91CF;</span>
@@ -1167,6 +1546,8 @@ index&#x8BB0;&#x5F55;&#x52A0;&#x5165;&#x8DEF;&#x5F84;&#x7684;&#x6E38;&#x6807;
     <span class="hljs-keyword">return</span> res + <span class="hljs-number">1</span>;
 }
 </code></pre>
+<h3 id="&#x9644;">&#x9644;</h3>
+<p>- <a href="https://blog.csdn.net/wat1r/category_10804842.html" target="_blank">&#x56FE;&#x7B97;&#x6CD5;&#x4E13;&#x680F;</a></p>
 <h2 id="2049-&#x7EDF;&#x8BA1;&#x6700;&#x9AD8;&#x5206;&#x7684;&#x8282;&#x70B9;&#x6570;&#x76EE;"><a href="https://leetcode-cn.com/problems/count-nodes-with-the-highest-score/" target="_blank">2049. &#x7EDF;&#x8BA1;&#x6700;&#x9AD8;&#x5206;&#x7684;&#x8282;&#x70B9;&#x6570;&#x76EE;</a></h2>
 <h3 id="&#x65B9;&#x6CD5;1&#x90BB;&#x63A5;&#x8868;dfs">&#x65B9;&#x6CD5;1:&#x90BB;&#x63A5;&#x8868;+DFS</h3>
 <pre><code class="lang-java"><span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>, M = N * <span class="hljs-number">2</span>;
@@ -1292,6 +1673,133 @@ List&lt;Integer&gt;[] children;
     <span class="hljs-keyword">return</span> cnt;
 }
 </code></pre>
+<h2 id="6081-&#x5230;&#x8FBE;&#x89D2;&#x843D;&#x9700;&#x8981;&#x79FB;&#x9664;&#x969C;&#x788D;&#x7269;&#x7684;&#x6700;&#x5C0F;&#x6570;&#x76EE;"><a href="https://leetcode.cn/problems/minimum-obstacle-removal-to-reach-corner/" target="_blank">6081. &#x5230;&#x8FBE;&#x89D2;&#x843D;&#x9700;&#x8981;&#x79FB;&#x9664;&#x969C;&#x788D;&#x7269;&#x7684;&#x6700;&#x5C0F;&#x6570;&#x76EE;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;01-bfs">&#x65B9;&#x6CD5;1&#xFF1A;01-BFS</h3>
+<pre><code class="lang-java">        <span class="hljs-keyword">int</span> m, n;
+        <span class="hljs-keyword">int</span>[][] dirs = {{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minimumObstacles</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            m = grid.length;
+            n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">int</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m * n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            dist[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">boolean</span>[] vis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">boolean</span>[m * n];
+            Deque&lt;Integer&gt; deque = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            deque.offerFirst(<span class="hljs-number">0</span>);
+            <span class="hljs-keyword">while</span> (!deque.isEmpty()) {
+                <span class="hljs-keyword">int</span> cur_pos = deque.pollFirst();
+                <span class="hljs-keyword">if</span> (vis[cur_pos]) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+                vis[cur_pos] = <span class="hljs-keyword">true</span>;
+                <span class="hljs-keyword">int</span> x = cur_pos / n, y = cur_pos % n;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+                    <span class="hljs-keyword">int</span> nx = x + dirs[i][<span class="hljs-number">0</span>], ny = y + dirs[i][<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">int</span> new_pos = nx * n + ny;
+                    <span class="hljs-keyword">if</span> (nx &lt; <span class="hljs-number">0</span> || nx &gt;= m || ny &lt; <span class="hljs-number">0</span> || ny &gt;= n) {
+                        <span class="hljs-keyword">continue</span>;
+                    }
+                    <span class="hljs-keyword">int</span> g = grid[x][y];
+                    <span class="hljs-keyword">if</span> (dist[cur_pos] + g &lt; dist[new_pos]) {
+                        dist[new_pos] = dist[cur_pos] + g;
+                        <span class="hljs-comment">//01&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x641C;&#x7D22;&#xFF0C;&#x5C06;0&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x961F;&#x9996;&#xFF0C;1&#x7684;&#x90A3;&#x4E2A;&#x70B9;&#x52A0;&#x5165;&#x5230;&#x5BF9;&#x5C3E;</span>
+                        <span class="hljs-keyword">if</span> (g == <span class="hljs-number">0</span>) {
+                            deque.offerFirst(new_pos);
+                        } <span class="hljs-keyword">else</span> {
+                            deque.offerLast(new_pos);
+                        }
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> dist[m * n - <span class="hljs-number">1</span>];
+        }
+</code></pre>
+<ul>
+<li>&#x53E6; &#xFF0C;&#x6570;&#x7EC4;&#x5199;&#x6CD5;&#xFF0C;&#x4E0D;&#x8F6C;&#x6362;&#x5750;&#x6807;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-keyword">int</span>[][] dirs = {{-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}};
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minimumObstacles</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            <span class="hljs-keyword">int</span> m = grid.length;
+            <span class="hljs-keyword">int</span> n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">int</span>[][] dis = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m][n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+                Arrays.fill(dis[i], Integer.MAX_VALUE);
+            }
+            dis[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+            Deque&lt;<span class="hljs-keyword">int</span>[]&gt; q = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+            q.addFirst(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{<span class="hljs-number">0</span>, <span class="hljs-number">0</span>});
+            <span class="hljs-keyword">while</span> (!q.isEmpty()) {
+                <span class="hljs-keyword">int</span>[] p = q.pollFirst();
+                <span class="hljs-keyword">int</span> x = p[<span class="hljs-number">0</span>], y = p[<span class="hljs-number">1</span>];
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>[] d : dirs) {
+                    <span class="hljs-keyword">int</span> nx = x + d[<span class="hljs-number">0</span>], ny = y + d[<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &lt;= nx &amp;&amp; nx &lt; m &amp;&amp; <span class="hljs-number">0</span> &lt;= ny &amp;&amp; ny &lt; n) {
+                        <span class="hljs-keyword">int</span> g = grid[nx][ny];
+                        <span class="hljs-keyword">if</span> (dis[x][y] + g &lt; dis[nx][ny]) {
+                            dis[nx][ny] = dis[x][y] + g;
+                            <span class="hljs-keyword">if</span> (g == <span class="hljs-number">0</span>) q.addFirst(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{nx, ny});
+                            <span class="hljs-keyword">else</span> q.addLast(<span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{nx, ny});
+                        }
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> dis[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];
+        }
+</code></pre>
+<h3 id="&#x65B9;&#x6CD5;201bfs">&#x65B9;&#x6CD5;2:01BFS</h3>
+<pre><code class="lang-java">      <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span> </span>{
+            <span class="hljs-keyword">int</span> value;
+            <span class="hljs-keyword">int</span> pos;
+
+            Point() {
+            }
+
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Point</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value, <span class="hljs-keyword">int</span> pos)</span> </span>{
+                <span class="hljs-keyword">this</span>.value = value;
+                <span class="hljs-keyword">this</span>.pos = pos;
+            }
+        }
+
+        <span class="hljs-keyword">int</span>[][] dirs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[][]{{<span class="hljs-number">0</span>, <span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}};
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minimumObstacles</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[][] grid)</span> </span>{
+            <span class="hljs-keyword">int</span> m = grid.length;
+            <span class="hljs-keyword">int</span> n = grid[<span class="hljs-number">0</span>].length;
+            <span class="hljs-keyword">int</span>[][] dist = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[m][n];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>; r &lt; m; r++) {
+                Arrays.fill(dist[r], Integer.MAX_VALUE);
+            }
+            <span class="hljs-comment">//&#x6309;value &#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x6392;&#x5E8F;</span>
+            PriorityQueue&lt;Point&gt; pq = <span class="hljs-keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; o1.value - o2.value);
+            pq.offer(<span class="hljs-keyword">new</span> Point(grid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>], <span class="hljs-number">0</span>));
+            dist[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">while</span> (!pq.isEmpty()) {
+                Point cur = pq.poll();
+                <span class="hljs-keyword">int</span> r = cur.pos / n, c = cur.pos % n;
+                <span class="hljs-keyword">int</span> value = cur.value;
+                <span class="hljs-keyword">if</span> (dist[r][c] &lt; value) {
+                    <span class="hljs-keyword">continue</span>;
+                }
+                <span class="hljs-keyword">if</span> (r == m - <span class="hljs-number">1</span> &amp;&amp; c == n - <span class="hljs-number">1</span>) {
+                    <span class="hljs-keyword">return</span> value;
+                }
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">4</span>; k++) {
+                    <span class="hljs-keyword">int</span> nr = r + dirs[k][<span class="hljs-number">0</span>], nc = c + dirs[k][<span class="hljs-number">1</span>];
+                    <span class="hljs-keyword">int</span> cost = (k + <span class="hljs-number">1</span> == grid[r][c] ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+                    <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &lt;= nr &amp;&amp; nr &lt; m &amp;&amp; <span class="hljs-number">0</span> &lt;= nc &amp;&amp; nc &lt; n) {
+                        <span class="hljs-keyword">int</span> next_value = grid[nr][nc] + value;
+                        <span class="hljs-keyword">if</span> (dist[nr][nc] &gt; next_value) {
+                            dist[nr][nc] = next_value;
+                            pq.offer(<span class="hljs-keyword">new</span> Point(next_value, nr * n + nc));
+                        }
+                    }
+                }
+            }
+            <span class="hljs-keyword">return</span> dist[m - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>];
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -1335,7 +1843,7 @@ List&lt;Integer&gt;[] children;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.3.4","depth":2,"next":{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-04-28T23:58:30.456Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-05-20T00:21:53.157Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.3.4","depth":2,"next":{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-05-29T14:04:35.966Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
