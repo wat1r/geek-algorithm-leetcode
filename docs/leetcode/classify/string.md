@@ -412,3 +412,36 @@ public int[] numberOfLines(int[] widths, String s) {
     return new int[]{lines, num};
 }
 ```
+
+
+
+
+
+## [890. 查找和替换模式](https://leetcode.cn/problems/find-and-replace-pattern/)
+
+### 方法1：两次Hash映射
+
+```java
+        public List<String> findAndReplacePattern(String[] words, String pattern) {
+            List<String> res = new ArrayList<>();
+            for (String word : words) {
+                if (check(word, pattern) && check(pattern, word)) res.add(word);
+            }
+            return res;
+        }
+
+
+        public boolean check(String source, String target) {
+            Map<Character, Character> map = new HashMap<>();
+            for (int i = 0; i < source.length(); i++) {
+                //相同字符映射的字符应该是唯一的
+                char s = source.charAt(i), t = target.charAt(i);
+                if (!map.containsKey(s)) {
+                    map.put(s, t);
+                } else if (map.get(s) != t) {
+                    return false;
+                }
+            }
+            return true;
+        }
+```

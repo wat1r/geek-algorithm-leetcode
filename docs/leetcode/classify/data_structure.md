@@ -1356,6 +1356,28 @@ public boolean isValidBST(TreeNode root) {
 
 
 
+
+
+## [101. 对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
+
+```java
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return false;
+        return helper(root.left, root.right);
+    }
+
+
+    public boolean helper(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        return left.val == right.val && helper(left.left, right.right) && helper(left.right, right.left);
+    }
+```
+
+
+
+
+
 ## [103. 二叉树的锯齿形层序遍历](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/)
 
 ```java
