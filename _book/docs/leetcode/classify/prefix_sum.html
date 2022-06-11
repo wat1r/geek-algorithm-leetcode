@@ -1519,6 +1519,58 @@ a_i-a</em>{i-1},\quad i\in [2,n]\
     <span class="hljs-keyword">return</span> intervals;
 }
 </code></pre>
+<h2 id="2222-&#x9009;&#x62E9;&#x5EFA;&#x7B51;&#x7684;&#x65B9;&#x6848;&#x6570;"><a href="https://leetcode.cn/problems/number-of-ways-to-select-buildings/" target="_blank">2222. &#x9009;&#x62E9;&#x5EFA;&#x7B51;&#x7684;&#x65B9;&#x6848;&#x6570;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x524D;&#x7F00;&#x548C;">&#x65B9;&#x6CD5;1&#xFF1A;&#x524D;&#x7F00;&#x548C;</h3>
+<ul>
+<li>&#x672C;&#x9898;&#x7C7B;&#x4F3C;926</li>
+</ul>
+<pre><code class="lang-java">       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> <span class="hljs-title">numberOfWays</span><span class="hljs-params">(String s)</span> </span>{
+            <span class="hljs-keyword">int</span> n = s.length();
+            <span class="hljs-keyword">long</span>[] one = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[n + <span class="hljs-number">1</span>];<span class="hljs-comment">//&#x8BB0;&#x5F55;&apos;1&apos;&#x7684;&#x6570;&#x91CF;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x4FBF;&#x662F;&apos;0&apos;&#x7684;&#x6570;&#x91CF;</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+                one[i] = one[i - <span class="hljs-number">1</span>] + (s.charAt(i - <span class="hljs-number">1</span>) == <span class="hljs-string">&apos;1&apos;</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>);
+            }
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">char</span> c = s.charAt(i);
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;0&apos;</span>) {
+                    <span class="hljs-comment">//&#x5F62;&#x6210;101&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x6784;</span>
+                    <span class="hljs-keyword">long</span> a = one[i + <span class="hljs-number">1</span>], b = one[n] - one[i + <span class="hljs-number">1</span>];
+                    res += a * b;
+                } <span class="hljs-keyword">else</span> {
+                    <span class="hljs-comment">//&#x5F62;&#x6210;010&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x6784;</span>
+                    <span class="hljs-keyword">long</span> a = i + <span class="hljs-number">1</span> - one[i + <span class="hljs-number">1</span>], b = n - i - (one[n] - one[i]);
+                    res += a * b;
+                }
+            }
+            <span class="hljs-keyword">return</span> res;
+        }
+</code></pre>
+<ul>
+<li>&#x53E6;&#xFF0C;&#x4E0D;&#x7528;&#x53EF;&#x4EE5;&#x7EDF;&#x8BA1;&#x524D;&#x7F00;&#x548C;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> <span class="hljs-title">numberOfWays</span><span class="hljs-params">(String s)</span> </span>{
+            <span class="hljs-keyword">long</span> tot_zero = <span class="hljs-number">0</span>, cur_zero = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x7EDF;&#x8BA1;&#x6240;&#x6709;&apos;0&apos;&#x7684;&#x6570;&#x91CF; &#x5F53;&#x524D;&#x6240;&#x6709;&apos;0&apos;&#x7684;&#x6570;&#x91CF;</span>
+            <span class="hljs-keyword">int</span> n = s.length();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">if</span> (s.charAt(i) == <span class="hljs-string">&apos;0&apos;</span>) tot_zero++;
+            }
+            <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+                <span class="hljs-keyword">char</span> c = s.charAt(i);
+                <span class="hljs-keyword">if</span> (c == <span class="hljs-string">&apos;1&apos;</span>) {<span class="hljs-comment">//010</span>
+                    res += cur_zero * (tot_zero - cur_zero);
+                } <span class="hljs-keyword">else</span> {<span class="hljs-comment">//101</span>
+                    <span class="hljs-keyword">long</span> cur_one = i - cur_zero;
+                    <span class="hljs-comment">// n - &#x6240;&#x6709;&#x7684;0 &#x5269;&#x4E0B;&#x6240;&#x6709;&#x7684;1 &#x518D;&#x51CF;&#x53BB;&#x5F53;&#x524D;&#x7684;1 &#x5F97;&#x5230;&#x5269;&#x4E0B;&#x7684;1 </span>
+                    res += cur_one * (n - tot_zero - cur_one);
+                    cur_zero++;
+                }
+            }
+            <span class="hljs-keyword">return</span> res;
+
+        }
+</code></pre>
 <h2 id="2256-&#x6700;&#x5C0F;&#x5E73;&#x5747;&#x5DEE;"><a href="https://leetcode-cn.com/problems/minimum-average-difference/" target="_blank">2256. &#x6700;&#x5C0F;&#x5E73;&#x5747;&#x5DEE;</a></h2>
 <pre><code class="lang-java"><span class="hljs-comment">//&#x6CE8;&#x610F;&#x4F7F;&#x7528;long&#x7C7B;&#x578B;</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minimumAverageDifference</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums)</span> </span>{
@@ -1589,7 +1641,7 @@ a_i-a</em>{i-1},\quad i\in [2,n]\
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-06-11T04:24:01.049Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T04:37:58.300Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"前缀和与差分","level":"1.2.5","depth":2,"next":{"title":"排序","level":"1.2.6","depth":2,"path":"docs/leetcode/classify/sorting.md","ref":"docs/leetcode/classify/sorting.md","articles":[]},"previous":{"title":"数组","level":"1.2.4","depth":2,"path":"docs/leetcode/classify/array.md","ref":"docs/leetcode/classify/array.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/prefix_sum.md","mtime":"2022-06-11T12:23:05.110Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T12:32:10.886Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
