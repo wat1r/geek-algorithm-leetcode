@@ -2322,6 +2322,63 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     dfs(sub, nums, idx + <span class="hljs-number">1</span>);
 }
 </code></pre>
+<h2 id="5289-&#x516C;&#x5E73;&#x5206;&#x53D1;&#x997C;&#x5E72;"><a href="https://leetcode.cn/problems/fair-distribution-of-cookies/" target="_blank">5289. &#x516C;&#x5E73;&#x5206;&#x53D1;&#x997C;&#x5E72;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x56DE;&#x6EAF;">&#x65B9;&#x6CD5;1&#xFF1A;&#x56DE;&#x6EAF;</h3>
+<pre><code class="lang-java">
+        <span class="hljs-keyword">int</span> n;<span class="hljs-comment">//cookies&#x7684;&#x5927;&#x5C0F;</span>
+        <span class="hljs-keyword">int</span> totalMax = Integer.MAX_VALUE;
+        <span class="hljs-keyword">int</span> k;<span class="hljs-comment">//&#x5B69;&#x5B50;&#x7684;&#x6570;&#x91CF;</span>
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">distributeCookies</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] cookies, <span class="hljs-keyword">int</span> k)</span> </span>{
+            n = cookies.length;
+            <span class="hljs-keyword">this</span>.k = k;
+            <span class="hljs-comment">//&#x8BA9;&#x5927;&#x7684;&#x997C;&#x5E72;&#x5728;&#x524D;&#x9762;</span>
+            cookies = IntStream.of(cookies)          <span class="hljs-comment">// &#x53D8;&#x4E3A; IntStream</span>
+                    .boxed()           <span class="hljs-comment">// &#x88C5;&#x76D2;&#x53D8;&#x4E3A; Stream&lt;Integer&gt;</span>
+                    .sorted(Comparator.reverseOrder()) <span class="hljs-comment">// &#x6309;&#x81EA;&#x7136;&#x5E8F;&#x76F8;&#x53CD;&#x6392;&#x5E8F;</span>
+                    .mapToInt(Integer::intValue)       <span class="hljs-comment">// &#x53D8;&#x4E3A; IntStream</span>
+                    .toArray();        <span class="hljs-comment">// &#x53C8;&#x53D8;&#x56DE; int[]</span>
+            <span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[k];
+            backtrace(<span class="hljs-number">0</span>, arr, cookies);
+            <span class="hljs-keyword">return</span> totalMax;
+
+        }
+
+
+        <span class="hljs-comment">/**
+         * <span class="hljs-doctag">@param</span> index   &#x5F53;&#x524D;&#x5904;&#x7406;&#x5230;&#x7684;cookies&#x6570;&#x636E;&#x7684;&#x4E0B;&#x6807;
+         * <span class="hljs-doctag">@param</span> arr     &#x5F53;&#x524D;k&#x4E2A;&#x5C0F;&#x5B69;&#xFF0C;&#x6BCF;&#x4EBA;&#x4E00;&#x4E2A;&#x888B;&#x5B50;&#xFF0C;&#x6BCF;&#x4E2A;&#x888B;&#x5B50;&#x91CC;&#x7684;&#x997C;&#x5E72;&#x7684;&#x603B;&#x6570;
+         * <span class="hljs-doctag">@param</span> cookies &#x997C;&#x5E72;&#x7684;&#x6570;&#x7EC4;
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">backtrace</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index, <span class="hljs-keyword">int</span>[] arr, <span class="hljs-keyword">int</span>[] cookies)</span> </span>{
+            <span class="hljs-keyword">if</span> (index == n) {<span class="hljs-comment">//&#x5904;&#x7406;&#x7684;&#x4E0B;&#x6807;&#x6765;&#x5230;cookies&#x6570;&#x7EC4;&#x7684;&#x6700;&#x540E;&#xFF0C;&#x8BF4;&#x660E;&#x8FD9;&#x65F6;&#x5019;&#x6240;&#x6709;&#x7684;&#x997C;&#x5E72;&#x90FD;&#x5206;&#x5B8C;&#x4E86;</span>
+                <span class="hljs-keyword">int</span> maxx = <span class="hljs-number">0</span>;<span class="hljs-comment">//&#x8BB0;&#x5F55;&#x5F53;&#x524D;&#x8FD9;&#x79CD;&#x5206;&#x6CD5;&#x4E0B;&#x7684;&#x6700;&#x5927;&#x997C;&#x5E72;</span>
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : arr) maxx = Math.max(maxx, x);
+                totalMax = Math.min(totalMax, maxx);<span class="hljs-comment">//&#x5168;&#x5C40;&#x7684;&#x6700;&#x5C0F;&#x997C;&#x5E72;&#x6570;&#x91CF;</span>
+                <span class="hljs-keyword">return</span>;
+            }
+            <span class="hljs-comment">//&#x7EDF;&#x8BA1;&#x5F53;&#x524D;&#x7684;&#x5C0F;&#x5B69;&#x8FD8;&#x6CA1;&#x6709;&#x5206;&#x5230;&#x997C;&#x5E72;&#x7684;&#x6570;&#x91CF;</span>
+            <span class="hljs-keyword">int</span> empty = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : arr) {
+                <span class="hljs-keyword">if</span> (x == <span class="hljs-number">0</span>) empty++;
+            }
+            <span class="hljs-comment">//&#x5269;&#x4F59;&#x7684;&#x53EF;&#x4F9B;&#x5206;&#x914D;&#x7684;&#x997C;&#x5E72;&#x7684;&#x6570;&#x91CF;&#x662F; n-index&#x4E2A;&#xFF0C;&#x4F46;&#x662F;&#x8981;&#x5206;&#x997C;&#x5E72;&#x7684;&#x5C0F;&#x5B69;&#x6709;empty&#x4E2A;&#xFF0C;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x5269;&#x4E0B;&#x7684;&#x5C0F;&#x5B69;&#x6BCF;&#x4EBA;&#x90FD;&#x5206;&#x5230;&#x997C;&#x5E72;</span>
+            <span class="hljs-keyword">if</span> (empty &gt; n - index) <span class="hljs-keyword">return</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; k; i++) {
+                <span class="hljs-comment">//&#x89C4;&#x5B9A;index&#x4E3A;0&#x7684;&#x997C;&#x5E72;&#x5373;&#x7B2C;&#x4E00;&#x5757;&#x997C;&#x5E72;&#x5206;&#x914D;&#x7ED9;&#x7B2C;&#x4E00;&#x4E2A;&#x5C0F;&#x5B69;</span>
+                <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; index == <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">return</span>;
+                }
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x5C0F;&#x5B69;&#x7684;&#x6570;&#x91CF;&#x548C;&#x4E0A;&#x4E00;&#x4E2A;&#x5C0F;&#x5B69;&#x7684;&#x6570;&#x91CF;&#x76F8;&#x7B49;&#xFF08;&#x997C;&#x5E72;&#x6570;&#x91CF;&#xFF09;&#xFF0C;&#x6B64;&#x79CD;&#x7ED3;&#x679C;&#x91CD;&#x590D;&#x4E86;</span>
+                <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span> &amp;&amp; arr[i] == arr[i - <span class="hljs-number">1</span>]) <span class="hljs-keyword">continue</span>;
+                <span class="hljs-comment">//&#x5F53;&#x524D;&#x5C0F;&#x5B69;&#x62FF;&#x7684;&#x997C;&#x5E72;&#xFF0C;&#x6BD4;&#x4E4B;&#x524D;&#x83B7;&#x53D6;&#x5230;&#x7684;&#x5168;&#x5C40;&#x6700;&#x5C0F;&#x503C;&#x8FD8;&#x8981;&#x5927;&#xFF0C;&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x7684;&#x8FD9;&#x79CD;&#x65B9;&#x6848;&#x4E0B;&#xFF0C;&#x80AF;&#x5B9A;&#x4E0D;&#x5982;totalMax&#x7684;&#x65B9;&#x6848;&#x4E0B;&#x7684;&#x5206;&#x914D;&#x65B9;&#x5F0F;</span>
+                <span class="hljs-keyword">if</span> (arr[i] + cookies[index] &gt; totalMax) <span class="hljs-keyword">continue</span>;
+                arr[i] += cookies[index];
+                backtrace(index + <span class="hljs-number">1</span>, arr, cookies);
+                arr[i] -= cookies[index];
+            }
+        }
+</code></pre>
 <h2 id="&#x5C9B;&#x5C7F;&#x7CFB;&#x5217;&#x95EE;&#x9898;">&#x5C9B;&#x5C7F;&#x7CFB;&#x5217;&#x95EE;&#x9898;</h2>
 <h3 id="200-&#x5C9B;&#x5C7F;&#x6570;&#x91CF;"><a href="https://leetcode-cn.com/problems/number-of-islands/" target="_blank">200. &#x5C9B;&#x5C7F;&#x6570;&#x91CF;</a></h3>
 <p><a href="https://leetcode-cn.com/problems/number-of-islands/solution/dao-yu-wen-ti-zhi-dao-yu-de-shu-liang-eighty-eight/" target="_blank">&#x5C9B;&#x5C7F;&#x95EE;&#x9898;&#x4E4B;&#x5C9B;&#x5C7F;&#x7684;&#x6570;&#x91CF;Eighty-eight Butterfly</a></p>
@@ -2649,6 +2706,30 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
             }
         }
 </code></pre>
+<h2 id="&#x9762;&#x8BD5;&#x9898;-0806-&#x6C49;&#x8BFA;&#x5854;&#x95EE;&#x9898;"><a href="https://leetcode.cn/problems/hanota-lcci/" target="_blank">&#x9762;&#x8BD5;&#x9898; 08.06. &#x6C49;&#x8BFA;&#x5854;&#x95EE;&#x9898;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;">&#x65B9;&#x6CD5;1&#xFF1A;&#x9012;&#x5F52;</h3>
+<ul>
+<li><a href="https://leetcode.cn/problems/hanota-lcci/solution/tu-jie-yi-nuo-ta-de-gu-shi-ju-shuo-dang-64ge-pan-z/" target="_blank">&#x94FE;&#x63A5;</a></li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">hanota</span><span class="hljs-params">(List&lt;Integer&gt; A, List&lt;Integer&gt; B, List&lt;Integer&gt; C)</span> </span>{
+    <span class="hljs-keyword">int</span> remain = A.size();
+    move(remain, A, B, C);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span> remain, List&lt;Integer&gt; A, List&lt;Integer&gt; B, List&lt;Integer&gt; C)</span> </span>{
+    <span class="hljs-keyword">if</span> (remain == <span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">int</span> t = A.remove(A.size() - <span class="hljs-number">1</span>);
+        C.add(t);
+        <span class="hljs-keyword">return</span>;
+    }
+    move(remain - <span class="hljs-number">1</span>, A, C, B);
+    <span class="hljs-keyword">int</span> t = A.remove(A.size() - <span class="hljs-number">1</span>);
+    C.add(t);
+    move(remain - <span class="hljs-number">1</span>, B, A, C);
+
+}
+</code></pre>
 <h3 id="&#x641C;&#x7D22;&#x4E0E;&#x56FE;&#x8BBA;&#x95EE;&#x9898;&#x5408;&#x8F91;">&#x641C;&#x7D22;&#x4E0E;&#x56FE;&#x8BBA;&#x95EE;&#x9898;&#x5408;&#x8F91;</h3>
 <p>1.<a href="https://blog.csdn.net/wat1r/article/details/113702607" target="_blank">&#x641C;&#x7D22;&#x4E0E;&#x56FE;&#x8BBA;&#x4E4B;FloodFill</a></p>
 <p>2.<a href="https://blog.csdn.net/wat1r/article/details/113729703" target="_blank">&#x641C;&#x7D22;&#x4E0E;&#x56FE;&#x8BBA;&#x4E4B;&#x6700;&#x77ED;&#x8DEF;</a></p>
@@ -2697,7 +2778,7 @@ List&lt;List&lt;Integer&gt;&gt; res = <span class="hljs-keyword">new</span> Arra
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.3","depth":2,"next":{"title":"图论","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-06-01T00:26:38.537Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T12:32:10.886Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搜索","level":"1.3.3","depth":2,"next":{"title":"图论","level":"1.3.4","depth":2,"path":"docs/leetcode/classify/graph.md","ref":"docs/leetcode/classify/graph.md","articles":[]},"previous":{"title":"线段树与树状数组","level":"1.3.2","depth":2,"path":"docs/leetcode/classify/segment_tree.md","ref":"docs/leetcode/classify/segment_tree.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/search.md","mtime":"2022-06-12T12:27:09.261Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-12T22:39:36.064Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

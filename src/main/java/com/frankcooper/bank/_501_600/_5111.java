@@ -1,15 +1,13 @@
-package com.frankcooper.bank.bi_weekly;
+package com.frankcooper;
 
-//import java.util.*;
-//
-//import com.frankcooper.utils.PrintUtils;
-//import org.junit.Assert;
-
-public class BiWeek {
+/*import java.util.*;
+import org.junit.Assert;*/
+public class _Model {
 
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
+
 
         }
 
@@ -29,11 +27,9 @@ public class BiWeek {
         }
     }
 
-
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
         }
     }
-
 }

@@ -15,7 +15,7 @@ public class _182 {
 
         /**
          * select a.Email Email from (select Email ,count(Email) cnt  from Person  group by Email ) a
-         * where a.cnt>1-8
+         * where a.cnt>1
          */
 
 

@@ -1637,6 +1637,27 @@ List&lt;Integer&gt;[] children;
     <span class="hljs-keyword">return</span> n - size;
 }
 </code></pre>
+<h2 id="2087-&#x7F51;&#x683C;&#x56FE;&#x4E2D;&#x673A;&#x5668;&#x4EBA;&#x56DE;&#x5BB6;&#x7684;&#x6700;&#x5C0F;&#x4EE3;&#x4EF7;"><a href="https://leetcode.cn/problems/minimum-cost-homecoming-of-a-robot-in-a-grid/" target="_blank">2087. &#x7F51;&#x683C;&#x56FE;&#x4E2D;&#x673A;&#x5668;&#x4EBA;&#x56DE;&#x5BB6;&#x7684;&#x6700;&#x5C0F;&#x4EE3;&#x4EF7;</a></h2>
+<h3 id="&#x65B9;&#x6CD5;1&#xFF1A;&#x6A21;&#x62DF;">&#x65B9;&#x6CD5;1&#xFF1A;&#x6A21;&#x62DF;</h3>
+<ul>
+<li>&#x56E0;&#x4E3A;&#x4EE3;&#x4EF7;&#x503C;&#x90FD;&#x662F;&#x6B63;&#x6574;&#x6570;&#xFF0C;&#x6240;&#x4EE5;&#x5F80;&#x56DE;&#x8D70;&#x6216;&#x8005;&#x91CD;&#x590D;&#x8D70;&#x90FD;&#x4F1A;&#x589E;&#x52A0;&#x4EE3;&#x4EF7;&#xFF0C;&#x6700;&#x4F73;&#x65B9;&#x5F0F;&#x662F;&#x76F4;&#x89D2;&#x7EBF;&#x8D70;</li>
+</ul>
+<pre><code class="lang-java">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">minCost</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] startPos, <span class="hljs-keyword">int</span>[] homePos, <span class="hljs-keyword">int</span>[] rowCosts, <span class="hljs-keyword">int</span>[] colCosts)</span> </span>{
+            <span class="hljs-keyword">int</span> R = rowCosts.length, C = colCosts.length;
+            <span class="hljs-keyword">int</span> sr = startPos[<span class="hljs-number">0</span>], sc = startPos[<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">int</span> er = homePos[<span class="hljs-number">0</span>], ec = homePos[<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">int</span> cost = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">int</span> r_delta = (sr &lt;= er ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = sr + r_delta; r_delta == <span class="hljs-number">1</span> ? i &lt;= er : i &gt;= er; i += r_delta) {
+                <span class="hljs-keyword">if</span> (i &lt; R &amp;&amp; i &gt;= <span class="hljs-number">0</span>) cost += rowCosts[i];
+            }
+            <span class="hljs-keyword">int</span> c_delta = (sc &lt;= ec ? <span class="hljs-number">1</span> : -<span class="hljs-number">1</span>);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = sc + c_delta; c_delta == <span class="hljs-number">1</span> ? j &lt;= ec : j &gt;= ec; j += c_delta) {
+                <span class="hljs-keyword">if</span> (j &lt; C &amp;&amp; j &gt;= <span class="hljs-number">0</span>) cost += colCosts[j];
+            }
+            <span class="hljs-keyword">return</span> cost;
+        }
+</code></pre>
 <h3 id="&#x65B9;&#x6CD5;3&#x62D3;&#x6251;&#x6392;&#x5E8F;">&#x65B9;&#x6CD5;3:&#x62D3;&#x6251;&#x6392;&#x5E8F;</h3>
 <pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">countHighestScoreNodes</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] parents)</span> </span>{
     <span class="hljs-keyword">int</span> n = parents.length;
@@ -1843,7 +1864,7 @@ List&lt;Integer&gt;[] children;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.3.4","depth":2,"next":{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-05-29T14:04:35.966Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T12:32:10.886Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"图论","level":"1.3.4","depth":2,"next":{"title":"动态规划","level":"1.3.5","depth":2,"path":"docs/leetcode/classify/dynamic_programing.md","ref":"docs/leetcode/classify/dynamic_programing.md","articles":[]},"previous":{"title":"搜索","level":"1.3.3","depth":2,"path":"docs/leetcode/classify/search.md","ref":"docs/leetcode/classify/search.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/graph.md","mtime":"2022-06-12T12:27:09.259Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-12T22:39:36.064Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

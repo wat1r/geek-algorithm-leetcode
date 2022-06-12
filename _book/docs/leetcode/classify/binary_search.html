@@ -1751,6 +1751,37 @@
 
     }
 </code></pre>
+<h2 id="luogup2440-&#x6728;&#x6750;&#x52A0;&#x5DE5;">[luogu]P2440 &#x6728;&#x6750;&#x52A0;&#x5DE5;</h2>
+<pre><code class="lang-java">        <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+                Scanner sc = <span class="hljs-keyword">new</span> Scanner(System.in);
+                <span class="hljs-keyword">int</span> n = sc.nextInt(), k = sc.nextInt();
+                <span class="hljs-keyword">int</span>[] L = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[n];
+                <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">while</span> (index &lt; n) {
+                    L[index++] = sc.nextInt();
+                }
+                <span class="hljs-keyword">int</span> lo = <span class="hljs-number">0</span>, hi = (<span class="hljs-keyword">int</span>) <span class="hljs-number">1e8</span>;
+                <span class="hljs-keyword">while</span> (lo &lt; hi) {
+                    <span class="hljs-keyword">int</span> mid = lo + (hi - lo + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span>;
+                    <span class="hljs-keyword">if</span> (check(L, k, mid)) lo = mid;
+                    <span class="hljs-keyword">else</span> hi = mid - <span class="hljs-number">1</span>;
+                }
+                System.out.println(lo);
+            }
+
+            <span class="hljs-comment">//&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x957F;&#x5EA6;&#x4E3A;l&#x7684;&#x6728;&#x68D2;,&#x662F;&#x5426;&#x80FD;&#x88C1;&#x526A;&#x51FA;&#x8D85;&#x8FC7;k&#x6BB5;&#x7684;&#x6728;&#x68D2;</span>
+            <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] L, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> l)</span> </span>{
+                <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : L) {
+                    count += x / l;
+                    <span class="hljs-keyword">if</span> (count &gt;= k) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+                }
+                <span class="hljs-keyword">return</span> count &gt;= k;
+
+            }
+        }
+</code></pre>
 
                                 
                                 </section>
@@ -1794,7 +1825,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.9","depth":2,"next":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-06-07T00:32:09.670Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-11T12:32:10.886Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"二分","level":"1.2.9","depth":2,"next":{"title":"结构设计","level":"1.2.10","depth":2,"path":"docs/leetcode/classify/structure_design.md","ref":"docs/leetcode/classify/structure_design.md","articles":[]},"previous":{"title":"字符串","level":"1.2.8","depth":2,"path":"docs/leetcode/classify/string.md","ref":"docs/leetcode/classify/string.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/binary_search.md","mtime":"2022-06-12T12:27:09.257Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-12T22:39:36.064Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
