@@ -349,9 +349,42 @@ public void swap(int[] nums, int i, int j) {
         }
 ```
 
+## [1051. 高度检查器](https://leetcode.cn/problems/height-checker/)
 
+### 方法1：辅助数组+排序
 
+```java
+public int heightChecker(int[] heights) {
+    int n = heights.length;
+    int[] arr = new int[n];
+    System.arraycopy(heights, 0, arr, 0, n);
+    Arrays.sort(arr);
+    int res = 0;
+    for (int i = 0; i < n; i++) {
+        if (heights[i] != arr[i]) res++;
+    }
+    return res;
+}
+```
 
+### 方法2：桶排序
+
+```java
+public int heightChecker(int[] heights) {
+    int[] buckets = new int[110];
+    for (int h : heights) buckets[h]++;
+    int res = 0;
+    //i为buckets的自增下标，j为heights的自增下标
+    for (int i = 1, j = 0; i < buckets.length; i++) {
+        //桶里还有元素的时候一直循环
+        while (buckets[i]-- > 0) {
+            //如果出现当前的元素和桶里的元素（i）不一致，说明该元素heights[j]位置错了，需要统计
+            if (heights[j++] != i) res++;
+        }
+    }
+    return res;
+}
+```
 
 
 

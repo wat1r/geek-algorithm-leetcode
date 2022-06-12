@@ -41,7 +41,7 @@
 | 题号 | 链接                                                         | 标签          | 关联题目 | 难度级别 | 知识点 |
 | ---- | ------------------------------------------------------------ | ------------- | -------- | -------- | ------ |
 | 347  | [347. 前 K 个高频元素](https://mp.csdn.net/mp_blog/creation/success/125192362) | 快速排序/哈希 |          | Medium   |        |
-|      |                                                              |               |          |          |        |
+| 1051 | [1051. 高度检查器](https://blog.csdn.net/wat1r/article/details/125253050) |               |          | Easy     | 桶排序 |
 |      |                                                              |               |          |          |        |
 
 
@@ -126,9 +126,9 @@
 
 | 题号 | 链接                                                         | 标签                   | 关联题目     | 难度级别 | 知识点       |
 | ---- | ------------------------------------------------------------ | ---------------------- | ------------ | -------- | ------------ |
-| 473  | [473. 火柴拼正方形](https://mp.csdn.net/mp_blog/creation/success/125076950) | 回溯/动态规划/状态压缩 | 473/698/5289 | Medium   | 分割等和子集 |
-| 698  | [698. 划分为k个相等的子集](https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/) | 回溯                   | 473/698/5289 | Medium   | 分割等和子集 |
-| 5289 | [5289. 公平分发饼干](https://leetcode.cn/problems/fair-distribution-of-cookies/) | 回溯                   | 473/698/5289 | Medium   | 分割等和子集 |
+| 473  | [473. 火柴拼正方形](https://blog.csdn.net/wat1r/article/details/125076950) | 回溯/动态规划/状态压缩 | 473/698/5289 | Medium   | 分割等和子集 |
+| 698  | [698. 划分为k个相等的子集](https://blog.csdn.net/wat1r/article/details/125248688) | 回溯                   | 473/698/5289 | Medium   | 分割等和子集 |
+| 5289 | [5289. 公平分发饼干](https://blog.csdn.net/wat1r/article/details/125248658) | 回溯                   | 473/698/5289 | Medium   | 分割等和子集 |
 |      | [面试题 08.06. 汉诺塔问题](https://blog.csdn.net/wat1r/article/details/125242145) | 回溯/递归              |              | Easy     | 汉诺塔       |
 
 
