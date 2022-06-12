@@ -1,8 +1,8 @@
 package com.frankcooper.bank.week;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
+import java.util.stream.IntStream;
 
 public class Week297 {
 
@@ -111,27 +111,65 @@ public class Week297 {
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+            int[] cookies = new int[]{8, 15, 10, 20, 8};
+            int k = 2;
+//            handler.subsets(cookies);
+            handler.distributeCookies(cookies, k);
+            System.out.println();
         }
 
+        int n;//cookies的大小
+        int totalMax = Integer.MAX_VALUE;
+        int k;//孩子的数量
 
         public int distributeCookies(int[] cookies, int k) {
-            int n = cookies.length;
-            boolean[] vis = new boolean[n];
-            List<List<Integer>> arr = new ArrayList<>();
-
-            return 0;
+            n = cookies.length;
+            this.k = k;
+            //让大的饼干在前面
+            cookies = IntStream.of(cookies)          // 变为 IntStream
+                    .boxed()           // 装盒变为 Stream<Integer>
+                    .sorted(Comparator.reverseOrder()) // 按自然序相反排序
+                    .mapToInt(Integer::intValue)       // 变为 IntStream
+                    .toArray();        // 又变回 int[]
+            int[] arr = new int[k];
+            backtrace(0, arr, cookies);
+            return totalMax;
 
         }
 
 
-        private void helper(int index, List<List<Integer>> arr, int[] cookies, boolean[] vis) {
-
-
-//            for (int i = 0; i < cookies.length; i++) {
-//                for()
-//            }
-
-
+        /**
+         * @param index   当前处理到的cookies数据的下标
+         * @param arr     当前k个小孩，每人一个袋子，每个袋子里的饼干的总数
+         * @param cookies 饼干的数组
+         */
+        private void backtrace(int index, int[] arr, int[] cookies) {
+            if (index == n) {//处理的下标来到cookies数组的最后，说明这时候所有的饼干都分完了
+                int maxx = 0;//记录当前这种分法下的最大饼干
+                for (int x : arr) maxx = Math.max(maxx, x);
+                totalMax = Math.min(totalMax, maxx);//全局的最小饼干数量
+                return;
+            }
+            //统计当前的小孩还没有分到饼干的数量
+            int empty = 0;
+            for (int x : arr) {
+                if (x == 0) empty++;
+            }
+            //剩余的可供分配的饼干的数量是 n-index个，但是要分饼干的小孩有empty个，不能保证剩下的小孩每人都分到饼干
+            if (empty > n - index) return;
+            for (int i = 0; i < k; i++) {
+                //规定index为0的饼干即第一块饼干分配给第一个小孩
+                if (i > 0 && index == 0) {
+                    return;
+                }
+                //当前小孩的数量和上一个小孩的数量相等（饼干数量），此种结果重复了
+                if (i > 0 && arr[i] == arr[i - 1]) continue;
+                //当前小孩拿的饼干，比之前获取到的全局最小值还要大，说明当前的这种方案下，肯定不如totalMax的方案下的分配方式
+                if (arr[i] + cookies[index] > totalMax) continue;
+                arr[i] += cookies[index];
+                backtrace(index + 1, arr, cookies);
+                arr[i] -= cookies[index];
+            }
         }
 
 
