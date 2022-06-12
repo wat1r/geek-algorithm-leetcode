@@ -1,8 +1,8 @@
-package com.frankcooper;
+package com.frankcooper.bank._601_700;
 
 /*import java.util.*;
 import org.junit.Assert;*/
-public class _Model {
+public class _601 {
 
     static class _1st {
         public static void main(String[] args) {

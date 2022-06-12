@@ -339,3 +339,33 @@ JOIN weather w2
         AND w1.temperature < w2.temperature
 ```
 
+
+
+## [511. 游戏玩法分析 I](https://leetcode.cn/problems/game-play-analysis-i/)
+
+### 方法1：group by
+
+```sql
+SELECT player_id ,
+        min(event_date) AS first_login
+FROM Activity
+GROUP BY  player_id
+```
+
+
+
+
+
+## [584. 寻找用户推荐人](https://leetcode.cn/problems/find-customer-referee/)
+
+
+
+
+
+```sql
+SELECT name
+FROM customer
+WHERE referee_id is null
+        OR referee_id!=2 
+```
+
