@@ -842,6 +842,36 @@ private int dfs(int node) {
 
 
 
+## [2087. 网格图中机器人回家的最小代价](https://leetcode.cn/problems/minimum-cost-homecoming-of-a-robot-in-a-grid/)
+
+### 方法1：模拟
+
+- 因为代价值都是正整数，所以往回走或者重复走都会增加代价，最佳方式是直角线走
+
+```java
+        public int minCost(int[] startPos, int[] homePos, int[] rowCosts, int[] colCosts) {
+            int R = rowCosts.length, C = colCosts.length;
+            int sr = startPos[0], sc = startPos[1];
+            int er = homePos[0], ec = homePos[1];
+            int cost = 0;
+            int r_delta = (sr <= er ? 1 : -1);
+            for (int i = sr + r_delta; r_delta == 1 ? i <= er : i >= er; i += r_delta) {
+                if (i < R && i >= 0) cost += rowCosts[i];
+            }
+            int c_delta = (sc <= ec ? 1 : -1);
+            for (int j = sc + c_delta; c_delta == 1 ? j <= ec : j >= ec; j += c_delta) {
+                if (j < C && j >= 0) cost += colCosts[j];
+            }
+            return cost;
+        }
+```
+
+
+
+
+
+
+
 
 
 

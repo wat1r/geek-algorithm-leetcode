@@ -2,12 +2,14 @@ package com.frankcooper.other;
 
 import com.frankcooper.utils.PrintUtils;
 
-import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestOne {
 
     static class _1st {
         public static void main(String[] args) {
+            _1st handler = new _1st();
             // `is_to_hive` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否导入hive, 0: 不导入，1:导入',
             //  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:未审核,, 2:审核通过,4:审核后修改',
             //  `has_create` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:没有建表;1:已经建表;2:建表后修改',
@@ -83,9 +85,16 @@ public class TestOne {
 //        PrintUtils.toBinaryString()
 
 //        test1();
-            test2();
+//            test2();
+            handler.strongPasswordCheckerII("IloveLe3tcode!");
+            handler.strongPasswordCheckerII("Ilove!");
+            handler.strongPasswordCheckerII("IloveLee3tcode!");
+            handler.strongPasswordCheckerII("IloveLeee3tcode!");
+            handler.strongPasswordCheckerII("1aB!");
+            handler.strongPasswordCheckerII("@Aa1a1a1");
+            handler.strongPasswordCheckerII("-Aa1a1a1");
+            handler.strongPasswordCheckerII("11A!A!Aa");
         }
-
 
         private static void test1() {
             int state = 29;
@@ -137,6 +146,21 @@ public class TestOne {
 //            a4.add(null);
 //            // 编译出错，不允许add非null的数据
 //            a4.add(new Object());
+
+            //[\\!@\#\$\%\^\&\*\(\)\-\+]{1,}
+        }
+
+
+
+
+        public boolean strongPasswordCheckerII(String password) {
+            String reg1 = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\+]).{8,}";
+            Matcher matcher = Pattern.compile(reg1).matcher(password);
+            boolean x = matcher.find();
+            String reg2 = "(.)\\1";
+            matcher = Pattern.compile(reg2).matcher(password);
+            boolean y = !matcher.find();
+            return x && y;
         }
     }
 

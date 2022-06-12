@@ -3,6 +3,8 @@ package com.frankcooper.bank.bi_weekly;
 import org.junit.Assert;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BiWeek80 {
 
@@ -29,6 +31,18 @@ public class BiWeek80 {
             return a >= 1 && A >= 1 && num >= 1 && symbol >= 1;
         }
 
+    }
+
+    static class _1st_1 {
+        public boolean strongPasswordCheckerII(String password) {
+            String reg1 = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\+]).{8,}|((.)\1)";
+            Matcher matcher = Pattern.compile(reg1).matcher(password);
+            boolean x = matcher.find();
+            String reg2 = "(.)\\1";
+            matcher = Pattern.compile(reg2).matcher(password);
+            boolean y = !matcher.find();
+            return x && y;
+        }
     }
 
     static class _2nd {

@@ -1037,3 +1037,42 @@ public char nextGreatestLetter(char[] le, char ta) {
 
     }
 ```
+
+
+
+
+
+## [luogu]P2440 木材加工
+
+```java
+        static class Main {
+            public static void main(String[] args) {
+                Scanner sc = new Scanner(System.in);
+                int n = sc.nextInt(), k = sc.nextInt();
+                int[] L = new int[n];
+                int index = 0;
+                while (index < n) {
+                    L[index++] = sc.nextInt();
+                }
+                int lo = 0, hi = (int) 1e8;
+                while (lo < hi) {
+                    int mid = lo + (hi - lo + 1) / 2;
+                    if (check(L, k, mid)) lo = mid;
+                    else hi = mid - 1;
+                }
+                System.out.println(lo);
+            }
+
+            //给定一个长度为l的木棒,是否能裁剪出超过k段的木棒
+            private static boolean check(int[] L, int k, int l) {
+                int count = 0;
+                for (int x : L) {
+                    count += x / l;
+                    if (count >= k) return true;
+                }
+                return count >= k;
+
+            }
+        }
+```
+

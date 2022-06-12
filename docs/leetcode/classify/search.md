@@ -2006,6 +2006,35 @@ public void dfs(String s, int left, int right) {
 
 
 
+## [面试题 08.06. 汉诺塔问题](https://leetcode.cn/problems/hanota-lcci/)
+
+### 方法1：递归
+
+- [链接](https://leetcode.cn/problems/hanota-lcci/solution/tu-jie-yi-nuo-ta-de-gu-shi-ju-shuo-dang-64ge-pan-z/)
+
+```java
+public void hanota(List<Integer> A, List<Integer> B, List<Integer> C) {
+    int remain = A.size();
+    move(remain, A, B, C);
+}
+
+
+public void move(int remain, List<Integer> A, List<Integer> B, List<Integer> C) {
+    if (remain == 1) {
+        int t = A.remove(A.size() - 1);
+        C.add(t);
+        return;
+    }
+    move(remain - 1, A, C, B);
+    int t = A.remove(A.size() - 1);
+    C.add(t);
+    move(remain - 1, B, A, C);
+
+}
+```
+
+
+
 
 
 
