@@ -592,7 +592,7 @@ FROM
 ORDER BY id ASC;
 ```
 
-方法2：使用位操作和 COALESCE()
+### 方法2：使用位操作和 COALESCE()
 
 ```sql
 SELECT
