@@ -358,9 +358,7 @@ GROUP BY  player_id
 
 ## [584. 寻找用户推荐人](https://leetcode.cn/problems/find-customer-referee/)
 
-
-
-
+### 方法1：IS NULL
 
 ```sql
 SELECT name
@@ -368,4 +366,287 @@ FROM customer
 WHERE referee_id is null
         OR referee_id!=2 
 ```
+
+
+
+## [586. 订单最多的客户](https://leetcode.cn/problems/customer-placing-the-largest-number-of-orders/)
+
+### 方法1：ORDER BY
+
+```sql
+SELECT customer_number
+FROM Orders
+GROUP BY  customer_number
+ORDER BY  count(1) DESC limit 0,1 
+```
+
+> 如果有多个订单数最多并列的用户呢?
+
+- 查询出最值使用having子句匹配
+
+```sql
+SELECT
+    customer_number
+FROM
+    Orders
+GROUP BY customer_number
+HAVING COUNT(*) = (
+    SELECT 
+        COUNT(customer_number) AS 'cnt' 
+    FROM 
+        Orders 
+    GROUP BY customer_number 
+    ORDER BY cnt DESC  
+    LIMIT 1
+    )
+```
+
+另使用dense_rank()函数
+
+```sql
+SELECT customer_number
+FROM 
+    (SELECT customer_number,
+         dense_rank() over(order by count(order_number) desc) AS ranking
+    FROM orders
+    GROUP BY  customer_number) t
+WHERE ranking = 1 
+```
+
+## [595. 大的国家](https://leetcode.cn/problems/big-countries/)
+
+### 方法1：OR
+
+```sql
+SELECT name,
+         population,
+         area
+FROM world
+WHERE area >= 3000000
+        OR population >= 25000000
+```
+
+### 方法2：UNION
+
+```sql
+SELECT name,
+         population,
+         area
+FROM world
+WHERE area >= 3000000
+UNION
+SELECT name,
+         population,
+         area
+FROM world
+WHERE population >= 25000000 
+```
+
+## [596. 超过5名学生的课](https://leetcode.cn/problems/classes-more-than-5-students/)
+
+### 方法1：子查询
+
+- distinct去重，同一门课中学生被重复计算
+
+```sql
+SELECT class
+FROM 
+    (SELECT class,
+         COUNT(DISTINCT student) AS num
+    FROM courses
+    GROUP BY  class) AS temp_table
+WHERE num >= 5 
+```
+
+#### 方法2：HAVING语句
+
+```sql
+SELECT class
+FROM courses
+GROUP BY  class
+HAVING COUNT(DISTINCT student) >= 5 
+```
+
+## [607. 销售员](https://leetcode.cn/problems/sales-person/)
+
+### 方法1：not in 
+
+```sql
+SELECT s.name
+FROM salesperson s
+WHERE s.sales_id NOT IN 
+    (SELECT o.sales_id
+    FROM orders o
+    LEFT JOIN company c
+        ON o.com_id = c.com_id
+    WHERE c.name = 'RED') 
+```
+
+
+
+## [608. 树节点](https://leetcode.cn/problems/tree-node/)
+
+- Root: 没有父节点
+- Inner: 它是某些节点的父节点，且有非空的父节点
+- Leaf: 除了上述两种情况以外的节点
+
+### 方法1：三段式UNION
+
+- ORDER BY放在最后
+
+```sql
+SELECT id,
+         'Root' AS Type
+FROM tree
+WHERE p_id IS NULL
+UNION
+SELECT id,
+         'Leaf' AS Type
+FROM tree
+WHERE id NOT IN 
+    (SELECT DISTINCT p_id
+    FROM tree
+    WHERE p_id IS NOT NULL)
+        AND p_id IS NOT NULL
+UNION
+SELECT id,
+         'Inner' AS Type
+FROM tree
+WHERE id IN 
+    (SELECT DISTINCT p_id
+    FROM tree
+    WHERE p_id IS NOT NULL)
+        AND p_id IS NOT NULL
+ORDER BY  id
+```
+
+### 方法2：CASE
+
+```sql
+SELECT a.id ,
+        
+    CASE
+    WHEN a.id = 
+    (SELECT id
+    FROM tree
+    WHERE p_id is null) THEN
+    'Root'
+    WHEN a.id IN 
+    (SELECT p_id
+    FROM tree) THEN
+    'Inner'
+    ELSE 'Leaf'
+    END AS Type
+FROM tree a
+ORDER BY  a.id
+```
+
+### 方法3：IF NULL
+
+```sql
+SELECT a.id,
+         IF(ISNULL(a.p_id),
+         'Root', IF(a.id IN 
+    (SELECT p_id
+    FROM tree), 'Inner','Leaf')) Type
+FROM tree a
+ORDER BY  a.id
+```
+
+
+
+## [620. 有趣的电影](https://leetcode.cn/problems/not-boring-movies/)
+
+### 方法1：MOD条件判断
+
+```sql
+SELECT *
+FROM cinema
+WHERE mod(id, 2) = 1
+        AND description != 'boring'
+ORDER BY  rating DESC
+```
+
+
+
+
+
+## [626. 换座位](https://leetcode.cn/problems/exchange-seats/)
+
+### 方法1：CASE
+
+```sql
+SELECT
+    (CASE
+        WHEN MOD(id, 2) != 0 AND counts != id THEN id + 1
+        WHEN MOD(id, 2) != 0 AND counts = id THEN id
+        ELSE id - 1
+    END) AS id,
+    student
+FROM
+    seat,
+    (SELECT
+        COUNT(*) AS counts
+    FROM
+        seat) AS seat_counts
+ORDER BY id ASC;
+```
+
+方法2：使用位操作和 COALESCE()
+
+```sql
+SELECT
+    s1.id, COALESCE(s2.student, s1.student) AS student
+FROM
+    seat s1
+        LEFT JOIN
+    seat s2 ON ((s1.id + 1) ^ 1) - 1 = s2.id
+ORDER BY s1.id
+```
+
+
+
+
+
+## [627. 变更性别](https://leetcode.cn/problems/swap-salary/)
+
+### 方法1：CASE
+
+```sql
+UPDATE salary SET sex =
+    CASE sex
+    WHEN 'm' THEN
+    'f'
+    ELSE 'm' END
+```
+
+另
+
+```sql
+UPDATE salary SET sex=IF(sex='f','m','f') 
+```
+
+## [1050. 合作过至少三次的演员和导演](https://leetcode.cn/problems/actors-and-directors-who-cooperated-at-least-three-times/)
+
+```sql
+SELECT actor_id,
+        director_id
+FROM ActorDirector
+GROUP BY  actor_id,director_id
+HAVING count(*)>=3
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
