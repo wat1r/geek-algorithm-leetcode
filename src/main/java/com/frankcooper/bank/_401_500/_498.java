@@ -8,7 +8,7 @@ public class _498 {
     public static void main(String[] args) {
         _1st handler = new _1st();
         int[][] matrix = PrintUtils.processSymbol("[[1,2,3],[4,5,6],[7,8,9]]");
-        matrix = PrintUtils.processSymbol("[[1]]");
+//        matrix = PrintUtils.processSymbol("[[1]]");
         handler.findDiagonalOrder(matrix);
     }
 
