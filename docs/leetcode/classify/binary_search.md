@@ -1154,3 +1154,12 @@ public char nextGreatestLetter(char[] le, char ta) {
         }
 ```
 
+
+
+
+
+## Reference
+
+- [二分查找重难点总结（边界条件、循环条件、mid计算方法等）](https://blog.csdn.net/weixin_45727931/article/details/115276255)
+
+- [详解二分查找算法](https://www.cnblogs.com/kyoner/p/11080078.html)
