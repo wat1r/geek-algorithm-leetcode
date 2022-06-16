@@ -100,6 +100,7 @@ public class _3 {
     static class _3rd {
         /**
          * 借助set控制滑窗
+         *
          * @param s
          * @return
          */
@@ -137,6 +138,24 @@ public class _3 {
                 r++;
             }
             return maxLen;
+        }
+    }
+
+    static class _5th {
+        public int lengthOfLongestSubstring(String s) {
+            char[] ch = s.toCharArray();
+            Set<Character> set = new HashSet<>();
+            int n = ch.length;
+            int j = 0;
+            int res = 0;
+            for (int i = 0; i < n; i++) {
+                while (j < n && !set.contains(ch[j])) {
+                    set.add(ch[j++]);
+                }
+                res = Math.max(res, j - i);
+                set.remove(ch[i]);
+            }
+            return res;
         }
     }
 }
