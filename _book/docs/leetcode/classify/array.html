@@ -1185,6 +1185,46 @@
             <span class="hljs-keyword">return</span> res;
         }
 </code></pre>
+<h2 id="498-&#x5BF9;&#x89D2;&#x7EBF;&#x904D;&#x5386;"><a href="https://leetcode.cn/problems/diagonal-traverse/" target="_blank">498. &#x5BF9;&#x89D2;&#x7EBF;&#x904D;&#x5386;</a></h2>
+<ul>
+<li><a href="https://leetcode-cn.com/problems/diagonal-traverse/solution/xiao-bai-kan-guo-lai-zui-zhi-bai-yi-li-jie-ban-ben/" target="_blank">&#x94FE;&#x63A5;</a></li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] findDiagonalOrder(<span class="hljs-keyword">int</span>[][] matrix) {
+    <span class="hljs-keyword">if</span> (matrix == <span class="hljs-keyword">null</span> || matrix.length == <span class="hljs-number">0</span> || matrix[<span class="hljs-number">0</span>].length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[]{};
+    <span class="hljs-keyword">int</span> R = matrix.length, C = matrix[<span class="hljs-number">0</span>].length;
+    <span class="hljs-keyword">int</span>[] ans = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[R * C];
+    <span class="hljs-keyword">int</span> r = <span class="hljs-number">0</span>, c = <span class="hljs-number">0</span>, idx = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; R + C - <span class="hljs-number">1</span>; i++) {
+        <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">while</span> (r &gt;= <span class="hljs-number">0</span> &amp;&amp; c &lt; C) {
+                ans[idx++] = matrix[r][c];
+                r--;
+                c++;
+            }
+            <span class="hljs-keyword">if</span> (c &lt; C) {
+                r++;
+            } <span class="hljs-keyword">else</span> {
+                r += <span class="hljs-number">2</span>;
+                c--;
+            }
+
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">while</span> (r &lt; R &amp;&amp; c &gt;= <span class="hljs-number">0</span>) {
+                ans[idx++] = matrix[r][c];
+                r++;
+                c--;
+            }
+            <span class="hljs-keyword">if</span> (r &lt; R) {
+                c++;
+            } <span class="hljs-keyword">else</span> {
+                c += <span class="hljs-number">2</span>;
+                r--;
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> ans;
+}
+</code></pre>
 <h2 id="599-&#x4E24;&#x4E2A;&#x5217;&#x8868;&#x7684;&#x6700;&#x5C0F;&#x7D22;&#x5F15;&#x603B;&#x548C;"><a href="https://leetcode-cn.com/problems/minimum-index-sum-of-two-lists/" target="_blank">599. &#x4E24;&#x4E2A;&#x5217;&#x8868;&#x7684;&#x6700;&#x5C0F;&#x7D22;&#x5F15;&#x603B;&#x548C;</a></h2>
 <pre><code class="lang-java"><span class="hljs-keyword">public</span> String[] findRestaurant(String[] list1, String[] list2) {
     <span class="hljs-comment">//map k:list1&#x7684;string v:string&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x56E0;&#x4E3A;&#x9898;&#x76EE;&#x4E2D;&#x6CA1;&#x6709;&#x6307;&#x51FA;&#x6765;list1&#x7684;string&#x662F;&#x5426;&#x6709;&#x91CD;&#x590D;&#xFF0C;&#x5FFD;&#x7565;&#x4E86;&#x91CD;&#x590D;&#x7684;&#x60C5;&#x51B5;</span>
@@ -1259,7 +1299,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数组","level":"1.2.4","depth":2,"next":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"previous":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/array.md","mtime":"2022-05-08T01:23:29.085Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-12T22:39:36.064Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"数组","level":"1.2.4","depth":2,"next":{"title":"前缀和与差分","level":"1.2.5","depth":2,"path":"docs/leetcode/classify/prefix_sum.md","ref":"docs/leetcode/classify/prefix_sum.md","articles":[]},"previous":{"title":"堆栈","level":"1.2.3","depth":2,"path":"docs/leetcode/classify/heap_stack.md","ref":"docs/leetcode/classify/heap_stack.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/leetcode/classify/array.md","mtime":"2022-06-15T01:37:57.495Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-06-16T00:49:42.710Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
