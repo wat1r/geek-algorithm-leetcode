@@ -544,6 +544,45 @@ public int[] sortArrayByParity(int[] nums) {
 
 
 
+## [1023. 驼峰式匹配](https://leetcode.cn/problems/camelcase-matching/)
+
+### 方法1：双指针+check
+
+- 校验s与pattern的字符
+
+```java
+public List<Boolean> camelMatch(String[] queries, String pattern) {
+    List<Boolean> res = new ArrayList<>();
+    for (String s : queries) {
+        res.add(check(s, pattern));
+    }
+    return res;
+}
+
+private boolean check(String s, String p) {
+    int m = s.length(), n = p.length(), i = 0, j = 0;
+    while (i < m || j < n) {
+        // System.out.printf("%d %d-> ",i , j );
+        if (i < m && j < n && s.charAt(i) == p.charAt(j)) {
+            i++;
+            j++;
+        } else if (i < m && s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
+            i++;
+        } else {
+            return false;
+        }
+    }
+    return true;
+
+}
+```
+
+
+
+
+
+
+
 ## [1089. 复写零](https://leetcode.cn/problems/duplicate-zeros/)
 
 ### 方法1：快慢指针
