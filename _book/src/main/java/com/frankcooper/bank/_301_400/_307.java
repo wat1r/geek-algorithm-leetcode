@@ -1,4 +1,4 @@
-package com.frankcooper.bank._301_400;
+package com.frankcooper.platform.leetcode.bank._301_400;
 
 /**
  * Created by FrankCooper

@@ -1,4 +1,4 @@
-package com.frankcooper.pack;
+package com.frankcooper.classify.pack;
 
 /**
  * Created by FrankCooper

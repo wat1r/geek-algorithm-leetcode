@@ -1,4 +1,4 @@
-package com.frankcooper.interview;
+package com.frankcooper.platform.leetcode.interview;
 
 import java.io.File;
 import java.io.IOException;

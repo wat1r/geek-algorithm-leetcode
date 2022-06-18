@@ -1,4 +1,4 @@
-package com.frankcooper.bank._501_600;
+package com.frankcooper.platform.leetcode.bank._501_600;
 
 /**
  * https://leetcode-cn.com/problems/beautiful-arrangement/solution/java-zhuang-tai-ya-suo-dp-dai-zhu-shi-yi-dong-by-d/

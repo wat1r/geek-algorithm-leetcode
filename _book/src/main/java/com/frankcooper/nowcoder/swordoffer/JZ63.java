@@ -1,4 +1,4 @@
-package com.frankcooper.nowcoder.swordoffer;
+package com.frankcooper.platform.nowcoder.swordoffer;
 
 /*import java.util.*;
 import org.junit.Assert;*/

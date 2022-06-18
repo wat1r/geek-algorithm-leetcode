@@ -1,4 +1,4 @@
-package com.frankcooper.interview;
+package com.frankcooper.platform.leetcode.interview;
 
 import com.frankcooper.struct.ListNode;
 import com.frankcooper.struct.TreeNode;

@@ -1,4 +1,4 @@
-package com.frankcooper.bank.LCP;
+package com.frankcooper.platform.leetcode.bank.LCP;
 
 /**
  * @author: Frank Cooper

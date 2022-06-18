@@ -1,4 +1,4 @@
-package com.frankcooper.lintcode;
+package com.frankcooper.platform.lintcode;
 
 import com.alibaba.fastjson.JSON;
 

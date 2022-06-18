@@ -1,4 +1,4 @@
-package com.frankcooper.graph;
+package com.frankcooper.classify.graph;
 
 import java.util.ArrayList;
 import java.util.List;

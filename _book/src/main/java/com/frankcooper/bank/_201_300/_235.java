@@ -1,4 +1,4 @@
-package com.frankcooper.bank._201_300;
+package com.frankcooper.platform.leetcode.bank._201_300;
 
 import com.frankcooper.struct.TreeNode;
 

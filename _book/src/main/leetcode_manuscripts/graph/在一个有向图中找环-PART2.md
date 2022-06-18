@@ -72,7 +72,7 @@ public class CycleInDirectedGraph {
 ### Graph
 
 ```java
-package com.frankcooper.graph;
+package com.frankcooper.classify.graph;
 
 import java.util.*;
 

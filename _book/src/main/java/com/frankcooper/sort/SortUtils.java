@@ -1,4 +1,4 @@
-package com.frankcooper.sort;
+package com.frankcooper.classify.sort;
 
 import java.util.Arrays;
 

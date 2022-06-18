@@ -1,4 +1,4 @@
-package com.frankcooper.interview;
+package com.frankcooper.platform.leetcode.interview;
 
 /**
  * @Date 2020/7/31

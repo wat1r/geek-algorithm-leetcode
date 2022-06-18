@@ -1,8 +1,8 @@
-package com.frankcooper.bank.week;
+package com.frankcooper.platform.leetcode.bank.week;
 
 import java.util.*;
 
-import com.frankcooper.bank._1001_1500._1368;
+import com.frankcooper.platform.leetcode.bank._1001_1500._1368;
 import org.junit.Assert;
 
 public class Week295 {

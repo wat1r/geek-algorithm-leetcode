@@ -1,4 +1,4 @@
-package com.frankcooper.bank._301_400;
+package com.frankcooper.platform.leetcode.bank._301_400;
 
 //309. 最佳买卖股票时机含冷冻期 309. Best Time to Buy and Sell Stock with Cooldown
 //Medium

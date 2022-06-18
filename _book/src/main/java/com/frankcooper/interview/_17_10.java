@@ -1,4 +1,4 @@
-package com.frankcooper.interview;
+package com.frankcooper.platform.leetcode.interview;
 
 import java.util.Arrays;
 import java.util.HashMap;

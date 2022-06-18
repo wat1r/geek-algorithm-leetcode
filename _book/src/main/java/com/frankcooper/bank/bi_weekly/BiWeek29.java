@@ -1,4 +1,4 @@
-package com.frankcooper.bank.bi_weekly;
+package com.frankcooper.platform.leetcode.bank.bi_weekly;
 
 public class BiWeek29 {
 

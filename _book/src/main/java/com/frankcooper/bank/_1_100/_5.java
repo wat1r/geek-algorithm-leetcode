@@ -1,4 +1,4 @@
-package com.frankcooper.bank._1_100;
+package com.frankcooper.platform.leetcode.bank._1_100;
 
 public class _5 {
     static _5 handler = new _5();

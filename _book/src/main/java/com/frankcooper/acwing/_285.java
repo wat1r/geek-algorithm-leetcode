@@ -1,4 +1,4 @@
-package com.frankcooper.acwing;
+package com.frankcooper.platform.acwing;
 
 import com.alibaba.fastjson.JSON;
 

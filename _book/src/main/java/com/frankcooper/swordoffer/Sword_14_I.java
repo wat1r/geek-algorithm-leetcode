@@ -1,4 +1,4 @@
-package com.frankcooper.swordoffer;
+package com.frankcooper.platform.leetcode.swordoffer;
 
 /**
  * @Date 2020/7/30

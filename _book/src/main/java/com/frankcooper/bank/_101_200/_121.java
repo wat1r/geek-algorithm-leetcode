@@ -1,4 +1,4 @@
-package com.frankcooper.bank._101_200;
+package com.frankcooper.platform.leetcode.bank._101_200;
 //121. 买卖股票的最佳时机 121. Best Time to Buy and Sell Stock Easy
 
 import org.junit.Assert;

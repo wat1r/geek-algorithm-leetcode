@@ -1,4 +1,4 @@
-package com.frankcooper.bank._501_600;
+package com.frankcooper.platform.leetcode.bank._501_600;
 
 //518. 零钱兑换 II  518. Coin Change 2 Medium
 //参见背包思想解决零钱兑换问题.md

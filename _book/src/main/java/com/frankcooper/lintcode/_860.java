@@ -1,4 +1,4 @@
-package com.frankcooper.lintcode;
+package com.frankcooper.platform.lintcode;
 
 import java.util.HashSet;
 import java.util.Set;

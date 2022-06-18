@@ -1,8 +1,8 @@
-package com.frankcooper.swordoffer_II;
+package com.frankcooper.platform.leetcode.swordoffer_II;
 
 import java.util.*;
 
-import com.frankcooper.bank._401_500._421;
+import com.frankcooper.platform.leetcode.bank._401_500._421;
 import org.junit.Assert;
 
 public class Sword_II_067 {

@@ -1,4 +1,4 @@
-package com.frankcooper.swordoffer;
+package com.frankcooper.platform.leetcode.swordoffer;
 
 import java.util.*;
 import org.junit.Assert;

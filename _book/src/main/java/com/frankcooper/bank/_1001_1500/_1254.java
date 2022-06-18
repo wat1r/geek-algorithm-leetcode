@@ -1,4 +1,4 @@
-package com.frankcooper.bank._1001_1500;
+package com.frankcooper.platform.leetcode.bank._1001_1500;
 
 /**
  * @Date 2020/9/2

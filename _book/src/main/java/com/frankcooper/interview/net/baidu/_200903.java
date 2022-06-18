@@ -1,4 +1,4 @@
-package com.frankcooper.interview.net.baidu;
+package com.frankcooper.platform.leetcode.interview.net.baidu;
 
 /**
  * @Date 2020/9/3

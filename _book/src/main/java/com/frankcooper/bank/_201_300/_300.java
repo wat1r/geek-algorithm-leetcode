@@ -1,4 +1,4 @@
-package com.frankcooper.bank._201_300;
+package com.frankcooper.platform.leetcode.bank._201_300;
 
 //300. 最长上升子序列 300. Longest Increasing Subsequence Medium
 public class _300 {

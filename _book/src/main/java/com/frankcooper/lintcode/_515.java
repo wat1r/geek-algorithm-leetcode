@@ -1,4 +1,4 @@
-package com.frankcooper.lintcode;
+package com.frankcooper.platform.lintcode;
 
 /**
  * 同leetcode 256

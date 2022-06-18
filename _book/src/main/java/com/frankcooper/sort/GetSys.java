@@ -1,4 +1,4 @@
-package com.frankcooper.sort;
+package com.frankcooper.classify.sort;
 
 public class GetSys {
     public static void main(String[] args) {

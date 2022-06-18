@@ -1,4 +1,4 @@
-package com.frankcooper.luogu;
+package com.frankcooper.platform.luogu;
 
 public class _P4461 {
 

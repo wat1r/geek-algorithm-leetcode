@@ -1,4 +1,4 @@
-package com.frankcooper.swordoffer;
+package com.frankcooper.platform.leetcode.swordoffer;
 
 public class Sword_51 {
     static Sword_51 handler = new Sword_51();

@@ -1,4 +1,4 @@
-package com.frankcooper.bank._501_600;
+package com.frankcooper.platform.leetcode.bank._501_600;
 
 /*import java.util.*;
 import org.junit.Assert;*/

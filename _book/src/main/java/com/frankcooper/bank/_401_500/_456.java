@@ -1,4 +1,4 @@
-package com.frankcooper.bank._401_500;
+package com.frankcooper.platform.leetcode.bank._401_500;
 
 
 import org.junit.Assert;

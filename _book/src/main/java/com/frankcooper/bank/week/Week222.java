@@ -1,4 +1,4 @@
-package com.frankcooper.bank.week;
+package com.frankcooper.platform.leetcode.bank.week;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;

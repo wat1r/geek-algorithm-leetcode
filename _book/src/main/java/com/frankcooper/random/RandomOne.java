@@ -1,4 +1,4 @@
-package com.frankcooper.random;
+package com.frankcooper.classify.random;
 
 
 import java.util.Arrays;

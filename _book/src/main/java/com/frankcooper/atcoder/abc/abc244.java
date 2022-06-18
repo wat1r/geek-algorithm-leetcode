@@ -1,4 +1,4 @@
-package com.frankcooper.atcoder.abc;
+package com.frankcooper.platform.atcoder.abc;
 
 
 import java.io.BufferedReader;
@@ -80,7 +80,7 @@ public class abc244 {
 
     static class D {
         public static void main(String[] args) {
-            com.frankcooper.atcoder.abc.Main.FastReader fr = new com.frankcooper.atcoder.abc.Main.FastReader();
+            com.frankcooper.platform.atcoder.abc.Main.FastReader fr = new com.frankcooper.platform.atcoder.abc.Main.FastReader();
             String[] S = new String[3];
             for (int i = 0; i < 3; i++) S[i] = fr.next();
             String[] T = new String[3];
@@ -104,7 +104,7 @@ public class abc244 {
         static int MOD = 998244353;
 
         public static void main(String[] args) {
-            com.frankcooper.atcoder.abc.Main.FastReader fr = new com.frankcooper.atcoder.abc.Main.FastReader();
+            com.frankcooper.platform.atcoder.abc.Main.FastReader fr = new com.frankcooper.platform.atcoder.abc.Main.FastReader();
             String[] arr = fr.nextLine().split("\\s+");
             int N = Integer.parseInt(arr[0]);
             int M = Integer.parseInt(arr[1]);
@@ -160,7 +160,7 @@ public class abc244 {
         static int MOD = 998244353;
 
         public static void main(String[] args) {
-            com.frankcooper.atcoder.abc.Main.FastReader fr = new com.frankcooper.atcoder.abc.Main.FastReader();
+            com.frankcooper.platform.atcoder.abc.Main.FastReader fr = new com.frankcooper.platform.atcoder.abc.Main.FastReader();
             String[] arr = fr.nextLine().split("\\s+");
             int N = Integer.parseInt(arr[0]);
             int M = Integer.parseInt(arr[1]);
@@ -215,7 +215,7 @@ public class abc244 {
         static int MOD = 998244353;
 
         public static void main(String[] args) {
-            com.frankcooper.atcoder.abc.Main.FastReader fr = new com.frankcooper.atcoder.abc.Main.FastReader();
+            com.frankcooper.platform.atcoder.abc.Main.FastReader fr = new com.frankcooper.platform.atcoder.abc.Main.FastReader();
             int N = fr.nextInt();
             process(N);
         }

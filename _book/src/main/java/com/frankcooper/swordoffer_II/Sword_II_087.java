@@ -1,4 +1,4 @@
-package com.frankcooper.swordoffer_II;
+package com.frankcooper.platform.leetcode.swordoffer_II;
 
 import java.util.*;
 

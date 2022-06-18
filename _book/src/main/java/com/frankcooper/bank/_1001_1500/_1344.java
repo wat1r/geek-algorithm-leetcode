@@ -1,4 +1,4 @@
-package com.frankcooper.bank._1001_1500;
+package com.frankcooper.platform.leetcode.bank._1001_1500;
 
 public class _1344 {
     static class _1st {

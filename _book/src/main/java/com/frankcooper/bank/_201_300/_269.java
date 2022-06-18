@@ -1,4 +1,4 @@
-package com.frankcooper.bank._201_300;
+package com.frankcooper.platform.leetcode.bank._201_300;
 
 public class _269 {
     /**

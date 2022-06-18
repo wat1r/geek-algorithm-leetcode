@@ -1,4 +1,4 @@
-package com.frankcooper.bank._1501_2000;
+package com.frankcooper.platform.leetcode.bank._1501_2000;
 
 import java.util.ArrayList;
 import java.util.List;

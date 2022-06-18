@@ -1,4 +1,4 @@
-package com.frankcooper.atcoder.abc;
+package com.frankcooper.platform.atcoder.abc;
 
 
 import java.util.Scanner;

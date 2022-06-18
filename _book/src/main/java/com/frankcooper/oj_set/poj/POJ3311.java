@@ -1,4 +1,4 @@
-package com.frankcooper.oj_set.poj;
+package com.frankcooper.platform.oj_set.poj;
 
 import com.frankcooper.utils.PrintUtils;
 

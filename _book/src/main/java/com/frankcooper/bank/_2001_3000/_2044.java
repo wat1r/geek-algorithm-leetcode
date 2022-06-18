@@ -1,4 +1,4 @@
-package com.frankcooper.bank._2001_3000;
+package com.frankcooper.platform.leetcode.bank._2001_3000;
 
 import java.util.*;
 

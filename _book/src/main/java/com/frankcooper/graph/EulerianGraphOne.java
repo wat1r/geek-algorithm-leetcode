@@ -1,4 +1,4 @@
-package com.frankcooper.graph;
+package com.frankcooper.classify.graph;
 
 import java.io.*;
 import java.util.*;

@@ -1,6 +1,6 @@
-package com.frankcooper.bank._1_100;
+package com.frankcooper.platform.leetcode.bank._1_100;
 
-//import com.frankcooper.swordoffer.utils.PrintUtils;
+//import com.frankcooper.platform.leetcode.swordoffer.utils.PrintUtils;
 
 public class _50 {
 

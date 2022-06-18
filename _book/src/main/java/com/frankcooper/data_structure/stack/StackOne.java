@@ -1,4 +1,4 @@
-package com.frankcooper.data_structure.stack;
+package com.frankcooper.classify.data_structure.stack;
 
 import java.util.*;
 

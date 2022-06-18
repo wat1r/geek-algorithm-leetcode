@@ -1,4 +1,4 @@
-package com.frankcooper.board;
+package com.frankcooper.classify.board;
 
 
 import java.io.BufferedReader;

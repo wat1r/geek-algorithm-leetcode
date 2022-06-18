@@ -1,4 +1,4 @@
-package com.frankcooper.bank;
+package com.frankcooper.platform.leetcode.bank;
 
 import java.util.Arrays;
 

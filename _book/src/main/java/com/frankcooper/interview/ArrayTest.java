@@ -1,4 +1,4 @@
-package com.frankcooper.interview;
+package com.frankcooper.platform.leetcode.interview;
 
 public class ArrayTest {
     static ArrayTest handler = new ArrayTest();
