@@ -686,6 +686,178 @@ public boolean gcdSort(int[] nums) {
 
 
 
+## [Week298](https://leetcode.cn/contest/weekly-contest-298/)
+
+### T1.[5242. 兼具大小写的最好英文字母](https://leetcode.cn/problems/greatest-english-letter-in-upper-and-lower-case/)
+
+#### 方法1:开数组统计
+
+- 统计每个大小写字符出现的次数，从Z往后到A遍历，找到同时出现了大小写字符的字符，返回
+
+```java
+        public String greatestLetter(String s) {
+            int[] arr = new int[128];
+            for (char c : s.toCharArray()) {
+                arr[c]++;
+            }
+            for (char c = 'Z'; c >= 'A'; c--) {
+                if (arr[c + 32] >= 1 && arr[c] >= 1) return String.valueOf(c);
+            }
+            return "";
+        }
+```
+
+#### 方法2:位运算
+
+- A为65,a为97，z为122，只需要58位即可存储 ，开个long类型的t，最大位位64位，将大写字符存在低32位，小写字符存在高32位，然后从Z到A开始倒序遍历，如果当前位（大写）出现的次数大于等于1，当前位+32移位到当前字符的小写字符上，如果出现的次数大于等于1，返回该字符
+
+```java
+        public String greatestLetter(String s) {
+            long t = 0;
+            int n = s.length();
+            for (int i = 0; i < n; i++) {
+                t |= (1L << (s.charAt(i) - 'A'));//低位存大写字符，高位存小写字符
+            }
+            for (int i = 25; i >= 0; i--) {
+                if (((t >> i) & (t >> (i + 32))) == 1) {
+                    return String.valueOf((char) ('A' + i));
+                }
+            }
+            return "";
+        }
+```
+
+### T2.[5218. 个位数字为 K 的整数之和](https://leetcode.cn/problems/sum-of-numbers-with-units-digit-k/)
+
+#### 方法1：数学朴素版
+
+设任意一个数`x=10*a+b*k`，这个数满足了个位数是k的条件，如果num可以拆解成这若干个x，将这若干个x加起来，得到的结果一样满足`10*m+n*k=num` 可以得到 `(num-n*k)%10 =0`，要求的是小的n
+
+```java
+        public int minimumNumbers(int num, int k) {
+            if (num == 0) return 0;
+            for (int n = 1; n <= num; n++) {
+                int t = num - k * n;
+                if (t < 0) break;
+                if (t % 10 == 0) {
+                    return n;
+                }
+            }
+            return -1;
+        }
+```
+
+#### 方法2：同余优化版
+
+当`(n*k )%10` 拆解成`n%10 * k%10` ，当n>=11的时候，效果和 1-10之间的数是一样的，这时候，n上界可以到10结束
+
+```java
+        public int minimumNumbers(int num, int k) {
+            if (num == 0) return 0;
+            for (int n = 1; n <= 10; n++) {
+                int t = num - k * n;
+                if (t < 0) break;
+                if (t % 10 == 0) {
+                    return n;
+                }
+            }
+            return -1;
+        }
+```
+
+### T3.[6099. 小于等于 K 的最长二进制子序列](https://leetcode.cn/problems/longest-binary-subsequence-less-than-or-equal-to-k/)
+
+#### 方法1：位运算+贪心
+
+- 从后向前，所有的0都是加成，对结果构成正收益，1的话需要满足所构成的数t<=k,一旦到达这个数，1就不会被统计了
+
+```java
+        public int longestSubsequence(String s, int k) {
+            char[] ch = s.toCharArray();
+            int n = ch.length;
+            int zero = 0;
+            for (char c : ch) zero += c == '0' ? 1 : 0;
+            long t = 0;
+            int pre = 0;
+            for (int i = n - 1; i >= 0; i--) {
+                if (ch[i] == '1') {
+                    //位数太多，会溢出
+                    if (n - i - 1 >= 32) return zero;
+//                    System.out.printf("%d %d \n ", i, 1 << (n - i - 1));
+                    int delta = 1 << (n - i - 1);
+                    if (pre > delta) return zero;
+                    pre = delta;
+                    t += delta;
+                    if (t > k) {
+                        return zero;
+                    }
+                    zero++;
+                }
+            }
+            return zero;
+        }
+```
+
+另
+
+- 数据溢出，需要考虑到
+
+```java
+       //2^30 =1073741824 > 1e9 也就是说低位的i最大值第30位
+        public int longestSubsequence(String s, int k) {
+            char[] ch = s.toCharArray();
+            int n = ch.length;
+            int t = 0, res = 0;
+            for (int i = n - 1; i >= 0; i--) {
+                if (ch[i] == '1') {
+                    //位数太多，会溢出
+                    if (n - i - 1 > 30) {
+                        continue;
+                    }
+                    t |= (1 << (n - i - 1));
+                    if (t > k) {//大于k，当前位的1不能被使用
+                        continue;
+                    }
+                    res++;
+                } else {
+                    res++;
+                }
+            }
+            return res;
+        }
+```
+
+#### 方法2：动态规划
+
+- [链接](https://leetcode.cn/problems/longest-binary-subsequence-less-than-or-equal-to-k/solution/dp-by-tsreaper-nnvz/)
+
+### T4.[5254. 卖木头块](https://leetcode.cn/problems/selling-pieces-of-wood/)
+
+#### 方法1：动态规划
+
+```java
+        public long sellingWood(int m, int n, int[][] prices) {
+            int[][] pr = new int[m + 1][n + 1];
+            for (int[] p : prices) {
+                pr[p[0]][p[1]] = p[2];
+            }
+            //f[i][j]表示切割高为i宽为j的木块，能得到的最多的钱数
+            long[][] f = new long[m + 1][n + 1];
+            for (int i = 1; i <= m; i++) {
+                for (int j = 1; j <= n; j++) {
+                    f[i][j] = pr[i][j];//不切割，直接卖
+                    for (int k = 1; k < i; k++) {
+                        f[i][j] = Math.max(f[i][j], f[k][j] + f[i - k][j]);
+                    }
+                    for (int k = 1; k < j; k++) {
+                        f[i][j] = Math.max(f[i][j], f[i][k] + f[i][j - k]);
+                    }
+                }
+            }
+            return f[m][n];
+        }
+```
+
 
 
 

@@ -1356,6 +1356,54 @@ public boolean isValidBST(TreeNode root) {
 
 
 
+## [100. 相同的树](https://leetcode.cn/problems/same-tree/)
+
+### 方法1：DFS
+
+```java
+        public boolean isSameTree(TreeNode p, TreeNode q) {
+            if (p == null && q == null) return true;
+            if (p == null || q == null) return false;
+            return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        }
+```
+
+### 方法2：BFS
+
+```java
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        Queue<TreeNode> queue1 = new LinkedList<>();
+        Queue<TreeNode> queue2 = new LinkedList<>();
+        queue1.offer(p);
+        queue2.offer(q);
+        while (!queue1.isEmpty()) {
+            TreeNode currP = queue1.poll();
+            TreeNode currQ = queue2.poll();
+            if (currP == null && currQ == null) continue;
+            if (currP.val != currQ.val) return false;
+            TreeNode currPLeft = currP.left;
+            TreeNode currPRight = currP.right;
+            TreeNode currQLeft = currQ.left;
+            TreeNode currQRight = currQ.right;
+            if (currPLeft == null ^ currQLeft == null) return false;
+            if (currPRight == null ^ currQRight == null) return false;
+            if (currPLeft != null) queue1.offer(currPLeft);
+            if (currPRight != null) queue1.offer(currPRight);
+            if (currQLeft != null) queue2.offer(currQLeft);
+            if (currQRight != null) queue2.offer(currQRight);
+        }
+        return true;
+    }
+```
+
+
+
+
+
+
+
 
 
 ## [101. 对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
@@ -2314,7 +2362,39 @@ public List<List<Integer>> levelOrder(Node root) {
 
 
 
+## [508. 出现次数最多的子树元素和](https://leetcode.cn/problems/most-frequent-subtree-sum/)
 
+### 方法1：DFS
+
+```java
+public int[] findFrequentTreeSum(TreeNode root) {
+    if (root == null) return new int[]{};
+    dfs(root);
+    List<Integer> list = new ArrayList<>();
+    for (int k : map.keySet()) {
+        if (map.get(k) == maxx) list.add(k);
+    }
+    int[] res = new int[list.size()];
+    for (int i = 0; i < list.size(); i++) res[i] = list.get(i);
+    return res;
+}
+
+
+int maxx = 0;//出现的最大的次数
+//记录当前出现的sum 的次数
+Map<Integer, Integer> map = new HashMap<>();
+
+
+private int dfs(TreeNode root) {
+    if (root == null) return 0;
+    int l = dfs(root.left);
+    int r = dfs(root.right);
+    int s = l + root.val + r;
+    map.put(s, map.getOrDefault(s, 0) + 1);
+    maxx = Math.max(maxx, map.get(s));
+    return s;
+}
+```
 
 
 
@@ -2351,7 +2431,32 @@ public int dfs(TreeNode root) {
 
 
 
+## [572. 另一棵树的子树](https://leetcode.cn/problems/subtree-of-another-tree/)
 
+### 方法1：dfs
+
+```java
+public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+    if (root == null || subRoot == null) {
+        return root == null && subRoot == null;
+    }
+    //注意，如果比较的是root，则比较相同的树:isSameTree
+    //如果比较的是root左右子节点，则比较的是不是子树 ：isSubtree
+    return isSameTree(root, subRoot) ||
+            isSubtree(root.left, subRoot) ||
+            isSubtree(root.right, subRoot);
+
+}
+
+private boolean isSameTree(TreeNode source, TreeNode target) {
+    if (source == null || target == null) {
+        return source == null && target == null;
+    }
+    return source.val == target.val &&
+            isSameTree(source.left, target.left) &&
+            isSameTree(source.right, target.right);
+}
+```
 
 
 
@@ -2927,3 +3032,53 @@ public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
     }
 }
 ```
+
+
+
+
+
+
+
+## [剑指 Offer II 029. 排序的循环链表](https://leetcode.cn/problems/4ueAj6/)
+
+### 方法1：遍历
+
+- 找递增的两个点之间
+- 找旋转点
+
+```java
+        public ListNode insert(ListNode head, int insertVal) {
+            if (head == null) {
+                ListNode insertNode = new ListNode(insertVal);
+                insertNode.next = insertNode;
+                return insertNode;
+            }
+            ListNode cur = head;
+            while (cur.next != head) {
+                if (cur.val < cur.next.val) {
+                    if (insertVal >= cur.val && insertVal <= cur.next.val) {
+                        insert(insertVal, cur);
+                        return head;
+                    }
+                }
+                if (cur.val > cur.next.val) {
+                    if ((insertVal < cur.val && insertVal < cur.next.val) || insertVal > cur.val) {
+                        insert(insertVal, cur);
+                        return head;
+                    }
+                }
+                cur = cur.next;
+            }
+            insert(insertVal, cur);
+            return head;
+        }
+
+
+        private static void insert(int insertVal, ListNode cur) {
+            ListNode insertNode = new ListNode(insertVal);
+            ListNode nxt = cur.next;
+            cur.next = insertNode;
+            insertNode.next = nxt;
+        }
+```
+

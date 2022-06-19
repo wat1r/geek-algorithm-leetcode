@@ -42,4 +42,17 @@ public class Sword_14_I {
     }
 
 
+    static class _3rd {
+        public int cuttingRope(int n) {
+            int[] f = new int[n + 1];
+            f[1] = 1;
+            for (int i = 2; i <= n; i++) {
+                for (int j = 1; j < i; j++) {
+                    f[i] = Math.max(f[i], Math.max(j * (i - j), j * f[i - j]));
+                }
+            }
+            return f[n];
+        }
+    }
+
 }
