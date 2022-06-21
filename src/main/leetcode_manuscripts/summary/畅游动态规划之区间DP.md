@@ -42,8 +42,7 @@ int main(int argc, char const *argv[])
             {
                 f[l][r] = min(f[l][r], f[l][k] + f[k + 1][r] + s[r] - s[l - 1]);
             }
-        }
-    }
+        } 
     cout << f[1][n] << endl;
     return 0;
 }

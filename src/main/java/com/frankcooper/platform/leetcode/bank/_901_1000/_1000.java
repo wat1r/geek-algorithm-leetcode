@@ -11,21 +11,26 @@ public class _1000 {
 
         }
 
+
         public int mergeStones(int[] stones, int k) {
             int n = stones.length;
-            int[][] f = new int[n + 1][n + 1];
+            if ((n - 1) % (k - 1) != 0) return -1;
+            int[][] dp = new int[n + 1][n + 1];
             int[] sum = new int[n + 1];
             for (int i = 1; i <= n; i++) sum[i] = sum[i - 1] + stones[i - 1];
             for (int len = k; len <= n; len++) {
                 for (int i = 1; i + len - 1 <= n; i++) {
                     int j = i + len - 1;
-                    f[i][j] = Integer.MAX_VALUE;
-                    for (int m = i; m < j; m += k - 1) {
-                        f[i][j] = Math.min(f[i][j], f[i][m] + f[m + 1][j] + sum[j] - sum[i - 1]);
+                    dp[i][j] = Integer.MAX_VALUE;
+                    for (int p = i; p < j; p += k - 1) {
+                        dp[i][j] = Math.min(dp[i][j], dp[i][p] + dp[p + 1][j]);
+                    }
+                    if ((j - i) % (k - 1) == 0) {
+                        dp[i][j] += sum[j] - sum[i - 1];
                     }
                 }
             }
-            return f[1][n];
+            return dp[1][n];
         }
 
 
