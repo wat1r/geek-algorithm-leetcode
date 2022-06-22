@@ -7,6 +7,20 @@
 
 
 
+### 00.1.总结类文章列表
+
+| 链接                                                         | 标签     | 难度级别 | 知识点   |
+| ------------------------------------------------------------ | -------- | -------- | -------- |
+| [畅游面试中算法题集锦](https://blog.csdn.net/wat1r/article/details/115614680) | 畅游系   |          |          |
+|                                                              |          |          |          |
+| [石子合并问题分析](https://blog.csdn.net/wat1r/article/details/125385569) | 动态规划 |          | 合并石子 |
+
+
+
+
+
+
+
 ## 01.链表
 
 | 题号 | 链接                                                         | 标签 | 关联题目 | 难度级别 | 知识点 |
@@ -34,6 +48,7 @@
 | 100  | [100. 相同的树](https://blog.csdn.net/wat1r/article/details/125354535) | DFS/BFS | 572      | Easy     |        |
 | 450  | [450. 删除二叉搜索树中的节点](https://mp.csdn.net/mp_blog/creation/success/125093908) |         |          | Medium   |        |
 | 508  | [508. 出现次数最多的子树元素和](https://blog.csdn.net/wat1r/article/details/125354350) | DFS     |          | Medium   |        |
+| 513  | [513. 找树左下角的值](https://blog.csdn.net/wat1r/article/details/125402119) | DFS/BFS |          | Medium   |        |
 | 572  | [572. 另一棵树的子树](https://blog.csdn.net/wat1r/article/details/125354453) | DFS     | 100      | Easy     |        |
 | 1022 | [1022. 从根到叶的二进制数之和](https://blog.csdn.net/wat1r/article/details/125039777) |         |          |          |        |
 |      |                                                              |         |          |          |        |
@@ -228,11 +243,15 @@
 
 ## 16.动态规划
 
-| 题号 | 链接                                                         | 标签                 | 关联题目 | 难度级别 | 知识点             |
-| ---- | ------------------------------------------------------------ | -------------------- | -------- | -------- | ------------------ |
-| 300  | [300. 最长递增子序列](https://mp.csdn.net/mp_blog/creation/success/125233439) | 动态规划             | 926      | Medium   | LIS/最长上升子序列 |
-| 730  | [730. 统计不同回文子序列](https://mp.csdn.net/mp_blog/creation/success/125215606) | 动态规划             |          | Hard     | 回文子序列/回文串  |
-| 926  | [926. 将字符串翻转到单调递增](https://mp.csdn.net/mp_blog/creation/success/125233379) | 前缀和/动态规划/二分 | 300      | Medium   | LIS/最长上升子序列 |
+| 题号 | 链接                                                         | 标签                 | 关联题目     | 难度级别 | 知识点             |
+| ---- | ------------------------------------------------------------ | -------------------- | ------------ | -------- | ------------------ |
+|      |                                                              |                      |              |          |                    |
+| 300  | [300. 最长递增子序列](https://mp.csdn.net/mp_blog/creation/success/125233439) | 动态规划             | 926          | Medium   | LIS/最长上升子序列 |
+| 343  | [动态规划解拆分整数I[Silver Fox]](https://blog.csdn.net/wat1r/article/details/125366624) |                      | 343/410/1043 | Medium   | 整数拆分/数学      |
+| 410  | [动态规划解分割数组I[Red Fox]](https://blog.csdn.net/wat1r/article/details/125366584) |                      | 343/410/1043 | Hard     | 分割数组           |
+| 730  | [730. 统计不同回文子序列](https://mp.csdn.net/mp_blog/creation/success/125215606) | 动态规划             |              | Hard     | 回文子序列/回文串  |
+| 926  | [926. 将字符串翻转到单调递增](https://mp.csdn.net/mp_blog/creation/success/125233379) | 前缀和/动态规划/二分 | 300          | Medium   | LIS/最长上升子序列 |
+| 1043 | [动态规划解分割数组II[Arctic Fox]](https://blog.csdn.net/wat1r/article/details/125366536) |                      | 343/410/1043 | Medium   | 分割数组           |
 
 
 
