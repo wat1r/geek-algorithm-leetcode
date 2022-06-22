@@ -2396,7 +2396,100 @@ private int dfs(TreeNode root) {
 }
 ```
 
+## [513. 找树左下角的值](https://leetcode.cn/problems/find-bottom-left-tree-value/)
 
+### 方法1：BFS
+
+- 层序遍历，迭代每一层，取最左边的
+
+```java
+        public int findBottomLeftValue(TreeNode root) {
+            Queue<TreeNode> q = new LinkedList<>();
+            q.offer(root);
+            TreeNode res = root;
+            while (!q.isEmpty()) {
+                int size = q.size();
+                for (int i = 0; i < size; i++) {
+                    if (i == 0) res = q.peek();
+                    TreeNode cur = q.poll();
+                    if (cur.left != null) q.offer(cur.left);
+                    if (cur.right != null) q.offer(cur.right);
+                }
+            }
+            return res.val;
+        }
+```
+
+### 方法2：DFS
+
+- 先左子树节点后右子树节点，左子树切换到右子树的时机进行最大深度`maxDepth`的更新与记录，并保存结果值
+
+```java
+        public int findBottomLeftValue(TreeNode root) {
+            dfs(root, 0);
+            return res;
+        }
+
+        int maxDepth = -1, res = 0;
+
+        private void dfs(TreeNode root, int depth) {
+            if (root == null) return;
+            dfs(root.left, depth + 1);
+            if (depth > maxDepth) {
+                maxDepth = depth;
+                res = root.val;
+            }
+            dfs(root.right, depth + 1);
+        }
+```
+
+### Follow Up:找树右下角的值
+
+### 方法1：BFS
+
+- 记录每一层的最后一个值
+
+```java
+public int findBottomRightValue(TreeNode root) {
+    Queue<TreeNode> q = new LinkedList<>();
+    q.offer(root);
+    TreeNode res = root;
+    while (!q.isEmpty()) {
+        int size = q.size();
+        for (int i = 0; i < size; i++) {
+            if (i == size - 1) res = q.peek();
+            TreeNode cur = q.poll();
+            if (cur.left != null) q.offer(cur.left);
+            if (cur.right != null) q.offer(cur.right);
+        }
+    }
+    return res.val;
+}
+```
+
+### 方法2：DFS
+
+- 先右子树后左子树
+
+```java
+        public int findBottomRightValue(TreeNode root) {
+            dfs(root, 0);
+            return res;
+        }
+
+        int maxDepth = -1, res = 0;
+
+        private void dfs(TreeNode root, int depth) {
+            if (root == null) return;
+            dfs(root.right, depth + 1);
+            if (depth > maxDepth) {
+                maxDepth = depth;
+                // System.out.printf("%d->",root.val);
+                res = root.val;
+            }
+            dfs(root.left, depth + 1);
+        }
+```
 
 
 
