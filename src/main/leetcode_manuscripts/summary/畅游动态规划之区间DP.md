@@ -268,19 +268,57 @@ int main(int argc, char const *argv[])
 
 - $dp[1][n]$为结果，表示合并$[1...n]$区间的石子，最小的代价是多少
 
+##### 代码
 
+```java
+            public static int mergeStonesTwo(int[] stones) {
+                int n = stones.length;
+                int[][] dp = new int[n + 1][n + 1];
+                int[] sum = new int[n + 1];
+                for (int i = 1; i <= n; i++) sum[i] = sum[i - 1] + stones[i - 1];
+                for (int len = 2; len <= n; ++len) {
+                    for (int i = 1; i + len - 1 <= n; i++) {
+                        int j = i + len - 1;
+                        dp[i][j] = Integer.MAX_VALUE;
+                        for (int k = i; k < j; k++) {
+                            dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k + 1][j] + sum[j] - sum[i - 1]);
+                        }
+                    }
+                }
+                return dp[1][n];
+            }
+```
 
-- 
+**上面的问题回答了合并相邻的两堆石子，如果推广到一般的情况呢？合并连续的K堆石子？**
 
+考虑这个问题，需要考虑子问题：**将做部分的石子合并成K-1堆，将右部分石子合并成1堆，需要的最小花费**
 
+##### 状态
 
+- $dp[i][j][k]$表示合并$[i...j]$堆到$k$堆时花费的最小代价
 
+##### 转移方程
 
+- $dp[i][j][1]=dp[i][j][K]+sum[i...j](dp[i][j][K]!=max)$ 
+- 一般情况：
 
+$$
+dp[i][j][k]=min(dp[i][t][k-1]+dp[t+1][j][1])
+\begin{cases}
+t\in[i,j)\\
+dp[i][t][k-1]!=max\\
+dp[t+1][j][1]!=max\\
+k \in[2,K]
+\end{cases}
+$$
 
+##### 初始化
 
+- 当$i==j$时，$dp[i][i][1]=0$,因为本身就是一堆了，合并的代价为0
 
+##### 返回
 
+- $dp[1][n][1]$为结果，表示合并$[1...n]$区间的石子，最小的代价是多少
 
 
 

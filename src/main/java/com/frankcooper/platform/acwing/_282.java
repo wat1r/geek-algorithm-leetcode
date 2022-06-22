@@ -44,6 +44,39 @@ public class _282 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
+        static class Main {
+            public static void main(String[] args) {
+                Scanner in = new Scanner(System.in);
+                int n = in.nextInt();
+                int[] stones = new int[n];
+                for (int i = 1; i <= n; i++) {
+                    stones[i - 1] = in.nextInt();
+                }
+                System.out.println(mergeStonesTwo(stones));
+            }
+
+
+            public static int mergeStonesTwo(int[] stones) {
+                int n = stones.length;
+                int[][] dp = new int[n + 1][n + 1];
+                int[] sum = new int[n + 1];
+                for (int i = 1; i <= n; i++) sum[i] = sum[i - 1] + stones[i - 1];
+                for (int len = 2; len <= n; ++len) {
+                    for (int i = 1; i + len - 1 <= n; i++) {
+                        int j = i + len - 1;
+                        dp[i][j] = Integer.MAX_VALUE;
+                        for (int k = i; k < j; k++) {
+                            dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k + 1][j] + sum[j] - sum[i - 1]);
+                        }
+                    }
+                }
+                return dp[1][n];
+            }
+        }
+
+
     }
 
 
