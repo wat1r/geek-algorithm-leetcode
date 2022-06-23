@@ -75,4 +75,33 @@ public class _30 {
         }
     }
 
+
+    static class _3rd {
+        public List<Integer> findSubstring(String s, String[] words) {
+            Map<String, Integer> dict = new HashMap<>();//words的字典map，k为当前单词word v为出现的次数
+            int len = 0, w_len = 0; //总的长度，当个单词的长度，每个单词的长度都是相等的，只需要记录一个即可
+            for (String word : words) {
+                len += word.length();
+                w_len = word.length();
+                dict.put(word, dict.getOrDefault(word, 0) + 1);
+            }
+            int n = s.length();
+            List<Integer> res = new ArrayList<>();
+            for (int i = 0; i + len - 1 < n; i++) {
+                Map<String, Integer> can = new HashMap<>();//候选的map
+                String sub = s.substring(i, i + len);
+                // System.out.println(sub);
+                //以每次w_len的步长切分单词
+                for (int j = 0; j < len; j += w_len) {
+                    String seg = sub.substring(j, j + w_len);
+                    can.put(seg, can.getOrDefault(seg, 0) + 1);
+                }
+                //dict与can一致的时候，说明可以形成
+                if (dict.equals(can)) {
+                    res.add(i);
+                }
+            }
+            return res;
+        }
+    }
 }

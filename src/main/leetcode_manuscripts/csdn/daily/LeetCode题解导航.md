@@ -79,6 +79,7 @@
 | 题号      | 链接                                                         | 标签       | 关联题目      | 难度级别 | 知识点   |
 | --------- | ------------------------------------------------------------ | ---------- | ------------- | -------- | -------- |
 | 6         | [6. Z 字形变换](https://mp.csdn.net/mp_blog/creation/success/125211411) | 模拟       |               | Medium   |          |
+| 30        | [30. 串联所有单词的子串](https://blog.csdn.net/wat1r/article/details/125420933) | 哈希       |               | Hard     |          |
 | 796       | [796. 旋转字符串](https://blog.csdn.net/wat1r/article/details/125056034) | 最小表示法 | Acwing158,899 | Medium   |          |
 | 890       | [890. 查找和替换模式](https://blog.csdn.net/wat1r/article/details/125242004) | Hash       |               | Medium   | 双向校验 |
 | 899       | [899. 有序队列](https://blog.csdn.net/wat1r/article/details/125059935) | 最小表示法 | 796,Acwing158 | Medium   |          |
