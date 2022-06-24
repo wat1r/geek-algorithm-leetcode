@@ -401,6 +401,91 @@ public void reverse(char[] chas, int l, int r) {
 
 
 
+## [161. 相隔为 1 的编辑距离](https://leetcode.cn/problems/one-edit-distance)
+
+### 方法1：比较字符串
+
+```java
+public static void main(String[] args) {
+    _1st handler = new _1st();
+    String s = "ab", t = "acb";
+    Assert.assertTrue(handler.isOneEditDistance(s, t));
+    s = "cab";
+    t = "ad";
+    Assert.assertFalse(handler.isOneEditDistance(s, t));
+    s = "1203";
+    t = "1213";
+    Assert.assertTrue(handler.isOneEditDistance(s, t));
+
+
+}
+
+
+public boolean isOneEditDistance(String s, String t) {
+    int sn = s.length(), tn = t.length();
+    //维持s的长度小于t
+    if (sn > tn) {
+        return isOneEditDistance(t, s);
+    }
+    if (tn - sn > 1) return false;//相隔大于1时，返回false
+    for (int i = 0; i < sn; i++) {
+        if (s.charAt(i) != t.charAt(i)) {
+            //s与t的长度相同，比较后面的
+            if (sn == tn) {
+                return s.substring(i + 1).equals(t.substring(i + 1));
+            } else {//s与t的长度不同 s的字符短
+                return s.substring(i).equals(t.substring(i + 1));
+            }
+        }
+    }
+    return sn + 1 == tn;
+}
+```
+
+
+
+## [186. 翻转字符串里的单词 II](https://leetcode.cn/problems/reverse-words-in-a-string-ii)
+
+### 方法1：翻转
+
+```java
+public void reverseWords(char[] str) {
+    int i = 0;
+    for (int j = 0; j < str.length; j++) {
+        if (str[j] == ' ') {
+            reverse(str, i, j);
+            i = j + 1;
+        }
+    }
+    reverse(str, i, str.length);
+    System.out.println(String.valueOf(str));
+    reverse(str, 0, str.length);
+}
+
+/**
+ * 将 ch 的 [l, r] 进行翻转，
+ * 注意，[l,r) 是左闭右开
+ *
+ * @param ch
+ * @param l
+ * @param r
+ */
+private void reverse(char[] ch, int l, int r) {
+    for (int k = l; k < (l + r) / 2; k++) {
+        char tmp = ch[k];  // 位置 k 的元素
+        int g = r - 1 - k + l;  // 位置 k 的对称位置
+        ch[k] = ch[g];
+        ch[g] = tmp;
+    }
+}
+```
+
+
+
+
+
+
+
 ## [522. 最长特殊序列 II](https://leetcode.cn/problems/longest-uncommon-subsequence-ii/)
 
 ### 方法1：暴力枚举+状态压缩
