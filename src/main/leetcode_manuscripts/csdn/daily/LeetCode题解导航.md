@@ -49,6 +49,7 @@
 | 450  | [450. 删除二叉搜索树中的节点](https://mp.csdn.net/mp_blog/creation/success/125093908) |         |          | Medium   |        |
 | 508  | [508. 出现次数最多的子树元素和](https://blog.csdn.net/wat1r/article/details/125354350) | DFS     |          | Medium   |        |
 | 513  | [513. 找树左下角的值](https://blog.csdn.net/wat1r/article/details/125402119) | DFS/BFS |          | Medium   |        |
+| 515  | [515. 在每个树行中找最大值](https://blog.csdn.net/wat1r/article/details/125438548) | DFS/BFS |          | Medium   |        |
 | 572  | [572. 另一棵树的子树](https://blog.csdn.net/wat1r/article/details/125354453) | DFS     | 100      | Easy     |        |
 | 1022 | [1022. 从根到叶的二进制数之和](https://blog.csdn.net/wat1r/article/details/125039777) |         |          |          |        |
 |      |                                                              |         |          |          |        |

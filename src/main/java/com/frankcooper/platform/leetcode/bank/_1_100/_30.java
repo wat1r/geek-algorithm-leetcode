@@ -88,7 +88,7 @@ public class _30 {
             int n = s.length();
             List<Integer> res = new ArrayList<>();
             for (int i = 0; i + len - 1 < n; i++) {
-                Map<String, Integer> can = new HashMap<>();//候选的map
+                Map<String , Integer> can = new HashMap<>();//候选的map
                 String sub = s.substring(i, i + len);
                 // System.out.println(sub);
                 //以每次w_len的步长切分单词
