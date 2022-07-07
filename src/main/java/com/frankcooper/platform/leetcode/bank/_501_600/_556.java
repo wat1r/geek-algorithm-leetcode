@@ -8,11 +8,11 @@ public class _556 {
         public static void main(String[] args) {
             _1st handler = new _1st();
             int n = 158476531;
-//            Assert.assertEquals(158513467, handler.nextGreaterElement(n));
-            n = 21;
+            Assert.assertEquals(158513467, handler.nextGreaterElement(n));
+//            n = 21;
+////            Assert.assertEquals(-1, handler.nextGreaterElement(n));
+//            n = 2147483486;
 //            Assert.assertEquals(-1, handler.nextGreaterElement(n));
-            n = 2147483486;
-            Assert.assertEquals(-1, handler.nextGreaterElement(n));
 
         }
 
