@@ -1,80 +1,66 @@
 
 
-#### [6. Z 字形变换](https://leetcode.cn/problems/zigzag-conversion/)
+## [[1403. 非递增顺序的最小子序列](https://leetcode.cn/problems/minimum-subsequence-in-non-increasing-order/)6. Z 字形变换](https://leetcode.cn/problems/zigzag-conversion/)
 
 ### 题目
 
 ```java
-6. Z 字形变换
-将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。
+给你一个数组 nums，请你从中抽取一个子序列，满足该子序列的元素之和 严格 大于未包含在该子序列中的各元素之和。
 
-比如输入字符串为 "PAYPALISHIRING" 行数为 3 时，排列如下：
+如果存在多个解决方案，只需返回 长度最小 的子序列。如果仍然有多个解决方案，则返回 元素之和最大 的子序列。
 
-P   A   H   N
-A P L S I I G
-Y   I   R
-之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："PAHNAPLSIIGYIR"。
+与子数组不同的地方在于，「数组的子序列」不强调元素在原数组中的连续性，也就是说，它可以通过从数组中分离一些（也可能不分离）元素得到。
 
-请你实现这个将字符串进行指定行数变换的函数：
+注意，题目数据保证满足所有约束条件的解决方案是 唯一 的。同时，返回的答案应当按 非递增顺序 排列。
 
-string convert(string s, int numRows);
- 
+ 
 
 示例 1：
 
-输入：s = "PAYPALISHIRING", numRows = 3
-输出："PAHNAPLSIIGYIR"
+输入：nums = [4,3,10,9,8]
+输出：[10,9] 
+解释：子序列 [10,9] 和 [10,8] 是最小的、满足元素之和大于其他各元素之和的子序列。但是 [10,9] 的元素之和最大。 
 示例 2：
-输入：s = "PAYPALISHIRING", numRows = 4
-输出："PINALSIGYAHRPI"
-解释：
-P     I    N
-A   L S  I G
-Y A   H R
-P     I
+
+输入：nums = [4,4,7,6,7]
+输出：[7,7,6] 
+解释：子序列 [7,7] 的和为 14 ，不严格大于剩下的其他元素之和（14 = 4 + 4 + 6）。因此，[7,6,7] 是满足题意的最小子序列。注意，元素按非递增顺序返回。  
 示例 3：
 
-输入：s = "A", numRows = 1
-输出："A"
- 
+输入：nums = [6]
+输出：[6]
+ 
 
 提示：
 
-1 <= s.length <= 1000
-s 由英文字母（小写和大写）、',' 和 '.' 组成
-1 <= numRows <= 1000
+1 <= nums.length <= 500
+1 <= nums[i] <= 100
+
 ```
 
 
 
-### 方法1：模拟
+### 方法1：排序+前缀和
 
 ```java
-public String convert(String s, int numRows) {
-    //r表示每一行的索引 [0,numRows-1]
-    //flag是 1 或者 -1 按从上到下或者从下到上 两个方向区分正负
-    int r = 0, flag = 1;
-    //结果列表
-    StringBuilder[] sb = new StringBuilder[numRows];
-    for (int k = 0; k < numRows; k++) sb[k] = new StringBuilder();
-    int i = 0;
-    while (i < s.length()) {
-        if (r == numRows) {
-            flag = -flag;
-            //区分nowrows 是否为1
-            if (numRows == 1) r -= 1;
-            else r -= 2;
-        } else if (r == -1) {
-            flag = -flag;
-            if (numRows == 1) r += 1;
-            else r += 2;
+        public List<Integer> minSubsequence(int[] nums) {
+            Arrays.sort(nums);
+            int n = nums.length;
+            int[] sum = new int[n + 1];
+            for (int i = 0; i < n; i++) {
+                sum[i + 1] = sum[i] + nums[i];
+            }
+            int cur = 0;
+            List<Integer> res = new ArrayList<>();
+            for (int i = n - 1; i >= 0; i--) {
+                cur += nums[i];
+                res.add(nums[i]);
+                int remain = sum[i] - sum[0];
+                if (cur > remain) {
+                    break;
+                }
+            }
+            return res;
         }
 
-        sb[r].append(s.charAt(i++));
-        r += flag;
-    }
-    StringBuilder ans = new StringBuilder();
-    for (int k = 0; k < numRows; k++) ans.append(sb[k]);
-    return ans.toString();
-}
 ```
