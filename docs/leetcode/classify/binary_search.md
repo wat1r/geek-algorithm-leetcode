@@ -1004,7 +1004,44 @@ public char nextGreatestLetter(char[] le, char ta) {
 
 
 
+## [1413. 逐步求和得到正数的最小值](https://leetcode.cn/problems/minimum-value-to-get-positive-step-by-step-sum/)
 
+### 方法1：贪心
+
+```java
+//记录最小的累加和,最后满足 accSumMin + startValue >=1
+public int minStartValue(int[] nums) {
+    int accSum = 0, accSumMin = 0;
+    for (int x : nums) {
+        accSum += x;
+        accSumMin = Math.min(accSumMin, accSum);
+    }
+    return -accSumMin + 1;
+}
+```
+
+### 方法2：二分
+
+```java
+        public int minStartValue(int[] nums) {
+            int l = 1, r = 10010;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (valid(nums, mid)) r = mid;
+                else l = mid + 1;
+            }
+            return l;
+        }
+
+
+        private boolean valid(int[] nums, int startValue) {
+            for (int x : nums) {
+                startValue += x;
+                if (startValue < 1) return false;
+            }
+            return true;
+        }
+```
 
 
 
@@ -1155,6 +1192,83 @@ public char nextGreatestLetter(char[] le, char ta) {
 ```
 
 
+
+## [LintCode]437 · 书籍复印
+
+### 方法1：动态规划
+
+```java
+        public int copyBooks(int[] pages, int k) {
+            int n = pages.length;
+            //f[t][i] 前t个人抄前i本书，最少需要的时间
+            //转移方程：f[t][i] =min{max{f[k-1][j],pages[j]+...pages[i-1]}}(0<=j<=i)
+            int[][] f = new int[k + 1][n + 1];
+            int INF = Integer.MAX_VALUE;
+            Arrays.fill(f[0], INF);
+            f[0][0] = 0;
+            //边界条件：
+            //1.0个人抄0本书 f[0][0] = 0;
+            //2.0个人抄1...n本书，f[0][1]=f[0][2]=...=f[0][n]=INF
+            //3.t个人抄0本书 f[t][0] = 0;
+            for (int t = 1; t <= k; t++) {
+                f[t][0] = 0;
+                for (int i = 1; i <= n; i++) {
+                    f[t][i] = INF;
+                    int sum = 0;
+                    for (int j = i; j >= 0; j--) {
+                        f[t][i] = Math.min(f[t][i], Math.max(f[t - 1][j], sum));
+                        if (j > 0) sum += pages[j - 1];
+                    }
+                }
+            }
+            return f[k][n];
+        }
+```
+
+### 方法2：二分
+
+```java
+//437.书籍复印
+public int copyBooks(int[] pages, int k) {
+    //当人数够的时候，恰好有>=len(pages)的人数，只需要每个人抄写一本书即可，这时候最慢的抄书的人花费的时间恰好是最多的那本书的页数
+    //当总数为tot时，这时候如果只有一个人抄书，需要这个人抄完整合pages列表
+    int maxx = 0, tot = 0;
+    for (int x : pages) {
+        maxx = Math.max(maxx, x);
+        tot += x;
+    }
+    int start = maxx, end = tot;
+    //退出条件是start+1 =end start比end少一个
+    while (start + 1 < end) {
+        int mid = start + (end - start) / 2;
+        if (countWorkers(pages, mid) <= k) {//说明当前的mid可能是需要的值(mid...end]排除
+            end = mid;
+        } else {
+            start = mid + 1;//当前的count>k，说明该count不满足条件，排除[start...mid]这部分
+        }
+    }
+    //判断下start
+    if (countWorkers(pages, start) <= k) return start;
+    //start不是目标值的话，就返回end
+    return end;
+}
+
+//给定每个人的工作时长t，每个人都不能超过这个时长，返回需要多少个人能完成所有的工作
+public int countWorkers(int[] pages, int t) {
+    int sum = 0;
+    int count = 0;
+    for (int x : pages) {
+        if (x + sum > t) {//如果当前的sum+x比t大，证明这个阶段的人抄书已经到顶了，重新开始并计数
+            sum = x;
+            count++;
+        } else {
+            sum += x;
+        }
+    }
+    count++;
+    return count;
+}
+```
 
 
 

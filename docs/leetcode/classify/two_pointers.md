@@ -332,12 +332,14 @@ public int removeDuplicates(int[] nums) {
 public String reverseWords(String s) {
     if (s == null || s.length() == 0) return null;
     char[] chas = s.toCharArray();
+  	//整体翻转一次
     reverse(chas, 0, chas.length - 1);
     String t = String.valueOf(chas);
     String[] arr = t.trim().split("\\s+");
     StringBuilder ans = new StringBuilder();
     for (String a : arr) {
         char[] tmp = a.toCharArray();
+      	//每一个单词再次翻转一次
         reverse(tmp, 0, a.length() - 1);
         ans.append(tmp);
         ans.append(" ");
@@ -361,6 +363,7 @@ private void reverse(char[] chas, int l, int r) {
 public String reverseWords(String s) {
     char[] chas = s.toCharArray();
     int n = chas.length;
+  	//整体翻转一次
     reverse(chas, 0, chas.length - 1);
     reverseWords(chas, n);
     return cleanSpaces(chas, n);
@@ -378,16 +381,18 @@ public String cleanSpaces(char[] chas, int n) {
     return new String(chas).substring(0, l);
 }
 
+//
 public void reverseWords(char[] chas, int n) {
     int l = 0, r = 0;
     while (l < chas.length) {
+       //移除空格
         while (l < r || l < n && chas[l] == ' ') l++;
         while (r < l || r < n && chas[r] != ' ') r++;
         reverse(chas, l, r - 1);
     }
 }
 
-
+//翻转整个数组
 public void reverse(char[] chas, int l, int r) {
     while (l < r) {
         char t = chas[l];
@@ -796,3 +801,34 @@ private boolean check(String s, String p) {
         }
 ```
 
+
+
+## [LintCode]31 · 数组划分
+
+### 方法1：快速选择
+
+```java
+public int partitionArray(int[] nums, int k) {
+    int l = 0, r = nums.length - 1;
+    while (l <= r) {//出口条件是l = r +1
+        //返回数组划分的位置，即数组中第一个位置 i，满足 nums[i] 大于等于 k
+        //当nums[l]<k，说明l这个点不是分割点
+        while (l <= r && nums[l] < k) {
+            l++;
+        }
+        //当nums[r]>=k r点都不会是分隔点
+        while (l <= r && nums[r] >= k) {
+            r--;
+        }
+        //交换 nums[l] 和 nums[r]
+        if (l < r) {
+            int t = nums[l];
+            nums[l] = nums[r];
+            nums[r] = t;
+            l++;
+            r--;
+        }
+    }
+    return l;
+}
+```

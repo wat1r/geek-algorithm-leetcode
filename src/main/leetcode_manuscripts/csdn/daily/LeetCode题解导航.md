@@ -110,11 +110,13 @@
 
 ## 08.二分
 
-| 题号  | 链接                                                         | 标签 | 关联题目 | 难度级别 | 知识点 |
-| ----- | ------------------------------------------------------------ | ---- | -------- | -------- | ------ |
-|       |                                                              |      |          |          |        |
-| 875   | [875. 爱吃香蕉的珂珂](https://mp.csdn.net/mp_blog/creation/success/125158353) |      |          |          |        |
-| P2449 | [P2440 木材加工](https://blog.csdn.net/wat1r/article/details/125247573) |      |          | Medium   | 剪木棍 |
+| 题号  | 链接                                                         | 标签          | 关联题目 | 难度级别 | 知识点 |
+| ----- | ------------------------------------------------------------ | ------------- | -------- | -------- | ------ |
+|       |                                                              |               |          |          |        |
+| 875   | [875. 爱吃香蕉的珂珂](https://mp.csdn.net/mp_blog/creation/success/125158353) |               |          |          |        |
+| 1413  | [1413. 逐步求和得到正数的最小值](https://blog.csdn.net/wat1r/article/details/126241603) | 二分/贪心     |          | Easy     |        |
+| P2449 | [P2440 木材加工](https://blog.csdn.net/wat1r/article/details/125247573) |               |          | Medium   | 剪木棍 |
+|       | [[LintCode]437 · 书籍复印](https://blog.csdn.net/wat1r/article/details/126253959) | 二分/动态规划 |          | Medium   |        |
 
 
 
@@ -124,12 +126,13 @@
 
 ## 09.双指针
 
-| 题号 | 链接                                                         | 标签          | 关联题目 | 难度级别 | 知识点 |
-| ---- | ------------------------------------------------------------ | ------------- | -------- | -------- | ------ |
-| 532  | [532. 数组中的 k-diff 数对](https://blog.csdn.net/wat1r/article/details/125308985) | 哈希/双指针   |          | Medium   |        |
-| 1023 | [1023. 驼峰式匹配](https://blog.csdn.net/wat1r/article/details/125326956) | 字符串/双指针 |          | Medium   |        |
-| 1089 | [1089. 复写零](https://blog.csdn.net/wat1r/article/details/125326299) |               |          | Easy     |        |
-|      |                                                              |               |          |          |        |
+| 题号 | 链接                                                         | 标签          | 关联题目 | 难度级别 | 知识点     |
+| ---- | ------------------------------------------------------------ | ------------- | -------- | -------- | ---------- |
+| 151  | [151. 翻转字符串里的单词](https://blog.csdn.net/wat1r/article/details/126254264) | 双指针        |          | Medium   | 翻转字符串 |
+| 532  | [532. 数组中的 k-diff 数对](https://blog.csdn.net/wat1r/article/details/125308985) | 哈希/双指针   |          | Medium   |            |
+| 1023 | [1023. 驼峰式匹配](https://blog.csdn.net/wat1r/article/details/125326956) | 字符串/双指针 |          | Medium   |            |
+| 1089 | [1089. 复写零](https://blog.csdn.net/wat1r/article/details/125326299) |               |          | Easy     |            |
+|      | [31 · 数组划分](https://blog.csdn.net/wat1r/article/details/126255586) |               |          | Medium   |            |
 
 
 
