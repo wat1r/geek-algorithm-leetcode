@@ -1,9 +1,19 @@
 package com.frankcooper.platform.leetcode.interview;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.struct.ListNode;
 
 public class _02_05 {
     static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            ListNode l1 = ListNodeIOUtils.transform("[7,1,6]");
+            ListNode l2 = ListNodeIOUtils.transform("[5,9,2]");
+            handler.addTwoNumbers(l1, l2);
+        }
+
+
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
 
