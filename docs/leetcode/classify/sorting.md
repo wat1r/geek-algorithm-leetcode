@@ -386,6 +386,26 @@ public int heightChecker(int[] heights) {
 }
 ```
 
+## [1460. 通过翻转子数组使两个数组相等](https://leetcode.cn/problems/make-two-arrays-equal-by-reversing-sub-arrays/)
+
+```java
+    public boolean canBeEqual(int[] target, int[] arr) {
+        Arrays.sort(target);
+        Arrays.sort(arr);
+        for (int i = 0; i < target.length; i++) {
+            if (i > arr.length) return false;
+            if (arr[i] != target[i]) return false;
+        }
+        return true;
+    }
+```
+
+
+
+
+
+
+
 
 
 ### Reference

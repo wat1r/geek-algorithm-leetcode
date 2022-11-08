@@ -61,7 +61,7 @@
 | ---- | ------------------------------------------------------------ | ------------- | -------- | -------- | ------ |
 | 347  | [347. 前 K 个高频元素](https://mp.csdn.net/mp_blog/creation/success/125192362) | 快速排序/哈希 |          | Medium   |        |
 | 1051 | [1051. 高度检查器](https://blog.csdn.net/wat1r/article/details/125253050) |               |          | Easy     | 桶排序 |
-|      |                                                              |               |          |          |        |
+| 1460 | [1460. 通过翻转子数组使两个数组相等](https://blog.csdn.net/wat1r/article/details/126497151) |               |          | Easy     |        |
 
 
 
@@ -351,6 +351,10 @@
 | 478  | [478. 在圆内随机生成点](https://blog.csdn.net/wat1r/article/details/125128708) | 随机化/几何 | 497      | Medium   | 极坐标/拒绝采样 |
 | 497  | [497. 非重叠矩形中的随机点](https://blog.csdn.net/wat1r/article/details/125196641) | 随机化      | 478      | Medium   | 二分/前缀和     |
 |      |                                                              |             |          |          |                 |
+
+
+
+
 
 
 
