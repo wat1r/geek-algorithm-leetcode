@@ -527,6 +527,29 @@ public class RepeateOne {
 
     }
 
+    static class _1st_10{
+        public static void main(String[] args) {
+            _1st_10 handler = new _1st_10();
+            TreeNode root = TreeNodeIOUtils.transform("[8,3,10,1,6,null,14,null,null,4,7,13]");
+            handler.maxAncestorDiff(root);
+        }
+
+        public int maxAncestorDiff(TreeNode root) {
+            return dfs(root, root.val, root.val);
+        }
+
+        public int dfs(TreeNode root, int minn, int maxx) {
+            if (root == null) {
+                return 0;
+            }
+            int diff = Math.max(Math.abs(root.val - minn), Math.abs(root.val - maxx));
+            minn = Math.min(minn, root.val);
+            maxx = Math.max(maxx, root.val);
+            diff = Math.max(dfs(root.left, minn, maxx), diff);
+            diff = Math.max(dfs(root.right, minn, maxx), diff);
+            return diff;
+        }
+    }
 
 
 
