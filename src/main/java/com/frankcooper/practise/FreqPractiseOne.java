@@ -1,6 +1,10 @@
 package com.frankcooper.practise;
 
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class FreqPractiseOne {
     static class _1st {
         public static void main(String[] args) {
@@ -129,6 +133,67 @@ public class FreqPractiseOne {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+        }
+    }
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            int[] values = {5, 4, 3, 2, 1};
+            int[] labels = {1, 1, 2, 2, 3};
+            int numWanted = 3;
+            int useLimit = 1;
+            handler.largestValsFromLabels(values, labels, numWanted, useLimit);
+        }
+
+        public int largestValsFromLabels(int[] values, int[] labels, int numWanted, int useLimit) {
+            int n = values.length;
+            Integer[] id = new Integer[n];
+            for (int i = 0; i < n; i++) {
+                id[i] = i;
+            }
+            Arrays.sort(id, (a, b) -> values[b] - values[a]);
+            Map<Integer, Integer> map = new HashMap<>();
+            int choose = 0;
+            int res = 0;
+            for (int i = 0; i < n; i++) {
+                if (choose >= numWanted) {
+                    break;
+                }
+                int label = labels[id[i]];
+                if (map.getOrDefault(label, 0) == useLimit) {
+                    continue;
+                }
+                choose++;
+                res += values[id[i]];
+                map.put(label, map.getOrDefault(label, 0) + 1);
+            }
+            return res;
+        }
+    }
+
+    static class _6th {
+        public String oddString(String[] words) {
+            Map<String, Integer> map = new HashMap<>();
+            for (int i = 0; i < words.length; i++) {
+                char[] ch = words[i].toCharArray();
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < ch.length - 1; j++) {
+                    sb.append(ch[j + 1] - ch[j]).append("_");
+                }
+                if (map.containsKey(sb.toString())) {
+                    map.put(sb.toString(), -1);
+                } else {
+                    map.put(sb.toString(), i);
+                }
+            }
+            for (String k : map.keySet()) {
+                System.out.println(k);
+                if (map.get(k) != -1) {
+                    return words[map.get(k)];
+                }
+            }
+            return "";
         }
     }
 
