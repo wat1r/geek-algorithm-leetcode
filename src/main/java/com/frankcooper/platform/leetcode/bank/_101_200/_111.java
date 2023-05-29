@@ -14,7 +14,8 @@ public class _111 {
     static _111 handler = new _111();
 
     public static void main(String[] args) {
-
+        TreeNode root = TreeNodeIOUtils.transform("[3,9,20,null,null,15,7]");
+        handler.minDepth(root);
     }
 
     public int minDepth(TreeNode root) {
@@ -42,6 +43,21 @@ public class _111 {
             }
         }
         return level;
+    }
+
+    static class _1st {
+        public int minDepth(TreeNode root) {
+            if (root == null) return 0;
+            if (root.left == null && root.right == null) return 1;
+            int t = Integer.MAX_VALUE;
+            if (root.left != null) {
+                t = Math.min(t, minDepth(root.left));
+            }
+            if (root.right != null) {
+                t = Math.min(t, minDepth(root.right));
+            }
+            return t + 1;
+        }
     }
 
 

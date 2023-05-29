@@ -20,6 +20,7 @@ public class _643 {
     /**
      * Double.MIN_VALUE 这是个正数
      * 要用Double负无穷 用 Double.NEGATIVE_INFINITY
+     *
      * @param nums
      * @param k
      * @return
@@ -35,6 +36,28 @@ public class _643 {
             }
         }
         return ans;
+    }
+
+    static class _1st {
+        public static void main(String[] args) {
+
+        }
+
+        //前缀和+滑动窗口
+        public double findMaxAverage(int[] nums, int k) {
+            int sum = 0;
+            for (int i = 0; i < k; i++) {
+                sum += nums[i];
+            }
+            int maxSum = sum;
+            for (int i = k; i < nums.length; i++) {
+                sum = sum - nums[i - k] + nums[i];
+                maxSum = Math.max(maxSum, sum);
+            }
+            System.out.println(maxSum);
+            return (double) maxSum / k;
+        }
+
     }
 
 
