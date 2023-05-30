@@ -14,7 +14,15 @@ public class _547 {
     }
 
 
-    class _1st {
+    static class _1st {
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[][] isConnected = PrintUtils.processSymbol("[[1,1,0],[1,1,0],[0,0,1]]");
+            handler.findCircleNum(isConnected);
+        }
+
+
         public int findCircleNum(int[][] isConnected) {
             int n = isConnected.length;
             UnionFind uf = new UnionFind(n);
@@ -124,6 +132,62 @@ public class _547 {
             return circles;
         }
 
+    }
+
+
+    static class _4th {
+
+        public int findCircleNum(int[][] isConnected) {
+            int n = isConnected.length;
+            UnionFind uf = new UnionFind(n);
+            int res = n;
+            for (int i = 0; i < n; i++) {
+                for (int j = i + 1; j < n; j++) {
+                    if (isConnected[i][j] == 1 && uf.union(i, j)) {
+                        res--;
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        class UnionFind {
+            int[] parents;
+            int[] ranks;
+
+            public UnionFind(int n) {
+                parents = new int[n];
+                ranks = new int[n];
+                for (int i = 0; i < n; i++) parents[i] = i;
+            }
+
+            public int find(int x) {
+                if (x != parents[x]) {
+                    parents[x] = find(parents[x]);
+                }
+                return parents[x];
+            }
+
+            public boolean union(int x, int y) {
+                int rootX = find(x), rootY = find(y);
+                if (rootX == rootY) return false;
+                if (ranks[rootX] > ranks[rootY]) parents[rootY] = rootX;
+                if (ranks[rootX] < ranks[rootY]) parents[rootX] = rootY;
+                if (ranks[rootX] == ranks[rootY]) {
+                    parents[rootY] = rootX;
+                    ranks[rootY]++;
+                }
+                return true;
+            }
+
+            public boolean connect(int x, int y) {
+                int rootX = find(x);
+                int rootY = find(y);
+                return rootX == rootY;
+            }
+
+        }
     }
 
 }
