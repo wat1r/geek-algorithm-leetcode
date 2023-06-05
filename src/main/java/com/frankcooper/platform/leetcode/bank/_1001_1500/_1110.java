@@ -2,6 +2,7 @@ package com.frankcooper.platform.leetcode.bank._1001_1500;
 
 import java.util.*;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 import org.junit.Assert;
 
@@ -51,6 +52,40 @@ public class _1110 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            TreeNode root = TreeNodeIOUtils.transform("[1,2,3,4,5,6,7]");
+            int[] to_delete = {3, 5};
+            handler.delNodes(root,to_delete);
+        }
+
+        Set<Integer> set = new HashSet<>();
+        List<TreeNode> res = new ArrayList<>();
+
+        public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+            for (int x : to_delete) set.add(x);
+            if (dfs(root) != null) {
+                res.add(root);
+            }
+            return res;
+        }
+
+
+        public TreeNode dfs(TreeNode node) {
+            if (node == null) {
+                return null;
+            }
+            node.left = dfs(node.left);
+            node.right = dfs(node.right);
+            if (!set.contains(node.val)) {
+                return node;
+            }
+            if (node.left != null) {
+                res.add(node.left);
+            }
+            if (node.right != null) {
+                res.add(node.right);
+            }
+            return null;
+
         }
     }
 
