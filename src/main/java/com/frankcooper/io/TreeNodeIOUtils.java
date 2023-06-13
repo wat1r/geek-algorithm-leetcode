@@ -31,6 +31,10 @@ public class TreeNodeIOUtils {
         return root;
     }
 
+    public static void prettyPrintTree(TreeNode root) {
+        Wrapper.prettyPrintTree(root);
+    }
+
 
     static class Wrapper {
         /**

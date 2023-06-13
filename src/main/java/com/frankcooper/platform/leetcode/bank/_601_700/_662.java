@@ -2,13 +2,17 @@ package com.frankcooper.platform.leetcode.bank._601_700;
 
 import java.util.*;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
+import org.junit.Assert;
 
 public class _662 {
 
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
+            TreeNode root = TreeNodeIOUtils.transform("[1,3,2,5,null,null,9,6,null,7]");
+            Assert.assertEquals(7, handler.widthOfBinaryTree(root));
 
         }
 
@@ -32,7 +36,9 @@ public class _662 {
                         q.offer(cur.right);
                     }
                 }
+                TreeNodeIOUtils.prettyPrintTree(root);
             }
+            TreeNodeIOUtils.prettyPrintTree(root);
             return res;
         }
 
@@ -43,6 +49,25 @@ public class _662 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        Map<Integer,Integer> depthMap = new HashMap<>();
+
+
+        public int widthOfBinaryTree(TreeNode root) {
+            return dfs(root,1,1);
+        }
+
+
+        public int dfs(TreeNode root,int depth ,int index ){
+            if(root == null){
+                return 0;
+            }
+            depthMap.putIfAbsent(depth,index);
+            int ld = dfs(root.left,depth+1, index *2 +1);
+            int rd = dfs(root.right,depth+1, index *2 +2);
+            return Math.max(index-depthMap.get(depth)+1,Math.max(ld,rd));
+        }
+
     }
 
 

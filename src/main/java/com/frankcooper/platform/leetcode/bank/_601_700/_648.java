@@ -3,7 +3,9 @@ package com.frankcooper.platform.leetcode.bank._601_700;
 import org.junit.Assert;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class _648 {
 
@@ -77,12 +79,81 @@ public class _648 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        public String replaceWords(List<String> dictionary, String sentence) {
+            TrieNode root = new TrieNode();
+            buildTrie(dictionary, root);
+            StringBuilder res = new StringBuilder();
+            String[] arr = sentence.split(" ");
+            for (String s : arr) {
+                res.append(get(s, root)).append(" ");
+            }
+            return res.toString().trim();
+        }
+
+        public String get(String s, TrieNode root) {
+            StringBuilder res = new StringBuilder();
+            TrieNode curr = root;
+            for (char c : s.toCharArray()) {
+                if (curr == null) {
+                    break;
+                }
+                if (curr.next[c - 'a'] != null) {
+                    res.append(c);
+                }
+                curr = curr.next[c - 'a'];
+                if (curr != null && curr.isEnd) {
+                    return res.toString();
+                }
+            }
+            return s;
+        }
+
+
+        //建字典树
+        public void buildTrie(List<String> list, TrieNode root) {
+            for (String s : list) {
+                TrieNode curr = root;
+                for (char c : s.toCharArray()) {
+                    if (curr.next[c - 'a'] == null) {
+                        curr.next[c - 'a'] = new TrieNode();
+                    }
+                    curr = curr.next[c - 'a'];
+                }
+                curr.isEnd = true;
+            }
+        }
+
+
+        class TrieNode {
+            TrieNode[] next = new TrieNode[26];
+            boolean isEnd = false;
+
+        }
     }
 
 
     static class _3rd {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
+        }
+
+        public String replaceWords(List<String> dictionary, String sentence) {
+            Set<String> set = new HashSet<>();
+            for (String s : dictionary) {
+                set.add(s);
+            }
+            String[] words = sentence.split("\\s+");
+            for (int i = 0; i < words.length; i++) {
+                String word = words[i];
+                for (int j = 0; j < word.length(); j++) {
+                    if (set.contains(word.substring(0, j + 1))) {
+                        words[i] = word.substring(0, j + 1);
+                        break;
+                    }
+                }
+            }
+            return String.join(" ", words);
         }
     }
 
