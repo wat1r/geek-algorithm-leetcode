@@ -9,6 +9,7 @@ public class _673 {
 
     public static void main(String[] args) {
         handler.findNumberOfLIS(new int[]{1, 3, 5, 4, 7});
+
     }
 
 
