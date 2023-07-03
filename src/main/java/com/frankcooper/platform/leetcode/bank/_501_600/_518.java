@@ -17,6 +17,7 @@ public class _518 {
         for (int i = 1; i <= n; i++) {
             for (int j = 0; j <= amount; j++) {
                 for (int k = 0; k * coins[i - 1] <= j; k++) {
+                    System.out.printf("%d,%d,%d\n", i, j, k);
                     dp[i][j] += dp[i - 1][j - k * coins[i - 1]];
                 }
             }

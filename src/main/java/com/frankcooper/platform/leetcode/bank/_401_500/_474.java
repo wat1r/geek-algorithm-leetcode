@@ -25,13 +25,28 @@ public class _474 {
             int[] counter = counter(str);
             for (int i = m; i >= counter[0]; i--) {
                 for (int j = n; j >= counter[1]; j--) {
-                    dp[i][j] = Math.max(dp[i][j],
-                            dp[i - counter[0]][j - counter[1]] + 1);
+                    dp[i][j] = Math.max(dp[i][j], dp[i - counter[0]][j - counter[1]] + 1);
                 }
             }
             PrintUtils.printMatrix(dp);
         }
         return dp[m][n];
+    }
+
+
+
+
+
+    /**
+     * 计算str字符串中的 0和1的个数， counter[0] 是 "0"的个数，counter[1]是"1"的个数
+     *
+     * @param str
+     * @return
+     */
+    public int[] counter(String str) {
+        int[] counter = new int[2];
+        for (char c : str.toCharArray()) counter[c - '0']++;
+        return counter;
     }
 
 
@@ -51,19 +66,6 @@ public class _474 {
             }
         }
         return dp[len][m][n];
-    }
-
-
-    /**
-     * 计算str字符串中的 0和1的个数， counter[0] 是 "0"的个数，counter[1]是"1"的个数
-     *
-     * @param str
-     * @return
-     */
-    public int[] counter(String str) {
-        int[] counter = new int[2];
-        for (char c : str.toCharArray()) counter[c - '0']++;
-        return counter;
     }
 
 
