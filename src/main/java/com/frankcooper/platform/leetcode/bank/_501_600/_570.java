@@ -1,8 +1,8 @@
-package com.frankcooper.platform.leetcode.bank._601_700;
+package com.frankcooper.platform.leetcode.bank._501_600;
 
 /*import java.util.*;
 import org.junit.Assert;*/
-public class _626 {
+public class _570 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -12,19 +12,14 @@ public class _626 {
         }
 
         /**
-         *
-         select
-         (case
-         when MOD(a.id,2)!=0 and b.total !=id then id +1
-         when MOD(a.id,2)!=0 and b.total =id then id
-         else id -1
-         end
-         ) as id,
-         student
-         from
-         Seat a,
-         (select count(*) total from Seat ) b
-         order by id asc
+         * select a.name
+         * from Employee a
+         * join
+         * (select managerId
+         * from Employee
+         * group by managerId
+         * having count(managerId)>=5) b
+         * on a.id = b.managerId
          */
 
     }

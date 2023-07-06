@@ -1,8 +1,8 @@
-package com.frankcooper.platform.leetcode.bank._601_700;
+package com.frankcooper.platform.leetcode.bank._501_600;
 
 /*import java.util.*;
 import org.junit.Assert;*/
-public class _626 {
+public class _550 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -12,21 +12,14 @@ public class _626 {
         }
 
         /**
-         *
-         select
-         (case
-         when MOD(a.id,2)!=0 and b.total !=id then id +1
-         when MOD(a.id,2)!=0 and b.total =id then id
-         else id -1
-         end
-         ) as id,
-         student
-         from
-         Seat a,
-         (select count(*) total from Seat ) b
-         order by id asc
+         * select round(avg(a.event_date is not null), 2) fraction
+         * from
+         *     (select player_id, min(event_date) as login
+         *     from activity
+         *     group by player_id) p
+         * left join activity a
+         * on p.player_id=a.player_id and datediff(a.event_date, p.login)=1
          */
-
     }
 
     static class _2nd {

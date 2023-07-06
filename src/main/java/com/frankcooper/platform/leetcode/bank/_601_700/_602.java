@@ -2,7 +2,7 @@ package com.frankcooper.platform.leetcode.bank._601_700;
 
 /*import java.util.*;
 import org.junit.Assert;*/
-public class _626 {
+public class _602 {
 
     static class _1st {
         public static void main(String[] args) {
@@ -12,20 +12,18 @@ public class _626 {
         }
 
         /**
-         *
-         select
-         (case
-         when MOD(a.id,2)!=0 and b.total !=id then id +1
-         when MOD(a.id,2)!=0 and b.total =id then id
-         else id -1
-         end
-         ) as id,
-         student
-         from
-         Seat a,
-         (select count(*) total from Seat ) b
-         order by id asc
+         * select ids as id , cnt as num
+         * from
+         * (select ids , count(*) cnt
+         * from
+         * ( select requester_id as ids from RequestAccepted
+         *         union all
+         * select accepter_id from RequestAccepted ) as a
+         * group by ids) as b
+         * order by cnt  desc
+         * limit 1
          */
+
 
     }
 
