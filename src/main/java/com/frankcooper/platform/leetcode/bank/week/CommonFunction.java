@@ -11,7 +11,8 @@ public class CommonFunction {
     public static void main(String[] args) {
         CommonFunction handler = new CommonFunction();
 //        Assert.assertEquals(handler.pow(9, 8), (int) Math.pow(9, 8));
-        Assert.assertTrue(handler.isPrime(7));
+//        Assert.assertTrue(handler.isPrime(7));
+        handler.Eratosthenes(10);
     }
 
 
