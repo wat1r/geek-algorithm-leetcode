@@ -12,9 +12,11 @@ public class _952 {
         public static void main(String[] args) {
             _1st handler = new _1st();
             int[] nums = {2, 3, 6, 7, 4, 12, 21, 39};
-            Assert.assertEquals(8, handler.largestComponentSize(nums));
+//            Assert.assertEquals(8, handler.largestComponentSize(nums));
             nums = new int[]{20, 50, 9, 63};
 //            Assert.assertEquals(2, handler.largestComponentSize(nums));
+            nums = new int[]{4, 6, 15, 35};
+            Assert.assertEquals(4, handler.largestComponentSize(nums));
 
         }
 
@@ -87,6 +89,8 @@ public class _952 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+
     }
 
 
