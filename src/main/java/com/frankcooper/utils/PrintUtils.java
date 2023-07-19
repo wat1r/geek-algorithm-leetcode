@@ -16,7 +16,9 @@ public class PrintUtils {
         //----
         String s = "10111";
         s = "10011110000011";
-        transformBinStr2Int(s);
+//        transformBinStr2Int(s);
+        toBinaryString(9,6);
+        toBinaryString(18,6);
     }
 
 
