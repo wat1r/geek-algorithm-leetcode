@@ -83,6 +83,54 @@ public class _2034 {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
         }
+
+        class StockPrice {
+
+            Map<Integer, Integer> map;
+            int curr;
+            PriorityQueue<int[]> pqMax;
+            PriorityQueue<int[]> pqMin;
+
+
+            public StockPrice() {
+                map = new HashMap<>();
+                pqMax = new PriorityQueue<int[]>((a, b) -> b[0] - a[0]);//大根堆
+                pqMin = new PriorityQueue<int[]>((a, b) -> a[0] - b[0]);//小根堆
+            }
+
+            public void update(int timestamp, int price) {
+                curr = Math.max(curr, timestamp);
+                map.put(timestamp, price);
+                pqMax.offer(new int[]{price, timestamp});
+                pqMin.offer(new int[]{price, timestamp});
+            }
+
+            public int current() {
+                return map.get(curr);
+            }
+
+            public int maximum() {
+                while (true) {
+                    int[] p = pqMax.peek();
+                    int price = p[0], timestamp = p[1];
+                    if (map.get(timestamp) == price) {
+                        return price;
+                    }
+                    pqMax.poll();
+                }
+            }
+
+            public int minimum() {
+                while (true) {
+                    int[] p = pqMin.peek();
+                    int price = p[0], timestamp = p[1];
+                    if (map.get(timestamp) == price) {
+                        return price;
+                    }
+                    pqMin.poll();
+                }
+            }
+        }
     }
 
 
