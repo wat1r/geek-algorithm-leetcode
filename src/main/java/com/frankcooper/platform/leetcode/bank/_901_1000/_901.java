@@ -1,5 +1,7 @@
 package com.frankcooper.platform.leetcode.bank._901_1000;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 //901. 股票价格跨度 901. Online Stock Span
@@ -83,6 +85,36 @@ class StockSpanner1st {
             this.price = price;
             this.count = count;
         }
+    }
+
+    static class _1st {
+        public static void main(String[] args) {
+            StockSpanner stockSpanner = new StockSpanner();
+            stockSpanner.next(100); // 返回 1
+            stockSpanner.next(80);  // 返回 1
+            stockSpanner.next(60);  // 返回 1
+            stockSpanner.next(70);  // 返回 2
+            stockSpanner.next(60);  // 返回 1
+            stockSpanner.next(75);  // 返回 4 ，因为截至今天的最后 4 个股价 (包括今天的股价 75) 都小于或等于今天的股价。
+            stockSpanner.next(85);  // 返回 6
+        }
+
+        static class StockSpanner {
+            Deque<int[]> d = new ArrayDeque<>();
+            int cur = 0;
+
+            public int next(int price) {
+                while (!d.isEmpty() && d.peekLast()[1] <= price) {
+                    d.pollLast();
+                }
+                int prev = d.isEmpty() ? -1 : d.peekLast()[0];
+                int ans = cur - prev;
+                d.addLast(new int[]{cur++, price});
+                return ans;
+            }
+        }
+
+
     }
 }
 
