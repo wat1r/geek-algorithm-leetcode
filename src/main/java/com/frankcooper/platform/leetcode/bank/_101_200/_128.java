@@ -130,4 +130,24 @@ public class _128 {
             return maxLen;
         }
     }
+
+    static class _5th {
+        public int longestConsecutive(int[] nums) {
+            Set<Integer> set = new HashSet<>();
+            for (int x : nums) {
+                set.add(x);
+            }
+            int maxLen = 0;
+            for (int x : nums) {
+                if (!set.contains(x - 1)) {
+                    int y = x + 1;
+                    while (set.contains(y)) {
+                        y++;
+                    }
+                    maxLen = Math.max(maxLen, y - x);
+                }
+            }
+            return maxLen;
+        }
+    }
 }

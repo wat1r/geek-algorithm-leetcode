@@ -123,6 +123,13 @@ public class _3 {
     }
 
     static class _4th {
+
+        public static void main(String[] args) {
+            _4th handler = new _4th();
+            String s = "abcabcbb";
+            handler.lengthOfLongestSubstring(s);
+        }
+
         public int lengthOfLongestSubstring(String s) {
             int n = s.length(), l = 0, r = 0;
             //数组控制滑窗,arr记录的当前字符从右往左看，第一次出现的位置（下标索引）
@@ -154,6 +161,24 @@ public class _3 {
                 }
                 res = Math.max(res, j - i);
                 set.remove(ch[i]);
+            }
+            return res;
+        }
+    }
+
+    static class _6th {
+
+        public int lengthOfLongestSubstring(String s) {
+            int res = 0, l = 0, r = 0;
+            int n = s.length();
+            Set<Character> set = new HashSet<>();
+            while (l < n && r < n) {
+                if (!set.contains(s.charAt(r))) {
+                    set.add(s.charAt(r++));
+                    res = Math.max(res, r - l);
+                } else {
+                    set.remove(s.charAt(l++));
+                }
             }
             return res;
         }
