@@ -27,24 +27,33 @@ public class _128 {
         return Math.max(max, cur);
     }
 
-    public int longestConsecutive2nd(int[] nums) {
-        Set<Integer> set = new HashSet<>();
-        for (int num : nums) set.add(num);
-        int max = 0;
-        for (int num : nums) {
-            if (!set.contains(num - 1)) {//判断set不包含当前元素-1的值，跳过已经计算的最长递增序列
-                int curNum = num;
-                int curCnt = 1;
-                while (set.contains(curNum + 1)) {
-                    curNum += 1;
-                    curCnt += 1;
-                }
-                max = Math.max(max, curCnt);
-            }
+    static class _2nd {
+
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            handler.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2});
         }
 
-        return max;
+        public int longestConsecutive(int[] nums) {
+            Set<Integer> set = new HashSet<>();
+            for (int num : nums) set.add(num);
+            int max = 0;
+            for (int num : nums) {
+                if (!set.contains(num - 1)) {//判断set不包含当前元素-1的值，跳过已经计算的最长递增序列
+                    int curNum = num;
+                    int curCnt = 1;
+                    while (set.contains(curNum + 1)) {
+                        curNum += 1;
+                        curCnt += 1;
+                    }
+                    max = Math.max(max, curCnt);
+                }
+            }
+
+            return max;
+        }
     }
+
 
     static class _1st {
 
@@ -72,9 +81,9 @@ public class _128 {
         }
     }
 
-    static class _2nd {
+    static class _4th {
         public static void main(String[] args) {
-
+//            handler.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2});
         }
 
         public int longestConsecutive(int[] nums) {
@@ -92,6 +101,33 @@ public class _128 {
                 }
             }
             return Math.max(res, cur);
+        }
+    }
+
+    static class _3rd {
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            handler.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2});
+        }
+
+        public int longestConsecutive(int[] nums) {
+            Set<Integer> set = new HashSet<>();
+            for (int x : nums) {
+                set.add(x);
+            }
+            int maxLen = 0;
+            for (int x : nums) {
+                if (!set.contains(x - 1)) {
+                    int currNum = x;
+                    int currLen = 1;
+                    while (set.contains(currNum + 1)) {
+                        currNum += 1;
+                        currLen += 1;
+                    }
+                    maxLen = Math.max(maxLen, currLen);
+                }
+            }
+            return maxLen;
         }
     }
 }

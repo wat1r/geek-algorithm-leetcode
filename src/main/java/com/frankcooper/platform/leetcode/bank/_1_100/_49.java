@@ -9,6 +9,8 @@ public class _49 {
     static class _0th {
         public static void main(String[] args) {
             _0th handler = new _0th();
+            String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+            handler.groupAnagrams(strs);
         }
 
         public List<List<String>> groupAnagrams(String[] strs) {
@@ -29,8 +31,12 @@ public class _49 {
         public static void main(String[] args) {
             _1st handler = new _1st();
 
-
+            String s = "0123,";
+            System.out.println(s.substring(0, Math.max(0, s.length() - 1)));
+//            String.valueOf()
         }
+
+
 
         public List<List<String>> groupAnagrams(String[] strs) {
             List<List<String>> result = new ArrayList<>();
@@ -77,8 +83,6 @@ public class _49 {
                     })).values());
         }
     }
-
-
 
 
     static class _4th {

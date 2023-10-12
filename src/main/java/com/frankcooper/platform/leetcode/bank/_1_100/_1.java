@@ -65,6 +65,13 @@ public class _1 {
             }
             return null;
         }
+
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            int[] nums = {2, 7, 11, 15};
+            int target = 9;
+            handler.twoSum(nums, target);
+        }
     }
 }
 
