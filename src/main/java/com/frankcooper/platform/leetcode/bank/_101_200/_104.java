@@ -42,4 +42,8 @@ public class _104 {
             return root == null ? 0 : Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
         }
     }
+
+    static class _2nd {
+
+    }
 }
