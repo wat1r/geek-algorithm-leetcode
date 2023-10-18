@@ -1,5 +1,6 @@
 package com.frankcooper.platform.leetcode.bank._101_200;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
 import java.util.Stack;
@@ -14,6 +15,11 @@ public class _114 {
     /**
      * https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/114-er-cha-shu-zhan-kai-wei-lian-biao-by-ming-zhi-/
      */
+    //其实是分为三步：
+    //
+    //首先将根节点的左子树变成链表
+    //其次将根节点的右子树变成链表
+    //最后将变成链表的右子树放在变成链表的左子树的最右边
     static class _1st {
         public void flatten(TreeNode root) {
             if (root == null) return;
@@ -30,18 +36,27 @@ public class _114 {
     }
 
 
-    public void flatten(TreeNode root) {
-        while (root != null) {
-            if (root.left != null) {
-                TreeNode pre = root.left;
-                while (pre.right != null) pre = pre.right;//找到左子树的最右侧的节点
-                pre.right = root.right;//前驱节点接上处理节点的右子树
-                root.right = root.left;//处理节点的右节点挂上左子树
-                root.left = null;//处理节点左子树设置为null
-            }
-            root = root.right;//继续转到下一个节点
-
+    static class _2nd {
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            TreeNode root = TreeNodeIOUtils.transform("[1,2,5,3,4,null,6]");
+            handler.flatten(root);
         }
+
+        public void flatten(TreeNode root) {
+            while (root != null) {
+                if (root.left != null) {
+                    TreeNode pre = root.left;
+                    while (pre.right != null) pre = pre.right;//找到左子树的最右侧的节点
+                    pre.right = root.right;//前驱节点接上处理节点的右子树
+                    root.right = root.left;//处理节点的右节点挂上左子树
+                    root.left = null;//处理节点左子树设置为null
+                }
+                root = root.right;//继续转到下一个节点
+
+            }
+        }
+
     }
 
 

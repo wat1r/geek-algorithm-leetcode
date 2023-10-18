@@ -2,6 +2,7 @@ package com.frankcooper.platform.leetcode.bank._201_300;
 
 import java.util.*;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
 public class _230 {
@@ -95,6 +96,33 @@ public class _230 {
                 } else {
                     TreeNode cur = stk.pop();
                     if (++cnt == k) return cur.val;
+                    root = cur.right;
+                }
+            }
+            return -1;
+        }
+    }
+
+    static class _5th {
+        public static void main(String[] args) {
+            _5th handler = new _5th();
+            TreeNode root = TreeNodeIOUtils.transform("[5,3,6,2,4,null,null,1]");
+            int k = 3;
+            handler.kthSmallest(root, k);
+        }
+
+        public int kthSmallest(TreeNode root, int k) {
+            Stack<TreeNode> stk = new Stack<>();
+            int cnt = 0;
+            while (!stk.isEmpty() || root != null) {
+                if (root != null) {
+                    stk.push(root);
+                    root = root.left;
+                } else {
+                    TreeNode cur = stk.pop();
+                    if (++cnt == k) {
+                        return cur.val;
+                    }
                     root = cur.right;
                 }
             }

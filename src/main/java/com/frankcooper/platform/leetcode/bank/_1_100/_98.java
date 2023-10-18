@@ -129,4 +129,28 @@ public class _98 {
         }
     }
 
+    static class _6th {
+        public static void main(String[] args) {
+            _6th handler = new _6th();
+            TreeNode root = TreeNodeIOUtils.transform("[2147483647]");
+            handler.isValidBST(root);
+        }
+
+
+        public boolean isValidBST(TreeNode root) {
+            return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        }
+
+        private boolean dfs(TreeNode node, long lower, long upper) {
+            if (node == null) {
+                return true;
+            }
+            if (node.val <= lower || node.val >= upper) {
+                return false;
+            }
+
+            return dfs(node.left, lower, node.val) && dfs(node.right, node.val, upper);
+        }
+    }
+
 }

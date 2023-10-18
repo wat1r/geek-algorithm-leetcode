@@ -84,7 +84,7 @@ public class _124 {
         public static void main(String[] args) {
             _4th handler = new _4th();
             TreeNode root = TreeNodeIOUtils.transform("[-100,9,20,16,17,15,7]");
-             root = TreeNodeIOUtils.transform("[1,2,null,3,null,4,null,5]");
+            root = TreeNodeIOUtils.transform("[1,2,null,3,null,4,null,5]");
 
 //            handler.maxPathSum(root);
         }
@@ -210,5 +210,23 @@ public class _124 {
             }
         }
 
+    }
+
+    static class _6th {
+        int res = Integer.MIN_VALUE;
+
+        public int maxPathSum(TreeNode root) {
+            dfs(root);
+            return res;
+        }
+
+        public int dfs(TreeNode root) {
+            if (root == null) return 0;
+            int l = Math.max(0, dfs(root.left));
+            int r = Math.max(0, dfs(root.right));
+            int s = l + root.val + r;
+            res = Math.max(res, s);
+            return root.val + Math.max(l, r);
+        }
     }
 }
