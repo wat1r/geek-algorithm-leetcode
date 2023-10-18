@@ -3,6 +3,8 @@ package com.frankcooper.platform.leetcode.bank._201_300;
 import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
+import java.util.LinkedList;
+
 /*import java.util.*;
 import org.junit.Assert;*/
 public class _226 {
@@ -29,6 +31,29 @@ public class _226 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            TreeNode root = TreeNodeIOUtils.transform("[4,2,7,1,3,6,9]");
+            handler.invertTree(root);
+        }
+
+        public TreeNode invertTree(TreeNode root) {
+            if (root == null) {
+                return null;
+            }
+            LinkedList<TreeNode> q = new LinkedList<>();
+            q.add(root);
+            while (!q.isEmpty()) {
+                TreeNode cur = q.poll();
+                TreeNode l = cur.left;
+                cur.left = cur.right;
+                cur.right = l;
+                if (cur.left != null) {
+                    q.add(cur.left);
+                }
+                if (cur.right != null) {
+                    q.add(cur.right);
+                }
+            }
+            return root;
         }
     }
 

@@ -1,5 +1,6 @@
 package com.frankcooper.platform.leetcode.bank._1_100;
 
+import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.TreeNode;
 
 import java.util.ArrayList;
@@ -78,6 +79,12 @@ public class _94 {
 
 
     static class _3rd {
+
+        public static void main(String[] args) {
+            _3rd handler = new _3rd();
+            TreeNode root = TreeNodeIOUtils.transform("[1,null,2,3]");
+            handler.inorderTraversal(root);
+        }
 
 
         public List<Integer> inorderTraversal(TreeNode root) {
