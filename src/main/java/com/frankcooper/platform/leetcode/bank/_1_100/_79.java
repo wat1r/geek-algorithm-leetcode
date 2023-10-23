@@ -30,11 +30,11 @@ public class _79 {
             if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] != word.charAt(idx) || board[i][j] == '#')
                 return false;
             if (idx == word.length() - 1) return true;
-            board[i][j] = '#';
-            for (int d = 0; d < dx.length; d++) {
+            board[i][j] = '#';//标记
+            for (int d = 0; d < dx.length; d++) {//四个方向
                 if (dfs(word, i + dx[d], j + dy[d], idx + 1)) return true;
             }
-            board[i][j] = word.charAt(idx);
+            board[i][j] = word.charAt(idx);//恢复
             return false;
         }
 

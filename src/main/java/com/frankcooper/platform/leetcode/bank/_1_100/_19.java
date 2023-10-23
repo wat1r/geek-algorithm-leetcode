@@ -1,5 +1,6 @@
 package com.frankcooper.platform.leetcode.bank._1_100;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.struct.ListNode;
 
 /*import java.util.*;
@@ -9,7 +10,9 @@ public class _19 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-
+            ListNode head = ListNodeIOUtils.transform("[1,2,3,4,5]");
+            int n = 2;
+            handler.removeNthFromEnd(head, n);
 
         }
 

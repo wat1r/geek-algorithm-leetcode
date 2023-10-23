@@ -76,8 +76,8 @@ public class _78 {
             for (int i = idx; i < nums.length; i++) {
                 sub.add(nums[i]);
                 res.add(new ArrayList<>(sub));
-                sub.forEach(System.out::print);
-                System.out.println();
+//                sub.forEach(System.out::print);
+//                System.out.println();
                 dfs(sub, nums, i + 1);
                 sub.remove(sub.size() - 1);
             }

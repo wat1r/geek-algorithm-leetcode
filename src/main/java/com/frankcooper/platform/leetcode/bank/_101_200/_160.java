@@ -1,5 +1,6 @@
 package com.frankcooper.platform.leetcode.bank._101_200;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.struct.ListNode;
 
 public class _160 {
@@ -7,7 +8,9 @@ public class _160 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-
+            ListNode   listA = ListNodeIOUtils.transform("[4,1,8,4,5]");
+            ListNode   listB = ListNodeIOUtils.transform("[5,6,1,8,4,5]");
+            handler.getIntersectionNode(listA,listB);
         }
 
         public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
