@@ -3,6 +3,25 @@ package com.frankcooper.platform.leetcode.bank._101_200;
 public class _200 {
 
     static class _1st {
+
+
+        public static void main(String[] args) {
+            char[][] grid = {
+                    {'1', '1', '0', '0', '0'},
+                    {'1', '1', '0', '0', '0'},
+                    {'0', '0', '1', '0', '0'},
+                    {'0', '0', '0', '1', '1'}
+            };
+            _1st handler = new _1st();
+            handler.numIslands(grid);
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid[0].length; j++) {
+                    System.out.printf("%s ", grid[i][j]);
+                }
+                System.out.println();
+            }
+        }
+
         int m, n;
 
         int[][] dirs = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};

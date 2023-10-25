@@ -8,7 +8,8 @@ public class _394 {
         public static void main(String[] args) {
             _1st handler = new _1st();
 
-
+            String s = "3[a2[c]]";
+            handler.decodeString(s);
         }
 
 
