@@ -1,5 +1,6 @@
 package com.frankcooper.platform.leetcode.bank._1_100;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.struct.ListNode;
 
 public class _24 {
@@ -37,6 +38,8 @@ public class _24 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            ListNode head = ListNodeIOUtils.transform("[1,2,3,4]");
+            ListNode newHead = handler.swapPairs(head);
         }
 
         public ListNode swapPairs(ListNode head) {

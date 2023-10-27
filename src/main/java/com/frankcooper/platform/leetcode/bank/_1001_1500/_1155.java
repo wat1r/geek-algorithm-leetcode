@@ -198,4 +198,43 @@ public class _1155 {
             return res;
         }
     }
+
+
+    static class _8th {
+        public static void main(String[] args) {
+
+        }
+
+        int MOD = (int) 1e9 + 7;
+        Map<String, Integer> cache = new HashMap<>();
+
+        /**
+         * @param n      个骰子
+         * @param k      个面
+         * @param target 目标和
+         * @return
+         */
+        public int numRollsToTarget(int n, int k, int target) {
+            if (n == 0 && target == 0) {
+                return 1;
+            }
+            if (n > target || n * k < target) {
+                return 0;
+            }
+            String key = n + "_" + target;
+            if (cache.containsKey(key)) {
+                return cache.get(key);
+            }
+            int res = 0;
+            for (int i = 1; i <= k; i++) {
+                if (target >= i) {
+                    res = (res + numRollsToTarget(n - 1, k, target - i)) % MOD;
+                } else {
+                    break;
+                }
+            }
+            cache.put(key, res);
+            return res;
+        }
+    }
 }
