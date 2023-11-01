@@ -20,6 +20,7 @@ public class _33 {
 
 
         public int search(int[] nums, int target) {
+//            [l,r]闭区间
             int n = nums.length, l = 0, r = n - 1;
             while (l < r) {
                 int m = l + (r - l) / 2;//下取整

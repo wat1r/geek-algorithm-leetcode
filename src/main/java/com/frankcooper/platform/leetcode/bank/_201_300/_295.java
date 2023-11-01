@@ -14,6 +14,8 @@ public class _295 {
             mf.addNum(2);
             mf.findMedian();
             mf.addNum(3);
+            mf.addNum(4);
+            mf.addNum(5);
             mf.findMedian();
         }
 
@@ -37,6 +39,7 @@ public class _295 {
             //小根堆，从栈顶到栈底 依次从小到大
             PriorityQueue<Integer> minHeap = new PriorityQueue<>();
             int cnt = 0;
+            //整体上minHeap的元素>=maxHeap的元素
 
 
             /**

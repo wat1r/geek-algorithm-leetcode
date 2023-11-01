@@ -49,7 +49,7 @@ public class _35 {
             if (nums[r] < target) return n;
             while (l < r) {
                 int mid = l + (r - l) / 2;
-                if (nums[mid] < target) l = mid + 1;
+                if (nums[mid] < target) l = mid + 1;7
                 else r = mid;
             }
             return l;

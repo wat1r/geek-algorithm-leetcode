@@ -10,7 +10,9 @@ public class _347 {
     static class _1st {
         public static void main(String[] args) {
             _1st handler = new _1st();
-
+            int[] nums = {1, 1, 1, 2, 2, 3};
+            int k = 2;
+            handler.topKFrequent(nums, k);
         }
 
 
