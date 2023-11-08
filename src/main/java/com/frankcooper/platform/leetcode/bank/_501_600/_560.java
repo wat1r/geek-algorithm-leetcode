@@ -36,7 +36,9 @@ public class _560 {
         for (int i = 0; i < n; i++) {
             sumEnd += nums[i];
             int remain = sumEnd - k;
-            if (preSumMap.containsKey(remain)) res += preSumMap.get(remain);
+            if (preSumMap.containsKey(remain)) {
+                res += preSumMap.get(remain);
+            }
             preSumMap.put(sumEnd, preSumMap.getOrDefault(sumEnd, 0) + 1);
         }
         return res;

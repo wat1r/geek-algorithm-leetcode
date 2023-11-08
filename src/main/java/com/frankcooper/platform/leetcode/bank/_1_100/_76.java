@@ -58,10 +58,13 @@ public class _76 {
             int l = 0, r = 0;
             String ans = "";
             while (r < s.length()) {
-                if (!check(p, q)) p[s.charAt(r++)]++;
+                if (!check(p, q)) {
+                    p[s.charAt(r++)]++;
+                }
+
                 while (check(p, q)) {
-                    if (r - l + 1 < minLen) {
-                        minLen = r - l + 1;
+                    if (r - l < minLen) {
+                        minLen = r - l;
                         ans = s.substring(l, r);
                     }
                     p[s.charAt(l++)]--;
