@@ -68,6 +68,54 @@ public class DailyPractise {
 
     }
 
+    static class _23_11_14 {
+        public static void main(String[] args) {
+
+
+        }
+
+
+        public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+            int INF = Integer.MAX_VALUE;
+            int[][] graph = new int[n][n];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    graph[i][j] = (i == j) ? 0 : INF;
+                }
+            }
+            for (int[] e : edges) {
+                int u = e[0], v = e[1], w = e[2];
+                graph[u][v] = w;
+                graph[v][u] = w;
+            }
+
+            for (int k = 0; k < n; k++) {
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < n; j++) {
+                        if (i == j || graph[i][k] == INF || graph[k][j] == INF) {
+                            continue;
+                        }
+                        graph[i][j] = Math.min(graph[i][j], graph[i][k] + graph[k][j]);
+                    }
+                }
+            }
+            int res = -1, minn = n + 1;
+            for (int i = 0; i < n; i++) {
+                int cnt = 0;
+                for (int j = 0; j < n; j++) {
+                    if (i != j && graph[i][j] <= distanceThreshold) {
+                        cnt++;
+                    }
+                }
+                if (minn >= cnt) {
+                    minn = cnt;
+                    res = i;
+                }
+            }
+            return res;
+        }
+
+    }
 
 //    static class _23_11_03 {
 //        public static void main(String[] args) {
