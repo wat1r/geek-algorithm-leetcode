@@ -20,6 +20,7 @@ public class _337 {
     class _3rd {
 
 
+        //f[0]表示选当前节点所能得到的最大值，f[1]表示不选当前节点所能得到的最大值
         public int rob(TreeNode root) {
             int[] f = dfs(root);
             return Math.max(f[0], f[1]);

@@ -1,5 +1,8 @@
 package com.frankcooper.platform.leetcode.bank._201_300;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //300. 最长上升子序列 300. Longest Increasing Subsequence Medium
 public class _300 {
     static _300 handler = new _300();
@@ -192,6 +195,31 @@ public class _300 {
     }
 
     static class _4th_1 {
+        public int lengthOfLIS(int[] nums) {
+            List<Integer> g = new ArrayList<>();
+            for (int x : nums) {
+                int j = lowerBound(g, x);
+                if (j == g.size()) {
+                    g.add(x);
+                } else {
+                    g.set(j, x);
+                }
+            }
+            return g.size();
+        }
 
+
+        private int lowerBound(List<Integer> g, int target) {
+            int left = -1, right = g.size();//(left,right)
+            while (left + 1 < right) {
+                int mid = (left + right) >>> 1;
+                if (g.get(mid) < target) {
+                    left = mid;
+                } else {
+                    right = mid;
+                }
+            }
+            return right;
+        }
     }
 }
