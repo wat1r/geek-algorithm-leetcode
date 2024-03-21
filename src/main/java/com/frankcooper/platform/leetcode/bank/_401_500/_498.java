@@ -35,7 +35,7 @@ public class _498 {
                     }
                     if (c < C) {
                         r++;
-                    } else {
+                    } else {//过中间最长对角线之后的逻辑
                         r += 2;
                         c--;
                     }

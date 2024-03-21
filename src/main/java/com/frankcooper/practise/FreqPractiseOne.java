@@ -198,4 +198,42 @@ public class FreqPractiseOne {
     }
 
 
+    static class _7th {
+        public static void main(String[] args) {
+            int[][] matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
+            int[] ans = process(matrix);
+            for (int i = 0; i < ans.length; i++) {
+                System.out.printf("%d ", ans[i]);
+            }
+        }
+
+        public static int[] process(int[][] matrix) {
+            int R = matrix.length, C = matrix[0].length;
+            int[] ans = new int[R * C];
+            int r = 0, c = 0, idx = 0;
+            while (c < C) {
+                idx = collect(matrix, R, ans, r, c, idx);
+                c++;
+            }
+            c--;
+            r++;
+            while (r < R) {
+                idx = collect(matrix, R, ans, r, c, idx);
+                r++;
+            }
+            return ans;
+
+        }
+
+        private static int collect(int[][] matrix, int R, int[] ans, int r, int c, int idx) {
+            int sr = r, sc = c;
+            while (sr < R && sc >= 0) {
+                ans[idx++] = matrix[sr][sc];
+                sr++;
+                sc--;
+            }
+            return idx;
+        }
+    }
+
 }
