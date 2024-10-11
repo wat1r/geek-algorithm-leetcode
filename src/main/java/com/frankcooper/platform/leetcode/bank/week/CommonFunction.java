@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CommonFunction {
+public class
+CommonFunction {
 
     public static void main(String[] args) {
         CommonFunction handler = new CommonFunction();
@@ -177,6 +178,36 @@ public class CommonFunction {
         return primes.size();
     }
 
+    //埃拉托斯特尼筛法 查找 n和m之间的所有质数
+    public static List<Integer> findPrimes(int n, int m) {
+        List<Integer> primes = new ArrayList<>();
+        boolean[] isPrime = new boolean[m + 1];
+
+        // 初始化所有的数为质数
+        for (int i = 2; i <= m; i++) {
+            isPrime[i] = true;
+        }
+
+        // 埃拉托斯特尼筛法
+        for (int i = 2; i * i <= m; i++) {
+            if (isPrime[i]) {
+                // 如果i是质数，那么它的所有倍数都不是质数
+                for (int j = i * i; j <= m; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        // 收集范围内的质数
+        for (int i = n; i <= m; i++) {
+            if (isPrime[i]) {
+                primes.add(i);
+            }
+        }
+
+        return primes;
+    }
+
     int MOD = (int) 1e9 + 7;
 
     private long factorial(long n) {
@@ -194,7 +225,8 @@ public class CommonFunction {
         }
         return rem;
     }
-//    函数 upper_bound() 在 [begin, end) 进行二分查找，返回 大于 tar的第一个元素位置。如果所有元素都小于tar，则返回 end.
+
+    //    函数 upper_bound() 在 [begin, end) 进行二分查找，返回 大于 tar的第一个元素位置。如果所有元素都小于tar，则返回 end.
     public static int upper_bound(int[] arr, int begin, int end, int tar) {
         while (begin < end) {
             int mid = begin + (end - begin) / 2;
