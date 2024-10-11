@@ -85,6 +85,29 @@ public class _73 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+        public void setZeroes(int[][] matrix) {
+            int R = matrix.length, C = matrix[0].length;
+            int[] rows = new int[R];
+            int[] cols = new int[C];
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    if (matrix[r][c] == 0) {
+                        rows[r] = 1;
+                        cols[c] = 1;
+                    }
+                }
+            }
+
+            for (int r = 0; r < R; r++) {
+                for (int c = 0; c < C; c++) {
+                    if (rows[r] == 1 || cols[c] == 1) {
+                        matrix[r][c] = 0;
+                    }
+                }
+            }
+
+        }
     }
 
     static class _4th {

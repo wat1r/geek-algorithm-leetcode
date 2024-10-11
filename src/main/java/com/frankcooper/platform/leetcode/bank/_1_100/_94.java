@@ -15,7 +15,7 @@ import java.util.Stack;
 public class _94 {
 
     public static void main(String[] args) {
-        List<Integer> list1 = new ArrayList<>(),res= new ArrayList<>();
+        List<Integer> list1 = new ArrayList<>(), res = new ArrayList<>();
 //        res.addAll(list1.subList())
     }
 
@@ -107,7 +107,7 @@ public class _94 {
     }
 
 
-    static class _4th{
+    static class _4th {
         List<Integer> inoderList = new ArrayList<>();
 
         public List<Integer> inorderTraversal(TreeNode root) {
@@ -116,6 +116,24 @@ public class _94 {
             inoderList.add(root.val);
             inorderTraversal(root.right);
             return inoderList;
+        }
+    }
+
+    static class _5th {
+        public List<Integer> inorderTraversal(TreeNode root) {
+            List<Integer> res = new ArrayList<>();
+            Stack<TreeNode> stk = new Stack<>();
+            TreeNode cur = root;
+            while (cur != null || !stk.isEmpty()) {
+                while (cur != null) {
+                    stk.push(cur);
+                    cur = cur.left;
+                }
+                cur = stk.pop();
+                res.add(cur.val);
+                cur = cur.right;
+            }
+            return res;
         }
     }
 
