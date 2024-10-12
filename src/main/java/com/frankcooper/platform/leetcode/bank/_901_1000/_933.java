@@ -21,7 +21,9 @@ public class _933 {
             }
 
             public int ping(int t) {
-
+                if(!pq.isEmpty()){
+                    System.out.println(pq.peek());
+                }
                 while (!pq.isEmpty() && pq.peek() < t - N) {
                     pq.poll();
                 }
