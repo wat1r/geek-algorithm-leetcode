@@ -85,5 +85,34 @@ public class _316 {
 
     }
 
+    //https://leetcode.cn/problems/remove-duplicate-letters/?envType=study-plan-v2&envId=2024-spring-sprint-100
+    static class _3th {
+        public String removeDuplicateLetters(String s) {
+            boolean[] vis = new boolean[26];
+            int[] cnt = new int[26];
+            for (int i = 0; i < s.length(); i++) {
+                cnt[s.charAt(i) - 'a']++;
+            }
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (!vis[c - 'a']) {
+                    while (sb.length() > 0 && sb.charAt(sb.length() - 1) > c) {
+                        if (cnt[sb.charAt(sb.length() - 1) - 'a'] > 0) {
+                            vis[sb.charAt(sb.length() - 1) - 'a'] = false;
+                            sb.deleteCharAt(sb.length() - 1);
+                        } else {
+                            break;
+                        }
+                    }
+                    vis[c - 'a'] = true;
+                    sb.append(c);
+                }
+                cnt[c - 'a'] -= 1;
+            }
+            return sb.toString();
+        }
+    }
+
 
 }
