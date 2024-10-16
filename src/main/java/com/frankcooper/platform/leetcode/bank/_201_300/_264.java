@@ -60,6 +60,29 @@ public class _264 {
         public static void main(String[] args) {
             _3rd handler = new _3rd();
         }
+
+
+        public int nthUglyNumber(int n) {
+
+            PriorityQueue<Long> pq = new PriorityQueue<>();
+            Set<Long> vis = new HashSet<>();
+            pq.offer(1L);
+            long res = 0;
+            for (int i = 0; i < n; i++) {
+                long cur = pq.poll();
+                res = cur;
+                int[] factors = {2, 3, 5};
+                for (int f : factors) {
+                    long t = f * cur;
+                    if (!vis.contains(t)) {
+                        pq.offer(t);
+                        vis.add(t);
+                    }
+                }
+            }
+            return (int) res;
+        }
+
     }
 
     static class _4th {
