@@ -88,6 +88,16 @@ public class _264 {
     static class _4th {
         public static void main(String[] args) {
             _4th handler = new _4th();
+            try {
+                int i = 1 / 0;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                throw e;
+            } finally {
+                System.out.println("finally");
+            }
         }
+
+
     }
 }

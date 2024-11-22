@@ -1,5 +1,6 @@
 package com.frankcooper.platform.leetcode.bank._1_100;
 
+import com.frankcooper.io.ListNodeIOUtils;
 import com.frankcooper.struct.ListNode;
 
 public class _92 {
@@ -50,6 +51,14 @@ public class _92 {
 
 
     static class _2nd {
+
+        public static void main(String[] args) {
+            _2nd handler = new _2nd();
+            ListNode head = ListNodeIOUtils.transform("[1,2,3,4,5]");
+            int m = 2, n = 4;
+            handler.reverseBetween(head, m, n);
+        }
+
         public ListNode reverseBetween(ListNode head, int m, int n) {
             ListNode dummy = new ListNode(0);
             dummy.next = head;

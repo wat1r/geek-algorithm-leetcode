@@ -44,6 +44,7 @@ public class _69 {
             _2nd handler = new _2nd();
             System.out.println(2 << 15);
             System.out.println(Math.pow(2, 16));
+            handler.mySqrt(8);
         }
 
         //上取整

@@ -6,6 +6,14 @@ import com.frankcooper.struct.ListNode;
 public class _82 {
 
     static class _1st {
+        public static void main(String[] args) {
+            _1st handler = new _1st();
+            ListNode head = ListNodeIOUtils.transform("[1,2,3,3,4,4,5]");
+            handler.deleteDuplicates(head);
+
+        }
+
+
         public ListNode deleteDuplicates(ListNode head) {
             ListNode dummy = new ListNode(-1);
             dummy.next = head;
