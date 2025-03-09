@@ -31,6 +31,8 @@ public class _26 {
     static class _2nd {
         public static void main(String[] args) {
             _2nd handler = new _2nd();
+            int[] nums = {0,0,1,1,1,2,2,3,3,4};
+            handler.removeDuplicates(nums);
         }
 
         public int removeDuplicates(int[] nums) {

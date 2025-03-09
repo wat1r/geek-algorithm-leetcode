@@ -6,8 +6,7 @@ import com.frankcooper.io.TreeNodeIOUtils;
 import com.frankcooper.struct.ParentTreeNode;
 import com.frankcooper.struct.TreeNode;
 
-public class
-_236 {
+public class _236 {
 
     static class _1st {
         public static void main(String[] args) {
